@@ -1,0 +1,666 @@
+<html><head></head><body>
+
+
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimal-ui">
+
+	<title>Steed Monteiro</title>
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/octicons/2.0.2/octicons.min.css">
+
+	<style type="text/css">
+	@import url(
+	https://fonts.googleapis.com/css?family=Lato:400,700
+);
+body {
+	background: #fff;
+	font-family: Lato, sans-serif;
+	margin: 0 0 80px;
+}
+a {
+	color: #2ecc71;
+}
+a:focus,
+a:hover {
+	color: #f1c40f;
+	text-decoration: none;
+}
+p {
+	line-height: 1.5;
+	margin: 0;
+}
+p + p {
+	margin-top: 10px;
+}
+h1,
+h2,
+h3,
+h4 {
+	margin-top: 0
+}
+section {
+	margin-top: 30px;
+}
+li {
+	line-height: 1.8;
+	list-style: none;
+}
+li:before {
+	content: "\f052";
+	float: left;
+	font: 13px Octicons;
+	margin-top: 6px;
+	margin-left: -20px;
+	opacity: .1;
+	position: absolute;
+}
+blockquote {
+	border-left: 5px solid #e7e9ec;
+	font-size: 14px;
+}
+em {
+	color: #95a5a6;
+	font-weight: normal;
+	font-style: normal;
+}
+h4 span:first-child {
+	color: #000;
+	font-weight: bold;
+}
+.container {
+	max-width: 750px;
+	padding: 0 30px;
+}
+.col-sm-6 {
+	margin-bottom: 10px;
+}
+.col-sm-12 h4 {
+	margin-top: 12px;
+}
+.col-sm-12 + .col-sm-12 {
+	margin-top: 30px;
+}
+#header {
+	background: #f4f6f6;
+	padding: 50px 0;
+	margin-bottom: 30px;
+}
+#header h2 {
+	color: #95a5a6;
+	font-size: 24px;
+}
+#content h3 {
+	color: #f1c40f;
+	font-size: 26px;
+	margin-top: -4px;
+}
+#content aside {
+	text-align: right;
+	padding-right: 30px;
+}
+#profiles .network {
+	text-transform: capitalize;
+}
+#work .position,
+#volunteer .position {
+	font-weight: bold;
+	margin-bottom: 8px;
+}
+#education .area {
+	font-weight: bold;
+}
+#education .area:before {
+	content: "\f0d7";
+	font: 16px Octicons;
+	margin-right: 6px;
+}
+#education .studyType {
+	margin-left: 25px;
+}
+#awards .summary,
+#publications .summary {
+	margin-top: 8px;
+}
+#publications .website a:before {
+	content: attr(href);
+}
+
+@media (min-width: 480px) {
+	.strike-through {
+		border-top: 1px solid #f4f6f6;
+		height: 20px;
+		margin-top: 12px;
+		margin-bottom: -2px;
+		position: relative;
+	}
+	.strike-through span,
+	.strike-through a {
+		background: #fff;
+		position: absolute;
+	}
+	.strike-through span:first-child {
+		padding-right: 20px;
+		margin-top: -12px;
+	}
+	.strike-through span + span {
+		font-size: 14px;
+		margin-top: -10px;
+		padding-left: 20px;
+		right: 0;
+	}
+}
+@media (max-width: 768px) {
+	.col-sm-6:last-child {
+		margin-bottom: 0px;
+	}
+	#content aside {
+		margin-bottom: 20px;
+		padding-right: 0;
+		text-align: left;
+	}
+	#publications .website a:before {
+		content: "View publication";
+	}
+}
+@media (max-width: 480px) {
+	h1 {
+		font-size: 26px;
+	}
+	.date {
+		font-size: 14px;
+		margin-bottom: 5px;
+	}
+	.strike-through span:first-child {
+		margin-bottom: 7px;
+	}
+	.strike-through span {
+		display: block;
+	}
+	#header {
+		margin-bottom: 10px;
+		padding: 40px 0;
+	}
+	#actions {
+		display: none;
+	}
+}
+
+	</style>
+
+
+
+
+	<header id="header">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-9 col-sm-push-3">
+					<h1>
+						Steed Monteiro
+					</h1>
+					<h2>
+						Full-Stack Developer - Javascript / NodeJS / ReactJS / PHP / ExtJS
+					</h2>
+				</div>
+			</div>
+		</div>
+	</header>
+	<div id="content" class="container">
+
+	<section id="contact" class="row">
+		<aside class="col-sm-3">
+			<h3>Contact</h3>
+		</aside>
+		<div class="col-sm-9">
+			<div class="row">
+			<div class="col-sm-6">
+				<strong>Email</strong>
+				<div class="email"><a class="__cf_email__" href="/cdn-cgi/l/email-protection" data-cfemail="3447405151501a595b5a40515d465b745359555d581a575b59">[email&nbsp;protected]</a><script data-cfhash="f9e31" type="text/javascript">/* <![CDATA[ */!function(t,e,r,n,c,a,p){try{t=document.currentScript||function(){for(t=document.getElementsByTagName('script'),e=t.length;e--;)if(t[e].getAttribute('data-cfhash'))return t[e]}();if(t&&(c=t.previousSibling)){p=t.parentNode;if(a=c.getAttribute('data-cfemail')){for(e='',r='0x'+a.substr(0,2)|0,n=2;a.length-n;n+=2)e+='%'+('0'+('0x'+a.substr(n,2)^r).toString(16)).slice(-2);p.replaceChild(document.createTextNode(decodeURIComponent(e)),c)}p.removeChild(t)}}catch(u){}}()/* ]]> */</script></div>
+			</div>
+			<div class="col-sm-6">
+				<strong>Phone</strong>
+				<div class="phone">+33 6 31653474</div>
+			</div>
+			<div class="col-sm-6">
+				<strong>Website</strong>
+				<div class="website">
+					<a href=""></a>
+				</div>
+			</div>
+			</div>
+		</div>
+	</section>
+	<section id="about" class="row">
+		<aside class="col-sm-3">
+			<h3>About</h3>
+		</aside>
+		<div class="col-sm-9">
+			<p>Développeur Full-Stack avec plus de 8 ans d'expérience dans le développement d'applications  mobile, desktop et web en JavaScript, PHP, HTML5, ReactJS, ExtJS, NodeJS etc ... Je suis à la recherche de nouvelles opportunités pour utiliser et développer mes compétences.</p>
+		</div>
+	</section>
+	<section id="profiles" class="row">
+		<aside class="col-sm-3">
+			<h3>Profiles</h3>
+		</aside>
+		<div class="col-sm-9">
+			<div class="row">
+				<div class="col-sm-6">
+					<strong class="network">
+						Twitter
+					</strong>
+					<div class="username">
+						<div class="url">
+							<a href="https://twitter.com/SteedMonteiro">SteedMonteiro</a>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-6">
+					<strong class="network">
+						GitHub
+					</strong>
+					<div class="username">
+						<div class="url">
+							<a href="https://github.com/SteedMonteiro">SteedMonteiro</a>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-6">
+					<strong class="network">
+						LinkedIn
+					</strong>
+					<div class="username">
+						<div class="url">
+							<a href="https://www.linkedin.com/in/steedmonteiro">SteedMonteiro</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section id="work" class="row">
+		<aside class="col-sm-3">
+			<h3>Work</h3>
+		</aside>
+		<div class="col-sm-9">
+			<div class="row">
+			<div class="col-sm-12">
+				<h4 class="strike-through">
+					<span>Photobox</span>
+					<span class="date">
+						01/03/2015 — 01/09/2015
+					</span>
+				</h4>
+				<div class="website pull-right">
+					<a href="https://www.photobox.fr/">https://www.photobox.fr/</a>
+				</div>
+				<div class="position">
+					Développeur Front-End
+				</div>
+				<div class="summary">
+					<p>Développement d'une plate-forme  de personnalisation de produits (Backbone, Marionette.js, Node.js, Gulp, Git, SASS, MongoDB</p>
+				</div>
+				<h4>Highlights</h4>
+				<ul class="highlights">
+					<li class="bullet">Migration de Grunt à Gulp</li>
+					<li class="bullet">R&amp;D: Conception d'un module 3D pour afficher des objets en 3D (WebGL, three.js)  </li>
+					<li class="bullet">Tests d'intégration : Cucumber, WebDriver, PhantomJS, Mocha</li>
+					<li class="bullet">Equipe agile : SCRUM</li>
+				</ul>
+			</div>
+			<div class="col-sm-12">
+				<h4 class="strike-through">
+					<span>Orange Labs London - Libon</span>
+					<span class="date">
+						09/07/2012 — 15/04/2014
+					</span>
+				</h4>
+				<div class="website pull-right">
+					<a href="https://web.libon.com ">https://web.libon.com </a>
+				</div>
+				<div class="position">
+					Développeur Front-End
+				</div>
+				<div class="summary">
+					<p>Développement d'une application Responsive HTML5 (Backbone, Marionnette.JS, Node.js, Grunt, Bower, Git, CSS3, SASS )</p>
+				</div>
+				<h4>Highlights</h4>
+				<ul class="highlights">
+					<li class="bullet">Support du design responsive sur IE9 et IE10</li>
+					<li class="bullet">R&amp;D : Transformation de l'application Web dans une application de bureau avec Node-webkit (nw.js)</li>
+					<li class="bullet">R&amp;D : Développement d'un module de WebRTC pour appeler un mobile à partir d'une application de bureau et vice-versa</li>
+					<li class="bullet">Equipe agile : SCRUM</li>
+				</ul>
+			</div>
+			<div class="col-sm-12">
+				<h4 class="strike-through">
+					<span>Orange Vallée - Libon</span>
+					<span class="date">
+						09/07/2012 — 15/04/2014
+					</span>
+				</h4>
+				<div class="website pull-right">
+					<a href="https://www.libon.com">https://www.libon.com</a>
+				</div>
+				<div class="position">
+					Lead Développeur
+				</div>
+				<div class="summary">
+					<p>Conception et Développement d'une API REST et d'un back office pour modifier le contenu en plusieurs langues (textes et images) pour les applications mobiles et le portail (ExtJS, PHP5, StudioPHP, HTML5 Canvas)</p>
+				</div>
+				<h4>Highlights</h4>
+				<ul class="highlights">
+					<li class="bullet">Intégration de Zendesk SSO Support pour les applications mobiles</li>
+					<li class="bullet">Synchonisation avec une plate-forme de traduction</li>
+				</ul>
+			</div>
+			<div class="col-sm-12">
+				<h4 class="strike-through">
+					<span>Starzik</span>
+					<span class="date">
+						15/06/2010 — 30/07/2011
+					</span>
+				</h4>
+				<div class="website pull-right">
+					<a href="https://www.starzik.com">https://www.starzik.com</a>
+				</div>
+				<div class="position">
+					Lead Développeur / Scrum Master
+				</div>
+				<div class="summary">
+					<p>Conception et Développement d'une nouvelle plate-forme de musique (MVC Framework: CodeIgniter, PHP5)</p>
+				</div>
+				<h4>Highlights</h4>
+				<ul class="highlights">
+					<li class="bullet">Formation de l'équipe à la méthodologie agile (SCRUM)</li>
+					<li class="bullet">Création d'une application de bureau, un gestionnaire de téléchargement réalisé avec Adobe Air pour télécharger des chansons et des albums directement sur un ordinateur</li>
+				</ul>
+			</div>
+			<div class="col-sm-12">
+				<h4 class="strike-through">
+					<span>Digiteka</span>
+					<span class="date">
+						10/09/2010  — 20/04/2011
+					</span>
+				</h4>
+				<div class="website pull-right">
+					<a href="http://www.jiwa.fr">http://www.jiwa.fr</a>
+				</div>
+				<div class="position">
+					ExtJS Expert
+				</div>
+				<div class="summary">
+					<p>Développement d'une nouvelle version du site Jiwa.fr. Conseils et formations des équipes sur le Framework ExtJS</p>
+				</div>
+			</div>
+			<div class="col-sm-12">
+				<h4 class="strike-through">
+					<span>Stade Français</span>
+					<span class="date">
+						30/08/2010 — 21/10/2011
+					</span>
+				</h4>
+				<div class="website pull-right">
+					<a href="https://www.stade.fr">https://www.stade.fr</a>
+				</div>
+				<div class="position">
+					Développeur PHP
+				</div>
+				<div class="summary">
+					<p>Intégration d'un nouveau design pour le site principal et le forum. Gestion de l'infrastructure réseau et développement de nouvelles fonctions pour le back-office (PHP5, Smarty, phpBB)</p>
+				</div>
+			</div>
+			<div class="col-sm-12">
+				<h4 class="strike-through">
+					<span>Groupe Atland</span>
+					<span class="date">
+						20/11/2011 — 09/12/2011
+					</span>
+				</h4>
+				<div class="website pull-right">
+					<a href="http://www.atland.fr ">http://www.atland.fr </a>
+				</div>
+				<div class="position">
+					Développeur PHP
+				</div>
+				<div class="summary">
+					<p>Développement d'un site web basé sur Wordpress.</p>
+				</div>
+			</div>
+			<div class="col-sm-12">
+				<h4 class="strike-through">
+					<span>Jiwa</span>
+					<span class="date">
+						05/05/2008 — 15/06/2010
+					</span>
+				</h4>
+				<div class="website pull-right">
+					<a href="http://www.jiwa.fr">http://www.jiwa.fr</a>
+				</div>
+				<div class="position">
+					Directeur technique adjoint / Chef de Projet/ Lead Développeur
+				</div>
+				<div class="summary">
+					<p>Conception et développement du site d'une plate-forme de streaming de musique</p>
+				</div>
+				<h4>Highlights</h4>
+				<ul class="highlights">
+					<li class="bullet">R&amp;D : Streaming, Webservices, AJAX, MVC Framework, Flash AS3, etc ...</li>
+					<li class="bullet">Optimisation du référencement pour de large base de donnée</li>
+					<li class="bullet">Gestion des partenariats B2B: création de services API / Web, la documentation</li>
+					<li class="bullet">Devops: Gestion Nginx et Apache serveurs, MySQL réplication, systèmes de fichiers, etc ...</li>
+				</ul>
+			</div>
+			<div class="col-sm-12">
+				<h4 class="strike-through">
+					<span>FotoVista</span>
+					<span class="date">
+						03/09/2007 — 04/05/2008
+					</span>
+				</h4>
+				<div class="website pull-right">
+					<a href="http://www.pixmania.com">http://www.pixmania.com</a>
+				</div>
+				<div class="position">
+					Développeur Web
+				</div>
+				<div class="summary">
+					<p>Refonte du moteur de recherche de produits en une application MVC/Ajax en utilisant ExtJS pour le coté client et PHP5 avec CodeIgniter pour coté serveur</p>
+				</div>
+			</div>
+			<div class="col-sm-12">
+				<h4 class="strike-through">
+					<span>EADS APSYS</span>
+					<span class="date">
+						20/11/2006 — 19/11/2007
+					</span>
+				</h4>
+				<div class="website pull-right">
+					<a href=""></a>
+				</div>
+				<div class="position">
+					Développeur Web
+				</div>
+				<div class="summary">
+					<p>Développement de nouveaux back-offices en utilisant ExtJS pour les équipes comptabilité, ressource humaines et commerciale </p>
+				</div>
+			</div>
+			</div>
+		</div>
+	</section>
+
+	<section id="volunteer" class="row">
+		<aside class="col-sm-3">
+			<h3>Volunteer</h3>
+		</aside>
+		<div class="col-sm-9">
+			<div class="row">
+			<div class="col-sm-12">
+				<h4 class="strike-through">
+					<span>Cifap</span>
+					<span class="date">
+						13/10/2007 — 10/11/2007
+					</span>
+				</h4>
+				<div class="website pull-right">
+					<a href=""></a>
+				</div>
+				<div class="position">
+					Professeur de Javascript
+				</div>
+				<div class="summary">
+					<p></p>
+				</div>
+				<h4>Highlights</h4>
+				<ul class="highlights">
+					<li class="bullet">Cours de Javascript/AJAX</li>
+					<li class="bullet">Screencast</li>
+				</ul>
+			</div>
+			</div>
+		</div>
+	</section>
+
+	<section id="education" class="row">
+		<aside class="col-sm-3">
+			<h3>Education</h3>
+		</aside>
+		<div class="col-sm-9">
+			<div class="row">
+			<div class="col-sm-12">
+				<h4 class="strike-through">
+					<span>Université de Versailles Saint-Quentin-en-Yvelines</span>
+					<span class="date">
+						2005 — 2006
+					</span>
+				</h4>
+				<div class="area">
+					Faculté des sciences
+				</div>
+				<div class="studyType">
+
+				</div>
+			</div>
+			<div class="col-sm-12">
+				<h4 class="strike-through">
+					<span>Université de Paris VI - UPMC</span>
+					<span class="date">
+						2006 — 2007
+					</span>
+				</h4>
+				<div class="area">
+					CFA-UPMC Paris
+				</div>
+				<div class="studyType">
+					DEUST SPI Informatique - Sciences de l'ingénieur
+				</div>
+				<h4>Courses</h4>
+				<ul class="courses">
+					<li>C/C++, MS SQL, PHP, VB.Net, etc...</li>
+				</ul>
+			</div>
+			<div class="col-sm-12">
+				<h4 class="strike-through">
+					<span>Cifap </span>
+					<span class="date">
+						2007 — 2008
+					</span>
+				</h4>
+				<div class="area">
+					Montreuil
+				</div>
+				<div class="studyType">
+					Formation - Développeur
+				</div>
+				<h4>Courses</h4>
+				<ul class="courses">
+					<li>PHP, Gestion de projet, Développement Web, etc ..</li>
+				</ul>
+			</div>
+			</div>
+		</div>
+	</section>
+
+
+	<section id="publications" class="row">
+		<aside class="col-sm-3">
+			<h3>Publications</h3>
+		</aside>
+		<div class="col-sm-9">
+			<div class="row">
+			<div class="col-sm-12">
+				<h4 class="strike-through">
+					<span>DevTools Live</span>
+					<span class="date">
+
+					</span>
+				</h4>
+				<div class="website pull-right">
+					<a href="https://github.com/StudioLabs/devtools-live"></a>
+				</div>
+				<div class="publisher">
+					<em>Published by</em>
+					<strong></strong>
+				</div>
+				<div class="summary">
+					<p>Une extension Chrome qui permet de modifier en cours d'exécution des applications sans les recharger</p>
+				</div>
+			</div>
+			</div>
+		</div>
+	</section>
+
+
+	<section id="languages" class="row">
+		<aside class="col-sm-3">
+			<h3>Languages</h3>
+		</aside>
+		<div class="col-sm-9">
+			<div class="row">
+			<div class="col-sm-6">
+				<div class="language">
+					<strong>Anglais</strong>
+				</div>
+				<div class="fluency">
+					Courant (lu, parlé, écrit)
+				</div>
+			</div>
+			<div class="col-sm-6">
+				<div class="language">
+					<strong>Espagnol</strong>
+				</div>
+				<div class="fluency">
+					Niveau Scolaire
+				</div>
+			</div>
+			</div>
+		</div>
+	</section>
+
+
+	<section id="references" class="row">
+		<aside class="col-sm-3">
+			<h3>References</h3>
+		</aside>
+		<div class="col-sm-9">
+			<div class="row">
+			<div class="col-sm-12">
+				<blockquote class="reference">
+					<p>Steed a apporté son expertise technique et ses très bonnes compétences technologiques afin de nous accompagner dans la réussite nos projets. Il très impliqué dans les tâches qui lui sont confiées et sait proposer des solutions innovantes</p>
+					<p class="name">
+						<strong>— Thomas Berger -  Responsable Front à PhotoBox</strong>
+					</p>
+				</blockquote>
+			</div>
+			<div class="col-sm-12">
+			</div>
+			</div>
+		</div>
+	</section>
+
+	</div>
+
+
+
+</body></html>

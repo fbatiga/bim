@@ -1,0 +1,218 @@
+{
+  "basics": {
+    "name": "Steed Monteiro",
+    "label": "Full-Stack Developer - Javascript / NodeJS / ReactJS / PHP ",
+    "picture": "",
+    "email": "steed.monteiro@gmail.com",
+    "phone": "+33 6 31653474",
+    "website": "",
+    "summary": "Full-Stack Developer with more than 8 years of experience building  mobile, desktop and web applications using JavaScript, PHP, HTML5, etc... I'm looking for new opportunities to use my skills for building great products.",
+    "location": {
+      "address": "",
+      "postalCode": "",
+      "city": "Paris",
+      "countryCode": "FR",
+      "region": ""
+    },
+    "profiles": [
+      {
+        "network": "Twitter",
+        "username": "SteedMonteiro",
+        "url": "https://twitter.com/SteedMonteiro"
+      },
+      {
+        "network": "GitHub",
+        "username": "SteedMonteiro",
+        "url": "https://github.com/SteedMonteiro"
+      },
+      {
+        "network": "LinkedIn",
+        "username": "SteedMonteiro",
+        "url": "https://www.linkedin.com/in/steedmonteiro"
+      }
+    ]
+  },
+  "work": [
+    {
+      "company": "Photobox",
+      "position": "Front-End Developer",
+      "website": "https://www.photobox.fr/",
+      "startDate": "2015/03/01",
+      "endDate": "2015/09/01",
+      "summary": "Developement of  a  product customisation platform (Backbone, Marionette.js, Node.js,  Gulp, Git, SASS, MongoDB)",
+      "highlights": [
+        "Migration from Grunt to Gulp",
+        "R&D:  Integration of a 3D module to view Mug  in 3D (WebGL, three.js)  ",
+        "Integration Tests : Cucumber, WebDriver, PhantomJS, Mocha",
+        "Agile Team : SCRUM"
+      ]
+    },
+    {
+      "company": "Orange Labs London - Libon",
+      "position": "Front Developer",
+      "website": "https://web.libon.com ",
+      "startDate": "2012/09/07",
+      "endDate": "2014/04/15",
+      "summary": "Developement of  an HTML5 Responsive Application  (Backbone, Marionnette.JS, Node.js, Grunt, Bower, Git, CSS3, SASS )",
+      "highlights": [
+        "Responsive Design Support for IE9  & IE10",
+        "R&D :  Transformation of the web application in a desktop application with Node-webkit (nw.js) ",
+        "R&D :  Developement of a WebRTC module to call a mobile from a desktop application and vice-versa",
+        "Agile Team : SCRUM"
+      ]
+    },
+    {
+      "company": "Orange Vallée - Libon",
+      "position": "Lead Developer",
+      "website": "https://www.libon.com ",
+      "startDate": "2012/09/07",
+      "endDate": "2014/04/15",
+      "summary": "Design and Developement of a REST API and  a back office to edit content in multi-languages (texts and images) for the mobiles app and the portal ( ExtJS, PHP5, StudioPHP, HTML5 Canvas )",
+      "highlights": [
+        "Integration of Zendesk SSO Support for mobile Applications",
+        "Synchonization with a translation platform"
+      ]
+    },
+    {
+      "company": "Starzik",
+      "position": "Lead Developer / Scrum Master",
+      "website": "https://www.starzik.com",
+      "startDate": "2010/06/15",
+      "endDate": "2011/07/30",
+      "summary": "Design and Developement of  a new music platform (Framework MVC : CodeIgniter, PHP5).",
+      "highlights": [
+        " Training the team to agile methodology ( SCRUM )",
+        "Creation of a download manager desktop application with Adobe Air  to download songs and albums  directly on a computer"
+      ]
+    },
+    {
+      "company": "Digiteka",
+      "position": "ExtJS Expert",
+      "website": "http://www.jiwa.fr",
+      "startDate": "2010/09/10 ",
+      "endDate": "2011/04/20 ",
+      "summary": "Development of a new version of the Jiwa.fr . Consulting and training of the team on  ExtJS Framework",
+      "highlights": []
+    },
+    {
+      "company": "Stade Français",
+      "position": "PHP Developer",
+      "website": "https://www.stade.fr",
+      "startDate": "2010/08/30",
+      "endDate": "2011/10/21",
+      "summary": "Integration of a new design on the main website and the forum. Management of the network infrastructure, developement of new back-office features ( PHP5, Smarty, phpBB)",
+      "highlights": []
+    },
+    {
+      "company": "Groupe Atland",
+      "position": "PHP Developer",
+      "website": "http://www.atland.fr ",
+      "startDate": "2011/11/20",
+      "endDate": "2011/12/09",
+      "summary": "Developpement of a website based on Wordpress.",
+      "highlights": []
+    },
+    {
+      "company": "Jiwa",
+      "position": "Vice-CTO / Project Manager / Lead Developer",
+      "website": "http://www.jiwa.fr",
+      "startDate": "2008/05/05",
+      "endDate": "2010/06/15",
+      "summary": "Design and Site Development of a music streaming platform. ",
+      "highlights": [
+        "R&D : Streaming, Webservices, AJAX MVC Framework, Flash AS3, etc ...",
+        "SEO on  a large content database",
+        "Management of B2B partnerships: establishment of API/web services, documentation ",
+        "DevOPS : Managing Nginx & Apache servers, MySQL Replication, File systems etc ..."
+      ]
+    },
+    {
+      "company": "FotoVista",
+      "position": "Web developer",
+      "website": "http://www.pixmania.com",
+      "startDate": "2007/09/03",
+      "endDate": "2008/05/04",
+      "summary": "Redesign  of the Product Search Engine in an Ajax Application in MVC using ExtJS for the client side and PHP5 with CodeIgniter on the server side.",
+      "highlights": []
+    },
+    {
+      "company": "EADS APSYS",
+      "position": "Web Developer",
+      "website": "",
+      "startDate": "2006/11/20",
+      "endDate": "2007/11/19",
+      "summary": "Development of new  back-office for management, accounting and administration teams using ExtJS",
+      "highlights": []
+    }
+  ],
+  "volunteer": [
+    {
+      "organization": "Cifap",
+      "position": "Javascript Teacher",
+      "website": "",
+      "startDate": "2007/09/13",
+      "endDate": "2007/11/10",
+      "summary": "",
+      "highlights": [
+        "Lessons of Javascript / AJAX",
+        "Screencast"
+      ]
+    }
+  ],
+  "education": [
+    {
+      "institution": "University of Paris VI - UPMC",
+      "area": "CFA-UPMC Paris ",
+      "studyType": "DEUST Sciences for Engineering Computing",
+      "startDate": "2006",
+      "endDate": "2007",
+      "gpa": "",
+      "courses": [
+        "C/C++, MS SQL, PHP, VB.Net, etc..."
+      ]
+    },
+    {
+      "institution": "Cifap ",
+      "area": "Montreuil",
+      "studyType": "Training - Developer / Web Designer",
+      "startDate": "2007",
+      "endDate": "2008",
+      "gpa": "",
+      "courses": [
+        "PHP, Project Management, Web Developement, etc..."
+      ]
+    }
+  ],
+  "awards": [],
+  "publications": [
+    {
+      "name": "DevTools Live",
+      "publisher": "",
+      "releaseDate": "",
+      "website": "https://github.com/StudioLabs/devtools-live",
+      "summary": "A Chrome extension that lets you modify running apps without reloading them."
+    }
+  ],
+  "skills": [],
+  "languages": [
+    {
+      "language": "English",
+      "fluency": "Native speaker"
+    },
+    {
+      "language": "Spanish",
+      "fluency": "Medium"
+    }
+  ],
+  "interests": [],
+  "references": [
+    {
+      "name": "Thomas Berger -  Developement Manager at PhotoBox",
+      "reference": " Steed has provided technical expertise and very good technology skills to support us in our projects success. It very involved in the tasks entrusted to it and knows propose innovative solutions ."
+    },
+    {
+      "name": "",
+      "reference": ""
+    }
+  ]
+}

@@ -1,0 +1,142 @@
+{
+  "basics": {
+    "name": "Stéphane ARDISSON",
+    "label": "DevOps - Linux / Ansible / Cobbler",
+    "picture": "",
+    "email": "steard@gmail.com",
+    "phone": "+33 623522348",
+    "website": "",
+    "summary": "DevOps  avec 10 ans d'expérience en réseaux et administration système. Expert Linux, RedHat, Base de donnée Oracle et programmation Batch/Shell. J'ai une forte expérience en automation avec Ansible, en deploiement avec Cobbler et en gestion de base de données avec Mysql et Oracle.",
+    "location": {
+      "address": "",
+      "postalCode": "",
+      "city": "Paris",
+      "countryCode": "FR",
+      "region": ""
+    },
+    "profiles": [
+      {
+        "network": "LinkedIn",
+        "username": "Stephane Ardisson",
+        "url": "https://fr.linkedin.com/in/stephane-ardisson-24a6a183"
+      }
+    ]
+  },
+  "work": [
+    {
+      "company": "Michelin TravelPartner",
+      "position": "DevOps Linux",
+      "website": "",
+      "startDate": "01/06/2014",
+      "endDate": "Aujourd'hui",
+      "summary": "Déploiement et gestion de machines virtuelles sur RedHat KVM avec cobbler",
+      "highlights": [
+        "Outils : Ansible, Cobbler, Git, Docker, Jenkins",
+        "Administration de base de données : RedHat Linux, Oracle databases, MySQLSupervision with xymon ",
+        "Scripting Shell, JSon, Jinja, Yaml",
+        "Linux RedHat/CentOS 5, 6, 7",
+        "Equipe Agile : SCRUM, Kanban"
+      ]
+    },
+    {
+      "company": "Medysys",
+      "position": "Responsable Informatique",
+      "website": "",
+      "startDate": "2011/02/07",
+      "endDate": "2014/06/30",
+      "summary": " Développement et supervision of a Linux Cluster RedHat Linux (Rocks Cluster) .",
+      "highlights": [
+        "Déploiement de code de calcul par script shell",
+        "Virtualisation KVM RedHat Linux 5 / 6",
+        "Projet Organisé sur SI, WAN and LAN."
+      ]
+    },
+    {
+      "company": "NEURONES",
+      "position": "Administrateur Système",
+      "website": "",
+      "startDate": "2008/12/07",
+      "endDate": "2011/02/01",
+      "summary": "Administration de serveurs Windows. Déploiement par Linux DRBL, Active Directory 2003 et Microsoft Exchange 2003",
+      "highlights": []
+    },
+    {
+      "company": "SIAAP",
+      "position": "Administrateur Système",
+      "website": "",
+      "startDate": "2008/09/10",
+      "endDate": "2006/09/23",
+      "summary": "Administration de serveurs Linux et Windows",
+      "highlights": []
+    }
+  ],
+  "volunteer": [],
+  "education": [
+    {
+      "institution": "Ecole SupInfo",
+      "area": "Junior Level Professional Linux",
+      "studyType": "Linux, LVM, Raid, Active Directory, Perl, Bash, etc... ",
+      "startDate": "2011",
+      "endDate": "2011",
+      "gpa": "",
+      "courses": []
+    },
+    {
+      "institution": "University of Paris VI - UPMC",
+      "area": "Licence en Informatique",
+      "studyType": "Java, C/C++, Linux",
+      "startDate": "2007",
+      "endDate": "2008",
+      "gpa": "",
+      "courses": []
+    },
+    {
+      "institution": "",
+      "area": "DEUST SPI Informatique - Sciences de l'ingénieur",
+      "studyType": "C/C++, MS SQL, PHP, VB.Net ",
+      "startDate": "2006",
+      "endDate": "2007",
+      "gpa": "",
+      "courses": []
+    }
+  ],
+  "awards": [],
+  "publications": [],
+  "skills": [
+    {
+      "name": "Expert",
+      "level": "Expert",
+      "keywords": [
+        "Ansible",
+        "Cobbler",
+        "Linux RedHat/CentOS 5 to 7",
+        "RedHat KVM",
+        "Shell",
+        "Mysql",
+        "Git"
+      ]
+    },
+    {
+      "name": "Intermédiaire",
+      "level": "Intermediate",
+      "keywords": [
+        "Oracle Databases",
+        "PostGres SQL",
+        "CentOS, Debian",
+        "Windows Server"
+      ]
+    },
+    {
+      "name": "Débutant",
+      "level": "Beginner",
+      "keywords": [
+        "Docker",
+        "AWS",
+        "Jenkins"
+      ]
+    }
+  ],
+  "languages": [],
+  "interests": [],
+  "references": []
+}

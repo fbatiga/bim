@@ -1,0 +1,227 @@
+{
+  "basics": {
+    "name": "Steed Monteiro",
+    "label": "Full-Stack Developer - Javascript / NodeJS / ReactJS / PHP / ExtJS ",
+    "picture": "",
+    "email": "steed.monteiro@gmail.com",
+    "phone": "+33 6 31653474",
+    "website": "",
+    "summary": "Développeur Full-Stack avec plus de 8 ans d'expérience dans le développement d'applications  mobile, desktop et web en JavaScript, PHP, HTML5, ReactJS, ExtJS, NodeJS etc ... Je suis à la recherche de nouvelles opportunités pour utiliser mes compétences et développer de grands produits.",
+    "location": {
+      "address": "",
+      "postalCode": "",
+      "city": "Paris",
+      "countryCode": "FR",
+      "region": ""
+    },
+    "profiles": [
+      {
+        "network": "Twitter",
+        "username": "SteedMonteiro",
+        "url": "https://twitter.com/SteedMonteiro"
+      },
+      {
+        "network": "GitHub",
+        "username": "SteedMonteiro",
+        "url": "https://github.com/SteedMonteiro"
+      },
+      {
+        "network": "LinkedIn",
+        "username": "SteedMonteiro",
+        "url": "https://www.linkedin.com/in/steedmonteiro"
+      }
+    ]
+  },
+  "work": [
+    {
+      "company": "Photobox",
+      "position": "Développeur Front-End",
+      "website": "https://www.photobox.fr/",
+      "startDate": "01/03/2015",
+      "endDate": "01/09/2015",
+      "summary": "Développement d'une plate-forme  de personnalisation de produits (Backbone, Marionette.js, Node.js, Gulp, Git, SASS, MongoDB",
+      "highlights": [
+        "Migration de Grunt à Gulp",
+        "R&D: Conception d'un module 3D pour afficher des objets en 3D (WebGL, three.js)  ",
+        "Tests d'intégration : Cucumber, WebDriver, PhantomJS, Mocha",
+        "Equipe agile : SCRUM"
+      ]
+    },
+    {
+      "company": "Orange Labs London - Libon",
+      "position": "Développeur Front-End",
+      "website": "https://web.libon.com ",
+      "startDate": "09/07/2012",
+      "endDate": "15/04/2014",
+      "summary": "Développement d'une application Responsive HTML5 (Backbone, Marionnette.JS, Node.js, Grunt, Bower, Git, CSS3, SASS )",
+      "highlights": [
+        "Support du design responsive sur IE9 et IE10",
+        "R&D : Transformation de l'application Web dans une application de bureau avec Node-webkit (nw.js)",
+        "R&D : Développement d'un module de WebRTC pour appeler un mobile à partir d'une application de bureau et vice-versa",
+        "Equipe agile : SCRUM"
+      ]
+    },
+    {
+      "company": "Orange Vallée - Libon",
+      "position": "Lead Développeur",
+      "website": "https://www.libon.com",
+      "startDate": "09/07/2012",
+      "endDate": "15/04/2014",
+      "summary": "Conception et Développement d'une API REST et d'un back office pour modifier le contenu en plusieurs langues (textes et images) pour les applications mobiles et le portail (ExtJS, PHP5, StudioPHP, HTML5 Canvas)",
+      "highlights": [
+        "Intégration de Zendesk SSO Support pour les applications mobiles",
+        "Synchonisation avec une plate-forme de traduction"
+      ]
+    },
+    {
+      "company": "Starzik",
+      "position": "Lead Développeur / Scrum Master",
+      "website": "https://www.starzik.com",
+      "startDate": "15/06/2010",
+      "endDate": "30/07/2011",
+      "summary": "Conception et Développement d'une nouvelle plate-forme de musique (MVC Framework: CodeIgniter, PHP5)",
+      "highlights": [
+        "Formation de l'équipe à la méthodologie agile (SCRUM)",
+        "Création d'une application de bureau, un gestionnaire de téléchargement réalisé avec Adobe Air pour télécharger des chansons et des albums directement sur un ordinateur"
+      ]
+    },
+    {
+      "company": "Digiteka",
+      "position": "ExtJS Expert",
+      "website": "http://www.jiwa.fr",
+      "startDate": "10/09/2010 ",
+      "endDate": "20/04/2011 ",
+      "summary": "Développement d'une nouvelle version du site Jiwa.fr. Conseils et formations des équipes sur le Framework ExtJS",
+      "highlights": []
+    },
+    {
+      "company": "Stade Français",
+      "position": "Développeur PHP",
+      "website": "https://www.stade.fr",
+      "startDate": "30/08/2010",
+      "endDate": "21/10/2011",
+      "summary": "Intégration d'un nouveau design pour le site principal et le forum. Gestion de l'infrastructure réseau et développement de nouvelles fonctions pour le back-office (PHP5, Smarty, phpBB)",
+      "highlights": []
+    },
+    {
+      "company": "Groupe Atland",
+      "position": "Développeur PHP",
+      "website": "http://www.atland.fr ",
+      "startDate": "20/11/2011",
+      "endDate": "09/12/2011",
+      "summary": "Développement d'un site web basé sur Wordpress.",
+      "highlights": []
+    },
+    {
+      "company": "Jiwa",
+      "position": "Directeur technique adjoint / Chef de Projet/ Lead Développeur",
+      "website": "http://www.jiwa.fr",
+      "startDate": "05/05/2008",
+      "endDate": "15/06/2010",
+      "summary": "Conception et développement du site d'une plate-forme de streaming de musique",
+      "highlights": [
+        "R&D : Streaming, Webservices, AJAX, MVC Framework, Flash AS3, etc ...",
+        "Optimisation du référencement pour de large base de donnée",
+        "Gestion des partenariats B2B: création de services API / Web, la documentation",
+        "Devops: Gestion Nginx et Apache serveurs, MySQL réplication, systèmes de fichiers, etc ..."
+      ]
+    },
+    {
+      "company": "FotoVista",
+      "position": "Développeur Web",
+      "website": "http://www.pixmania.com",
+      "startDate": "03/09/2007",
+      "endDate": "04/05/2008",
+      "summary": "Refonte du moteur de recherche de produits en une application MVC/Ajax en utilisant ExtJS pour le coté client et PHP5 avec CodeIgniter pour coté serveur",
+      "highlights": []
+    },
+    {
+      "company": "EADS APSYS",
+      "position": "Développeur Web",
+      "website": "",
+      "startDate": "20/11/2006",
+      "endDate": "19/11/2007",
+      "summary": "Développement de nouveaux back-offices en utilisant ExtJS pour les équipes comptabilité, ressource humaines et commerciale ",
+      "highlights": []
+    }
+  ],
+  "volunteer": [
+    {
+      "organization": "Cifap",
+      "position": "Professeur de Javascript",
+      "website": "",
+      "startDate": "13/10/2007",
+      "endDate": "10/11/2007",
+      "summary": "",
+      "highlights": [
+        "Cours de Javascript/AJAX",
+        "Screencast"
+      ]
+    }
+  ],
+  "education": [
+    {
+      "institution": "Université de Versailles Saint-Quentin-en-Yvelines",
+      "area": "Faculté des sciences",
+      "studyType": "",
+      "startDate": "2005",
+      "endDate": "2006",
+      "gpa": "",
+      "courses": []
+    },
+    {
+      "institution": "Université de Paris VI - UPMC",
+      "area": "CFA-UPMC Paris ",
+      "studyType": "DEUST SPI Informatique - Sciences de l'ingénieur",
+      "startDate": "2006",
+      "endDate": "2007",
+      "gpa": "",
+      "courses": [
+        "C/C++, MS SQL, PHP, VB.Net, etc..."
+      ]
+    },
+    {
+      "institution": "Cifap ",
+      "area": "Montreuil",
+      "studyType": "Formation - Développeur",
+      "startDate": "2007",
+      "endDate": "2008",
+      "gpa": "",
+      "courses": [
+        "PHP, Gestion de projet, Développement Web, etc .."
+      ]
+    }
+  ],
+  "awards": [],
+  "publications": [
+    {
+      "name": "DevTools Live",
+      "publisher": "",
+      "releaseDate": "",
+      "website": "https://github.com/StudioLabs/devtools-live",
+      "summary": "Une extension Chrome qui permet de modifier en cours d'exécution des applications sans les recharger"
+    }
+  ],
+  "skills": [],
+  "languages": [
+    {
+      "language": "Anglais",
+      "fluency": "Courant (lu, parlé, écrit)"
+    },
+    {
+      "language": "Espagnol",
+      "fluency": "Niveau Scolaire"
+    }
+  ],
+  "interests": [],
+  "references": [
+    {
+      "name": "Thomas Berger -  Responsable Front à PhotoBox",
+      "reference": "Steed a apporté son expertise technique et ses très bonnes compétences technologiques afin de nous accompagner dans la réussite nos projets. Il très impliqué dans les tâches qui lui sont confiées et sait proposer des solutions innovantes"
+    },
+    {
+      "name": "",
+      "reference": ""
+    }
+  ]
+}
