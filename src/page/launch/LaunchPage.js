@@ -1,7 +1,7 @@
 'use strict';
 
 import React, { Component } from 'react';
-import { View, Text} from 'react-native';
+import { View, Text, Image} from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import LaunchStyle from './LaunchStyle';
 
@@ -47,9 +47,12 @@ class LaunchPage extends Component {
 	}
 
 	render(){
+
 		return (
 			<View style={LaunchStyle.container}>
-			<Text>BIM Loading...</Text>
+			<Image source={require("../../asset/logo.png")} style ={LaunchStyle.logo}/>
+
+			<Text style={LaunchStyle.loading}>Chargement...</Text>
 			</View>
 			);
 	}
