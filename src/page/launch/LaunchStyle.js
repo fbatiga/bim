@@ -8,12 +8,18 @@ const LaunchStyle = StyleSheet.create({
         backgroundColor : '#1111FE'
     },
     logo : {
-    	position : 'absolute',
-    	top : 100
     },
     loading : {
         color: '#FFFFFF'
-    }
+    },
+    bottom : {
+		flex: 4,
+	},
+	top: {
+		flex: 3,
+        justifyContent: 'center',
+        alignItems: 'center',
+	}
 });
 
 export default LaunchStyle;

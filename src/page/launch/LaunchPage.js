@@ -33,9 +33,12 @@ class LaunchPage extends Component {
 
 		return (
 			<View style={LaunchStyle.container}>
-			<Image source={require("../../asset/logo.png")} style ={LaunchStyle.logo}/>
-
+			<View style={LaunchStyle.top} >
+				<Image source={require("../../asset/logo.png")} />
+			</View>
+			<View style={LaunchStyle.bottom} >
 			<Text style={LaunchStyle.loading}>Chargement...</Text>
+			</View>
 			</View>
 			);
 	}
