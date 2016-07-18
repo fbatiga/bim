@@ -25,6 +25,8 @@ const MessengerStyle = StyleSheet.create({
 	},
 	main: {
 		flex: 5,
+		borderBottomWidth: 1,
+		borderBottomColor : '#DDE6EC',
 		backgroundColor : '#F8F8F8',
 		padding : 10
 	},
@@ -41,7 +43,8 @@ class MessengerLayout extends Component {
 
 	onSend(text) {
 
-		this.props.dispatch(this.props.addMessage(text));
+		this.props.dispatch(this.props.addMessage(text))
+		;
 
 		this.props.dispatch(this.props.getReply({
 			msg : text,
