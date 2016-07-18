@@ -48,7 +48,7 @@ class MessengerLayout extends Component {
 
 		this.props.dispatch(this.props.getReply({
 			msg : text,
-			session : this.session
+			session : this.props.messenger.session
 		}));
 
 	}

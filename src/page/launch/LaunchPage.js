@@ -7,7 +7,7 @@ import LaunchStyle from './LaunchStyle';
 
 import {connect} from 'react-redux';
 import {loadSession} from './LaunchAction';
-import {loadChoices, addMessage, addBotMessage} from '../messenger/MessengerAction';
+import {loadChoices, registerSession, addMessage, addBotMessage} from '../messenger/MessengerAction';
 
 
 class LaunchPage extends Component {
@@ -22,7 +22,8 @@ class LaunchPage extends Component {
 
 			let result = nextProps.launch.start;
 
-			this.session = result.session;
+			this.props.dispatch(registerSession(result.session));
+
 
 			if(result.cards && result.cards[0].buttons){
 

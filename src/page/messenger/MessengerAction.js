@@ -1,7 +1,7 @@
 "use strict";
 
 import {
-    MESSENGER_REQUEST, MESSENGER_SUCCESS, MESSENGER_FAILURE, MESSENGER_CHOICE, MESSENGER_MESSAGE, MESSENGER_BOT_MESSAGE
+    MESSENGER_REQUEST, MESSENGER_SUCCESS, MESSENGER_FAILURE, MESSENGER_CHOICE, MESSENGER_MESSAGE, MESSENGER_BOT_MESSAGE, MESSENGER_SESSION
 } from './MessengerConstant';
 
 export function getReply(params) {
@@ -16,6 +16,13 @@ export function getReply(params) {
 export function loadChoices(params) {
   return {
     type: MESSENGER_CHOICE,
+    params : params
+  };
+}
+
+export function registerSession(params) {
+  return {
+    type: MESSENGER_SESSION,
     params : params
   };
 }

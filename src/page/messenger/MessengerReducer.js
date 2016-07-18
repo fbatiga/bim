@@ -2,10 +2,11 @@
 
 import { handleActions } from 'redux-actions';
 import {
-	MESSENGER_REQUEST, MESSENGER_SUCCESS, MESSENGER_FAILURE, MESSENGER_CHOICE, MESSENGER_MESSAGE, MESSENGER_BOT_MESSAGE
+	MESSENGER_REQUEST, MESSENGER_SUCCESS, MESSENGER_FAILURE, MESSENGER_CHOICE, MESSENGER_MESSAGE, MESSENGER_BOT_MESSAGE, MESSENGER_SESSION
 } from './MessengerConstant';
 
 const initialState = {
+	session : null,
 	messages: [],
 	choices : []
 };
@@ -88,6 +89,10 @@ const MessengerReducer = handleActions({
 
 	[MESSENGER_CHOICE]: (state, action) => {
 		return { ...state, choices: loadChoices(action.params)};
+	},
+
+	[MESSENGER_SESSION]: (state, action) => {
+		return { ...state, session: action.params};
 	},
 
 	[MESSENGER_MESSAGE]: (state, action) => {
