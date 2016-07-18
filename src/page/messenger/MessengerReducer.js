@@ -55,29 +55,53 @@ function createChoice(result){
 
 function loadChoices(result){
 	let choices = [];
-	result.map((text) =>{
-		choices.push({
-			text
+
+
+	if (typeof result ==  'string'){
+
+		result.split('[').map((option)=>{
+			let pos = option.indexOf(']')
+			if(pos != -1 ){
+				choices.push({
+					text : option.substr(0, pos)
+				});
+			}
 		});
-	});
+
+	}else{
+		result.map((text) =>{
+			choices.push({
+				text
+			});
+		});
+	}
+
 
 	return choices;
 
 }
 
-function addBotMessage(messages, result){
+function addMessage(messages, result, isBot){
 
-	return  messages.concat(createBotMessage(result));
+	if(isBot == undefined ){
+	 	let isBot = result.indexOf('@:') == 0;
+		if(isBot){
+			result = result.substr(2);
+		}
+	}
+
+
+	if(result.indexOf('[') != -1 || isBot ){
+
+		result = result.split('[')[0];
+
+		return messages.concat(createBotMessage(result));
+
+	}else{
+		return messages.concat(createMessage(result));
+	}
 
 }
-
-
-function addMessage(messages, result){
-
-	return  messages.concat(createMessage(result));
-
-}
-
 
 function loadMessage(messages, result){
 
@@ -96,11 +120,18 @@ const MessengerReducer = handleActions({
 	},
 
 	[MESSENGER_MESSAGE]: (state, action) => {
-		return { ...state, messages: addMessage(state.messages, action.params) };
+		return { ...state, messages: addMessage(state.messages, action.params, false) };
 	},
 
 	[MESSENGER_BOT_MESSAGE]: (state, action) => {
-		return  { ...state, messages: addBotMessage(state.messages, action.params) };
+		let newState = { ...state, messages: addMessage(state.messages, action.params, true) };
+		let choices = loadChoices(action.params);
+		if ( choices.length > 0 ) {
+			newState.choices = choices;
+		}
+
+		return newState;
+
 	},
 
 	[MESSENGER_REQUEST]: (state, action) => {
@@ -108,7 +139,14 @@ const MessengerReducer = handleActions({
 	},
 
 	[MESSENGER_SUCCESS]: (state, action) => {
-		return { ...state, loading: false, messages: addBotMessage(state.messages, action.result.botResponse)};
+		let choices = loadChoices(action.result.botResponse);
+		let newState =	{ ...state, loading: false, messages: addMessage(state.messages, action.result.botResponse)};
+
+		if ( choices.length > 0 ) {
+			newState.choices = choices;
+		}
+
+		return newState;
 	},
 
 	[MESSENGER_FAILURE]: (state, action) => {

@@ -36,10 +36,6 @@ const styles = StyleSheet.create({
 
 export default class Bubble extends React.Component {
 
-	componentWillMount() {
-		Object.assign(styles, this.props.styles);
-	}
-
 	render() {
 		const flexStyle = {};
 		if (this.props.text) {

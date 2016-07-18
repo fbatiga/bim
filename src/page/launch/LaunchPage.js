@@ -24,24 +24,6 @@ class LaunchPage extends Component {
 
 			this.props.dispatch(registerSession(result.session));
 
-
-			if(result.cards && result.cards[0].buttons){
-
-				let choices = [];
-				result.cards[0].buttons.map((button) =>{
-					choices.push(button.buttonText);
-				});
-
-				this.props.dispatch(loadChoices(choices));
-
-			}
-
-			if(result.botResponse){
-
-				this.props.dispatch(addBotMessage(result.botResponse));
-			}
-
-
 			Actions.messenger();
 		}
 
