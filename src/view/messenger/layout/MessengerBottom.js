@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import MessengerButton from '../item/MessengerButton';
+import asset from '../../../asset';
 
 const styles = StyleSheet.create({
 	button: {
@@ -68,7 +69,7 @@ class MessengerBottom extends Component {
 				</View>
 				<View  style={styles.bottom}  >
 					<TouchableOpacity onPress={()=> {Actions.launch()}}>
-						<Image source={require("../../../asset/bottomButton.png")} />
+						<Image source={asset.bottomButton} />
 					</TouchableOpacity>
 				</View>
 			</View>

@@ -1,3 +1,4 @@
 export default {
-  logo'calendar': require('./logo.png'),
+  logo : require('./logo.png'),
+  bottomButton : require('./bottomButton.png'),
 };

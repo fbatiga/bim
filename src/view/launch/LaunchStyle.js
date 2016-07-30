@@ -7,8 +7,6 @@ const LaunchStyle = StyleSheet.create({
         alignItems: 'center',
         backgroundColor : '#1111FE'
     },
-    logo : {
-    },
     loading : {
         color: '#FFFFFF'
     },

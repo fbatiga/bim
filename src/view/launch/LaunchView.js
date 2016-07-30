@@ -7,6 +7,7 @@ import LaunchStyle from './LaunchStyle';
 
 import {connect} from 'react-redux';
 import {loadSession} from './LaunchAction';
+import asset from '../../asset';
 import {loadChoices, registerSession, addMessage, addBotMessage} from '../messenger/MessengerAction';
 
 
@@ -34,7 +35,7 @@ class LaunchView extends Component {
 		return (
 			<View style={LaunchStyle.container}>
 			<View style={LaunchStyle.top} >
-				<Image source={require("../../asset/logo.png")} />
+				<Image source={asset.logo} />
 			</View>
 			<View style={LaunchStyle.bottom} >
 			<Text style={LaunchStyle.loading}>Chargement...</Text>

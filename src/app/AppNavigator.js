@@ -10,7 +10,6 @@ import CardView from '../view/card/CardView';
 import ContactView from '../view/contact/ContactView';
 import TransferView from '../view/transfer/TransferView';
 
-
 const scenes = Actions.create(
   <Scene key="root" hideNavBar={true}>
     <Scene key="launch" component={LaunchView} initial={true} title="Launch"/>
