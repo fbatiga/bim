@@ -1,5 +1,5 @@
-import LaunchReducer from '../page/launch/LaunchReducer';
-import MessengerReducer from '../page/messenger/MessengerReducer';
+import LaunchReducer from '../view/launch/LaunchReducer';
+import MessengerReducer from '../view/messenger/MessengerReducer';
 
 export default {
     launch : LaunchReducer,

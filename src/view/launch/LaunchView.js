@@ -10,7 +10,7 @@ import {loadSession} from './LaunchAction';
 import {loadChoices, registerSession, addMessage, addBotMessage} from '../messenger/MessengerAction';
 
 
-class LaunchPage extends Component {
+class LaunchView extends Component {
 
 	componentDidMount() {
 		this.props.dispatch(loadSession());
@@ -50,4 +50,4 @@ function mapStateToProps(state) {
 	};
 }
 
-export default connect(mapStateToProps)(LaunchPage);
+export default connect(mapStateToProps)(LaunchView);

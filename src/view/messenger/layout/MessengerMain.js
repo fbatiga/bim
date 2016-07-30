@@ -72,7 +72,7 @@ class MessengerMain extends Component {
 			onContentSizeChange={this.scrollToBottom.bind(this)}
 			renderRow={this.renderRow.bind(this)}
 			enableEmptySections={true}
-			pageSize={this.props.messages.length}
+			viewSize={this.props.messages.length}
 
 			{...this.props}
 			/>

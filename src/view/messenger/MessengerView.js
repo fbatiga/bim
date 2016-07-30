@@ -8,7 +8,7 @@ import MessengerMain from './layout/MessengerMain';
 import MessengerBottom from './layout/MessengerBottom';
 import MessengerStyle from './MessengerStyle';
 
-class MessengerPage extends Component {
+class MessengerView extends Component {
 
 
 	componentDidMount(){
@@ -54,4 +54,4 @@ function mapStateToProps(state) {
 	};
 }
 
-export default connect(mapStateToProps)(MessengerPage);
+export default connect(mapStateToProps)(MessengerView);
