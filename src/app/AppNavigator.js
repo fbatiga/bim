@@ -1,14 +1,24 @@
 'use strict'
 import React, { Component } from 'react';
 import { Navigator, Text } from 'react-native';
-import View from '../view';
-import {Actions, Scene, Router} from 'react-native-router-flux';
+import { Actions, Scene, Router } from 'react-native-router-flux';
+
+import LaunchView from '../view/launch/LaunchView';
+import MessengerView from '../view/messenger/MessengerView';
+import AccountView from '../view/account/AccountView';
+import CardView from '../view/card/CardView';
+import ContactView from '../view/contact/ContactView';
+import TransferView from '../view/transfer/TransferView';
+
 
 const scenes = Actions.create(
   <Scene key="root" hideNavBar={true}>
-    <Scene key="launch" component={View.LaunchView} initial={true} title="Launch"/>
-    <Scene key="messenger" component={View.MessengerView} title="messenger"/>
-    <Scene key="account" component={View.AccountView} title="account"/>
+    <Scene key="launch" component={LaunchView} initial={true} title="Launch"/>
+    <Scene key="messenger" component={MessengerView} title="messenger"/>
+    <Scene key="account" component={AccountView} title="account"/>
+    <Scene key="card" component={CardView} title="card"/>
+    <Scene key="contact" component={ContactView} title="contact"/>
+    <Scene key="transfer" component={TransferView} title="transfer"/>
   </Scene>
 );
 
