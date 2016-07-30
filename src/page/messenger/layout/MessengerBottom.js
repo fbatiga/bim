@@ -1,7 +1,7 @@
 'use strict';
 
 import React, { Component } from 'react';
-import { View, Text, StyleSheet} from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import MessengerButton from '../item/MessengerButton';
 
@@ -14,6 +14,11 @@ const styles = StyleSheet.create({
 	box :{
 		flex : 1,
 		flexDirection : 'row-reverse'
+	},
+	bottom :{
+		height : 40,
+        justifyContent: 'center',
+        alignItems: 'center',
 	},
 	container :{
 		flex : 1,
@@ -60,6 +65,11 @@ class MessengerBottom extends Component {
 			<View >
 				<View  style={styles.container}  >
 					{this.renderChoices()}
+				</View>
+				<View  style={styles.bottom}  >
+					<TouchableOpacity onPress={()=> {Actions.launch()}}>
+						<Image source={require("../../../asset/bottomButton.png")} />
+					</TouchableOpacity>
 				</View>
 			</View>
 		);
