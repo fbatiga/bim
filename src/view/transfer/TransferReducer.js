@@ -1,7 +1,7 @@
 "use strict";
 
 import { handleActions } from 'redux-actions';
-import { TRANSFER_REQUEST, TRANSFER_SUCCESS, TRANSFER_FAILURE } from './TransferConstant';
+import { TRANSFER_REQUEST, TRANSFER_SUCCESS, TRANSFER_FAILURE } from './TransferAction';
 import { Actions } from 'react-native-router-flux';
 
 const initialState = {

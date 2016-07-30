@@ -1,9 +1,13 @@
 "use strict";
 
-import {
-    TRANSFER_REQUEST, TRANSFER_SUCCESS, TRANSFER_FAILURE
-} from './TransferConstant';
+export const TRANSFER_INIT = 'transfer.init';
+export const TRANSFER_REQUEST = 'transfer.request';
+export const TRANSFER_SUCCESS = 'transfer.success';
+export const TRANSFER_FAILURE = 'transfer.failure';
+
 
 export function init(action) {
-  return {};
+  return {
+  	    type: TRANSFER_INIT
+  };
 }

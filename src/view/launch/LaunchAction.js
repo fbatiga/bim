@@ -1,8 +1,9 @@
 "use strict";
 
-import {
-    LAUNCH_REQUEST, LAUNCH_SUCCESS, LAUNCH_FAILURE
-} from './LaunchConstant';
+
+export const LAUNCH_REQUEST = 'launch.request';
+export const LAUNCH_SUCCESS = 'launch.success';
+export const LAUNCH_FAILURE = 'launch.failure';
 
 export function loadSession(action) {
   return {

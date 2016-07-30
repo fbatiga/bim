@@ -3,7 +3,7 @@
 import { handleActions } from 'redux-actions';
 import {
     LAUNCH_REQUEST, LAUNCH_SUCCESS, LAUNCH_FAILURE
-} from './LaunchConstant';
+} from './LaunchAction';
 import {Actions} from 'react-native-router-flux';
 
 const initialState = {

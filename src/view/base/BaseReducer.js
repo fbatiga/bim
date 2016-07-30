@@ -1,7 +1,7 @@
 "use strict";
 
 import { handleActions } from 'redux-actions';
-import { BASE_REQUEST, BASE_SUCCESS, BASE_FAILURE } from './BaseConstant';
+import { BASE_REQUEST, BASE_SUCCESS, BASE_FAILURE } from './BaseAction';
 import { Actions } from 'react-native-router-flux';
 
 const initialState = {

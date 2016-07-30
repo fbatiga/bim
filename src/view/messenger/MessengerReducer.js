@@ -3,7 +3,7 @@
 import { handleActions } from 'redux-actions';
 import {
 	MESSENGER_REQUEST, MESSENGER_SUCCESS, MESSENGER_FAILURE, MESSENGER_CHOICE, MESSENGER_MESSAGE, MESSENGER_BOT_MESSAGE, MESSENGER_SESSION
-} from './MessengerConstant';
+} from './MessengerAction';
 
 const initialState = {
 	session : null,

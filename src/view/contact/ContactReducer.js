@@ -1,7 +1,7 @@
 "use strict";
 
 import { handleActions } from 'redux-actions';
-import { CONTACT_REQUEST, CONTACT_SUCCESS, CONTACT_FAILURE } from './ContactConstant';
+import { CONTACT_REQUEST, CONTACT_SUCCESS, CONTACT_FAILURE } from './ContactAction';
 import { Actions } from 'react-native-router-flux';
 
 const initialState = {

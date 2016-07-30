@@ -1,7 +1,7 @@
 "use strict";
 
 import { handleActions } from 'redux-actions';
-import { CARD_REQUEST, CARD_SUCCESS, CARD_FAILURE } from './CardConstant';
+import { CARD_REQUEST, CARD_SUCCESS, CARD_FAILURE } from './CardAction';
 import { Actions } from 'react-native-router-flux';
 
 const initialState = {

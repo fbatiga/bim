@@ -1,9 +1,12 @@
 "use strict";
 
-import {
-    BASE_REQUEST, BASE_SUCCESS, BASE_FAILURE
-} from './BaseConstant';
+export const BASE_INIT = 'base.init';
+export const BASE_REQUEST = 'base.request';
+export const BASE_SUCCESS = 'base.success';
+export const BASE_FAILURE = 'base.failure';
 
 export function init(action) {
-  return {};
+  return {
+  	    type: ACCOUNT_INIT
+  };
 }

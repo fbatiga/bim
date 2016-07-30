@@ -1,7 +1,7 @@
 "use strict";
 
 import { handleActions } from 'redux-actions';
-import { ACCOUNT_REQUEST, ACCOUNT_SUCCESS, ACCOUNT_FAILURE } from './AccountConstant';
+import { ACCOUNT_REQUEST, ACCOUNT_SUCCESS, ACCOUNT_FAILURE } from './AccountAction';
 import { Actions } from 'react-native-router-flux';
 
 const initialState = {

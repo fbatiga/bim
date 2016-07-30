@@ -1,9 +1,13 @@
 "use strict";
 
-import {
-    ACCOUNT_REQUEST, ACCOUNT_SUCCESS, ACCOUNT_FAILURE
-} from './AccountConstant';
+export const ACCOUNT_INIT = 'account.init';
+export const ACCOUNT_REQUEST = 'account.request';
+export const ACCOUNT_SUCCESS = 'account.success';
+export const ACCOUNT_FAILURE = 'account.failure';
+
 
 export function init(action) {
-  return {};
+  return {
+  	    type: ACCOUNT_INIT
+  };
 }
