@@ -4,7 +4,7 @@ import { createStore, combineReducers, applyMiddleware } from 'redux';
 //import thunkMiddleware from 'redux-thunk';
 //import promiseMiddleware from 'redux-promise';
 import LoggerMiddleware from 'redux-logger';
-import ApiMiddleware from '../lib/middleware/ApiMiddleware';
+import ApiMiddleware from './middleware/ApiMiddleware';
 import AppReducers from './AppReducers';
 
 
