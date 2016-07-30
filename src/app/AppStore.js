@@ -5,7 +5,7 @@ import { createStore, combineReducers, applyMiddleware } from 'redux';
 //import promiseMiddleware from 'redux-promise';
 import LoggerMiddleware from 'redux-logger';
 import ApiMiddleware from '../lib/middleware/ApiMiddleware';
-import reducers from './AppReducers';
+import AppReducers from './AppReducers';
 
 
 /**
@@ -39,5 +39,5 @@ function createStoreWithMiddleware(reducer) {
 
 
 export default function configureStore (){
-  return (createStoreWithMiddleware)(combineReducers(reducers));
+  return (createStoreWithMiddleware)(combineReducers(AppReducers));
 }

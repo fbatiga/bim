@@ -3,12 +3,12 @@
 import React, { Component } from 'react';
 import { View, Text, Image} from 'react-native';
 import { Actions } from 'react-native-router-flux';
-import BaseStyle from './BaseStyle';
+import AccountStyle from './AccountStyle';
 
 import {connect} from 'react-redux';
-import {init} from './BaseAction';
+import {init} from './AccountAction';
 
-class BaseView extends Component {
+class AccountView extends Component {
 
 	componentDidMount() {
 		this.props.dispatch(init());
@@ -20,7 +20,7 @@ class BaseView extends Component {
 
 	render(){
 		return (
-			<View style={BaseStyle.container}>
+			<View style={AccountStyle.container}>
 			</View>
 		);
 	}
@@ -28,8 +28,8 @@ class BaseView extends Component {
 
 function mapStateToProps(state) {
 	return {
-		base : state.base
+		account : state.account
 	};
 }
 
-export default connect(mapStateToProps)(BaseView);
+export default connect(mapStateToProps)(AccountView);

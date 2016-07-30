@@ -8,6 +8,7 @@ const scenes = Actions.create(
   <Scene key="root" hideNavBar={true}>
     <Scene key="launch" component={View.LaunchView} initial={true} title="Launch"/>
     <Scene key="messenger" component={View.MessengerView} title="messenger"/>
+    <Scene key="account" component={View.AccountView} title="account"/>
   </Scene>
 );
 
