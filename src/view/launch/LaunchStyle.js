@@ -5,18 +5,29 @@ const LaunchStyle = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor : '#1111FE'
+        width: null
     },
     loading : {
+    	backgroundColor : 'transparent',
         color: '#FFFFFF'
     },
+    background : {
+        flex: 1,
+	    flexDirection: "column",
+	    justifyContent: "flex-start",
+	    alignItems: "stretch"
+    },
     bottom : {
-		flex: 4,
+		flex: 3,
+	    flexDirection: "column",
+	    justifyContent: "flex-start",
+        alignItems: 'center',
 	},
 	top: {
-		flex: 3,
-        justifyContent: 'center',
-        alignItems: 'center',
+		flex: 4,
+	    flexDirection: "column",
+	    justifyContent: "flex-end",
+	    alignItems: "center"
 	}
 });
 

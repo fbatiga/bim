@@ -14,7 +14,7 @@ import {loadChoices, registerSession, addMessage, addBotMessage} from '../messen
 class LaunchView extends Component {
 
 	componentDidMount() {
-		this.props.dispatch(loadSession());
+		//this.props.dispatch(loadSession());
 	}
 
 	componentWillReceiveProps(nextProps) {
@@ -25,7 +25,7 @@ class LaunchView extends Component {
 
 			this.props.dispatch(registerSession(result.session));
 
-			Actions.messenger();
+			//Actions.messenger();
 		}
 
 	}
@@ -33,14 +33,16 @@ class LaunchView extends Component {
 	render(){
 
 		return (
-			<View style={LaunchStyle.container}>
-			<View style={LaunchStyle.top} >
-				<Image source={asset.logo} />
-			</View>
-			<View style={LaunchStyle.bottom} >
-			<Text style={LaunchStyle.loading}>Chargement...</Text>
-			</View>
-			</View>
+				<View style={LaunchStyle.container}>
+					<Image source={asset.login} style={LaunchStyle.background} resizeMode='stretch'>
+						<View style={LaunchStyle.top} >
+							<Image source={asset.logo} style={LaunchStyle.logo} />
+						</View>
+						<View style={LaunchStyle.bottom} >
+							<Text style={LaunchStyle.loading}>Chargement...</Text>
+						</View>
+					</Image>
+				</View>
 			);
 	}
 }
