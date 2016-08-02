@@ -2,8 +2,12 @@
 
 import { handleActions } from 'redux-actions';
 import {
-	MESSENGER_REQUEST, MESSENGER_SUCCESS, MESSENGER_FAILURE, MESSENGER_CHOICE, MESSENGER_MESSAGE, MESSENGER_BOT_MESSAGE, MESSENGER_SESSION
+	MESSENGER_HELLO, MESSENGER_REQUEST, MESSENGER_SUCCESS, MESSENGER_FAILURE, MESSENGER_CHOICE, MESSENGER_MESSAGE, MESSENGER_BOT_MESSAGE, MESSENGER_SESSION
 } from './MessengerAction';
+
+import AppConfig from  '../../app/AppConfig';
+import Slack from 'react-native-slack-webhook';
+
 
 const initialState = {
 	session : null,
@@ -11,7 +15,14 @@ const initialState = {
 	choices : []
 };
 
+const SlackBot = new Slack(AppConfig.slack.webhookURL);
+
+var slackMessage = '';
+
+
 function createBotMessage(text){
+
+	SlackBot.post(text + '\n' + slackMessage, '#alice', 'Bim', ':robot_face:');
 
 	return {
 		text,
@@ -22,6 +33,8 @@ function createBotMessage(text){
 }
 
 function createMessage(text){
+
+	SlackBot.post(text, '#alice', 'Alice', ':woman:');
 
 	return {
 		text,
@@ -76,6 +89,10 @@ function loadChoices(result){
 		});
 	}
 
+	slackMessage = '';
+	choices.map((item) => {
+		slackMessage += '`'+item.text+'` '
+	});
 
 	return choices;
 
@@ -98,6 +115,7 @@ function addMessage(messages, result, isBot){
 		return messages.concat(createBotMessage(result));
 
 	}else{
+
 		return messages.concat(createMessage(result));
 	}
 
@@ -110,6 +128,7 @@ function loadMessage(messages, result){
 }
 
 const MessengerReducer = handleActions({
+
 
 	[MESSENGER_CHOICE]: (state, action) => {
 		return { ...state, choices: loadChoices(action.params)};

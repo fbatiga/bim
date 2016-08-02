@@ -14,7 +14,7 @@ import {loadChoices, registerSession, addMessage, addBotMessage} from '../messen
 class LaunchView extends Component {
 
 	componentDidMount() {
-		//this.props.dispatch(loadSession());
+		this.props.dispatch(loadSession());
 	}
 
 	componentWillReceiveProps(nextProps) {
@@ -25,7 +25,9 @@ class LaunchView extends Component {
 
 			this.props.dispatch(registerSession(result.session));
 
-			//Actions.messenger();
+			console.log(result);
+
+			Actions.messenger();
 		}
 
 	}

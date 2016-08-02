@@ -31,7 +31,6 @@ export function registerSession(params) {
   };
 }
 
-
 export function addBotMessage(params) {
   return {
     type: MESSENGER_BOT_MESSAGE,
