@@ -11,6 +11,7 @@
     "cookie-parser": "^1.4.3",
     "errorhandler": "^1.4.3",
     "express": "^4.14.0",
+    "firebase": "^3.2.1",
     "morgan": "^1.7.0",
     "react": "15.2.1",
     "react-native": "0.29.0",

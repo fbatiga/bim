@@ -7,6 +7,7 @@ export const MESSENGER_CHOICE = 'messenger.choice';
 export const MESSENGER_MESSAGE = 'messenger.message';
 export const MESSENGER_BOT_MESSAGE = 'messenger.bot_message';
 export const MESSENGER_SESSION = 'messenger.session';
+export const MESSENGER_SLACK_MESSAGE = 'messenger.slack';
 
 export function getReply(params) {
   return {
@@ -34,6 +35,14 @@ export function registerSession(params) {
 export function addBotMessage(params) {
   return {
     type: MESSENGER_BOT_MESSAGE,
+    params : params
+  };
+}
+
+
+export function addSlackMessage(params) {
+  return {
+    type: MESSENGER_SLACK_MESSAGE,
     params : params
   };
 }

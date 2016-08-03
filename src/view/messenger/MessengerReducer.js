@@ -2,12 +2,11 @@
 
 import { handleActions } from 'redux-actions';
 import {
-	MESSENGER_HELLO, MESSENGER_REQUEST, MESSENGER_SUCCESS, MESSENGER_FAILURE, MESSENGER_CHOICE, MESSENGER_MESSAGE, MESSENGER_BOT_MESSAGE, MESSENGER_SESSION
+	MESSENGER_SLACK_MESSAGE, MESSENGER_HELLO, MESSENGER_REQUEST, MESSENGER_SUCCESS, MESSENGER_FAILURE, MESSENGER_CHOICE, MESSENGER_MESSAGE, MESSENGER_BOT_MESSAGE, MESSENGER_SESSION
 } from './MessengerAction';
 
 import AppConfig from  '../../app/AppConfig';
 import Slack from 'react-native-slack-webhook';
-
 
 const initialState = {
 	session : null,
@@ -152,6 +151,18 @@ const MessengerReducer = handleActions({
 		return newState;
 
 	},
+
+	[MESSENGER_SLACK_MESSAGE]: (state, action) => {
+		let newState = { ...state, messages: addMessage(state.messages, action.params, true) };
+		let choices = loadChoices(action.params);
+		if ( choices.length > 0 ) {
+			newState.choices = choices;
+		}
+
+		return newState;
+
+	},
+
 
 	[MESSENGER_REQUEST]: (state, action) => {
 		return Object.assign({}, state, {loading: true});
