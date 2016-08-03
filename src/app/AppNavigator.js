@@ -12,9 +12,9 @@ import TransferView from '../view/transfer/TransferView';
 
 const scenes = Actions.create(
   <Scene key="root" hideNavBar={true}>
-    <Scene key="launch" component={LaunchView} initial={true}  title="Launch"/>
+    <Scene key="launch" component={LaunchView}  title="Launch"/>
     <Scene key="messenger" component={MessengerView} title="messenger"/>
-    <Scene key="account" component={AccountView} title="account"/>
+    <Scene key="account" component={AccountView}  initial={true} title="account"/>
     <Scene key="card" component={CardView}  title="card"/>
     <Scene key="contact" component={ContactView} title="contact"/>
     <Scene key="transfer" component={TransferView} title="transfer"/>

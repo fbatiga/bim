@@ -1,19 +1,34 @@
 import {StyleSheet} from 'react-native';
+import baseStyles from '../../asset/styles.js';
+
 
 const AccountStyle = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
+        flexDirection: 'column',
+        justifyContent: 'flex-start',
+        alignItems: 'stretch'
+
+    },
+    top: {
+        flex: 3,
+        justifyContent: 'flex-start',
+        flexDirection: "column",
+        alignItems: 'stretch',
+        backgroundColor: baseStyles.colors.deepBlue,
+        paddingTop: 15
     },
     bottom : {
-		flex: 4,
+        flex: 5,
+        justifyContent: 'flex-start',
+        flexDirection: "column",
+        alignItems: 'stretch',
 	},
-	top: {
-		flex: 3,
-        justifyContent: 'center',
-        alignItems: 'center',
-	}
+    graph: {
+        flex: 1,
+        height: 200,
+        alignItems: 'center'
+    }
 });
 
 export default AccountStyle;
