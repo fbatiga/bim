@@ -15,7 +15,7 @@ const MessengerStyle = StyleSheet.create({
 	container: {
 		flex: 1,
 		flexDirection : 'column',
-		backgroundColor: '#FFF',
+		backgroundColor: '#FFFFFF',
 	}
 });
 
