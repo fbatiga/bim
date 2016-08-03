@@ -1,5 +1,17 @@
-export default {
+
+module.exports = {
     slack : {
-    	webhookURL : 'https://hooks.slack.com/services/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'
+    	webhookURL : 'https://hooks.slack.com/services/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'
     },
+    motion : {
+    	url : 'https://api.motion.ai',
+    	key :'3c38ca9232b72a23e0b7497a60664c48',
+    	botId :7302
+    },
+    firebase : {
+	  apiKey: "3rOwgHz1tc3OSyk7OCjqC4B2cYkoFvGR3mm3ynvT",
+	  authDomain: "bimbot-3fff3.firebaseapp.com",
+	  databaseURL: "https://bimbot-3fff3.firebaseio.com/",
+	  storageBucket: "gs://bimbot-3fff3.appspot.com",
+	}
 };

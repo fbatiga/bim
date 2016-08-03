@@ -78,8 +78,7 @@ class Message extends Component {
 		}
 
 		return(
-			<View style={[styles.rowContainer, {
-					justifyContent: position === 'left' ? 'flex-start' : position === 'right' ? 'flex-end' : 'center',
+			<View style={[styles.rowContainer, {justifyContent: position === 'left' ? 'flex-start' : position === 'right' ? 'flex-end' : 'center',
 					}]}
 					>
 				<Bubble {...rowData} styles={styles} />

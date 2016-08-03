@@ -1,5 +1,7 @@
 'use strict';
 
+import AppConfig from '../AppConfig';
+
 function checkStatus(response) {
 	if (response.ok) {
         return response;
@@ -34,7 +36,7 @@ export default ({getState, dispatch}) => next => action => {
 	let url;
 
 	if(motion){
-		url = MOTION_URL + motion;
+		url = AppConfig.motion.url + motion;
 	}else{
 		url = api;
 	}
@@ -49,8 +51,8 @@ export default ({getState, dispatch}) => next => action => {
 
     if(params){
     	if(motion){
-    		params.key = API_KEY;
-    		params.bot = 7302;
+    		params.key = AppConfig.motion.key;
+    		params.bot = AppConfig.motion.botId;
 
 
     		options.method = 'GET';

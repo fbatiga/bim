@@ -10,7 +10,6 @@ const initialState = {
    start: false
 };
 
-
 const LaunchReducer = handleActions({
 
     [LAUNCH_REQUEST]: (state, action) => {
