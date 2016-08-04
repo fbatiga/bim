@@ -20,7 +20,6 @@
 {
   NSURL *jsCodeLocation;
 
-  [[RCTBundleURLProvider sharedSettings] setDefaults];
   jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index.ios" fallbackResource:nil];
 
   RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation
@@ -37,8 +36,6 @@
   
   self.oneSignal = [[RCTOneSignal alloc] initWithLaunchOptions:launchOptions                                                         appId:@"633748e4-b22a-4b69-b61e-f3a04ef1a999"];
 
-                    
-  
   return YES;
 }
 
