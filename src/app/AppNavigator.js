@@ -2,6 +2,8 @@
 import React, { Component } from 'react';
 import { Navigator, Text,  AppState, Platform } from 'react-native';
 import { Actions, Scene, Router } from 'react-native-router-flux';
+import {connect} from 'react-redux';
+import {addSlackMessage} from '../view/messenger/MessengerAction';
 
 import LaunchView from '../view/launch/LaunchView';
 import MessengerView from '../view/messenger/MessengerView';
@@ -11,9 +13,11 @@ import ContactView from '../view/contact/ContactView';
 import TransferView from '../view/transfer/TransferView';
 
 import OneSignal from 'react-native-onesignal'; // Import package from node modules
+import {firebaseDb} from  './AppFirebase';
 
 const pendingNotifications = [];
 
+const firebaseRef = firebaseDb.ref('alice/device');
 
 
 const scenes = Actions.create(
@@ -27,38 +31,28 @@ const scenes = Actions.create(
 	</Scene>
 	);
 
-export default class AppNavigator extends Component {
+class AppNavigator extends Component {
 
 	constructor(props) {
 		super(props);
 		this.handleAppStateChange = this.handleAppStateChange.bind(this);
-		this.state = {
-			seconds: 5,
-		};
 	}
 
-	handleNotification (notification) {
-
+	handleNotification (message, data, isActive) {
+			var notification = {message: message, data: data, isActive: isActive};
+			console.log('handleNotification', notification);
+			this.props.dispatch(addSlackMessage(message));
 	}
 
 	componentDidMount() {
 
 		OneSignal.configure({
-		    onIdsAvailable: function(device) {
-		        console.log('UserId = ', device.userId);
-		        console.log('PushToken = ', device.pushToken);
-		    },
-		  onNotificationOpened: function(message, data, isActive) {
-		      var notification = {message: message, data: data, isActive: isActive};
-		      console.log('handleNotification', notification);
-
-		      //if (!_navigator) { // Check if there is a navigator object. If not, waiting with the notification.
-		      //    console.log('Navigator is null, adding notification to pending list...');
-
-		  }.bind(this)
+			onNotificationOpened: this.handleNotification.bind(this)
 		});
 
 		AppState.addEventListener('change', this.handleAppStateChange);
+
+		OneSignal.sendTags( { user: 'alice' });
 	}
 
 	componentWillUnmount() {
@@ -66,12 +60,13 @@ export default class AppNavigator extends Component {
 	}
 
 	handleAppStateChange(appState) {
-		if (appState === 'background') {
-			let date = new Date(Date.now() + (this.state.seconds * 1000));
 
-			if (Platform.OS === 'ios') {
-				date = date.toISOString();
-			}
+		console.log('handleAppStateChange', appState);
+		if (appState === 'background') {
+
+			// if (Platform.OS === 'ios') {
+			// 	date = date.toISOString();
+			// }
 
 			// PushNotification.localNotificationSchedule({
 			// 	message: "My Notification Message",
@@ -86,3 +81,12 @@ export default class AppNavigator extends Component {
 	}
 
 }
+
+function mapStateToProps(state) {
+	return {
+		messenger : state.messenger
+	};
+}
+
+export default connect(mapStateToProps)(AppNavigator);
+

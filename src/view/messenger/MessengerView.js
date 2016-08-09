@@ -41,7 +41,6 @@ class MessengerView extends Component {
 
 	listenForItems(itemsRef) {
 
-
 		itemsRef.on("child_added", function(snapshot) {
 			let value = snapshot.val();
 			if(value.user !== undefined && value.user != 'slackbot' ){
