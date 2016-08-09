@@ -25,8 +25,6 @@ class LaunchView extends Component {
 
 			this.props.dispatch(registerSession(result.session));
 
-			console.log(result);
-
 			Actions.messenger();
 		}
 
