@@ -17,7 +17,7 @@ import {firebaseDb} from  './AppFirebase';
 
 const pendingNotifications = [];
 
-const firebaseRef = firebaseDb.ref('alice/device');
+//const firebaseRef = firebaseDb.ref('alice/device');
 
 
 const scenes = Actions.create(
@@ -74,7 +74,6 @@ class AppNavigator extends Component {
 			// });
 		}
 	}
-
 
 	render() {
 		return <Router scenes={scenes} />
