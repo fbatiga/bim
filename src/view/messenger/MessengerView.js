@@ -7,24 +7,16 @@ import {getReply, addMessage, addSlackMessage} from './MessengerAction';
 import MessengerMain from './layout/MessengerMain';
 import MessengerBottom from './layout/MessengerBottom';
 import MessengerStyle from './MessengerStyle';
-import AppConfig from  '../../app/AppConfig';
-
-import * as firebase from 'firebase';
-// Initialize Firebase
-const firebaseApp = firebase.initializeApp(AppConfig.firebase);
-
-
+import {firebaseDb} from  '../../app/AppFirebase';
 
 class MessengerView extends Component {
 
-
 	constructor(props){
 		super(props);
-		// Create a reference with .ref() instead of new Firebase(url)
-		const rootRef = firebase.database().ref();
+
+		const rootRef = firebaseDb.ref();
 		this.firebaseMessagesRef = rootRef.child('alice/slack');
 	}
-
 
 	componentDidMount(){
 		this.props.dispatch(getReply({
@@ -33,8 +25,6 @@ class MessengerView extends Component {
 		}));
 
 		this.listenForItems(this.firebaseMessagesRef);
-
-		this.messages = [];
 
 	}
 
@@ -50,7 +40,6 @@ class MessengerView extends Component {
 	}
 
 	listenForItems(itemsRef) {
-
 
 		itemsRef.on("child_added", function(snapshot) {
 			let value = snapshot.val();

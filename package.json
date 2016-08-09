@@ -1,27 +1,28 @@
 {
-  "name": "bimbot",
-  "version": "0.0.1",
-  "private": true,
-  "scripts": {
-    "start": "node node_modules/react-native/local-cli/cli.js start"
-  },
-  "dependencies": {
-    "body-parser": "^1.15.2",
-    "compression": "^1.6.2",
-    "cookie-parser": "^1.4.3",
-    "errorhandler": "^1.4.3",
-    "express": "^4.14.0",
-    "firebase": "^3.2.1",
-    "morgan": "^1.7.0",
-    "react": "15.2.1",
-    "react-native": "0.29.0",
-    "react-native-gifted-messenger": "^0.1.4",
-    "react-native-router-flux": "^3.31.0",
-    "react-native-slack-webhook": "0.0.5",
-    "react-redux": "^4.4.5",
-    "redux": "^3.5.2",
-    "redux-actions": "^0.10.1",
-    "redux-logger": "^2.6.1",
-    "verbal-expressions": "^0.2.1"
-  }
+	"name": "bimbot",
+	"version": "0.0.1",
+	"private": true,
+	"scripts": {
+		"start": "node node_modules/react-native/local-cli/cli.js start"
+	},
+	"dependencies": {
+		"body-parser": "^1.15.2",
+		"compression": "^1.6.2",
+		"cookie-parser": "^1.4.3",
+		"errorhandler": "^1.4.3",
+		"express": "^4.14.0",
+		"firebase": "^3.2.1",
+		"morgan": "^1.7.0",
+		"react": "15.2.1",
+		"react-native": "^0.30.0",
+		"react-native-gifted-messenger": "^0.1.4",
+		"react-native-onesignal": "^1.2.0",
+		"react-native-router-flux": "^3.31.0",
+		"react-native-slack-webhook": "0.0.5",
+		"react-redux": "^4.4.5",
+		"redux": "^3.5.2",
+		"redux-actions": "^0.10.1",
+		"redux-logger": "^2.6.1",
+		"verbal-expressions": "^0.2.1"
+	}
 }
