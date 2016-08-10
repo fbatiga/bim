@@ -78,6 +78,7 @@ export default ({getState, dispatch}) => next => action => {
     .then(checkStatus)
     .then(parseJSON)
     .then((result) => {
+    	console.log('fetch '+ url, result);
     	if (result.error !==  undefined) {
     		throw new Error(result.error);
     	}else{

@@ -1,12 +1,13 @@
 "use strict";
 
 import { handleActions } from 'redux-actions';
+
 import {
 	MESSENGER_SLACK_MESSAGE, MESSENGER_HELLO, MESSENGER_REQUEST, MESSENGER_SUCCESS, MESSENGER_FAILURE, MESSENGER_CHOICE, MESSENGER_MESSAGE, MESSENGER_BOT_MESSAGE, MESSENGER_SESSION
 } from './MessengerAction';
 
-import AppConfig from  '../../app/AppConfig';
-import Slack from 'react-native-slack-webhook';
+import { UserSlack, BimSlack } from '../../app/AppSlack';
+
 
 const initialState = {
 	session : null,
@@ -14,34 +15,18 @@ const initialState = {
 	choices : []
 };
 
-const SlackBot = new Slack(AppConfig.slack.webhookURL);
-
-var slackMessage = '';
 
 
-function createBotMessage(text){
-
-	SlackBot.post(text + '\n' + slackMessage, '#alice', 'Bim', ':robot_face:');
-
+function createMessage(text, image, isBot){
 	return {
 		text,
-		position: 'left',
+		image,
+		position: isBot ? 'left':'right',
 		date: new Date()
 	};
-
 }
 
-function createMessage(text){
 
-	SlackBot.post(text, '#alice', 'Alice', ':woman:');
-
-	return {
-		text,
-		position: 'right',
-		date: new Date()
-	};
-
-}
 
 function createChoice(result){
 
@@ -62,68 +47,87 @@ function createChoice(result){
 	}
 }
 
-
-
-
 function loadChoices(result){
 	let choices = [];
-
 
 	if (typeof result ==  'string'){
 
 		result.split('[').map((option)=>{
 			let pos = option.indexOf(']')
 			if(pos != -1 ){
-				choices.push({
-					text : option.substr(0, pos)
-				});
+				choices.push(option.substr(0, pos));
 			}
 		});
 
 	}else{
 		result.map((text) =>{
-			choices.push({
-				text
-			});
+			choices.push(text);
 		});
 	}
 
-	slackMessage = '';
-	choices.map((item) => {
-		slackMessage += '`'+item.text+'` '
-	});
+
 
 	return choices;
 
 }
 
-function addMessage(messages, result, isBot){
+function addMessages(state, result, isBot){
 
+	let text = result.split('::next-2000::');
+	let image = false;
+	let choices = [];
+	let messages = state.messages;
+	let slackMessage = [];
+
+	text.map((message, index)=>{
+		let indexImage = message.indexOf('[img]');
+		if(indexImage >= 0){
+			image = message.substr(indexImage+5, message.indexOf('[/img]') - ( indexImage + 5 ) );
+			message = message.replace( message.substr(indexImage, message.indexOf('[/img]')+ 6 ), '');
+		}
+		let choiceIndex  = message.indexOf('[')
+		if( choiceIndex != -1 ){
+			choices = loadChoices(message.substr(choiceIndex));
+			message =  message.substr(0, choiceIndex);
+		}
+
+		message = message.trim();
+		if ( image != false || message != ''){
+			messages = addMessage(messages, message, image, isBot, index);
+		}
+
+
+		slackMessage.push(message);
+
+	});
+
+	let newState = { ...state, messages };
+	if ( choices.length > 0 ) {
+		newState.choices = choices;
+	}
+
+	if(isBot == true){
+			if(newState.choices.length >0){
+				BimSlack.question(slackMessage.join('\n'), newState.choices, image);
+			}else{
+				BimSlack.text(slackMessage.join('\n'), image);
+			}
+	}else{
+		UserSlack.text(slackMessage.join('\n'), image);
+	}
+
+	return newState;
+}
+
+function addMessage(messages, result, image,  isBot, index){
 	if(isBot == undefined ){
-	 	let isBot = result.indexOf('@:') == 0;
+		let isBot = result.indexOf('@:') == 0;
 		if(isBot){
 			result = result.substr(2);
 		}
 	}
 
-
-	if(result.indexOf('[') != -1 || isBot ){
-
-		result = result.split('[')[0];
-
-		return messages.concat(createBotMessage(result));
-
-	}else{
-
-		return messages.concat(createMessage(result));
-	}
-
-}
-
-function loadMessage(messages, result){
-
-	return  messages.concat(createMessage(result));
-
+	return messages.concat(createMessage(result, image, isBot));
 }
 
 const MessengerReducer = handleActions({
@@ -138,29 +142,15 @@ const MessengerReducer = handleActions({
 	},
 
 	[MESSENGER_MESSAGE]: (state, action) => {
-		return { ...state, messages: addMessage(state.messages, action.params, false) };
+		return  addMessages(state, action.params, false);
 	},
 
 	[MESSENGER_BOT_MESSAGE]: (state, action) => {
-		let newState = { ...state, messages: addMessage(state.messages, action.params, true) };
-		let choices = loadChoices(action.params);
-		if ( choices.length > 0 ) {
-			newState.choices = choices;
-		}
-
-		return newState;
-
+		return  addMessages(state, action.result.botResponse, true);
 	},
 
 	[MESSENGER_SLACK_MESSAGE]: (state, action) => {
-		let newState = { ...state, messages: addMessage(state.messages, action.params, true) };
-		let choices = loadChoices(action.params);
-		if ( choices.length > 0 ) {
-			newState.choices = choices;
-		}
-
-		return newState;
-
+		return addMessages(state, action.params, true);
 	},
 
 
@@ -169,14 +159,7 @@ const MessengerReducer = handleActions({
 	},
 
 	[MESSENGER_SUCCESS]: (state, action) => {
-		let choices = loadChoices(action.result.botResponse);
-		let newState =	{ ...state, loading: false, messages: addMessage(state.messages, action.result.botResponse)};
-
-		if ( choices.length > 0 ) {
-			newState.choices = choices;
-		}
-
-		return newState;
+		return addMessages(state, action.result.botResponse, true);
 	},
 
 	[MESSENGER_FAILURE]: (state, action) => {

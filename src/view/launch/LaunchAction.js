@@ -10,7 +10,7 @@ export function loadSession(action) {
     types: [LAUNCH_REQUEST, LAUNCH_SUCCESS, LAUNCH_FAILURE],
     motion: '/messageBot',
     params : {
-    	session : 'alice',
+    	session : 'alice'+Math.random(),
     	msg : 'hello'
     }
   };

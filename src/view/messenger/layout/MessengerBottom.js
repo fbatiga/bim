@@ -38,7 +38,7 @@ class MessengerBottom extends Component {
 		let row = [];
 		let limit = (this.props.choices.length >3) ? 1 : 0;
 		this.props.choices.map((choice,index) => {
-			row.push(choice);
+			row.push({ text : choice });
 			if(row.length > limit){
 				buttons.push(row);
 				row = [];
