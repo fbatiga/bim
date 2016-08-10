@@ -4,6 +4,8 @@ export default {
     bottomButton : require('./bottomButton.png'),
     graphCircle: require('./circle.png'),
     dotIcon: require('./dotIcon.png'),
+    add: require('./add.png'),
+    c3po: require('./c3po.png'),
     tabs: {
         white: require('./tabs/white.png'),
         yellow: require('./tabs/yellow.png'),

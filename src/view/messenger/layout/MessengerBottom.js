@@ -68,7 +68,7 @@ class MessengerBottom extends Component {
 					{this.renderChoices()}
 				</View>
 				<View  style={styles.bottom}  >
-					<TouchableOpacity onPress={()=> {Actions.account()}}>
+					<TouchableOpacity onPress={()=> {Actions.overview()}}>
 						<Image source={asset.bottomButton} />
 					</TouchableOpacity>
 				</View>

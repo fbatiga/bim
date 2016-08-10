@@ -1,7 +1,7 @@
 "use strict";
 
 import { handleActions } from 'redux-actions';
-import { ACCOUNT_REQUEST, ACCOUNT_SUCCESS, ACCOUNT_FAILURE, ACCOUNT_FILTER_DEBIT, ACCOUNT_FILTER_CREDIT , ACCOUNT_FILTER_ALL } from './AccountAction';
+import { OVERVIEW_OPEN } from './OverviewAction';
 import { Actions } from 'react-native-router-flux';
 import moment from 'moment';
 import momentfr from 'moment/locale/fr';
@@ -39,77 +39,31 @@ const initialState = {
             balance: -1129,
             type: "external"
         },
+        {
+            id: 'boursormama',
+            label: "Boursormama's",
+            balance: -1129,
+            type: "external"
+        },
+
+        {
+            id: 'bdb',
+            label: "Banco de brasil",
+            balance: -1129,
+            type: "external"
+        }
 
     ], currentMonth: 6
 };
 
 
 moment.locale('fr');
-initialState.transactions = initialState.transactions.map((elm, idx) => {
-    elm.category = categories[elm.category];
-    // elm.createdAt = moment(elm.timestamp).format('DD MM YYYY [à] h:mm');
-    elm.createdAt = moment(elm.timestamp).calendar();
-    return elm;
-});
-initialState.originalTransactions = initialState.transactions;
 
-const AccountReducer = handleActions({
-
-    [ACCOUNT_REQUEST]: (state, action) => {
+const OverviewReducer = handleActions({
+    [OVERVIEW_OPEN]: (state, action) => {
         return Object.assign({}, state, {loading: true});
-    },
-    [ACCOUNT_FILTER_CREDIT]: (state, action) => {
-        var out = state.originalTransactions.filter((elm) => {
-            return elm.type === 'credit';
-        });
-        state.dataSource = ds.cloneWithRows(out);
-        console.log(state);
-        return Object.assign({}, state, {loading: false});
-    },
-    [ACCOUNT_FILTER_DEBIT]: (state, action) => {
-        var out = state.originalTransactions.filter((elm) => {
-            return elm.type === 'debit';
-        });
-        state.dataSource = ds.cloneWithRows(out);
-        return Object.assign({}, state, {loading: false});
-    },
-    [ACCOUNT_FILTER_ALL]: (state, action) => {
-        var out = state.originalTransactions;
-        state.dataSource = ds.cloneWithRows(out);
+    }
 },
+initialState);
 
-[ACCOUNT_SUCCESS]
-:
-(state, action) => {
-    return {
-    ...
-    state, loading
-    :
-    false, start
-    :
-    action.result
-};
-},
-
-[ACCOUNT_FAILURE]
-:
-(state, action) => {
-    console.error(action.error.stack);
-    return {
-    ...
-    state, loading
-    :
-    false, start
-    :
-    false, loginError
-    :
-    action.error
-};
-}
-
-},
-initialState
-)
-;
-
-export default AccountReducer;
+export default OverviewReducer;

@@ -3,8 +3,10 @@ const styles =   {
     colors: {
         light: '',
         deepBlue:'#10002B',
+
         alternative:'#6bf0cc',
         primary:'#A28CDA',
+
         white: "#fff",
         yellow: "yellow",
         violet: "violet",
@@ -14,7 +16,7 @@ const styles =   {
         green: "#47EBAE",
         lemon: "yellow",
         lightblue: "lightblue",
-        lightviolet: "violet",
+        lightviolet: "#b8a4e6",
         mauve: "violet",
         red: "red"
     },
