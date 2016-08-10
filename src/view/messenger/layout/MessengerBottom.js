@@ -38,7 +38,7 @@ class MessengerBottom extends Component {
 		let row = [];
 		let limit = (this.props.choices.length >3) ? 1 : 0;
 		this.props.choices.map((choice,index) => {
-			row.push(choice);
+			row.push({ text : choice });
 			if(row.length > limit){
 				buttons.push(row);
 				row = [];
@@ -50,7 +50,7 @@ class MessengerBottom extends Component {
 			content.push(
 				<View key={index} style={styles.box} >
 						{el.map((button,pos) => {
-							return (<MessengerButton key={pos} onPress={this.props.onPress} style={styles.button} {...button} />)
+							return (<MessengerButton key={index} onPress={this.props.onPress} style={styles.button} {...button} />)
 						})}
 				</View>
 			);

@@ -44,28 +44,6 @@ const styles = StyleSheet.create({
 
 class Message extends Component {
 
-	renderName(name){
-		return (
-			<Text style={styles.name} >
-				{name}
-			</Text>
-		);
-	}
-
-	renderImage(rowData) {
-
-		const ImageView = rowData.imageView || Image;
-		if (rowData.image) {
-			return (
-				<ImageView source={rowData.image}
-				style={[styles.imagePosition, styles.image, (rowData.position === 'left' ? styles.imageLeft : styles.imageRight)]}
-				/>
-				);
-		}
-		return null;
-	}
-
-
 	render() {
 		let { rowData, position } = this.props;
 
@@ -78,10 +56,8 @@ class Message extends Component {
 		}
 
 		return(
-			<View style={[styles.rowContainer, {justifyContent: position === 'left' ? 'flex-start' : position === 'right' ? 'flex-end' : 'center',
-					}]}
-					>
-				<Bubble {...rowData} styles={styles} />
+			<View style={[styles.rowContainer, {justifyContent: position === 'left' ? 'flex-start' : position === 'right' ? 'flex-end' : 'center'}]}>
+				<Bubble {...rowData}  styles={styles} />
 			</View>
 		);
 
