@@ -7,6 +7,7 @@ import {addSlackMessage} from '../view/messenger/MessengerAction';
 
 import LaunchView from '../view/launch/LaunchView';
 import MessengerView from '../view/messenger/MessengerView';
+import OverviewView from '../view/overview/OverviewView.js';
 import AccountView from '../view/account/AccountView';
 import CardView from '../view/card/CardView';
 import ContactView from '../view/contact/ContactView';
@@ -24,6 +25,7 @@ const scenes = Actions.create(
 	<Scene key="root" hideNavBar={true}>
 	<Scene key="launch" component={LaunchView} initial={true}  title="Launch"/>
 	<Scene key="messenger" component={MessengerView} title="messenger"/>
+	<Scene key="overview" component={OverviewView} title="overview"/>
 	<Scene key="account" component={AccountView} title="account"/>
 	<Scene key="card" component={CardView}  title="card"/>
 	<Scene key="contact" component={ContactView} title="contact"/>

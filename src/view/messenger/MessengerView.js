@@ -25,13 +25,10 @@ class MessengerView extends Component {
 		}));
 
 		this.listenForItems(this.firebaseMessagesRef);
-
 	}
 
 	onSend(text) {
-
 		this.props.dispatch(addMessage(text));
-
 		this.props.dispatch(getReply({
 			msg : text,
 			session : this.props.messenger.session
