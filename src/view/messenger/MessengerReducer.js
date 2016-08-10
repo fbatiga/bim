@@ -79,7 +79,12 @@ function addMessages(state, result, isBot){
 	let messages = state.messages;
 	let slackMessage = [];
 
+	console.log(isBot ? 'Bim : ' :'User : ');
+
 	text.map((message, index)=>{
+		message = message.trim();
+		console.log( message);
+
 		let indexImage = message.indexOf('[img]');
 		if(indexImage >= 0){
 			image = message.substr(indexImage+5, message.indexOf('[/img]') - ( indexImage + 5 ) );
@@ -90,14 +95,10 @@ function addMessages(state, result, isBot){
 			choices = loadChoices(message.substr(choiceIndex));
 			message =  message.substr(0, choiceIndex);
 		}
-
-		message = message.trim();
-		if ( image != false || message != ''){
+		if ( indexImage >= 0 || message != ''){
 			messages = addMessage(messages, message, image, isBot, index);
+			slackMessage.push(message);
 		}
-
-
-		slackMessage.push(message);
 
 	});
 

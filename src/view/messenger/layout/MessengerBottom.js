@@ -50,7 +50,7 @@ class MessengerBottom extends Component {
 			content.push(
 				<View key={index} style={styles.box} >
 						{el.map((button,pos) => {
-							return (<MessengerButton key={pos} onPress={this.props.onPress} style={styles.button} {...button} />)
+							return (<MessengerButton key={index} onPress={this.props.onPress} style={styles.button} {...button} />)
 						})}
 				</View>
 			);
