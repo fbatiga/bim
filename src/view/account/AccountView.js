@@ -83,12 +83,14 @@ class AccountView extends Component {
                 })}
                         </ScrollView>
                     </View>
+
+                    <TouchableOpacity style={{'position': 'absolute', height:80, width:80, bottom:-40, right: 20, borderRadius:100}} onPress={()=> {
+                        Actions.overview()
+                    }}>
+                        <Image source={asset.add}  style={{alignItems: 'center', justifyContent: 'center'}} />
+                    </TouchableOpacity>
                 </View>
-                <TouchableOpacity style={{'position': 'absolute', width:50, right: 20, borderRadius:100}} onPress={()=> {
-                    Actions.overview()
-                }}>
-                    <Image source={asset.add}  style={{alignItems: 'center', justifyContent: 'center'}} />
-                </TouchableOpacity>
+
                 <View style={AccountStyle.bottom}>
                     <View>
                         <Text style={[baseStyles.titles.h1, AccountStyle.bottomTitle]} >{this.state.currentMonth.toUpperCase()}</Text>

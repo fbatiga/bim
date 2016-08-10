@@ -2,7 +2,7 @@ import {StyleSheet} from 'react-native';
 import baseStyles from '../../asset/styles.js';
 
 
-const AccountStyle = StyleSheet.create({
+const OverviewStyle = StyleSheet.create({
     container: {
         backgroundColor:  baseStyles.colors.deepBlue,
     },
@@ -91,4 +91,4 @@ const AccountStyle = StyleSheet.create({
 
 });
 
-export default AccountStyle;
+export default OverviewStyle;

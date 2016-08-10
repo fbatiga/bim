@@ -1,10 +1,10 @@
 import React from 'react';
-import { Text, View, StyleSheet } from 'react-native';
+import { Text, View, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import asset from '../../../asset';
 
 const styles = StyleSheet.create({
-    bubble: {
+    botIcon: {
         position: 'absolute',
         right: 30,
         top: 10,

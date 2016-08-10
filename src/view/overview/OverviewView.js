@@ -10,7 +10,7 @@ import OverviewStyle from './OverviewStyle';
 import baseStyles from '../../asset/styles.js';
 import {init} from './OverviewAction';
 import asset from '../../asset';
-
+import MessengerFabButton from '../messenger/item/MessengerFabButton.js';
 
 import {connect} from 'react-redux';
 
@@ -49,6 +49,7 @@ class OverviewView extends Component {
             <ScrollView
             horizontal={false} style={OverviewStyle.container}>
                 <View style={OverviewStyle.top}>
+                    <MessengerFabButton />
                     <Text style={baseStyles.titles.h1}>Finances</Text>
 
                     <ScrollableTabView

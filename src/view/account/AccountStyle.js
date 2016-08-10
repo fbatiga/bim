@@ -10,7 +10,8 @@ const AccountStyle = StyleSheet.create({
         backgroundColor: baseStyles.colors.deepBlue,
         paddingTop: 15,
         top: 0,
-        left: 0
+        left: 0,
+        overflow:'visible'
     },
     tabs: {
         overflow: 'hidden', height:100
