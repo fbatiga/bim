@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, StyleSheet } from 'react-native';
+import { Text, Image, View, StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
 	bubble: {
@@ -15,6 +15,11 @@ const styles = StyleSheet.create({
 	},
 	text: {
 
+	},
+	image: {
+		flex : 1,
+		height: 200,
+		width: 300
 	},
 	textLeft: {
 		color: "#F0F3F5"
@@ -36,7 +41,19 @@ const styles = StyleSheet.create({
 
 export default class Bubble extends React.Component {
 
+
+	content(textStyle){
+		if(this.props.image){
+			return <Image  source={{uri: this.props.image}} style={styles.image}  resizeMode='cover'/>;
+		}
+
+		if(this.props.text != ''){
+			return <Text style={[styles.text, textStyle ]}>{this.props.text}</Text>;
+		}
+	}
+
 	render() {
+
 		const flexStyle = {};
 		if (this.props.text) {
 			if (this.props.text.length > 40) {
@@ -51,9 +68,7 @@ export default class Bubble extends React.Component {
 
 		return (
 			<View style={[styles.bubble, bubbleStyle ,flexStyle]} >
-				<Text style={[styles.text, textStyle ]}>
-					{this.props.text}
-				</Text>
+				{this.content(textStyle)}
 			</View>
 		);
 	}
@@ -62,5 +77,6 @@ export default class Bubble extends React.Component {
 Bubble.propTypes = {
 	position: React.PropTypes.oneOf(['left', 'right', 'center']),
 	text: React.PropTypes.string,
+	image: React.PropTypes.any,
 	styles: React.PropTypes.object
 };

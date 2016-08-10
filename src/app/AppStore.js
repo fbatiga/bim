@@ -13,7 +13,7 @@ import AppReducers from './AppReducers';
 */
 
 if (process.env.NODE_ENV !== 'production') {
-  __DEV__ = true;
+  __DEV__ = false;
 }
 
 function createStoreWithMiddleware(reducer) {
