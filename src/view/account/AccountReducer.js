@@ -20,6 +20,7 @@ const initialState = {
         {label: 'SORTIE & LOISIRS', categoryId: "sorties", color: 'red'}
     ],
     balance: 2300,
+    previousMonthBalance: 1000,
     transactions: [
         {
             label: 'LE VILLAGE',
@@ -78,8 +79,8 @@ const initialState = {
             timestamp: new Date() + ""
         },
         {
-            label: 'text faoir ',
-            amount: 1000,
+            label: 'Salaire mi mai',
+            amount: 3000,
             type: "credit",
             category: 'banque',
             timestamp: new Date() + ""
@@ -92,7 +93,7 @@ const initialState = {
             timestamp: new Date() + ""
         },
         {
-            label: 'text faoir ',
+            label: 'Prêt de Faou',
             amount: 89,
             type: "credit",
             category: 'banque',
@@ -166,37 +167,7 @@ const AccountReducer = handleActions({
     [ACCOUNT_FILTER_ALL]: (state, action) => {
         var out = state.originalTransactions;
         state.dataSource = ds.cloneWithRows(out);
-},
-
-[ACCOUNT_SUCCESS]
-:
-(state, action) => {
-    return {
-    ...
-    state, loading
-    :
-    false, start
-    :
-    action.result
-};
-},
-
-[ACCOUNT_FAILURE]
-:
-(state, action) => {
-    console.error(action.error.stack);
-    return {
-    ...
-    state, loading
-    :
-    false, start
-    :
-    false, loginError
-    :
-    action.error
-};
-}
-
+    }
 },
 initialState
 )

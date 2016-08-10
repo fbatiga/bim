@@ -3,9 +3,10 @@ import baseStyles from '../../asset/styles.js';
 
 
 const AccountStyle = StyleSheet.create({
-    container: {},
+    container: {
+        backgroundColor:  baseStyles.colors.deepBlue,
+    },
     top: {
-        height:550,
         alignItems: 'stretch',
         backgroundColor: baseStyles.colors.deepBlue,
         paddingTop: 15,
@@ -21,18 +22,18 @@ const AccountStyle = StyleSheet.create({
     graphCircle: {
         justifyContent: 'center',
         alignItems: 'center',
-        width: null,
-        height: 290,
-        resizeMode: 'stretch',
+        width: 200,
+        height: 200,
         padding: 10,
-        marginBottom: 10
+        marginBottom: 10,
+        backgroundColor:  baseStyles.colors.alternative,
+        borderRadius: 145
     },
     graphLabel: {
         fontSize: 8,
-        color: '#9FA2A7',
+        color: baseStyles.colors.deepBlue,
         fontWeight: '300',
         marginBottom: 12,
-        width: 230,
         marginLeft:20,
         marginRight:20,
         overflow: 'hidden',
@@ -40,7 +41,7 @@ const AccountStyle = StyleSheet.create({
     },
     graphBalance: {
         fontSize: 36,
-        color: '#FFF',
+        color: baseStyles.colors.deepBlue,
         fontWeight: 'bold'
 
     },
