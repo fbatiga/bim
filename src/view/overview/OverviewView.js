@@ -1,19 +1,17 @@
 'use strict';
 
 import React, { Component } from 'react';
-import { View, Text,ListView, Image, ScrollView, SegmentedControlIOS} from 'react-native';
+import { View, Text,ListView, Image, ScrollView} from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import moment from 'moment';
 
-import AccountStyle from './AccountStyle';
+import OverviewStyle from './OverviewStyle';
 import baseStyles from '../../asset/styles.js';
 import asset from '../../asset';
 
 
 import {connect} from 'react-redux';
-import {init, filterByCredit, filterByDebit, clearFilter} from './AccountAction';
-import AccountItem from './item/AccountItem';
-import AccountTab from './item/AccountTab';
+
 
 
 class AccountView extends Component {
@@ -53,37 +51,35 @@ class AccountView extends Component {
 
         return (
             <ScrollView
-            horizontal={false} style={AccountStyle.container}>
-
-                <View style={AccountStyle.top}>
+            horizontal={false} style={OverviewStyle.container}>
+                <View style={OverviewStyle.top}>
                     <Text style={baseStyles.titles.h1}>Finances</Text>
-
-                    <View style={AccountStyle.graph}>
-                        <Image source={asset.graphCircle}  style={AccountStyle.graphCircle}>
-                            <Text style={AccountStyle.graphLabel} >SOLDE ACTUEL JUIN</Text>
-                            <Text style={AccountStyle.graphBalance} >{this.props.account.balance} €</Text>
-                        </Image>
-                    </View>
-                    <View style={AccountStyle.dotIcon}>
-                        <Image source={asset.dotIcon}  style={{alignItems: 'center', justifyContent: 'center'}} />
-                    </View>
-
-                    <View style={AccountStyle.tabs}>
-                        <ScrollView
-                        horizontal={true}>
-                {this.props.account.categories.map((value, key) => {
-                    return (<AccountTab rowData={value} callback={this.filterByCategory.bind(this)} key={key} />);
-                })}
-                        </ScrollView>
-                    </View>
+                    <ScrollView
+                    horizontal={true}>
+                         {this.props.account.categories.map((value, key) => {
+                             return (
+                                 <View>
+                             <View style={OverviewStyle.graph}>
+                                 <Image source={asset.graphCircle}  style={OverviewStyle.graphCircle}>
+                                     <Text style={OverviewStyle.graphLabel} >SOLDE ACTUEL JUIN</Text>
+                                     <Text style={OverviewStyle.graphBalance} >{this.props.account.balance} €</Text>
+                                 </Image>
+                             </View>
+                             <View style={OverviewStyle.dotIcon}>
+                                 <Image source={asset.dotIcon}  style={{alignItems: 'center', justifyContent: 'center'}} />
+                             </View>
+                                     </View>
+                             );
+                         })}
+                    </ScrollView>
                 </View>
 
-                <View style={AccountStyle.bottom}>
+                <View style={OverviewStyle.bottom}>
                     <View>
-                        <Text style={[baseStyles.titles.h1, AccountStyle.bottomTitle]} >Juin</Text>
+                        <Text style={[baseStyles.titles.h1, OverviewStyle.bottomTitle]} >Juin</Text>
                     </View>
-                    <View style={AccountStyle.switchContainer}>
-                        <SegmentedControlIOS style={AccountStyle.switch} tintColor={baseStyles.colors.deepBlue} enabled={true} values={['Tout', 'Sorties', 'Entrées']} selectedIndex={this.state.filterIndex}
+                    <View style={OverviewStyle.switchContainer}>
+                        <SegmentedControlIOS style={OverviewStyle.switch} tintColor={baseStyles.colors.deepBlue} enabled={true} values={['Tout', 'Sorties', 'Entrées']} selectedIndex={this.state.filterIndex}
                         onChange={(event) => {
                             this.setState({selectedIndex: event.nativeEvent.selectedSegmentIndex});
                             console.log(event.nativeEvent.selectedSegmentIndex);
@@ -102,7 +98,7 @@ class AccountView extends Component {
                         />
                     </View>
                     <ListView
-                    style={AccountStyle.listView}
+                    style={OverviewStyle.listView}
                     ref="listView"
                     dataSource={this.state.dataSource}
                     renderRow={this.renderRow.bind(this)}

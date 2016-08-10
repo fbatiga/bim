@@ -4,7 +4,19 @@ const styles =   {
         light: '',
         deepBlue:'#10002B',
         alternative:'#6bf0cc',
-        primary:'#A28CDA'
+        primary:'#A28CDA',
+        white: "#fff",
+        yellow: "yellow",
+        violet: "violet",
+        blue: "#0092FF",
+        orange: "#BDC4C8",
+        cyan: "cyan",
+        green: "#47EBAE",
+        lemon: "yellow",
+        lightblue: "lightblue",
+        lightviolet: "violet",
+        mauve: "violet",
+        red: "red"
     },
 
     titles : {
