@@ -15,10 +15,18 @@ import {
 import AppLayout from './src/app/AppLayout';
 import AppNavigator from './src/app/AppNavigator';
 import configureStore from './src/app/AppStore';
+import CodePush from "react-native-code-push";
 
 const AppStore = configureStore();
 
 class App extends Component {
+
+  componentDidMount() {
+    CodePush.sync({updateDialog: true, installMode: CodePush.InstallMode.IMMEDIATE})
+      .then(update => console.log('update', update))
+      .catch(err => console.log('update error', err));
+  }
+
   render() {
 
     return (
@@ -30,6 +38,5 @@ class App extends Component {
     );
   }
 }
-
 
 AppRegistry.registerComponent('bimbot', () => App);

@@ -12,32 +12,24 @@ import AppReducers from './AppReducers';
 * Creates a preconfigured store for this example.
 */
 
-if (process.env.NODE_ENV !== 'production') {
-  __DEV__ = false;
+const middleware = [ApiMiddleware];
+
+if (__DEV__) {
+const logger = LoggerMiddleware({
+	    actionTransformer: (action) => {
+     return {
+       ...action,
+       type: String(action.type),
+     };
+   },
+ });
+
+middleware.push(logger);
 }
 
-function createStoreWithMiddleware(reducer) {
+const createStoreWithMiddleware = applyMiddleware(...middleware)(createStore);
+const store = createStoreWithMiddleware(combineReducers(AppReducers));
 
-  const middleware = [ApiMiddleware];
-
-  if (__DEV__) {
-    const logger = LoggerMiddleware({
-  	    actionTransformer: (action) => {
-         return {
-           ...action,
-           type: String(action.type),
-         };
-       },
-     });
-
-    middleware.push(logger);
-  }
-
-  return applyMiddleware(...middleware)(createStore)(reducer);
-
-}
-
-
-export default function configureStore (){
-  return (createStoreWithMiddleware)(combineReducers(AppReducers));
+export default function configureStore(){
+  return store;
 }
