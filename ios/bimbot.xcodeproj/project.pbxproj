@@ -963,7 +963,7 @@
 				529A7CFF1D5C7BB600A3B935 /* Staging */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Staging;
+			defaultConfigurationName = Release;
 		};
 		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "bimbot" */ = {
 			isa = XCConfigurationList;
@@ -973,7 +973,7 @@
 				529A7CFE1D5C7BB600A3B935 /* Staging */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Staging;
+			defaultConfigurationName = Release;
 		};
 		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "bimbot" */ = {
 			isa = XCConfigurationList;
@@ -983,7 +983,7 @@
 				529A7CFD1D5C7BB600A3B935 /* Staging */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Staging;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
