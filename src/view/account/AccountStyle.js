@@ -5,16 +5,18 @@ import baseStyles from '../../asset/styles.js';
 const AccountStyle = StyleSheet.create({
     container: {},
     top: {
-        height:550,
+        height: 550,
         alignItems: 'stretch',
         backgroundColor: baseStyles.colors.deepBlue,
         paddingTop: 15,
+        position: 'relative',
         top: 0,
         left: 0,
-        overflow:'visible'
+        overflow: 'visible',
+        zIndex: 10
     },
     tabs: {
-        overflow: 'hidden', height:100
+        overflow: 'hidden', height: 100
     },
     graph: {
         alignItems: 'center'
@@ -34,11 +36,12 @@ const AccountStyle = StyleSheet.create({
         fontWeight: '300',
         marginBottom: 12,
         width: 230,
-        marginLeft:20,
-        marginRight:20,
+        marginLeft: 20,
+        marginRight: 20,
         overflow: 'hidden',
         textAlign: "center"
     },
+
     graphBalance: {
         fontSize: 36,
         color: '#FFF',
@@ -52,13 +55,13 @@ const AccountStyle = StyleSheet.create({
     },
 
     bottom: {
-       /*
+        /*
 
-            justifyContent: 'flex-start',
-            flexDirection: "column",
-            alignItems: 'stretch',
+         justifyContent: 'flex-start',
+         flexDirection: "column",
+         alignItems: 'stretch',
 
-        */
+         */
         backgroundColor: '#fff'
     },
     bottomTitle: {

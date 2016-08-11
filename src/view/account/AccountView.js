@@ -27,7 +27,7 @@ class AccountView extends Component {
         });
 
         let categories = {};
-        this.props.account.categories.map((value) => {
+        this.props.account.categories.map((value, key) => {
             categories[value.categoryId] = value;
         });
 
@@ -78,16 +78,16 @@ class AccountView extends Component {
                     <View style={AccountStyle.tabs}>
                         <ScrollView
                         horizontal={true}>
-                {this.props.account.categories.map((value, key) => {
-                    return (<AccountTab rowData={value} callback={this.filterByCategory.bind(this)} key={key} />);
-                })}
+                        {this.props.account.categories.map((value, key) => {
+                            return (<AccountTab rowData={value} callback={this.filterByCategory.bind(this)} key={key} />);
+                        })}
                         </ScrollView>
                     </View>
 
-                    <TouchableOpacity style={{'position': 'absolute', height:80, width:80, bottom:-40, right: 20, borderRadius:100}} onPress={()=> {
+                    <TouchableOpacity style={{'position': 'absolute', bottom:-40, right: 20, borderRadius:100, padding:0}} onPress={()=> {
                         Actions.overview()
                     }}>
-                        <Image source={asset.add}  style={{alignItems: 'center', justifyContent: 'center'}} />
+                        <Image source={asset.add}  style={{alignItems: 'center', justifyContent: 'center', resizeMode:'contain', width:80, height:80}} />
                     </TouchableOpacity>
                 </View>
 

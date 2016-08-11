@@ -6,7 +6,7 @@ import asset from '../../../asset';
 const styles = StyleSheet.create({
     botIcon: {
         position: 'absolute',
-        right: 30,
+        right: 10,
         top: 10,
         width: 100,
         zIndex: 10
@@ -14,7 +14,9 @@ const styles = StyleSheet.create({
     image: {
         alignItems: 'center',
         justifyContent: 'center',
-        resizeMode: 'stretch'
+        resizeMode: 'stretch',
+        width:80,
+        height:80
     }
 });
 
