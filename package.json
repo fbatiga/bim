@@ -4,7 +4,9 @@
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
-    "push-ios": "code-push release-react bim ios"
+    "push-staging": "code-push release-react bim ios",
+    "push-production": "code-push promote bim Staging Production",
+    "push-version" : "code-push deployment ls bim -k"
   },
   "dependencies": {
     "body-parser": "^1.15.2",

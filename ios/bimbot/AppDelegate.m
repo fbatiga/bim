@@ -21,11 +21,23 @@
 {
   NSURL *jsCodeLocation;
 
-  #ifdef DEBUG
-    jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index.ios" fallbackResource:nil];
-  #else
-    jsCodeLocation = [CodePush bundleURL];
-  #endif
+#ifdef DEBUG
+  NSLog(@" DEBUG MODE");
+  jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index.ios" fallbackResource:nil];
+#else
+#ifdef TEST
+  NSLog(@" STAGING MODE");
+#else
+  NSLog(@"PRODUCTION MODE");
+#endif
+  jsCodeLocation = [CodePush bundleURL];
+#endif
+  
+  NSString *CodePushDeploymentKey = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CodePushDeploymentKey"];
+  NSLog(@"CodePushDeploymentKey : %@", CodePushDeploymentKey);
+
+  
+
   
   RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation
                                                       moduleName:@"bimbot"
