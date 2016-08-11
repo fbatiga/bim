@@ -3,7 +3,10 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node node_modules/react-native/local-cli/cli.js start"
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "push-staging": "code-push release-react bim ios",
+    "push-production": "code-push promote bim Staging Production",
+    "push-version" : "code-push deployment ls bim -k"
   },
   "dependencies": {
     "body-parser": "^1.15.2",
@@ -15,11 +18,10 @@
     "morgan": "^1.7.0",
     "react": "15.2.1",
     "react-native": "^0.30.0",
-    "react-native-gifted-messenger": "^0.1.4",
+    "react-native-code-push": "^1.14.1-beta",
     "react-native-onesignal": "^1.2.0",
     "react-native-router-flux": "^3.31.0",
     "react-native-scrollable-tab-view": "^0.5.3",
-    "react-native-slack-webhook": "0.0.5",
     "react-redux": "^4.4.5",
     "redux": "^3.5.2",
     "redux-actions": "^0.10.1",
