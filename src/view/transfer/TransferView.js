@@ -57,7 +57,7 @@ class TransferView extends Component {
                         height: 100,
                         width: null
                     }}
-                    >{this.state.amount || 'Votre montant...'}</Text>
+                    >{this.state.amount + ' €' || 'Votre montant...'}</Text>
                 </View>
 
                 <View style={TransferStyle.bottom}>
