@@ -1,79 +1,199 @@
 'use strict';
 
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
+import { View, Text, StyleSheet, PanResponder, TouchableOpacity, ScrollView, Image} from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import MessengerButton from '../item/MessengerButton';
 import asset from '../../../asset';
 
 const styles = StyleSheet.create({
 	button: {
-		flex : 1,
-		backgroundColor: '#F0F3F5',
-		alignSelf: 'stretch',
-	},
-	box :{
-		flex : 1,
-		flexDirection : 'row-reverse'
-	},
-	bottom :{
-		height : 40,
-        justifyContent: 'center',
-        alignItems: 'center',
+		marginTop : 10,
+		padding:10,
+		backgroundColor : '#FFFFFF'
 	},
 	container :{
-		flex : 1,
-		flexWrap : 'nowrap',
-		flexDirection : 'column'
+		backgroundColor: '#79F0CC',
+		flex: 1,
+		flexDirection:'row'
+	},
+	content :{
+		top : 120,
+		right : 50,
+		alignItems: 'flex-end'
+	},
+	floatView: {
+		position: 'absolute',
+		flex: 1,
+		top: 0,
+		left: 0,
+		opacity : 0.3,
+		backgroundColor: 'black',
+	},
+	spacer: {
+		height: 5,
+		width: 100
 	}
 });
 
+
 class MessengerBottom extends Component {
 
-	renderChoices(){
+	constructor(props){
+		super(props);
+		this.items = [];
+		this.position= 0;
+		this.state = {
+			choices: [],
+			icon : 0
+		};
+	}
 
-		let content = [];
-		let buttons = [];
 
-		let row = [];
-		let limit = (this.props.choices.length >3) ? 1 : 0;
-		this.props.choices.map((choice,index) => {
-			row.push({ text : choice });
-			if(row.length > limit){
-				buttons.push(row);
-				row = [];
+	setChoices(choices) {
+		this.setState({
+			choices: choices.concat(['','',''])
+		});
+	}
+
+	setPosition(index){
+			console.log("setPosition", index);
+
+
+		if(this.items[index] !== undefined ){
+
+			this.items[index].setState({
+				opacity: 1
+			});
+
+			this.position = index;
+
+			console.log("this.position = index", index);
+
+
+			if(this.items[index-1] !== undefined){
+				this.items[index-1].setState({
+					opacity: 0.7
+				});
 			}
+
+			if(this.items[index+1] !== undefined){
+				this.items[index+1].setState({
+					opacity: 0.7
+				});
+			}
+
+			if(this.items[index-2] !== undefined){
+				this.items[index-2].setState({
+					opacity: 0.4
+				});
+			}
+
+			if(this.items[index+2] !== undefined){
+				this.items[index+2].setState({
+					opacity: 0.4
+				});
+			}
+
+			if(this.items[index-3] !== undefined){
+				this.items[index-3].setState({
+					opacity: 0.15
+				});
+			}
+
+			if(this.items[index+3] !== undefined){
+				this.items[index+3].setState({
+					opacity: 0.15
+				});
+			}
+
+		}
+	}
+
+	componentWillMount() {
+		this._panResponder = PanResponder.create({
+		      onStartShouldSetPanResponder: (evt, gestureState) => true,
+		      onStartShouldSetPanResponderCapture: (evt, gestureState) => true,
+		      onMoveShouldSetPanResponder: (evt, gestureState) => true,
+		      onMoveShouldSetPanResponderCapture: (evt, gestureState) => true,
+		      onPanResponderTerminationRequest: (evt, gestureState) => true,
+		      onPanResponderRelease:this.handlePanResponderRelease.bind(this)
+		  });
+	}
+
+	componentDidMount() {
+		this.scrollResponder = this.refs.listView.getScrollResponder();
+	}
+
+
+
+	handlePanResponderRelease(evt, gestureState) {
+		let start = gestureState.moveY;
+		let dest = gestureState.y0;
+		let distance = gestureState.moveY- gestureState.y0;
+
+		let direction = Math.sign(-distance);
+
+		this.setPosition(this.position+ direction);
+	}
+
+
+	delete(item){
+		delete this.items[item.props.index];
+	}
+
+	save(item){
+		console.log('save',item.props.index);
+		this.items[item.props.index] = item;
+		if(item.props.index == this.position){
+			this.setPosition(this.position);
+		}
+	}
+
+
+	componentWillReceiveProps(nextProps) {
+		this.setChoices(nextProps.choices);
+		this.position = 0;
+	}
+
+
+	scrollTo(y){
+		this.scrollResponder.scrollTo({
+			y: y,
+			x: 0
 		});
-
-		buttons.map((el,index) => {
-
-			content.push(
-				<View key={index} style={styles.box} >
-						{el.map((button,pos) => {
-							return (<MessengerButton key={index} onPress={this.props.onPress} style={styles.button} {...button} />)
-						})}
-				</View>
-			);
-
-		});
-
-		return content;
 	}
 
 
 	render(){
 		return (
-			<View >
-				<View  style={styles.container}  >
-					{this.renderChoices()}
-				</View>
-				<View  style={styles.bottom}  >
-					<TouchableOpacity onPress={()=> {Actions.overview()}}>
-						<Image source={asset.bottomButton} />
-					</TouchableOpacity>
-				</View>
+			<View   style={[styles.container, this.props.style]} >
+			<ScrollView
+			ref="listView"
+
+			{...this._panResponder.panHandlers}
+
+			contentContainerStyle={styles.content}
+			scrollEventThrottle={200}
+			bounces={false}
+
+			>
+			{this.state.choices.map((text, index)=>{
+				if(text != ''){
+					return (<MessengerButton text={text}
+						save={this.save.bind(this)}
+						key={index}
+						index={index}
+						scrollTo={this.scrollTo.bind(this)}
+						onPress={this.props.onPress} />);
+				}else{
+					return ( <View style={styles.spacer} key={index} />);
+				}
+			})}
+			</ScrollView>
+			<View style={{backgroundColor:'red', top: this.state.icon, width : 10, height: 2}} />
 			</View>
-		);
+			);
 	}
 }
 
