@@ -69,7 +69,6 @@ class MessengerMain extends Component {
 			renderRow={this.renderRow.bind(this)}
 			enableEmptySections={true}
 			viewSize={this.props.messages.length}
-
 			{...this.props}
 			/>
 			);

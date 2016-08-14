@@ -3,24 +3,45 @@ import { Text, View, TouchableOpacity, StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
 	button: {
-		margin : 10,
-		borderRadius: 10,
+		marginTop : 10,
 		padding: 10,
-		backgroundColor: '#F0F3F5',
-		shadowColor: "#000000",
-		shadowOpacity: 0.2,
-		shadowRadius: 1,
-		shadowOffset: {
-			height: 1,
-			width: 0
-		}
+		backgroundColor: '#FFFFFF',
 	},
 	text: {
-		color: '#4F4367'
+		fontSize : 14,
+		color: '#4F4367',
+		//fontFamily : 'Verdana',
+		fontWeight: '100'
 	}
 });
 
 export default class MessengerButton extends React.Component {
+
+	constructor(props){
+		super(props);
+		this.state = {
+			opacity : 0.15
+		};
+	}
+
+	setOpacity(event){
+		this.props.savePos.bind(this);
+	}
+
+	save(event){
+		this.layout = event.nativeEvent.layout;
+		this.props.save(this);
+	}
+
+	componentDidUpdate(){
+		if(this.state.opacity == 1 && this.layout !== undefined ){
+			this.props.scrollTo(this.layout.y);
+		}
+	}
+
+	componentWillUnMount(){
+		this.props.delete(this);
+	}
 
 	render() {
 		const flexStyle = {};
@@ -31,19 +52,13 @@ export default class MessengerButton extends React.Component {
 		}
 
 		return (
-			<TouchableOpacity onPress={()=> {this.props.onPress(this.props.text)}}>
-			<View style={[styles.button,
-				]} >
-				<Text style={styles.text}>
-				{this.props.text}
-				</Text>
-				</View>
-				</TouchableOpacity>
-				);
+			<TouchableOpacity onLayout={this.save.bind(this)}  onPress={()=> {this.props.onPress(this.props.text)}} >
+			<View   style={[styles.button, { opacity : this.state.opacity }]} >
+			<Text style={styles.text}>
+			{this.props.text}
+			</Text>
+			</View>
+			</TouchableOpacity>
+			);
 	}
 }
-
-MessengerButton.propTypes = {
-	text: React.PropTypes.string,
-	onPress : React.PropTypes.func
-};
