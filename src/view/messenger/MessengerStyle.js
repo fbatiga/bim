@@ -8,7 +8,7 @@ const MessengerStyle = StyleSheet.create({
 	main: {
 		flex : 7,
 		backgroundColor : '#FFFFFF',
-		padding : 10
+		padding : 20
 	},
 	container: {
 		flex: 1,

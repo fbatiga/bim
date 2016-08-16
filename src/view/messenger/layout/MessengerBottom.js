@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet, PanResponder, TouchableOpacity, ScrollView, Image} from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import MessengerButton from '../item/MessengerButton';
+import asset from '../../../asset';
 
 const styles = StyleSheet.create({
 	button: {
@@ -17,22 +18,23 @@ const styles = StyleSheet.create({
 		flexDirection:'row'
 	},
 	content :{
+		flex : 1,
 		top : 120,
-		right : 50,
+		right : 0,
 		alignItems: 'flex-end'
-	},
-	floatView: {
-		position: 'absolute',
-		flex: 1,
-		top: 0,
-		left: 0,
-		opacity : 0.3,
-		backgroundColor: 'black',
 	},
 	spacer: {
 		height: 5,
 		width: 100
-	}
+	},
+	user :{
+		top : 118,
+		borderRadius:20,
+		width:40,
+		height:40,
+		marginRight: 10,
+		marginLeft: 0
+	},
 });
 
 
@@ -175,6 +177,7 @@ class MessengerBottom extends Component {
 			contentContainerStyle={styles.content}
 			scrollEventThrottle={200}
 			bounces={false}
+			scrollEnabled={false}
 
 			>
 			{this.state.choices.map((text, index)=>{
@@ -190,7 +193,7 @@ class MessengerBottom extends Component {
 				}
 			})}
 			</ScrollView>
-			<View style={{backgroundColor:'red', top: this.state.icon, width : 10, height: 2}} />
+			<Image source={asset.user}  style={[styles.user]} />
 			</View>
 			);
 	}

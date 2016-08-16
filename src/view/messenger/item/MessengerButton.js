@@ -1,21 +1,70 @@
-import React from 'react';
+import React, {Component} from 'react';
 import { Text, View, TouchableOpacity, StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
 	button: {
-		marginTop : 10,
+		marginTop: 10,
+		marginLeft: 10,
+		alignItems: 'flex-end',
+		flexDirection : 'row'
+	},
+	content: {
 		padding: 10,
 		backgroundColor: '#FFFFFF',
+		flexDirection: 'row',
+		maxWidth : 240
 	},
 	text: {
 		fontSize : 14,
+		flex: 1,
 		color: '#4F4367',
 		//fontFamily : 'Verdana',
 		fontWeight: '100'
+	},
+	triangle: {
+		width : 0,
+		height:0,
+		backgroundColor: 'transparent',
+		borderStyle: 'solid',
+		borderRightWidth: 8,
+		borderTopWidth: 8,
+		borderRightColor: 'transparent',
+		borderTopColor: '#FFFFFF',
+		alignSelf : 'flex-end',
+	},
+	triangleRight: {
+		transform: [
+			{rotate: '270deg'}
+		]
+	},
+	triangleLeft: {
+		transform: [
+			{rotate: '180deg'}
+		]
 	}
 });
 
-export default class MessengerButton extends React.Component {
+
+
+class TriangleCorner extends Component {
+	render() {
+		return (
+			<View style={[styles.triangle, this.props.style]} />
+			)
+	}
+}
+
+class UserRight extends Component {
+	render() {
+		return (
+			<View  style={[styles.user, styles.userRight, this.props.style]} >
+			</View>
+			)
+	}
+}
+
+
+export default class MessengerButton extends Component {
 
 	constructor(props){
 		super(props);
@@ -48,12 +97,13 @@ export default class MessengerButton extends React.Component {
 		}
 
 		return (
-			<TouchableOpacity onLayout={this.save.bind(this)}  onPress={()=> {this.props.onPress(this.props.text)}} >
-			<View   style={[styles.button, { opacity : this.state.opacity }]} >
+			<TouchableOpacity style={[styles.button, { opacity : this.state.opacity }]} onLayout={this.save.bind(this)}  onPress={()=> {this.props.onPress(this.props.text)}} >
+			<View   style={[styles.content, { opacity : this.state.opacity }]} >
 			<Text style={styles.text}>
 			{this.props.text}
 			</Text>
 			</View>
+			<TriangleCorner style={[styles.triangleRight, { opacity : this.state.opacity }]} />
 			</TouchableOpacity>
 			);
 	}

@@ -59,7 +59,7 @@ export class TriangleCorner extends Component {
 	}
 }
 
-export class TriangleLeft extends Component {
+export class UserLeft extends Component {
 	render() {
 		return (
 			<View  style={[styles.user,styles.userLeft, this.props.style]} >
@@ -70,7 +70,7 @@ export class TriangleLeft extends Component {
 	}
 }
 
-export class TriangleRight extends Component {
+export class UserRight extends Component {
 	render() {
 		return (
 			<View  style={[styles.user, styles.userRight, this.props.style]} >
