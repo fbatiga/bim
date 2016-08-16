@@ -100,6 +100,8 @@ function addMessages(state, result, isBot){
 			slackMessage.push(message);
 		}
 
+		image = false;
+
 	});
 
 	let newState = { ...state, messages };
