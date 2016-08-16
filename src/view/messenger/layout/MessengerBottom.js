@@ -57,20 +57,8 @@ class MessengerBottom extends Component {
 		});
 	}
 
-	setPosition(index){
-			console.log("setPosition", index);
-
-
-		if(this.items[index] !== undefined ){
-
-			this.items[index].setState({
-				opacity: 1
-			});
-
-			this.position = index;
-
-			console.log("this.position = index", index);
-
+	setShadow(index){
+		console.log("setShadow", index);
 
 			if(this.items[index-1] !== undefined){
 				this.items[index-1].setState({
@@ -107,19 +95,31 @@ class MessengerBottom extends Component {
 					opacity: 0.15
 				});
 			}
+	}
 
+	setPosition(index){
+		console.log("setPosition", index);
+
+
+		if(this.items[index] !== undefined ){
+
+			this.items[index].setState({
+				opacity: 1
+			});
+
+			this.position = index;
 		}
 	}
 
 	componentWillMount() {
 		this._panResponder = PanResponder.create({
-		      onStartShouldSetPanResponder: (evt, gestureState) => true,
-		      onStartShouldSetPanResponderCapture: (evt, gestureState) => true,
-		      onMoveShouldSetPanResponder: (evt, gestureState) => true,
-		      onMoveShouldSetPanResponderCapture: (evt, gestureState) => true,
-		      onPanResponderTerminationRequest: (evt, gestureState) => true,
-		      onPanResponderRelease:this.handlePanResponderRelease.bind(this)
-		  });
+			onStartShouldSetPanResponder: (evt, gestureState) => true,
+			onStartShouldSetPanResponderCapture: (evt, gestureState) => true,
+			onMoveShouldSetPanResponder: (evt, gestureState) => true,
+			onMoveShouldSetPanResponderCapture: (evt, gestureState) => true,
+			onPanResponderTerminationRequest: (evt, gestureState) => true,
+			onPanResponderRelease:this.handlePanResponderRelease.bind(this)
+		});
 	}
 
 	componentDidMount() {
@@ -187,7 +187,9 @@ class MessengerBottom extends Component {
 						key={index}
 						index={index}
 						scrollTo={this.scrollTo.bind(this)}
+						setShadow={this.setShadow.bind(this)}
 						onPress={this.props.onPress} />);
+
 				}else{
 					return ( <View style={styles.spacer} key={index} />);
 				}

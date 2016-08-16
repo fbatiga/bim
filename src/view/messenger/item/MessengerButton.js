@@ -76,11 +76,13 @@ export default class MessengerButton extends Component {
 	save(event){
 		this.layout = event.nativeEvent.layout;
 		this.props.save(this);
+
 	}
 
 	componentDidUpdate(){
 		if(this.state.opacity == 1 && this.layout !== undefined ){
 			this.props.scrollTo(this.layout.y);
+			this.props.setShadow(this.props.index);
 		}
 	}
 
@@ -97,7 +99,7 @@ export default class MessengerButton extends Component {
 		}
 
 		return (
-			<TouchableOpacity style={[styles.button, { opacity : this.state.opacity }]} onLayout={this.save.bind(this)}  onPress={()=> {this.props.onPress(this.props.text)}} >
+			<TouchableOpacity style={[styles.button]} onLayout={this.save.bind(this)}  onPress={()=> {this.props.onPress(this.props.text)}} >
 			<View   style={[styles.content, { opacity : this.state.opacity }]} >
 			<Text style={styles.text}>
 			{this.props.text}
