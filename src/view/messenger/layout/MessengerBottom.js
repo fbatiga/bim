@@ -4,7 +4,6 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet, PanResponder, TouchableOpacity, ScrollView, Image} from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import MessengerButton from '../item/MessengerButton';
-import asset from '../../../asset';
 
 const styles = StyleSheet.create({
 	button: {

@@ -5,6 +5,8 @@ export default {
     graphCircle: require('./circle.png'),
     dotIcon: require('./dotIcon.png'),
     add: require('./add.png'),
+    bot: require('./bot.png'),
+    user: require('./user.png'),
     c3po: require('./c3po.png'),
     tabs: {
         white: require('./tabs/white.png'),

@@ -24,10 +24,6 @@ export default class MessengerButton extends React.Component {
 		};
 	}
 
-	setOpacity(event){
-		this.props.savePos.bind(this);
-	}
-
 	save(event){
 		this.layout = event.nativeEvent.layout;
 		this.props.save(this);
