@@ -5,7 +5,14 @@ export default {
     graphCircle: require('./circle.png'),
     dotIcon: require('./dotIcon.png'),
     add: require('./add.png'),
+    transfer: require('./button-transfer.png'),
     c3po: require('./c3po.png'),
+    users:{
+        1:  require('./users/1.png'),
+        2:  require('./users/2.png'),
+        3:  require('./users/3.png'),
+        4:  require('./users/4.png')
+    },
     tabs: {
         white: require('./tabs/white.png'),
         yellow: require('./tabs/yellow.png'),

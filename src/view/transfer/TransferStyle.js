@@ -3,6 +3,7 @@ import baseStyles from '../../asset/styles.js';
 
 
 var width = Dimensions.get('window').width;
+const width = Dimensions.get('window').width;
 
 const TransferStyle = StyleSheet.create({
 	container: {
@@ -12,21 +13,15 @@ const TransferStyle = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: baseStyles.colors.deepBlue,
-        height: 400
+
     },
 	bottom : {
         backgroundColor:"white",
-        height: 400,
         flexWrap: 'wrap',
         alignItems: 'flex-start',
-        flexDirection:'row',
+        flexDirection:'row'
 
 	},
-    keyboardButton: {
-        padding: 20,
-        width: width * 0.33,
-        textAlign:'center'
-    }
 });
 
 export default TransferStyle;

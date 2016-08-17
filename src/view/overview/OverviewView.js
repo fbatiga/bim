@@ -63,7 +63,7 @@ class OverviewView extends Component {
                     >
                            {this.props.overview.accounts.map((value, key) => {
                                return (
-                                   <View tabLabel={value.label}>
+                                   <View tabLabel={value.label} key={key}>
                                        <TouchableOpacity style={OverviewStyle.graph} onPress={()=> {
                                            Actions.account()
                                        }}>
