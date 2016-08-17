@@ -62,7 +62,6 @@ class MessengerBottom extends Component {
 	}
 
 	setShadow(index){
-		console.log("setShadow", index);
 
 			if(this.items[index-1] !== undefined){
 				this.items[index-1].setState({
@@ -102,8 +101,6 @@ class MessengerBottom extends Component {
 	}
 
 	setPosition(index){
-		console.log("setPosition", index);
-
 
 		if(this.items[index] !== undefined ){
 
@@ -148,7 +145,6 @@ class MessengerBottom extends Component {
 	}
 
 	save(item){
-		console.log('save',item.props.index);
 		this.items[item.props.index] = item;
 		if(item.props.index == this.position){
 			this.setPosition(this.position);

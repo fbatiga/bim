@@ -69,8 +69,6 @@ export default class Bubble extends React.Component {
 
 
 	render() {
-		console.log('this.props.loading',this.props)
-
 
 		let isLeft = this.props.position === 'left' ;
 
