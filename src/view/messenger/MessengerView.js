@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import { Text, View, ListView,  StyleSheet } from 'react-native';
-import {getReply, addMessage, addSlackMessage} from './MessengerAction';
+import {getReply, addMessage, addSlackMessage,loadButtons} from './MessengerAction';
 import MessengerMain from './layout/MessengerMain';
 import MessengerBottom from './layout/MessengerBottom';
 import MessengerStyle from './MessengerStyle';
@@ -21,19 +21,24 @@ class MessengerView extends Component {
 	componentDidMount(){
 		this.props.dispatch(getReply({
 			msg : 'hello',
-			session : this.props.messenger.session
+			session : this.props.session
 		}));
 
 		this.listenForItems(this.firebaseMessagesRef);
 	}
 
 	onSend(text) {
+		this.props.dispatch(loadButtons([]));
 		this.props.dispatch(addMessage(text));
 		this.props.dispatch(getReply({
 			msg : text,
-			session : this.props.messenger.session
+			session : this.props.session
 		}));
 
+	}
+
+	setButtons(buttons) {
+		this.props.dispatch(loadButtons(buttons));
 	}
 
 	listenForItems(itemsRef) {
@@ -54,11 +59,12 @@ class MessengerView extends Component {
 			<View style={ { height: 20 } } />
 			<MessengerMain
 			style={MessengerStyle.main}
-			messages={this.props.messenger.messages}  />
+			setButtons={this.setButtons.bind(this)}
+			messages={this.props.messages}  />
 			<MessengerBottom
 			onLayout={this.onBottomLayout}
 			style={MessengerStyle.bottom}
-			choices={this.props.messenger.choices}
+			buttons={this.props.buttons}
 			onPress={this.onSend.bind(this)} />
 			</View>
 			);
@@ -68,7 +74,9 @@ class MessengerView extends Component {
 
 function mapStateToProps(state) {
 	return {
-		messenger : state.messenger
+		messages : state.messenger.messages,
+		session : state.messenger.session,
+		buttons : state.messenger.buttons
 	};
 }
 

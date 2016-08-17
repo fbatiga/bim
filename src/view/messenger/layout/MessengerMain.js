@@ -21,9 +21,10 @@ class MessengerMain extends Component {
 	}
 
 
-	setMessages(messages) {
+	setMessages(messages, choices) {
 		this.setState({
-			dataSource: this.state.dataSource.cloneWithRows(messages)
+			dataSource: this.state.dataSource.cloneWithRows(messages),
+			choices
 		});
 	}
 
@@ -31,7 +32,7 @@ class MessengerMain extends Component {
 	renderRow(rowData = {}) {
 		return (
 			<View>
-				<MessengerMessage rowData={rowData} position={rowData.position} />
+				<MessengerMessage rowData={rowData}  setButtons={this.props.setButtons} position={rowData.position} />
 			</View>
 		);
 	}
@@ -80,7 +81,8 @@ MessengerMain.defaultProps = {
 };
 
 MessengerMain.propTypes = {
-	messages: React.PropTypes.array
+	messages: React.PropTypes.array,
+	setButtons: React.PropTypes.func
 };
 
 export default MessengerMain;

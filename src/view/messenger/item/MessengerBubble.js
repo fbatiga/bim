@@ -82,5 +82,6 @@ Bubble.propTypes = {
 	position: React.PropTypes.oneOf(['left', 'right', 'center']),
 	text: React.PropTypes.string,
 	image: React.PropTypes.any,
+	index: React.PropTypes.number,
 	styles: React.PropTypes.object
 };

@@ -8,20 +8,24 @@ import asset from '../../../asset';
 
 const styles = StyleSheet.create({
 	button: {
-		marginTop : 10,
+		margin :5,
 		padding:10,
 		backgroundColor : '#FFFFFF'
 	},
 	container :{
 		backgroundColor: '#79F0CC',
 		flex: 1,
-		flexDirection:'row'
+		flexDirection:'column',
+		alignItems: 'center',
+		justifyContent:  'center',
 	},
 	content :{
-		flex : 1,
-		top : 120,
-		right : 0,
-		alignItems: 'flex-end'
+		padding : 5,
+		alignSelf : 'center',
+		flexDirection:'row',
+		flexWrap : 'wrap',
+		alignItems: 'flex-start',
+		justifyContent:  'flex-end',
 	},
 	spacer: {
 		height: 5,
@@ -45,15 +49,15 @@ class MessengerBottom extends Component {
 		this.items = [];
 		this.position= 0;
 		this.state = {
-			choices: [],
+			buttons: [],
 			icon : 0
 		};
 	}
 
 
-	setChoices(choices) {
+	setButtons(buttons) {
 		this.setState({
-			choices: choices.concat(['','',''])
+			buttons: buttons.concat([])
 		});
 	}
 
@@ -123,7 +127,7 @@ class MessengerBottom extends Component {
 	}
 
 	componentDidMount() {
-		this.scrollResponder = this.refs.listView.getScrollResponder();
+	//	this.scrollResponder = this.refs.listView.getScrollResponder();
 	}
 
 
@@ -153,34 +157,36 @@ class MessengerBottom extends Component {
 
 
 	componentWillReceiveProps(nextProps) {
-		this.setChoices(nextProps.choices);
+		this.setButtons(nextProps.buttons);
 		this.position = 0;
 	}
 
 
 	scrollTo(y){
-		this.scrollResponder.scrollTo({
-			y: y,
-			x: 0
-		});
+		// this.scrollResponder.scrollTo({
+		// 	y: y,
+		// 	x: 0
+		// });
 	}
 
-
+			// ScrollView
+			// ref="listView"
+			// {...this._panResponder.panHandlers}
+			// contentContainerStyle={styles.content}
+			// scrollEventThrottle={200}
+			// bounces={false}
+			// scrollEnabled={false}
+			//
 	render(){
 		return (
 			<View   style={[styles.container, this.props.style]} >
-			<ScrollView
+
+			<View
 			ref="listView"
-
-			{...this._panResponder.panHandlers}
-
-			contentContainerStyle={styles.content}
-			scrollEventThrottle={200}
-			bounces={false}
-			scrollEnabled={false}
+			style={styles.content}
 
 			>
-			{this.state.choices.map((text, index)=>{
+			{this.state.buttons.map((text, index)=>{
 				if(text != ''){
 					return (<MessengerButton text={text}
 						save={this.save.bind(this)}
@@ -189,13 +195,12 @@ class MessengerBottom extends Component {
 						scrollTo={this.scrollTo.bind(this)}
 						setShadow={this.setShadow.bind(this)}
 						onPress={this.props.onPress} />);
-
-				}else{
-					return ( <View style={styles.spacer} key={index} />);
 				}
+				// }else{
+				// 	return ( <View style={styles.spacer} key={index} />);
+				// }
 			})}
-			</ScrollView>
-			<Image source={asset.user}  style={[styles.user]} />
+			</View>
 			</View>
 			);
 	}

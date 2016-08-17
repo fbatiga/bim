@@ -3,8 +3,7 @@ import { Text, View, TouchableOpacity, StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
 	button: {
-		marginTop: 10,
-		marginLeft: 10,
+		margin: 10,
 		alignItems: 'flex-end',
 		flexDirection : 'row'
 	},
@@ -69,7 +68,7 @@ export default class MessengerButton extends Component {
 	constructor(props){
 		super(props);
 		this.state = {
-			opacity : 0.15
+			opacity : 1
 		};
 	}
 
@@ -81,13 +80,13 @@ export default class MessengerButton extends Component {
 
 	componentDidUpdate(){
 		if(this.state.opacity == 1 && this.layout !== undefined ){
-			this.props.scrollTo(this.layout.y);
-			this.props.setShadow(this.props.index);
+			//this.props.scrollTo(this.layout.y);
+			//this.props.setShadow(this.props.index);
 		}
 	}
 
 	componentWillUnMount(){
-		this.props.delete(this);
+		//this.props.delete(this);
 	}
 
 	render() {
@@ -100,12 +99,12 @@ export default class MessengerButton extends Component {
 
 		return (
 			<TouchableOpacity style={[styles.button]} onLayout={this.save.bind(this)}  onPress={()=> {this.props.onPress(this.props.text)}} >
-			<View   style={[styles.content, { opacity : this.state.opacity }]} >
+			<View   style={[styles.content]} >
 			<Text style={styles.text}>
 			{this.props.text}
 			</Text>
 			</View>
-			<TriangleCorner style={[styles.triangleRight, { opacity : this.state.opacity }]} />
+			<TriangleCorner style={[styles.triangleRight]} />
 			</TouchableOpacity>
 			);
 	}
