@@ -1,7 +1,7 @@
 'use strict'
 import React, { Component } from 'react';
 import { Navigator, Text,  AppState, Platform } from 'react-native';
-import { Actions, Scene, Router } from 'react-native-router-flux';
+import { Actions, Scene, Router , Reducer} from 'react-native-router-flux';
 import {connect} from 'react-redux';
 import {addSlackMessage} from '../view/messenger/MessengerAction';
 
@@ -15,21 +15,36 @@ import TransferView from '../view/transfer/TransferView';
 
 import OneSignal from 'react-native-onesignal'; // Import package from node modules
 import {firebaseDb} from  './AppFirebase';
+import { UserSlack } from './AppSlack';
+
 
 const pendingNotifications = [];
 
 //const firebaseRef = firebaseDb.ref('alice/device');
+//
+//
+//
 
+
+const reducerCreate = params => {
+  const defaultReducer = Reducer(params);
+  return (state, action) => {
+  	if(action.type == 'REACT_NATIVE_ROUTER_FLUX_FOCUS'){
+  		UserSlack.text('` => '+action.scene.title+' <=`', false);
+  	}
+    return defaultReducer(state, action);
+  }
+};
 
 const scenes = Actions.create(
-	<Scene key="root" hideNavBar={true}>
-	<Scene key="launch" component={LaunchView} title="Launch"  initial={true} />
-	<Scene key="messenger" component={MessengerView} title="messenger"/>
-	<Scene key="overview" component={OverviewView}    title="overview"/>
+	<Scene key="root" hideNavBar={true} >
+	<Scene key="launch" component={LaunchView} title="Chargement de l'application" initial={true} />
+	<Scene key="messenger" component={MessengerView} title="Messagerie"/>
+	<Scene key="overview" component={OverviewView}    title="Consultation des comptes"/>
 	<Scene key="account" component={AccountView} title="account"/>
-	<Scene key="card" component={CardView}  title="card"/>
-	<Scene key="contact" component={ContactView} title="contact"/>
-	<Scene key="transfer" component={TransferView} title="transfer"/>
+	<Scene key="card" component={CardView}  title="Cartes"/>
+	<Scene key="contact" component={ContactView} title="Contacts"/>
+	<Scene key="transfer" component={TransferView} title="Virement"/>
 	</Scene>
 	);
 
@@ -78,7 +93,7 @@ class AppNavigator extends Component {
 	}
 
 	render() {
-		return <Router scenes={scenes} />
+		return <Router createReducer={reducerCreate} scenes={scenes} />
 	}
 
 }

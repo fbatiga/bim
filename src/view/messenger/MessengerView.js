@@ -53,9 +53,13 @@ class MessengerView extends Component {
 
 	}
 
+	onShow(){
+		console.log('go to messenger', this);
+	}
+
 	render(){
 		return (
-			<View  style={MessengerStyle.container}>
+			<View  style={MessengerStyle.container} onLayout={this.onShow.bind(this)}>
 			<View style={ { height: 20 } } />
 			<MessengerMain
 			style={MessengerStyle.main}
