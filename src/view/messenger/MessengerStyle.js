@@ -3,7 +3,7 @@ import {StyleSheet} from 'react-native';
 
 const MessengerStyle = StyleSheet.create({
 	bottom : {
-		flex : 3,
+		flex : 4,
 	},
 	main: {
 		flex : 6,

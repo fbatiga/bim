@@ -47,9 +47,16 @@ export default class Bubble extends React.Component {
 
 
 	content(){
+
+		if(this.props.loading != false){
+			return <Image source={asset.wait}  style={{marginLeft:10}}  />
+		}
+
+
 		if(this.props.image){
 			return <Image source={{uri: this.props.image}} style={styles.image} resizeMode='contain'/>
 		}
+
 
 		if(this.props.text != ''){
 			return <View   style={[styles.content]} >
@@ -62,6 +69,7 @@ export default class Bubble extends React.Component {
 
 
 	render() {
+		console.log('this.props.loading',this.props)
 
 
 		let isLeft = this.props.position === 'left' ;
@@ -70,9 +78,10 @@ export default class Bubble extends React.Component {
 
 		return (
 			<View style={[styles.bubble, bubbleStyle ]}>
-				{isLeft && <UserLeft />}
+
+				{isLeft && <UserLeft loading={this.props.loading} />}
 				{this.content()}
-				{!isLeft && <UserRight />}
+				{!isLeft && !this.props.loading && <UserRight />}
 			</View>
 			);
 	}
@@ -82,6 +91,7 @@ Bubble.propTypes = {
 	position: React.PropTypes.oneOf(['left', 'right', 'center']),
 	text: React.PropTypes.string,
 	image: React.PropTypes.any,
+	loading: React.PropTypes.bool,
 	index: React.PropTypes.number,
 	styles: React.PropTypes.object
 };

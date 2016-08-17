@@ -64,7 +64,7 @@ export class UserLeft extends Component {
 		return (
 			<View  style={[styles.user,styles.userLeft, this.props.style]} >
 			<Image source={asset.bot}  style={[styles.userImage, styles.userImageLeft]} />
-			<TriangleCorner style={[styles.triangleLeft, this.props.style]}/>
+			{!this.props.loading && <TriangleCorner style={[styles.triangleLeft]}/> }
 			</View>
 		)
 	}
@@ -75,7 +75,7 @@ export class UserRight extends Component {
 		return (
 			<View  style={[styles.user, styles.userRight, this.props.style]} >
 			<Image source={asset.user}  style={[styles.userImage, styles.userImageRight]} />
-			<TriangleCorner style={[styles.triangleRight, this.props.style]} />
+			{!this.props.loading && <TriangleCorner style={[styles.triangleRight]} /> }
 			</View>
 			)
 	}

@@ -62,6 +62,8 @@ function addMessages(state, result, isBot){
 		if(indexImage >= 0){
 			image = message.substr(indexImage+5, message.indexOf('[/img]') - ( indexImage + 5 ) );
 			message = message.replace( message.substr(indexImage, message.indexOf('[/img]')+ 6 ), '');
+
+			console.log(image);
 		}
 		let choiceIndex  = message.indexOf('[')
 		if( choiceIndex != -1 ){

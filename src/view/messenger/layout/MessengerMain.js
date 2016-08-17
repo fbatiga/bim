@@ -42,9 +42,9 @@ class MessengerMain extends Component {
 		this.setMessages(this.props.messages);
 	}
 
-	componentWillReceiveProps(nextProps) {
-		this.setMessages(nextProps.messages);
-	}
+		componentWillReceiveProps(nextProps) {
+			this.setMessages(nextProps.messages);
+		}
 
 	scrollToBottom(contentWidth, contentHeight) {
 		if(contentHeight > this._listHeight){

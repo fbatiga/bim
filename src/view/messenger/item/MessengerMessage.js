@@ -4,8 +4,6 @@ import Bubble from './MessengerBubble';
 import {loadButtons} from '../MessengerAction';
 import {connect} from 'react-redux';
 
-
-
 const styles = StyleSheet.create({
 	rowContainer: {
 		flexDirection: 'row',
@@ -56,15 +54,18 @@ class Message extends Component {
 	}
 
 	componentDidMount(){
-		setTimeout(()=>{
-			this.setState({
-				visibility : 'loading'
-			});
-		}, this.props.rowData.index*2000);
+
+		if( this.props.position == 'left'){
+			setTimeout(()=>{
+				this.setState({
+					visibility : 'loading'
+				});
+			}, this.props.rowData.index*2000);
+		}
 	}
 
 	componentDidUpdate(){
-		if(this.state.visibility == 'loading' && !this.props.rowData.image){
+		if(this.state.visibility == 'loading'){
 			setTimeout(()=>{
 				this.setState({
 					visibility : 'show'
@@ -74,22 +75,23 @@ class Message extends Component {
 					this.props.setButtons(this.props.rowData.buttons);
 				}
 
-			}, 2000);
+			}, 1500);
 		}
 	}
 
 	render() {
 		let { rowData, position } = this.props;
 
-		if(rowData.text == '' && rowData.image == false){
+		if(rowData.text == '' &&  rowData.image == false){
 			return null;
 		}
 
+		let loading = (this.state.visibility == 'show' )? false : true;
+
 		return(
 			<View style={[styles.rowContainer, {justifyContent: position === 'left' ? 'flex-start' : position === 'right' ? 'flex-end' : 'center'}]}>
-				{ this.state.visibility == 'loading' && position === 'left' && <Bubble  {...rowData} text='...'  styles={styles} />}
-				{ this.state.visibility == 'show' && position === 'left'&& <Bubble {...rowData}  styles={styles} />}
-				{ position  !== 'left'&& <Bubble {...rowData}  styles={styles} />}
+				{ this.state.visibility != 'new' && position === 'left' && <Bubble {...rowData}  loading={loading} />}
+				{ position  !== 'left'&& <Bubble {...rowData}  loading={false} />}
 			</View>
 		);
 

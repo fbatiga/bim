@@ -6,6 +6,7 @@ export default {
     dotIcon: require('./dotIcon.png'),
     add: require('./add.png'),
     bot: require('./bot.png'),
+    wait: require('./wait.gif'),
     user: require('./user.png'),
     c3po: require('./c3po.png'),
     tabs: {
