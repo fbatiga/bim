@@ -1,29 +1,44 @@
 import React from 'react';
 import { Text, Image, View, StyleSheet } from 'react-native';
+import { UserLeft, UserRight } from './MessengerUser';
+import asset from '../../../asset';
 
 const styles = StyleSheet.create({
 	bubble: {
-		padding: 10
+		marginBottom: 15,
+		marginLeft: 10,
+		alignItems: 'flex-end',
+		flexDirection : 'row',
+		maxWidth : 220
 	},
-	text: {
-
+	content: {
+		padding: 10,
+		backgroundColor: '#F0F3F5',
+		flexDirection: 'row',
+		maxWidth : 220
 	},
 	image: {
-		flex : 1,
-		height: 200,
-		width: 300
+		width: 220,
+		height: 160,
+		borderColor :  '#F0F3F5',
+		backgroundColor :  '#F0F3F5',
+		maxWidth : 220,
+		borderWidth: 8
 	},
 	text: {
-		color: "#4F4367"
+		fontSize : 14,
+		flex: 1,
+		color: '#4F4367',
+		maxWidth : 220,
+		//fontFamily : 'Verdana',
+		fontWeight: '100'
 	},
 	bubbleLeft: {
 		marginRight: 70,
-		backgroundColor: '#F0F3F5',
 		alignSelf: 'flex-start',
 	},
 	bubbleRight: {
 		marginLeft: 70,
-		backgroundColor: '#F0F3F5',
 		alignSelf: 'flex-end',
 	},
 });
@@ -32,33 +47,41 @@ export default class Bubble extends React.Component {
 
 
 	content(){
-		if(this.props.image){
-			return <Image  source={{uri: this.props.image}} style={styles.image}  resizeMode='cover'/>;
+
+		if(this.props.loading != false){
+			return <Image source={asset.wait}  style={{marginLeft:10}}  />
 		}
 
+
+		if(this.props.image){
+			return <Image source={{uri: this.props.image}} style={styles.image} resizeMode='contain'/>
+		}
+
+
 		if(this.props.text != ''){
-			return <Text style={styles.text}>{this.props.text}</Text>;
+			return <View   style={[styles.content]} >
+			<Text style={styles.text}>
+			{this.props.text}
+			</Text>
+			</View>
 		}
 	}
 
-	render() {
 
-		const flexStyle = {};
-		if (this.props.text) {
-			if (this.props.text.length > 40) {
-				flexStyle.flex = 1;
-			}
-		}
+	render() {
 
 		let isLeft = this.props.position === 'left' ;
 
 		let bubbleStyle = (isLeft ? styles.bubbleLeft :  styles.bubbleRight );
 
 		return (
-			<View style={[styles.bubble, bubbleStyle ,flexStyle]} >
+			<View style={[styles.bubble, bubbleStyle ]}>
+
+				{isLeft && <UserLeft loading={this.props.loading} />}
 				{this.content()}
+				{!isLeft && !this.props.loading && <UserRight />}
 			</View>
-		);
+			);
 	}
 }
 
@@ -66,5 +89,7 @@ Bubble.propTypes = {
 	position: React.PropTypes.oneOf(['left', 'right', 'center']),
 	text: React.PropTypes.string,
 	image: React.PropTypes.any,
+	loading: React.PropTypes.bool,
+	index: React.PropTypes.number,
 	styles: React.PropTypes.object
 };

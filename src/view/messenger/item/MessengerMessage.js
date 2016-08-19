@@ -1,6 +1,8 @@
 import React, { Component} from 'react';
 import { View, Text, StyleSheet, TouchableHighlight, Image } from 'react-native';
 import Bubble from './MessengerBubble';
+import {loadButtons} from '../MessengerAction';
+import {connect} from 'react-redux';
 
 const styles = StyleSheet.create({
 	rowContainer: {
@@ -44,20 +46,52 @@ const styles = StyleSheet.create({
 
 class Message extends Component {
 
+	constructor(props){
+		super(props);
+		this.state = {
+			visibility : 'new'
+		};
+	}
+
+	componentDidMount(){
+
+		if( this.props.position == 'left'){
+			setTimeout(()=>{
+				this.setState({
+					visibility : 'loading'
+				});
+			}, this.props.rowData.index*2000);
+		}
+	}
+
+	componentDidUpdate(){
+		if(this.state.visibility == 'loading'){
+			setTimeout(()=>{
+				this.setState({
+					visibility : 'show'
+				});
+
+				if(this.props.rowData.buttons.length >0){
+					this.props.setButtons(this.props.rowData.buttons);
+				}
+
+			}, 1500);
+		}
+	}
+
 	render() {
 		let { rowData, position } = this.props;
 
-		const flexStyle = {};
-		let RowView = Bubble;
-		if (rowData.text) {
-			if (rowData.text.length > 40) {
-				flexStyle.flex = 1;
-			}
+		if(rowData.text == '' &&  rowData.image == false){
+			return null;
 		}
+
+		let loading = (this.state.visibility == 'show' )? false : true;
 
 		return(
 			<View style={[styles.rowContainer, {justifyContent: position === 'left' ? 'flex-start' : position === 'right' ? 'flex-end' : 'center'}]}>
-				<Bubble {...rowData}  styles={styles} />
+				{ this.state.visibility != 'new' && position === 'left' && <Bubble {...rowData}  loading={loading} />}
+				{ position  !== 'left'&& <Bubble {...rowData}  loading={false} />}
 			</View>
 		);
 
@@ -69,5 +103,12 @@ Message.propTypes = {
 	rowData: React.PropTypes.object
 };
 
-export default Message
+
+function mapStateToProps(state) {
+	return {
+		messenger : state.messenger
+	};
+}
+
+export default connect(mapStateToProps)(Message);
 

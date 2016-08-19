@@ -8,32 +8,37 @@ import asset from '../../../asset';
 
 const styles = StyleSheet.create({
 	button: {
-		marginTop : 10,
+		margin :5,
 		padding:10,
 		backgroundColor : '#FFFFFF'
 	},
 	container :{
 		backgroundColor: '#79F0CC',
 		flex: 1,
-		flexDirection:'row'
+		flexDirection:'column',
+		alignItems: 'center',
+		justifyContent:  'center',
 	},
 	content :{
-		top : 120,
-		right : 50,
-		alignItems: 'flex-end'
-	},
-	floatView: {
-		position: 'absolute',
-		flex: 1,
-		top: 0,
-		left: 0,
-		opacity : 0.3,
-		backgroundColor: 'black',
+		padding : 5,
+		alignSelf : 'center',
+		flexDirection:'row',
+		flexWrap : 'wrap',
+		alignItems: 'flex-start',
+		justifyContent:  'flex-end',
 	},
 	spacer: {
 		height: 5,
 		width: 100
-	}
+	},
+	user :{
+		top : 118,
+		borderRadius:20,
+		width:40,
+		height:40,
+		marginRight: 10,
+		marginLeft: 0
+	},
 });
 
 
@@ -44,32 +49,19 @@ class MessengerBottom extends Component {
 		this.items = [];
 		this.position= 0;
 		this.state = {
-			choices: [],
+			buttons: [],
 			icon : 0
 		};
 	}
 
 
-	setChoices(choices) {
+	setButtons(buttons) {
 		this.setState({
-			choices: choices.concat(['','',''])
+			buttons: buttons.concat([])
 		});
 	}
 
-	setPosition(index){
-			console.log("setPosition", index);
-
-
-		if(this.items[index] !== undefined ){
-
-			this.items[index].setState({
-				opacity: 1
-			});
-
-			this.position = index;
-
-			console.log("this.position = index", index);
-
+	setShadow(index){
 
 			if(this.items[index-1] !== undefined){
 				this.items[index-1].setState({
@@ -106,23 +98,33 @@ class MessengerBottom extends Component {
 					opacity: 0.15
 				});
 			}
+	}
 
+	setPosition(index){
+
+		if(this.items[index] !== undefined ){
+
+			this.items[index].setState({
+				opacity: 1
+			});
+
+			this.position = index;
 		}
 	}
 
 	componentWillMount() {
 		this._panResponder = PanResponder.create({
-		      onStartShouldSetPanResponder: (evt, gestureState) => true,
-		      onStartShouldSetPanResponderCapture: (evt, gestureState) => true,
-		      onMoveShouldSetPanResponder: (evt, gestureState) => true,
-		      onMoveShouldSetPanResponderCapture: (evt, gestureState) => true,
-		      onPanResponderTerminationRequest: (evt, gestureState) => true,
-		      onPanResponderRelease:this.handlePanResponderRelease.bind(this)
-		  });
+			onStartShouldSetPanResponder: (evt, gestureState) => true,
+			onStartShouldSetPanResponderCapture: (evt, gestureState) => true,
+			onMoveShouldSetPanResponder: (evt, gestureState) => true,
+			onMoveShouldSetPanResponderCapture: (evt, gestureState) => true,
+			onPanResponderTerminationRequest: (evt, gestureState) => true,
+			onPanResponderRelease:this.handlePanResponderRelease.bind(this)
+		});
 	}
 
 	componentDidMount() {
-		this.scrollResponder = this.refs.listView.getScrollResponder();
+	//	this.scrollResponder = this.refs.listView.getScrollResponder();
 	}
 
 
@@ -143,7 +145,6 @@ class MessengerBottom extends Component {
 	}
 
 	save(item){
-		console.log('save',item.props.index);
 		this.items[item.props.index] = item;
 		if(item.props.index == this.position){
 			this.setPosition(this.position);
@@ -152,46 +153,50 @@ class MessengerBottom extends Component {
 
 
 	componentWillReceiveProps(nextProps) {
-		this.setChoices(nextProps.choices);
+		this.setButtons(nextProps.buttons);
 		this.position = 0;
 	}
 
 
 	scrollTo(y){
-		this.scrollResponder.scrollTo({
-			y: y,
-			x: 0
-		});
+		// this.scrollResponder.scrollTo({
+		// 	y: y,
+		// 	x: 0
+		// });
 	}
 
-
+			// ScrollView
+			// ref="listView"
+			// {...this._panResponder.panHandlers}
+			// contentContainerStyle={styles.content}
+			// scrollEventThrottle={200}
+			// bounces={false}
+			// scrollEnabled={false}
+			//
 	render(){
 		return (
 			<View   style={[styles.container, this.props.style]} >
-			<ScrollView
+
+			<View
 			ref="listView"
-
-			{...this._panResponder.panHandlers}
-
-			contentContainerStyle={styles.content}
-			scrollEventThrottle={200}
-			bounces={false}
+			style={styles.content}
 
 			>
-			{this.state.choices.map((text, index)=>{
+			{this.state.buttons.map((text, index)=>{
 				if(text != ''){
 					return (<MessengerButton text={text}
 						save={this.save.bind(this)}
 						key={index}
 						index={index}
 						scrollTo={this.scrollTo.bind(this)}
+						setShadow={this.setShadow.bind(this)}
 						onPress={this.props.onPress} />);
-				}else{
-					return ( <View style={styles.spacer} key={index} />);
 				}
+				// }else{
+				// 	return ( <View style={styles.spacer} key={index} />);
+				// }
 			})}
-			</ScrollView>
-			<View style={{backgroundColor:'red', top: this.state.icon, width : 10, height: 2}} />
+			</View>
 			</View>
 			);
 	}
