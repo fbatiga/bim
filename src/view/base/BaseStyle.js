@@ -6,14 +6,14 @@ const BaseStyle = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center'
     },
-    bottom : {
-		flex: 4,
-	},
-	top: {
-		flex: 3,
+    bottom: {
+        flex: 4
+    },
+    top: {
+        flex: 3,
         justifyContent: 'center',
         alignItems: 'center',
-	}
+    }
 });
 
 export default BaseStyle;

@@ -3,13 +3,13 @@
 import React, { Component } from 'react';
 import { View, Text,ListView, Image, ScrollView, TouchableOpacity} from 'react-native';
 import { Actions } from 'react-native-router-flux';
-import  ScrollableTabView, { ScrollableTabBar, }  from 'react-native-scrollable-tab-view';
+import  ScrollableTabView, { ScrollableTabBar }  from 'react-native-scrollable-tab-view';
 import moment from 'moment';
 
 import OverviewStyle from './OverviewStyle';
-import baseStyles from '../../asset/styles.js';
 import {init} from './OverviewAction';
 import asset from '../../asset';
+import baseStyles from '../../styles/vars.js';
 import MessengerFabButton from '../messenger/item/MessengerFabButton.js';
 
 import {connect} from 'react-redux';

@@ -1,7 +1,7 @@
 import React from 'react';
-import { Text, View, TouchableOpacity, TouchableHighlight, StyleSheet, Dimensions } from 'react-native';
-import baseStyles from '../../../asset/styles.js';
-
+import { Text, View, Image, TouchableOpacity, TouchableHighlight, StyleSheet, Dimensions } from 'react-native';
+import baseStyles from '../../../styles/vars.js';
+import asset from '../../../asset';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -13,11 +13,11 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: baseStyles.colors.deepBlue,
-        height: (height/2 - 70)
+        height: (height / 2 - 70)
     },
     bottom: {
         backgroundColor: "white",
-        height: height/2,
+        height: height / 2,
         flexWrap: 'wrap',
         alignItems: 'flex-start',
         flexDirection: 'row'
@@ -84,24 +84,26 @@ class AmountSelectionView extends React.Component {
                             return (<TouchableOpacity style={{}} key={key} onPress={()=> {
                                 this.parseInput(value)
                             }}>
-                                <Text style={styles.keyboardButton}>{value}</Text>
+                                <Text style={styles.keyboardButton} onPress={()=> {
+                                    this.parseInput(value)
+                                }} >{value}</Text>
                             </TouchableOpacity>);
                         })
                             }
-                    <TouchableOpacity style={{}} >
-                        <Text style={styles.keyboardButton} onPress={()=> {
-                            this.parseInput('.')
-                        }} >.</Text>
+                    <TouchableOpacity style={{}} onPress={()=> {
+                        this.parseInput(',')
+                    }} >
+                        <Text style={styles.keyboardButton} >,</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={{}} >
-                        <Text style={styles.keyboardButton} onPress={()=> {
-                            this.parseInput('0')
-                        }} >0</Text>
+                    <TouchableOpacity style={{}}  onPress={()=> {
+                        this.parseInput('0')
+                    }} >
+                        <Text style={styles.keyboardButton} >0</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={{}} >
-                        <Text style={styles.keyboardButton} onPress={()=> {
-                            this.parseInput('<')
-                        }} > {' < '} </Text>
+                    <TouchableOpacity style={[styles.keyboardButton,{alignItems:'center'}]} onPress={()=> {
+                        this.parseInput('<')
+                    }}>
+                        <Image source={asset.keyboard['effacer']} style={{resizeMode: 'contain', width: 20}} />
                     </TouchableOpacity>
                 </View>
             </View>

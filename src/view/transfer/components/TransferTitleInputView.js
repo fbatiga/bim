@@ -1,7 +1,6 @@
 import React from 'react';
 import { Text, View, TextInput,  TouchableOpacity, TouchableHighlight, StyleSheet, Dimensions } from 'react-native';
-import baseStyles from '../../../asset/styles.js';
-
+import baseStyles from '../../../styles/vars';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;

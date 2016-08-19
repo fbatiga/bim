@@ -1,12 +1,11 @@
-const styles =   {
+import {StyleSheet} from 'react-native';
 
+const Vars = {
     colors: {
         light: '',
-        deepBlue:'#10002B',
-
-        alternative:'#6bf0cc',
-        primary:'#A28CDA',
-
+        deepBlue: '#10002B',
+        alternative: '#6bf0cc',
+        primary: '#A28CDA',
         white: "#fff",
         yellow: "yellow",
         violet: "violet",
@@ -21,14 +20,17 @@ const styles =   {
         red: "red"
     },
 
-    titles : {
+    titles: {
         h1: {
             color: '#6bf0cc',
             fontSize: 40,
             fontWeight: '700',
-            textAlign: "left"
+            textAlign: "left",
+            marginTop: 20
         }
     }
 };
 
-export default styles;
+
+export default Vars;
+

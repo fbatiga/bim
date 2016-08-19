@@ -5,16 +5,7 @@ import { TRANSFER_REQUEST, TRANSFER_SUCCESS, TRANSFER_FAILURE } from './Transfer
 import { Actions } from 'react-native-router-flux';
 import Contacts  from 'react-native-contacts';
 
-/*
-Contacts.getAll((err, contacts) => {
-    if(err && err.type === 'permissionDenied'){
-        // x.x
-    } else {
-        console.log(contacts);
-        initialState.contacts = contacts;
-    }
-});
- */
+
 const initialState = {
 };
 

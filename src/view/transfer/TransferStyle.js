@@ -1,5 +1,5 @@
 import {Dimensions, StyleSheet} from 'react-native';
-import baseStyles from '../../asset/styles.js';
+import baseStyles from '../../styles/vars.js';
 
 
 var width = Dimensions.get('window').width;

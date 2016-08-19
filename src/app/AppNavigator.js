@@ -23,9 +23,9 @@ const pendingNotifications = [];
 
 const scenes = Actions.create(
 	<Scene key="root" hideNavBar={true}>
-	<Scene key="launch" component={LaunchView} title="Launch"  initial={true} />
+	<Scene key="launch" component={LaunchView} title="Launch"  />
 	<Scene key="messenger" component={MessengerView} title="messenger"/>
-	<Scene key="overview" component={OverviewView}    title="overview"/>
+	<Scene key="overview" component={OverviewView}   initial={true}  title="overview"/>
 	<Scene key="account" component={AccountView} title="account"/>
 	<Scene key="card" component={CardView}  title="card"/>
 	<Scene key="contact" component={ContactView} title="contact"/>
@@ -47,13 +47,10 @@ class AppNavigator extends Component {
 	}
 
 	componentDidMount() {
-
 		OneSignal.configure({
 			onNotificationOpened: this.handleNotification.bind(this)
 		});
-
 		AppState.addEventListener('change', this.handleAppStateChange);
-
 		OneSignal.sendTags( { user: 'alice' });
 	}
 
