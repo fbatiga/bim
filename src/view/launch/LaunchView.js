@@ -39,7 +39,6 @@ class LaunchView extends Component {
 							<Image source={asset.logo} style={LaunchStyle.logo} />
 						</View>
 						<View style={LaunchStyle.bottom} >
-							<Text style={LaunchStyle.loading}>Chargement...</Text>
 						</View>
 					</Image>
 				</View>

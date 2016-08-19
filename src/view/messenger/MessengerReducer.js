@@ -3,116 +3,94 @@
 import { handleActions } from 'redux-actions';
 
 import {
-	MESSENGER_SLACK_MESSAGE, MESSENGER_HELLO, MESSENGER_REQUEST, MESSENGER_SUCCESS, MESSENGER_FAILURE, MESSENGER_CHOICE, MESSENGER_MESSAGE, MESSENGER_BOT_MESSAGE, MESSENGER_SESSION
+	MESSENGER_NOTIFICATION, MESSENGER_BOT_RESTART, MESSENGER_SLACK_MESSAGE, MESSENGER_HELLO, MESSENGER_REQUEST, MESSENGER_SUCCESS, MESSENGER_FAILURE, MESSENGER_BUTTONS, MESSENGER_MESSAGE, MESSENGER_BOT_MESSAGE, MESSENGER_SESSION
 } from './MessengerAction';
 
 import { UserSlack, BimSlack } from '../../app/AppSlack';
 
-
 const initialState = {
 	session : null,
 	messages: [],
-	choices : []
+	buttons : [],
+	notification : false,
+	bot: true
 };
 
-
-
-function createMessage(text, image, isBot){
+function createMessage(text, image, buttons, isBot, index){
 	return {
 		text,
 		image,
+		buttons,
+		index,
 		position: isBot ? 'left':'right',
 		date: new Date()
 	};
 }
 
 
+function loadButtons(result){
+	let buttons = [];
 
-function createChoice(result){
+	result.split('[').map((option)=>{
+		let pos = option.indexOf(']')
+		if(pos != -1 ){
+			buttons.push(option.substr(0, pos));
+		}
+	});
 
-	if(result.cards && result.cards[0].buttons){
+	console.log('loadButtons',buttons);
 
-		let choices = [];
-
-		result.cards[0].buttons.map((button) =>{
-			choices.push({
-				text: button.buttonText
-			});
-		});
-
-		return choices;
-
-	}else {
-		return [];
-	}
-}
-
-function loadChoices(result){
-	let choices = [];
-
-	if (typeof result ==  'string'){
-
-		result.split('[').map((option)=>{
-			let pos = option.indexOf(']')
-			if(pos != -1 ){
-				choices.push(option.substr(0, pos));
-			}
-		});
-
-	}else{
-		result.map((text) =>{
-			choices.push(text);
-		});
-	}
-
-
-
-	return choices;
-
+	return buttons;
 }
 
 function addMessages(state, result, isBot){
 
 	let text = result.split('::next-2000::');
 	let image = false;
-	let choices = [];
 	let messages = state.messages;
 	let slackMessage = [];
+	let slackButtons = [];
 
 	console.log(isBot ? 'Bim : ' :'User : ');
 
 	text.map((message, index)=>{
+		let buttons = [];
+
 		message = message.trim();
-		console.log( message);
+		console.log(message);
 
 		let indexImage = message.indexOf('[img]');
 		if(indexImage >= 0){
 			image = message.substr(indexImage+5, message.indexOf('[/img]') - ( indexImage + 5 ) );
 			message = message.replace( message.substr(indexImage, message.indexOf('[/img]')+ 6 ), '');
+
+			console.log(image);
 		}
 		let choiceIndex  = message.indexOf('[')
 		if( choiceIndex != -1 ){
-			choices = loadChoices(message.substr(choiceIndex));
+			buttons = loadButtons(message.substr(choiceIndex));
 			message =  message.substr(0, choiceIndex);
+			slackButtons = slackButtons.concat(buttons);
 		}
-		if ( indexImage >= 0 || message != ''){
-			messages = addMessage(messages, message, image, isBot, index);
+
+		if ( indexImage >= 0 || choiceIndex >= 0 || message != ''){
+			messages = addMessage(messages, message, image, buttons, isBot, index);
 			slackMessage.push(message);
 		}
 
+		image = false;
+
 	});
 
+
 	let newState = { ...state, messages };
-	if ( choices.length > 0 ) {
-		newState.choices = choices;
-	}
 
 	if(isBot == true){
-			if(newState.choices.length >0){
-				BimSlack.question(slackMessage.join('\n'), newState.choices, image);
-			}else{
-				BimSlack.text(slackMessage.join('\n'), image);
-			}
+		if(slackButtons.length >0){
+			BimSlack.question(slackMessage.join('\n'), slackButtons, image);
+		}else{
+			BimSlack.text(slackMessage.join('\n'), image);
+		}
 	}else{
 		UserSlack.text(slackMessage.join('\n'), image);
 	}
@@ -120,7 +98,7 @@ function addMessages(state, result, isBot){
 	return newState;
 }
 
-function addMessage(messages, result, image,  isBot, index){
+function addMessage(messages, result, image, buttons, isBot, index){
 	if(isBot == undefined ){
 		let isBot = result.indexOf('@:') == 0;
 		if(isBot){
@@ -128,18 +106,27 @@ function addMessage(messages, result, image,  isBot, index){
 		}
 	}
 
-	return messages.concat(createMessage(result, image, isBot));
+	return messages.concat(createMessage(result, image, buttons, isBot, index));
 }
 
 const MessengerReducer = handleActions({
 
 
-	[MESSENGER_CHOICE]: (state, action) => {
-		return { ...state, choices: loadChoices(action.params)};
+	[MESSENGER_BUTTONS]: (state, action) => {
+		console.log('MESSENGER_BUTTONS', action.params);
+		return { ...state, buttons: action.params};
 	},
 
 	[MESSENGER_SESSION]: (state, action) => {
 		return { ...state, session: action.params};
+	},
+
+	[MESSENGER_BOT_RESTART]: (state, action) => {
+		return { ...state, bot: true, notification : false};
+	},
+
+	[MESSENGER_NOTIFICATION]: (state, action) => {
+		return { ...state, messages : [], buttons:[], bot: false, notification : action.params};
 	},
 
 	[MESSENGER_MESSAGE]: (state, action) => {
@@ -153,7 +140,6 @@ const MessengerReducer = handleActions({
 	[MESSENGER_SLACK_MESSAGE]: (state, action) => {
 		return addMessages(state, action.params, true);
 	},
-
 
 	[MESSENGER_REQUEST]: (state, action) => {
 		return Object.assign({}, state, {loading: true});
