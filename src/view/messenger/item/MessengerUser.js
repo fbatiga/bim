@@ -55,7 +55,7 @@ export class TriangleCorner extends Component {
 	render() {
 		return (
 			<View style={[styles.triangle, this.props.style]} />
-			)
+		)
 	}
 }
 

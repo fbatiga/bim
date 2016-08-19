@@ -26,7 +26,7 @@ class SlackUser {
 				}]
 			};
 
-				if (image != false){
+			if (image != false){
 			payload.attachments.push({
 				text : image,
 				"color": "#3AA3E3",

@@ -8,6 +8,8 @@ export const MESSENGER_MESSAGE = 'messenger.message';
 export const MESSENGER_BOT_MESSAGE = 'messenger.bot_message';
 export const MESSENGER_SESSION = 'messenger.session';
 export const MESSENGER_SLACK_MESSAGE = 'messenger.slack';
+export const MESSENGER_BOT_RESTART = 'messenger.bot_start';
+export const MESSENGER_NOTIFICATION = 'messenger.notification';
 
 export function getReply(params) {
   return {
@@ -17,10 +19,22 @@ export function getReply(params) {
   };
 }
 
-
 export function loadButtons(params) {
   return {
     type: MESSENGER_BUTTONS,
+    params : params
+  };
+}
+
+export function restartBot() {
+  return {
+    type: MESSENGER_BOT_RESTART
+  };
+}
+
+export function notify(params) {
+  return {
+    type: MESSENGER_NOTIFICATION,
     params : params
   };
 }

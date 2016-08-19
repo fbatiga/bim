@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { Navigator, Text,  AppState, Platform } from 'react-native';
 import { Actions, Scene, Router , Reducer} from 'react-native-router-flux';
 import {connect} from 'react-redux';
-import {addSlackMessage} from '../view/messenger/MessengerAction';
+import {notify} from '../view/messenger/MessengerAction';
 
 import LaunchView from '../view/launch/LaunchView';
 import MessengerView from '../view/messenger/MessengerView';
@@ -18,22 +18,16 @@ import {firebaseDb} from  './AppFirebase';
 import { UserSlack } from './AppSlack';
 
 
-const pendingNotifications = [];
-
 //const firebaseRef = firebaseDb.ref('alice/device');
-//
-//
-//
-
 
 const reducerCreate = params => {
-  const defaultReducer = Reducer(params);
-  return (state, action) => {
-  	if(action.type == 'REACT_NATIVE_ROUTER_FLUX_FOCUS'){
-  		UserSlack.text('` => '+action.scene.title+' <=`', false);
-  	}
-    return defaultReducer(state, action);
-  }
+	const defaultReducer = Reducer(params);
+	return (state, action) => {
+		if(action.type == 'REACT_NATIVE_ROUTER_FLUX_FOCUS'){
+			UserSlack.text('` => '+action.scene.title+' <=`', false);
+		}
+		return defaultReducer(state, action);
+	}
 };
 
 const scenes = Actions.create(
@@ -52,13 +46,11 @@ class AppNavigator extends Component {
 
 	constructor(props) {
 		super(props);
+		this.pendingNotifications= [];
 		this.handleAppStateChange = this.handleAppStateChange.bind(this);
 	}
 
 	handleNotification (message, data, isActive) {
-			var notification = {message: message, data: data, isActive: isActive};
-			console.log('handleNotification', notification);
-			this.props.dispatch(addSlackMessage(message));
 	}
 
 	componentDidMount() {
@@ -80,7 +72,6 @@ class AppNavigator extends Component {
 
 		console.log('handleAppStateChange', appState);
 		if (appState === 'background') {
-
 			// if (Platform.OS === 'ios') {
 			// 	date = date.toISOString();
 			// }
@@ -89,6 +80,11 @@ class AppNavigator extends Component {
 			// 	message: "My Notification Message",
 			// 	date,
 			// });
+		}
+
+		if (appState === 'active') {
+
+
 		}
 	}
 
