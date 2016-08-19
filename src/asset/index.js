@@ -8,6 +8,7 @@ export default {
 	bot: require('./bot.png'),
 	user: require('./user.png'),
 	wait: require('./wait.gif'),
+	setting: require('./setting.png'),
 	transfer: require('./button-transfer.png'),
 	c3po: require('./c3po.png'),
 	users:{

@@ -2,6 +2,7 @@ import React from 'react';
 import { Text, View, ScrollView, ListView,  Image, TouchableOpacity, TouchableHighlight, StyleSheet, Dimensions } from 'react-native';
 import RecipientItem from './RecipientItem';
 
+import Title from '../../../component/Title.js';
 
 import baseStyles from '../../../asset/styles.js';
 import asset from '../../../asset';
@@ -47,7 +48,7 @@ class RecipientSelectionView extends React.Component {
     render() {
         return (
             <View style={styles.container}>
-                <Text style={baseStyles.titles.h1}>{this.props.title || 'B!M'}</Text>
+                <Title title={this.props.title} />
                 <View style={styles.top}>
                     <Text
                     style={{

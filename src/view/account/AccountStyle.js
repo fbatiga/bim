@@ -3,7 +3,9 @@ import baseStyles from '../../asset/styles.js';
 
 
 const AccountStyle = StyleSheet.create({
-    container: {},
+    container: {
+    	flex: 1
+    },
     top: {
         height: 550,
         alignItems: 'stretch',
@@ -50,7 +52,9 @@ const AccountStyle = StyleSheet.create({
     },
 
     dotIcon: {
-        alignItems: 'center',
+    	position : 'absolute',
+        top: 0,
+        left:20,
         marginTop: 25
     },
 

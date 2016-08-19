@@ -1,5 +1,4 @@
 const styles =   {
-
     colors: {
         light: '',
         deepBlue:'#10002B',
@@ -20,7 +19,6 @@ const styles =   {
         mauve: "violet",
         red: "red"
     },
-
     titles : {
         h1: {
             color: '#6bf0cc',

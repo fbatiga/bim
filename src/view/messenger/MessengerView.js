@@ -9,6 +9,7 @@ import MessengerBottom from './layout/MessengerBottom';
 import MessengerStyle from './MessengerStyle';
 import {firebaseDb} from  '../../app/AppFirebase';
 
+
 class MessengerView extends Component {
 
 	constructor(props){
@@ -91,8 +92,10 @@ class MessengerView extends Component {
 		this.props.dispatch(loadButtons(buttons));
 	}
 
+
 	render(){
 		return (
+
 			<View style={MessengerStyle.container}>
 			<View style={ { height: 20 } } />
 			<MessengerMain

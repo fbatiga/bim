@@ -1,6 +1,6 @@
 'use strict'
 import React, { Component } from 'react';
-import { Navigator, Text,  AppState, Platform } from 'react-native';
+import { Navigator, Text,  AppState, Platform , View } from 'react-native';
 import { Actions, Scene, Router , Reducer} from 'react-native-router-flux';
 import {connect} from 'react-redux';
 import {notify} from '../view/messenger/MessengerAction';
@@ -32,13 +32,13 @@ const reducerCreate = params => {
 
 const scenes = Actions.create(
 	<Scene key="root" hideNavBar={true} >
-	<Scene key="launch" component={LaunchView} title="Chargement de l'application" initial={true} />
-	<Scene key="messenger" component={MessengerView} title="Messagerie"/>
-	<Scene key="overview" component={OverviewView}    title="Consultation des comptes"/>
-	<Scene key="account" component={AccountView} title="account"/>
-	<Scene key="card" component={CardView}  title="Cartes"/>
-	<Scene key="contact" component={ContactView} title="Contacts"/>
-	<Scene key="transfer" component={TransferView} title="Virement"/>
+		<Scene key="launch" component={LaunchView} title="Chargement de l'application" />
+		<Scene key="messenger" component={MessengerView} title="Messagerie"  />
+		<Scene key="overview" component={OverviewView}    title="Consultation des comptes" />
+		<Scene key="account" component={AccountView} title="account"   initial={true} />
+		<Scene key="card" component={CardView}  title="Cartes"/>
+		<Scene key="contact" component={ContactView} title="Contacts" />
+		<Scene key="transfer" component={TransferView} title="Virement"/>
 	</Scene>
 	);
 
@@ -88,8 +88,12 @@ class AppNavigator extends Component {
 		}
 	}
 
+
 	render() {
-		return <Router createReducer={reducerCreate} scenes={scenes} />
+		return (
+				<Router createReducer={reducerCreate} scenes={scenes} />
+		);
+
 	}
 
 }
