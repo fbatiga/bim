@@ -54,7 +54,7 @@ const AccountStyle = StyleSheet.create({
         alignItems: 'center',
         marginTop: 10
     },
-    transferButton: { 'position': 'absolute', top: 0, right: 10, borderRadius:100, padding:0, zIndex:100 },
+    transferButton: { 'position': 'absolute', top: 420, right: 10, borderRadius:100, padding:0, zIndex:100 },
 
     closeModalButton: { 'position': 'absolute', top: -70, right: -40, padding:0, width: 100, zIndex: 10 },
 

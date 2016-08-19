@@ -47,13 +47,11 @@ class TransferConfirmView extends React.Component {
                         <View>
                             <Text>
                                 <Text style={{
-                                    color: baseStyles.colors.alternative,
-                                    display: 'inline'
+                                    color: baseStyles.colors.alternative
                                 }}>{this.props.transferTitle}</Text>
                                 <Text style={{color: '#fff'}}> de </Text>
                                 <Text style={{color: baseStyles.colors.alternative}}>{this.props.amount} €</Text>
-                                <Text  style={{color: '#fff'}}> pour
-                                </Text>
+                                <Text  style={{color: '#fff'}}> pour </Text>
                                 <Text style={{color: baseStyles.colors.alternative}}>{this.props.transferRecipient}</Text>
                                 </Text>
                                 </View>

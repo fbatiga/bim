@@ -99,24 +99,14 @@ class AccountView extends Component {
     render() {
         return (
             <View>
-                <TouchableOpacity style={AccountStyle.transferButton} onPress={()=> {
-                    this.setModalVisible(!this.state.modalVisible);
-                }}>
-                    <Image source={asset.transfer}  style={AccountStyle.transferButtonImage} />
-                </TouchableOpacity>
                 <ScrollView
                 horizontal={false} style={AccountStyle.container}>
-
 
                     <Modal
                     animationType={"slide"}
                     transparent={true}
                     visible={this.state.modalVisible}
-                    onRequestClose={() => {
-                        alert("Modal has been closed.")
-                    }}
                     >
-
 
                         <View style={{flex: 1, flexDirection: 'row', alignItems: 'flex-end'}}>
                             <View style={{height: 140, flex: 1}}>
@@ -132,7 +122,8 @@ class AccountView extends Component {
                                     height: 70
                                 }}
                                 onPress={() => {
-                                    Actions.transfer({mode: 'transfer'})
+                                    Actions.transfer({mode: 'transfer'});
+                                    this.setModalVisible(false);
                                 }}>
                                     <Text>Faire un transfert</Text>
                                 </TouchableOpacity>
@@ -144,7 +135,8 @@ class AccountView extends Component {
                                     height: 70
                                 }}
                                 onPress={() => {
-                                    Actions.transfer({mode: 'bim'})
+                                    Actions.transfer({mode: 'bim'});
+                                    this.setModalVisible(false);
                                 }}>
                                     <Text>Faire un Bim</Text>
                                 </TouchableOpacity>
@@ -152,17 +144,14 @@ class AccountView extends Component {
                         </View>
                     </Modal>
 
-
                     <View style={AccountStyle.top}>
                         <MessengerFabButton />
 
                         <Text style={baseStyles.titles.h1}>B!M</Text>
-
                         <TouchableOpacity style={AccountStyle.dotIcon} onPress={()=> {
                             Actions.overview()
                         }}>
                             <Image source={asset.dotIcon}  style={{alignItems: 'center', justifyContent: 'center'}} />
-
                         </TouchableOpacity>
 
                         <View style={AccountStyle.graph}>
@@ -212,6 +201,11 @@ class AccountView extends Component {
                         />
                     </View>
                 </ScrollView>
+                <TouchableOpacity style={AccountStyle.transferButton} onPress={()=> {
+                    this.setModalVisible(!this.state.modalVisible);
+                }}>
+                    <Image source={asset.transfer}  style={AccountStyle.transferButtonImage} />
+                </TouchableOpacity>
             </View>
         );
     }
@@ -236,7 +230,6 @@ class AccountView extends Component {
     }
 
     filterByAll() {
-
         this.state.dataSource = this.state.dataSource.cloneWithRows(this.getTransactions());
         return;
     }

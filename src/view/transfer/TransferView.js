@@ -29,7 +29,7 @@ class TransferView extends Component {
 
         this.state = {
             title: 'B!M',
-            amount: '',
+            amount: '1',
             transferTitle: '',
             transferRecipient: '',
             step: 0
