@@ -5,10 +5,16 @@ import { Dimensions, View, Text, Image, TextInput, TouchableOpacity} from 'react
 import { Actions } from 'react-native-router-flux';
 import TransferStyle from './TransferStyle';
 import baseStyles from '../../asset/styles.js';
+import asset from '../../asset';
+
 
 import {connect} from 'react-redux';
 import {init} from './TransferAction';
 import MessengerFabButton from '../messenger/item/MessengerFabButton.js';
+import AmountSelectionView from './components/AmountSelectionView.js';
+import TransferConfirmView from './components/TransferConfirmView.js';
+import TransferTitleInputView from './components/TransferTitleInputView.js';
+import RecipientSelectionView from './components/RecipientSelectionView.js';
 
 
 class TransferView extends Component {
@@ -16,12 +22,14 @@ class TransferView extends Component {
     constructor(props) {
         super(props);
 
-
         this.state = {
+            title: 'B!M',
             amount: '',
+            transferTitle: '',
+            transferRecipient: '',
+            step: 0
         };
     }
-
 
     componentDidMount() {
         this.props.dispatch(init());
@@ -32,108 +40,48 @@ class TransferView extends Component {
     }
 
     render() {
-        return (
-            <View style={TransferStyle.container}>
-                <Text style={baseStyles.titles.h1}>B1M</Text>
-                <View style={TransferStyle.top}>
-                    <Text style={{
-                        flex: 1,
-                        color: baseStyles.colors.alternative,
-                        height: 30,
-                        marginTop: 10,
-                        width: null
-                    }}>
-                    B!mer la somme de
-                    </Text>
-                    <Text
-                    ref="amountInput"
-                    style={{
-                        flex: 1,
-                        color: 'white',
-                        textAlign: 'center',
-                        borderBottomWidth: 3,
-                        borderBottomColor: "white",
-                        fontSize: 40,
-                        height: 100,
-                        width: null
-                    }}
-                    >{this.state.amount ? this.state.amount + ' €' : 'Votre montant...'}</Text>
-                </View>
-
-                <View style={TransferStyle.bottom}>
-                        {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((value, key) => {
-                            return (<TouchableOpacity style={{}} key={key} onPress={()=> {
-                                this.parseInput(value)
-                            }}>
-                                <Text style={TransferStyle.keyboardButton}>{value}</Text>
-                            </TouchableOpacity>);
-                        })
-                            }
-                    <TouchableOpacity style={{}} >
-                        <Text style={TransferStyle.keyboardButton} onPress={()=> {
-                            this.parseInput('.')
-                        }} >.</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={{}} >
-                        <Text style={TransferStyle.keyboardButton} onPress={()=> {
-                            this.parseInput('0')
-                        }} >0</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={{}} >
-                        <Text style={TransferStyle.keyboardButton} onPress={()=> {
-                            this.parseInput('<')
-                        }} > {'<'} </Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={{
-                        flex: 1,
-                        backgroundColor: baseStyles.colors.lightviolet,
-                        color: 'white',
-                        textAlign: 'center',
-                        padding: 15
-                    }}>
-                        <Text style={{padding: 10, textAlign: 'center'}}>Confirmer</Text>
-                    </TouchableOpacity>
-                </View>
-            </View>
-        );
-    }
-
-
-    parseInput(input) {
-        console.log(this.state);
-        var ln = this.state.amount.length;
-        var append = '';
-        switch (input) {
-            case '0':
-                if (ln > 0) {
-                    append = '0';
-                }
-                break;
-            case '<':
-                console.log(this.state.amount, this.state.amount.substr(0, this.state.amount.length - 2));
-                if (ln > 0) {
-                    append = this.state.amount.substr(0, this.state.amount.length - 1);
-                    this.setState({amount: append});
-                    append = undefined;
-                }
-                break;
-            case '.':
-                if (ln == '0') {
-                    append = '0.';
-                }
-                else if (this.state.amount.indexOf('0') == -1) {
-                    append = '.'
-                }
-                break;
+        console.log('STEP', this.state.step);
+        switch (this.state.step) {
+            case 0:
             default:
-                append = input + "";
+                return (<AmountSelectionView title={this.state.title}  subtitle={'B!MMER LA SOMME DE'} amount={this.state.amount} confirm={this.confirmAmount.bind(this)}/>);
+                break;
+            case 1:
+                return (<RecipientSelectionView title={this.state.title}  subtitle={'Destinataire'}  confirm={this.confirmRecipient.bind(this)} />);
+                break;
+            case 2:
+                return (<TransferTitleInputView title={this.state.title}  subtitle={'NOMMER CE BIM'}  confirm={this.confirmTitle.bind(this)} />);
+                break;
+            case 3:
+                return (<TransferConfirmView title={this.state.title}
+                subtitle={'Confirmer le B1M'}
+                amount={this.state.amount}
+                transferTitle={this.state.transferTitle} confirm={this.confirmTransfer.bind(this)} />);
+                break;
         }
-
-        if (append) {
-            this.setState({amount: this.state.amount + append});
-        }
-
     }
+
+    confirmAmount(amount) {
+        this.state.step = this.state.step + 1;
+        this.setState({amount: amount, step: this.state.step});
+    }
+
+    confirmRecipient(recipient) {
+        console.log(recipient);
+        this.state.step = this.state.step + 1;
+        this.setState({recipient : confirmRecipient,  step: this.state.step });
+    }
+
+    confirmTitle(title) {
+        this.state.step = this.state.step + 1;
+        this.setState({transferTitle: title, step: this.state.step });
+    }
+
+    confirmTransfer(title) {
+        this.state.step = this.state.step + 1;
+     //   this.setState({transferTitle: title, step: this.state.step });
+    }
+
 }
 
 function mapStateToProps(state) {

@@ -87,7 +87,7 @@ class AccountView extends Component {
                     <TouchableOpacity style={{'position': 'absolute', bottom:-40, right: 20, borderRadius:100, padding:0}} onPress={()=> {
                         Actions.transfer()
                     }}>
-                        <Image source={asset.add}  style={{alignItems: 'center', justifyContent: 'center', resizeMode:'contain', width:80, height:80}} />
+                        <Image source={asset.transfer}  style={{alignItems: 'center', justifyContent: 'center', resizeMode:'contain', width:80, height:80}} />
                     </TouchableOpacity>
                 </View>
 
