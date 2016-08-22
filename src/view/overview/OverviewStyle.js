@@ -30,12 +30,10 @@ const OverviewStyle = StyleSheet.create({
         borderRadius: 145
     },
     graphLabel: {
-        fontSize: 8,
+        fontSize: 10,
         color: baseStyles.colors.deepBlue,
         fontWeight: '300',
-        marginBottom: 12,
-        marginLeft:20,
-        marginRight:20,
+        marginBottom: 5,
         overflow: 'hidden',
         textAlign: "center"
     },
@@ -44,11 +42,6 @@ const OverviewStyle = StyleSheet.create({
         color: baseStyles.colors.deepBlue,
         fontWeight: 'bold'
 
-    },
-
-    dotIcon: {
-        alignItems: 'center',
-        marginTop: 25
     },
 
     bottom: {
@@ -87,6 +80,11 @@ const OverviewStyle = StyleSheet.create({
     listView: {
         flex: 10,
         borderColor: "red"
+    },
+    addIcon: {
+      alignItems: 'flex-end',
+      marginRight: -15,
+      marginBottom: 15
     }
 
 });

@@ -46,48 +46,67 @@ class OverviewView extends Component {
 
     render() {
         return (
-            <ScrollView
-            horizontal={false} style={OverviewStyle.container}>
-                <View style={OverviewStyle.top}>
+            <View
+            horizontal={false} style={[OverviewStyle.container, { flex: 1 }]}>
+                <View style={[OverviewStyle.top, { flex: 1 }]}>
                     <MessengerFabButton />
-                    <Text style={baseStyles.titles.h1}>Finances</Text>
+                    <Text style={baseStyles.titles.h1}>Comptes</Text>
 
-                    <ScrollableTabView
-                    style={{marginTop: 20}}
-                    initialPage={0}
-                    tabBarPosition={'bottom'}
-                    tabBarUnderlineColor={'transparent'}
-                    tabBarActiveTextColor={'white'}
-                    tabBarInactiveTextColor={baseStyles.colors.lightviolet}
-                    renderTabBar={() => <ScrollableTabBar   style={{borderBottomWidth:0}}/>}
-                    >
-                           {this.props.overview.accounts.map((value, key) => {
-                               return (
-                                   <View tabLabel={value.label} key={key}>
-                                       <TouchableOpacity style={OverviewStyle.graph} onPress={()=> {
-                                           Actions.account()
-                                       }}>
-                                           <View style={[OverviewStyle.graphCircle , {backgroundColor: (value.type== 'internal' ? baseStyles.colors.alternative :baseStyles.colors.lightviolet)}]}>
-                                               <Text style={OverviewStyle.graphLabel} >SOLDE ACTUEL {this.state.currentMonth}</Text>
-                                               <Text style={OverviewStyle.graphBalance} >{value.balance} €</Text>
-                                           </View>
-                                       </TouchableOpacity>
-
-                                       <TouchableOpacity style={OverviewStyle.dotIcon} onPress={()=> {
-                                           Actions.account()
-                                       }}>
-                                           <Image source={asset.dotIcon}  style={{
-                                               alignItems: 'center',
-                                               justifyContent: 'center'
-                                           }} />
-                                       </TouchableOpacity>
-                                   </View>
-                               );
-                           })}
-                    </ScrollableTabView>
+                    <View>
+                      <ScrollableTabView
+                      style={{marginTop: 20}}
+                      initialPage={0}
+                      tabBarPosition={'bottom'}
+                      tabBarUnderlineColor={'transparent'}
+                      tabBarActiveTextColor={'white'}
+                      tabBarInactiveTextColor={baseStyles.colors.lightviolet}
+                      renderTabBar={() => <ScrollableTabBar style={{ borderBottomWidth: 0 }}/>}
+                      >
+                             {this.props.overview.accounts.map((value, key) => {
+                                 return (
+                                     <View tabLabel={value.label} key={key}>
+                                         <TouchableOpacity style={OverviewStyle.graph} onPress={()=> {
+                                             Actions.account()
+                                         }}>
+                                             <View style={[OverviewStyle.graphCircle , {backgroundColor: (value.type== 'internal' ? baseStyles.colors.alternative :this.randomizeColor())}]}>
+                                                 <Text style={OverviewStyle.graphLabel} >SOLDE ACTUEL</Text>
+                                                 <Text style={OverviewStyle.graphBalance} >{value.balance} €</Text>
+                                             </View>
+                                         </TouchableOpacity>
+                                     </View>
+                                 );
+                             })}
+                      </ScrollableTabView>
+                    </View>
                 </View>
-            </ScrollView>
+
+                <View style={OverviewStyle.addIcon}>
+                  <Image source={asset.add}  style={{
+                    width: 70,
+                    height: 70
+                  }} />
+                </View>
+            </View>
         );
+    }
+
+    randomizeColor() {
+      switch (Math.floor(Math.random() * 3)) {
+        case 0:
+          return baseStyles.colors.white;
+          break;
+        case 1:
+          return baseStyles.colors.pink;
+          break;
+        case 2:
+          return baseStyles.colors.lightblue;
+          break;
+        case 3:
+          return baseStyles.colors.lightGrey;
+          break;
+        default:
+          return baseStyles.colors.lightblue
+      }
     }
 
     renderRow(rowData) {

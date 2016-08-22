@@ -14,10 +14,12 @@ const Vars = {
         cyan: "cyan",
         green: "#47EBAE",
         lemon: "yellow",
-        lightblue: "lightblue",
+        lightblue: "#00DDFF",
         lightviolet: "#b8a4e6",
         mauve: "violet",
-        red: "red"
+        red: "red",
+        pink : '#FF4386',
+        lightGrey: '#DDE6EC'
     },
 
     titles: {
@@ -33,4 +35,3 @@ const Vars = {
 
 
 export default Vars;
-
