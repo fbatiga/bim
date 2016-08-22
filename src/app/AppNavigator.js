@@ -6,6 +6,7 @@ import {connect} from 'react-redux';
 import {notify} from '../view/messenger/MessengerAction';
 
 import LaunchView from '../view/launch/LaunchView';
+import ParametersView from '../view/parameters/ParametersView';
 import MessengerView from '../view/messenger/MessengerView';
 import OverviewView from '../view/overview/OverviewView.js';
 import AccountView from '../view/account/AccountView';
@@ -31,14 +32,15 @@ const reducerCreate = params => {
 };
 
 const scenes = Actions.create(
-    <Scene key="root" hideNavBar={true} >
-        <Scene key="launch" component={LaunchView} title="Chargement de l'application" initial={true} />
+    <Scene key="root" hideNavBar={false} >
+        <Scene key="launch" component={LaunchView} title="Chargement de l'application"  />
         <Scene key="messenger" component={MessengerView} title="Messagerie"/>
-        <Scene key="overview" component={OverviewView}   initial={true}  title="Consultation des comptes"/>
+        <Scene key="overview" component={OverviewView}  initial={true}  title="Consultation des comptes"/>
         <Scene key="account" component={AccountView} title="account"/>
         <Scene key="card" component={CardView}  title="Cartes"/>
-        <Scene key="contact" component={ContactView} title="Contacts"/>
+        <Scene key="contact" component={ContactView}   title="Contacts"/>
         <Scene key="transfer" component={TransferView} title="Virement"/>
+        <Scene key="parameters" component={ParametersView} title="Paramètres" initial={true}/>
     </Scene>
 );
 
