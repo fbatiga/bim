@@ -1,7 +1,7 @@
 'use strict';
 
 import React, { Component } from 'react';
-import { View, Text, Modal, ListView, Image, ScrollView, SegmentedControlIOS, TouchableOpacity, TouchableHighlight} from 'react-native';
+import { View, Text, Modal, ListView, Image, ScrollView, SegmentedControlIOS, TouchableOpacity, TouchableHighlight, Dimensions} from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import moment from 'moment';
 import {firebaseDb} from  '../../app/AppFirebase';
@@ -17,6 +17,10 @@ import AccountItem from './item/AccountItem';
 import AccountTab from './item/AccountTab';
 import MessengerFabButton from '../messenger/item/MessengerFabButton.js';
 
+const {width, height} = Dimensions.get('window');
+const themePreview = 50;
+const themeMargin = 5;
+const themeWidth = width - (themePreview + themeMargin) * 2;
 
 class AccountView extends Component {
 
@@ -43,7 +47,8 @@ class AccountView extends Component {
         this.state = {
             filterIndex: 0,
             currentTab: 'all',
-            currentMonth: 'JUIN',
+            previousMonth: 'Mai',
+            currentMonth: 'Juin',
             balance: this.props.account.balance,
             dataSource: ds,
             modalVisible: false
@@ -98,8 +103,8 @@ class AccountView extends Component {
 
     render() {
         return (
-            <View>
-                <ScrollView
+            <ScrollView>
+                <View
                 horizontal={false} style={AccountStyle.container}>
 
                     <Modal
@@ -109,36 +114,30 @@ class AccountView extends Component {
                     >
 
                         <View style={{flex: 1, flexDirection: 'row', alignItems: 'flex-end'}}>
-                            <View style={{height: 140, flex: 1}}>
+                            <View style={{height: 220, flex: 1}}>
                                 <TouchableOpacity style={AccountStyle.closeModalButton} onPress={()=> {
                                     this.setModalVisible(false);
                                 }}>
                                     <Image source={asset.close}  style={{resizeMode: 'contain', width: 70}} />
                                 </TouchableOpacity>
-                                <TouchableOpacity style={{
-                                    flex: 1,
-                                    backgroundColor: '#fff',
-                                    padding: 15,
-                                    height: 70
-                                }}
+                                <TouchableOpacity style={AccountStyle.modalList}
                                 onPress={() => {
                                     Actions.transfer({mode: 'transfer'});
                                     this.setModalVisible(false);
                                 }}>
+                                  <View style={AccountStyle.modalContent}>
                                     <Text>Faire un transfert</Text>
+                                  </View>
                                 </TouchableOpacity>
 
-                                <TouchableOpacity style={{
-                                    flex: 1,
-                                    backgroundColor: '#fff',
-                                    padding: 15,
-                                    height: 70
-                                }}
+                                <TouchableOpacity style={AccountStyle.modalList}
                                 onPress={() => {
                                     Actions.transfer({mode: 'bim'});
                                     this.setModalVisible(false);
                                 }}>
+                                  <View style={AccountStyle.modalContent}>
                                     <Text>Faire un Bim</Text>
+                                  </View>
                                 </TouchableOpacity>
                             </View>
                         </View>
@@ -147,36 +146,44 @@ class AccountView extends Component {
                     <View style={AccountStyle.top}>
                         <MessengerFabButton />
 
-                        <Text style={baseStyles.titles.h1}>B!M</Text>
-                        <TouchableOpacity style={AccountStyle.dotIcon} onPress={()=> {
-                            Actions.overview()
-                        }}>
-                            <Image source={asset.dotIcon}  style={{alignItems: 'center', justifyContent: 'center'}} />
-                        </TouchableOpacity>
+                        <Text style={baseStyles.titles.h1Dark}>B!M</Text>
 
                         <View style={AccountStyle.graph}>
                             <Image source={asset.graphCircle}  style={AccountStyle.graphCircle}>
-                                <Text style={AccountStyle.graphLabel} >SOLDE ACTUEL {this.state.currentMonth}</Text>
+                                <Text style={AccountStyle.graphLabel} >SOLDE ACTUEL</Text>
                                 <Text style={AccountStyle.graphBalance} >{this.state.balance} €</Text>
                             </Image>
                         </View>
 
                         <View style={AccountStyle.tabs}>
-                            <ScrollView
-                            horizontal={true}>
-                        {this.props.account.categories.map((value, key) => {
-                            return (<AccountTab rowData={value} callback={this.filterByCategory.bind(this)} key={key} />);
-                        })}
-                            </ScrollView>
+                          <ScrollView
+                            style={AccountStyle.tabsContainer}
+                            contentContainerStyle={AccountStyle.tabsContent}
+                            horizontal={true}
+                            automaticallyAdjustInsets={false}
+                            decelerationRate={0}
+                            snapToInterval={themeWidth + themeMargin*2}
+                            snapToAlignment="center">
+                              {this.props.account.categories.map((value, key) => {
+                                return (<AccountTab rowData={value} callback={this.filterByCategory.bind(this)} key={key} />);
+                              })}
+                          </ScrollView>
                         </View>
                     </View>
 
                     <View style={AccountStyle.bottom}>
-                        <View>
-                            <Text style={[baseStyles.titles.h1, AccountStyle.bottomTitle]} >{this.state.currentMonth.toUpperCase()}</Text>
+                        <View style={AccountStyle.dateContainer}>
+                            <View style={AccountStyle.dateLeft}>
+                              <Text style={AccountStyle.previousMonth} >{this.state.previousMonth}</Text>
+                            </View>
+                            <View style={AccountStyle.dateCenter}>
+                              <Text style={[baseStyles.titles.h1, AccountStyle.bottomTitle]} >{this.state.currentMonth}</Text>
+                            </View>
+                            <View style={AccountStyle.dateRight} />
                         </View>
+
                         <View style={AccountStyle.switchContainer}>
-                            <SegmentedControlIOS style={AccountStyle.switch} tintColor={baseStyles.colors.deepBlue} enabled={true} values={['Tout', 'Sorties', 'Entrées']} selectedIndex={this.state.filterIndex}
+                            <SegmentedControlIOS style={AccountStyle.switch} tintColor={baseStyles.colors.lightviolet} enabled={true} values={['Tout', 'Sorties', 'Entrées']} selectedIndex={this.state.filterIndex}
                             onChange={(event) => {
                                 switch (event.nativeEvent.selectedSegmentIndex) {
                                     case 0:
@@ -200,16 +207,15 @@ class AccountView extends Component {
                         enableEmptySections={true}
                         />
                     </View>
-                </ScrollView>
+                </View>
                 <TouchableOpacity style={AccountStyle.transferButton} onPress={()=> {
                     this.setModalVisible(!this.state.modalVisible);
                 }}>
                     <Image source={asset.transfer}  style={AccountStyle.transferButtonImage} />
                 </TouchableOpacity>
-            </View>
+            </ScrollView>
         );
     }
-
 
     renderRow(rowData) {
         return (
