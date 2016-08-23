@@ -15,7 +15,7 @@ const ParametersStyle = StyleSheet.create({
     top: {
         flex: 3,
         justifyContent: 'center',
-        alignItems: 'center',
+        alignItems: 'center'
     }
 });
 

@@ -74,7 +74,7 @@ class OverviewView extends Component {
                                        </TouchableOpacity>
 
                                        <TouchableOpacity style={OverviewStyle.dotIcon} onPress={()=> {
-                                           Actions.account()
+                                           Actions.contact()
                                        }}>
                                            <Image source={asset.dotIcon}  style={{
                                                alignItems: 'center',
