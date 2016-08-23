@@ -1,5 +1,3 @@
-import {StyleSheet} from 'react-native';
-
 const Vars = {
     colors: {
         light: '',
@@ -21,7 +19,6 @@ const Vars = {
         pink : '#FF4386',
         lightGrey: '#DDE6EC'
     },
-
     titles: {
         h1: {
             color: '#6bf0cc',

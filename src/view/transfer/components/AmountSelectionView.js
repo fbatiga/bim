@@ -1,6 +1,8 @@
 import React from 'react';
+
 import { Text, View, Image, TouchableOpacity, TouchableHighlight, StyleSheet, Dimensions } from 'react-native';
 import baseStyles from '../../../styles/vars.js';
+import Title from '../../../component/Title.js';
 import asset from '../../../asset';
 
 const width = Dimensions.get('window').width;
@@ -42,7 +44,7 @@ class AmountSelectionView extends React.Component {
     render() {
         return (
             <View style={styles.container}>
-                <Text style={baseStyles.titles.h1}>{this.props.title || 'B!M'}</Text>
+                <Title title={this.props.title} />
                 <View style={styles.top}>
                     <Text style={{
                         // flex: 1,

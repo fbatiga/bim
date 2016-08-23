@@ -30,10 +30,10 @@ const styles = StyleSheet.create({
 export default
 class TransferConfirmView extends React.Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {transferTitle: this.props.transferTitle};
-    }
+	constructor(props) {
+		super(props);
+		this.state = {transferTitle: this.props.transferTitle};
+	}
 
     render() {
         return (

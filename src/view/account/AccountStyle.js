@@ -7,7 +7,9 @@ const themeMargin = 5;
 const themeWidth = width - (themePreview + themeMargin) * 2;
 
 const AccountStyle = StyleSheet.create({
-    container: {},
+    container: {
+    	flex: 1
+    },
     top: {
         height: 440,
         // alignItems: 'stretch',
@@ -51,9 +53,7 @@ const AccountStyle = StyleSheet.create({
         fontSize: 36,
         color: '#120037',
         fontWeight: 'bold'
-
     },
-
     dotIcon: {
         alignItems: 'center',
         marginTop: 10

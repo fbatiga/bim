@@ -25,6 +25,7 @@
 		378AD5F41D64A86500EC7528 /* libRCTContacts.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 378AD5E91D64A83D00EC7528 /* libRCTContacts.a */; };
 		52072F581D539B010027843C /* libRCTOneSignal.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 52072F571D539AE10027843C /* libRCTOneSignal.a */; };
 		52072F5C1D539BED0027843C /* OneSignal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52072F5B1D539BED0027843C /* OneSignal.framework */; };
+		529A63941D6714710040D8E6 /* Montserrat-ExtraBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 529A63931D6714710040D8E6 /* Montserrat-ExtraBold.otf */; };
 		529A7CCC1D5BE6F100A3B935 /* libCodePush.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 529A7CC01D5BE63300A3B935 /* libCodePush.a */; };
 		529A7CCE1D5BE77500A3B935 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 529A7CCD1D5BE77500A3B935 /* libz.tbd */; };
 		52C392241D59DBCA0042EDB8 /* Launch.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 52C392231D59DBCA0042EDB8 /* Launch.xcassets */; };
@@ -155,6 +156,7 @@
 		378AD5E21D64A83C00EC7528 /* RCTContacts.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTContacts.xcodeproj; path = "../node_modules/react-native-contacts/ios/RCTContacts.xcodeproj"; sourceTree = "<group>"; };
 		52072F521D539AE10027843C /* RCTOneSignal.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTOneSignal.xcodeproj; path = "../node_modules/react-native-onesignal/ios/RCTOneSignal.xcodeproj"; sourceTree = "<group>"; };
 		52072F5B1D539BED0027843C /* OneSignal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OneSignal.framework; sourceTree = "<group>"; };
+		529A63931D6714710040D8E6 /* Montserrat-ExtraBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Montserrat-ExtraBold.otf"; path = "../../../../../../../../../Users/steed/InVision/girodthomas@icloud.com/BiM/Assets/Fonts/Montserrat-ExtraBold.otf"; sourceTree = "<group>"; };
 		529A7CCD1D5BE77500A3B935 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		529A7D0C1D5C7F7C00A3B935 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		52C392231D59DBCA0042EDB8 /* Launch.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Launch.xcassets; path = bimbot/Launch.xcassets; sourceTree = "<group>"; };
@@ -356,6 +358,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				529A63931D6714710040D8E6 /* Montserrat-ExtraBold.otf */,
 				529A7CCD1D5BE77500A3B935 /* libz.tbd */,
 				52072F5B1D539BED0027843C /* OneSignal.framework */,
 				13B07FAE1A68108700A75B9A /* bimbot */,
@@ -612,6 +615,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				529A63941D6714710040D8E6 /* Montserrat-ExtraBold.otf in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				52C392241D59DBCA0042EDB8 /* Launch.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
