@@ -14,6 +14,7 @@ export default {
     userTransfert: require('./user-transfert.png'),
     success: require('./success.png'),
     setting: require('./setting.png'),
+    jackpot: require('./jackpot.png'),
     keyboard:{
         1:  require('./keyboard/1.png'),
         2:  require('./keyboard/2.png'),

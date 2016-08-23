@@ -45,12 +45,17 @@ const initialState = {
             balance: -1129,
             type: "external"
         },
-
         {
             id: 'bdb',
             label: "Banco de brasil",
             balance: -1129,
             type: "external"
+        },
+        {
+          id: 'jackpot',
+          label: 'Cagnotte',
+          balance: '0',
+          type: 'jackpot'
         }
 
     ], currentMonth: 6

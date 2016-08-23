@@ -67,7 +67,7 @@ class OverviewView extends Component {
                                  return (
                                      <View tabLabel={value.label} key={key}>
                                          <TouchableOpacity style={OverviewStyle.graph} onPress={()=> {
-                                             Actions.account()
+                                             value.type === 'jackpot' ? Actions.jackpot() : Actions.account()
                                          }}>
                                              <View style={[OverviewStyle.graphCircle , {backgroundColor: (value.type== 'internal' ? baseStyles.colors.alternative :this.randomizeColor())}]}>
                                                  <Text style={OverviewStyle.graphLabel} >SOLDE ACTUEL</Text>
