@@ -1,7 +1,7 @@
 const Vars = {
     colors: {
         light: '',
-        deepBlue: '#10002B',
+        deepBlue: '#120037',
         alternative: '#6bf0cc',
         primary: '#A28CDA',
         white: "#fff",

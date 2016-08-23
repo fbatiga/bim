@@ -10,6 +10,7 @@ import ParametersView from '../view/parameters/ParametersView';
 import MessengerView from '../view/messenger/MessengerView';
 import OverviewView from '../view/overview/OverviewView.js';
 import AccountView from '../view/account/AccountView';
+import JackpotView from '../view/jackpot/JackpotView';
 import CardView from '../view/card/CardView';
 import ContactView from '../view/contact/ContactView';
 import TransferView from '../view/transfer/TransferView';
@@ -37,6 +38,7 @@ const scenes = Actions.create(
         <Scene key="messenger" component={MessengerView} title="Messagerie"/>
         <Scene key="overview" component={OverviewView} title="Consultation des comptes"/>
         <Scene key="account" component={AccountView}  title="account"/>
+        <Scene key="jackpot" component={JackpotView} title="jackpot"/>
         <Scene key="card" component={CardView}     title="Cartes"/>
         <Scene key="contact" component={ContactView}   title="Contacts"/>
         <Scene key="transfer" component={TransferView} title="Virement"/>
@@ -102,4 +104,3 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps)(AppNavigator);
-
