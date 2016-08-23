@@ -1,17 +1,17 @@
 export default {
-    logo : require('./logo.png'),
-    login : require('./login.png'),
-    bottomButton : require('./bottomButton.png'),
-    graphCircle: require('./circle.png'),
-    dotIcon: require('./dotIcon.png'),
-    add: require('./add.png'),
-    bot: require('./bot.png'),
-    user: require('./user.png'),
-    wait: require('./wait.gif'),
-    close: require('./close.png'),
-    transfer: require('./button-transfer.png'),
-    c3po: require('./c3po.png'),
-    keyboard:{
+	logo : require('./logo.png'),
+	login : require('./login.png'),
+	bottomButton : require('./bottomButton.png'),
+	graphCircle: require('./circle.png'),
+	dotIcon: require('./dotIcon.png'),
+	add: require('./add.png'),
+	bot: require('./bot.png'),
+	user: require('./user.png'),
+	wait: require('./wait.gif'),
+	setting: require('./setting.png'),
+	transfer: require('./button-transfer.png'),
+	c3po: require('./c3po.png'),
+	keyboard:{
         1:  require('./keyboard/1.png'),
         2:  require('./keyboard/2.png'),
         3:  require('./keyboard/3.png'),
@@ -26,11 +26,11 @@ export default {
         'virgule':  require('./keyboard/virgule.png')
     },
     users:{
-        1:  require('./users/1.png'),
-        2:  require('./users/2.png'),
-        3:  require('./users/3.png'),
-        4:  require('./users/4.png')
-    },
+		1:  require('./users/1.png'),
+		2:  require('./users/2.png'),
+		3:  require('./users/3.png'),
+		4:  require('./users/4.png')
+	},
     tabs: {
         white: require('./tabs/white.png'),
         yellow: require('./tabs/yellow.png'),

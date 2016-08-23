@@ -9,6 +9,7 @@ import MessengerBottom from './layout/MessengerBottom';
 import MessengerStyle from './MessengerStyle';
 import {firebaseDb} from  '../../app/AppFirebase';
 
+
 class MessengerView extends Component {
 
 	constructor(props){
@@ -20,6 +21,9 @@ class MessengerView extends Component {
 	}
 
 	componentDidMount(){
+
+
+		console.log('componentDidMount',  this.props);
 
 		this.props.dispatch(getReply({
 			msg : 'hello',
@@ -41,8 +45,7 @@ class MessengerView extends Component {
 
 
 	componentWillReceiveProps(nextProps){
-
-		console.log('componentWillReceiveProps',this.props.messenger.notification, nextProps.messenger.notification);
+		console.log('componentWillReceiveProps', this.props, nextProps);
 
 		if(this.props.messenger.notification != nextProps.messenger.notification  && nextProps.messenger.notification != false){
 
@@ -72,7 +75,24 @@ class MessengerView extends Component {
 				msg : 'hello',
 				session : this.props.messenger.session
 			}));
+
 		}
+	}
+
+
+	componentDidUpdate(){
+
+		if(this.props.messenger.bot == true  && this.props.messenger.messages.length == 0){
+/*
+			this.props.dispatch(getReply({
+				msg : 'hello',
+				session : this.props.messenger.session
+			}));
+
+			*/
+
+		}
+
 	}
 
 	onSend(text) {
@@ -91,8 +111,10 @@ class MessengerView extends Component {
 		this.props.dispatch(loadButtons(buttons));
 	}
 
+
 	render(){
 		return (
+
 			<View style={MessengerStyle.container}>
 			<View style={ { height: 20 } } />
 			<MessengerMain

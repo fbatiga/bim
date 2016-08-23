@@ -4,7 +4,9 @@ import baseStyles from '../../styles/vars';
 
 console.log(baseStyles);
 const AccountStyle = StyleSheet.create({
-    container: {},
+    container: {
+    	flex: 1
+    },
     top: {
         height: 420,
         alignItems: 'stretch',
@@ -47,9 +49,7 @@ const AccountStyle = StyleSheet.create({
         fontSize: 36,
         color: '#FFF',
         fontWeight: 'bold'
-
     },
-
     dotIcon: {
         alignItems: 'center',
         marginTop: 10

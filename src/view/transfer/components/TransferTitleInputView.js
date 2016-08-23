@@ -1,5 +1,6 @@
 import React from 'react';
 import { Text, View, TextInput,  TouchableOpacity, TouchableHighlight, StyleSheet, Dimensions } from 'react-native';
+import Title from '../../../component/Title.js';
 import baseStyles from '../../../styles/vars';
 
 const width = Dimensions.get('window').width;
@@ -42,7 +43,7 @@ class TransferTitleInputView extends React.Component {
     render() {
         return (
             <View style={styles.container}>
-                <Text style={baseStyles.titles.h1}>{this.props.title || 'B!M'}</Text>
+                <Title title={this.props.title} />
                 <View style={styles.top}>
                     <Text style={{
                         flex: 1,

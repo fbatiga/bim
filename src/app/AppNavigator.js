@@ -1,6 +1,6 @@
 'use strict'
 import React, { Component } from 'react';
-import { Navigator, Text,  AppState, Platform } from 'react-native';
+import { Navigator, Text,  AppState, Platform , View } from 'react-native';
 import { Actions, Scene, Router , Reducer} from 'react-native-router-flux';
 import {connect} from 'react-redux';
 import {notify} from '../view/messenger/MessengerAction';
@@ -43,6 +43,8 @@ const scenes = Actions.create(
         <Scene key="parameters" component={ParametersView} title="Paramètres"/>
     </Scene>
 );
+
+
 
 class AppNavigator extends Component {
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Text, View, ScrollView, ListView,  Image, TouchableOpacity, TouchableHighlight, StyleSheet, Dimensions } from 'react-native';
 import RecipientItem from './RecipientItem';
+import Title from '../../../component/Title.js';
 import Contacts from 'react-native-contacts';
 import asset from '../../../asset';
 import baseStyles from '../../../styles/vars';
@@ -25,8 +26,7 @@ const styles = StyleSheet.create({
     }
 });
 
-export default
-class RecipientSelectionView extends React.Component {
+export default class RecipientSelectionView extends React.Component {
 
     constructor(props) {
 
@@ -55,7 +55,7 @@ class RecipientSelectionView extends React.Component {
     render() {
         return (
             <View style={styles.container}>
-                <Text style={baseStyles.titles.h1}>{this.props.title || 'B!M'}</Text>
+                <Title title={this.props.title} />
                 <View style={styles.top}>
                     <Text
                     style={{
