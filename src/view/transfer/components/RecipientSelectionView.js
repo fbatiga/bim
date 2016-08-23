@@ -2,7 +2,6 @@ import React from 'react';
 import { Text, View, ScrollView, ListView,  Image, TouchableOpacity, TouchableHighlight, StyleSheet, Dimensions } from 'react-native';
 import RecipientItem from './RecipientItem';
 import Title from '../../../component/Title.js';
-import baseStyles from '../../../asset/styles.js';
 import Contacts from 'react-native-contacts';
 import asset from '../../../asset';
 import baseStyles from '../../../styles/vars';

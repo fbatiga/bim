@@ -83,11 +83,13 @@ class MessengerView extends Component {
 	componentDidUpdate(){
 
 		if(this.props.messenger.bot == true  && this.props.messenger.messages.length == 0){
-
+/*
 			this.props.dispatch(getReply({
 				msg : 'hello',
 				session : this.props.messenger.session
 			}));
+
+			*/
 
 		}
 

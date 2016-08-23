@@ -1,6 +1,5 @@
 import React from 'react';
 import { Text, View, TextInput,  TouchableOpacity, TouchableHighlight, StyleSheet, Dimensions } from 'react-native';
-import baseStyles from '../../../asset/styles.js';
 import Title from '../../../component/Title.js';
 import baseStyles from '../../../styles/vars';
 

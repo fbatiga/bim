@@ -1,13 +1,9 @@
 import React from 'react';
-<<<<<<< HEAD
-import { Text, View, TouchableOpacity, TouchableHighlight, StyleSheet, Dimensions } from 'react-native';
-import baseStyles from '../../../asset/styles.js';
-import Title from '../../../component/Title.js';
-=======
+
 import { Text, View, Image, TouchableOpacity, TouchableHighlight, StyleSheet, Dimensions } from 'react-native';
 import baseStyles from '../../../styles/vars.js';
+import Title from '../../../component/Title.js';
 import asset from '../../../asset';
->>>>>>> master
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
