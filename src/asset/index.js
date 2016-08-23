@@ -3,6 +3,7 @@ export default {
     launch : require('./launch.png'),
     bottomButton : require('./bottomButton.png'),
     graphCircle: require('./circle.png'),
+    graphCircled: require('./circleAccount.png'),
     dotIcon: require('./dotIcon.png'),
     add: require('./add.png'),
     bot: require('./bot.png'),

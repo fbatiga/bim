@@ -11,20 +11,16 @@ const AccountStyle = StyleSheet.create({
     	flex: 1
     },
     top: {
-        height: 440,
-        // alignItems: 'stretch',
+        height: (height - 225),
         backgroundColor: baseStyles.colors.alternative,
         paddingTop: 15,
-        // position: 'relative',
-        // top: 0,
-        // left: 0,
         overflow: 'visible',
         zIndex: 10
     },
-    // tabs: {
-    //     overflow: 'hidden',
-    //     height: 75
-    // },
+    tabs: {
+        // overflow: 'hidden',
+        flex: 1
+    },
     graph: {
         alignItems: 'center'
     },
@@ -32,10 +28,8 @@ const AccountStyle = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         width: null,
-        height: 240,
+        height: 220,
         resizeMode: 'stretch',
-        padding: 10,
-        marginBottom: 10
     },
     graphLabel: {
         fontSize: 10,
@@ -61,7 +55,7 @@ const AccountStyle = StyleSheet.create({
 
     transferButton: {
       position: 'absolute',
-      top: (height - 250),
+      top: (height - 215),
       right: -10,
       borderRadius: 100,
       padding: 0,
@@ -136,7 +130,7 @@ const AccountStyle = StyleSheet.create({
       flex: 1,
       backgroundColor: '#fff',
       padding: 15,
-      height: 110,
+      height: 100,
       borderBottomWidth: 1,
       borderBottomColor: '#E3E4E3',
       justifyContent: 'center'
@@ -149,7 +143,6 @@ const AccountStyle = StyleSheet.create({
       flex: 1
     },
     tabsContent: {
-      marginTop: 20,
       paddingHorizontal: themePreview,
       alignItems: 'center',
       flex: 1
