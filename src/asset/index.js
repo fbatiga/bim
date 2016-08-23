@@ -46,5 +46,10 @@ export default {
         lightviolet: require('./tabs/lightviolet.png'),
         mauve: require('./tabs/mauve.png'),
         red: require('./tabs/red.png')
+    },
+    screens: {
+        parameters: require('./screens/parameters.png'),
+        contactsList: require('./screens/contactsList.png'),
+        contact: require('./screens/contact.png')
     }
 };
