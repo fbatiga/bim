@@ -34,9 +34,9 @@ const reducerCreate = params => {
 
 const scenes = Actions.create(
     <Scene key="root" hideNavBar={true} >
-        <Scene key="launch" component={LaunchView} title="Chargement de l'application"  />
+        <Scene key="launch" component={LaunchView} initial={true} title="Chargement de l'application"  />
         <Scene key="messenger" component={MessengerView} title="Messagerie"/>
-        <Scene key="overview" component={OverviewView} initial={true} title="Consultation des comptes"/>
+        <Scene key="overview" component={OverviewView} title="Consultation des comptes"/>
         <Scene key="account" component={AccountView}  title="account"/>
         <Scene key="jackpot" component={JackpotView} title="jackpot"/>
         <Scene key="card" component={CardView}     title="Cartes"/>
