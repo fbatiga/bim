@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import baseStyles from '../../asset/styles.js';
+import baseStyles from '../../styles/vars.js';
 
 
 const OverviewStyle = StyleSheet.create({

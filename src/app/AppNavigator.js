@@ -6,6 +6,7 @@ import {connect} from 'react-redux';
 import {notify} from '../view/messenger/MessengerAction';
 
 import LaunchView from '../view/launch/LaunchView';
+import ParametersView from '../view/parameters/ParametersView';
 import MessengerView from '../view/messenger/MessengerView';
 import OverviewView from '../view/overview/OverviewView.js';
 import AccountView from '../view/account/AccountView';
@@ -21,87 +22,83 @@ import { UserSlack } from './AppSlack';
 //const firebaseRef = firebaseDb.ref('alice/device');
 
 const reducerCreate = params => {
-	const defaultReducer = Reducer(params);
-	return (state, action) => {
-		if(action.type == 'REACT_NATIVE_ROUTER_FLUX_FOCUS'){
-			UserSlack.text('` => '+action.scene.title+' <=`', false);
-		}
-		return defaultReducer(state, action);
-	}
+    const defaultReducer = Reducer(params);
+    return (state, action) => {
+        if (action.type == 'REACT_NATIVE_ROUTER_FLUX_FOCUS') {
+            UserSlack.text('` => ' + action.scene.title + ' <=`', false);
+        }
+        return defaultReducer(state, action);
+    }
 };
 
 const scenes = Actions.create(
-	<Scene key="root" hideNavBar={true} >
-		<Scene key="launch" component={LaunchView} title="Chargement de l'application" />
-		<Scene key="messenger" component={MessengerView} title="Messagerie"  />
-		<Scene key="overview" component={OverviewView}    title="Consultation des comptes" />
-		<Scene key="account" component={AccountView} title="account"   initial={true} />
-		<Scene key="card" component={CardView}  title="Cartes"/>
-		<Scene key="contact" component={ContactView} title="Contacts" />
-		<Scene key="transfer" component={TransferView} title="Virement"/>
-	</Scene>
-	);
+    <Scene key="root" hideNavBar={false} >
+        <Scene key="launch" component={LaunchView} title="Chargement de l'application"  />
+        <Scene key="messenger" component={MessengerView} title="Messagerie"/>
+        <Scene key="overview" component={OverviewView}  initial={true}  title="Consultation des comptes"/>
+        <Scene key="account" component={AccountView} title="account"/>
+        <Scene key="card" component={CardView}  title="Cartes"/>
+        <Scene key="contact" component={ContactView}   title="Contacts"/>
+        <Scene key="transfer" component={TransferView} title="Virement"/>
+        <Scene key="parameters" component={ParametersView} title="Paramètres" />
+    </Scene>
+);
+
+
 
 class AppNavigator extends Component {
 
-	constructor(props) {
-		super(props);
-		this.pendingNotifications= [];
-		this.handleAppStateChange = this.handleAppStateChange.bind(this);
-	}
+    constructor(props) {
+        super(props);
+        this.pendingNotifications = [];
+        this.handleAppStateChange = this.handleAppStateChange.bind(this);
+    }
 
-	handleNotification (message, data, isActive) {
-	}
+    handleNotification(message, data, isActive) {
+    }
 
-	componentDidMount() {
+    componentDidMount() {
+        OneSignal.configure({
+            onNotificationOpened: this.handleNotification.bind(this)
+        });
+        AppState.addEventListener('change', this.handleAppStateChange);
+        OneSignal.sendTags({user: 'alice'});
+    }
 
-		OneSignal.configure({
-			onNotificationOpened: this.handleNotification.bind(this)
-		});
+    componentWillUnmount() {
+        AppState.removeEventListener('change', this.handleAppStateChange);
+    }
 
-		AppState.addEventListener('change', this.handleAppStateChange);
+    handleAppStateChange(appState) {
 
-		OneSignal.sendTags( { user: 'alice' });
-	}
+        console.log('handleAppStateChange', appState);
+        if (appState === 'background') {
+            // if (Platform.OS === 'ios') {
+            // 	date = date.toISOString();
+            // }
 
-	componentWillUnmount() {
-		AppState.removeEventListener('change', this.handleAppStateChange);
-	}
+            // PushNotification.localNotificationSchedule({
+            // 	message: "My Notification Message",
+            // 	date,
+            // });
+        }
 
-	handleAppStateChange(appState) {
-
-		console.log('handleAppStateChange', appState);
-		if (appState === 'background') {
-			// if (Platform.OS === 'ios') {
-			// 	date = date.toISOString();
-			// }
-
-			// PushNotification.localNotificationSchedule({
-			// 	message: "My Notification Message",
-			// 	date,
-			// });
-		}
-
-		if (appState === 'active') {
+        if (appState === 'active') {
 
 
-		}
-	}
+        }
+    }
 
-
-	render() {
-		return (
-				<Router createReducer={reducerCreate} scenes={scenes} />
-		);
-
-	}
+    render() {
+        return <Router createReducer={reducerCreate} scenes={scenes} />
+    }
 
 }
 
 function mapStateToProps(state) {
-	return {
-		messenger : state.messenger
-	};
+    return {
+        messenger: state.messenger
+    };
 }
 
 export default connect(mapStateToProps)(AppNavigator);

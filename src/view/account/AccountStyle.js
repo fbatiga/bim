@@ -1,13 +1,14 @@
 import {StyleSheet} from 'react-native';
-import baseStyles from '../../asset/styles.js';
+import baseStyles from '../../styles/vars';
 
 
+console.log(baseStyles);
 const AccountStyle = StyleSheet.create({
     container: {
     	flex: 1
     },
     top: {
-        height: 550,
+        height: 420,
         alignItems: 'stretch',
         backgroundColor: baseStyles.colors.deepBlue,
         paddingTop: 15,
@@ -27,7 +28,7 @@ const AccountStyle = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         width: null,
-        height: 290,
+        height: 240,
         resizeMode: 'stretch',
         padding: 10,
         marginBottom: 10
@@ -37,7 +38,7 @@ const AccountStyle = StyleSheet.create({
         color: '#9FA2A7',
         fontWeight: '300',
         marginBottom: 12,
-        width: 230,
+        width: 180,
         marginLeft: 20,
         marginRight: 20,
         overflow: 'hidden',
@@ -48,15 +49,16 @@ const AccountStyle = StyleSheet.create({
         fontSize: 36,
         color: '#FFF',
         fontWeight: 'bold'
-
     },
-
     dotIcon: {
-    	position : 'absolute',
-        top: 0,
-        left:20,
-        marginTop: 25
+        alignItems: 'center',
+        marginTop: 10
     },
+    transferButton: { 'position': 'absolute', top: 420, right: 10, borderRadius:100, padding:0, zIndex:100 },
+
+    closeModalButton: { 'position': 'absolute', top: -70, right: -40, padding:0, width: 100, zIndex: 10 },
+
+    transferButtonImage: {},
 
     bottom: {
         /*

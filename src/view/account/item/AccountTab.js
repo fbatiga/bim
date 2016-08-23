@@ -1,15 +1,15 @@
 import React from 'react';
 import { Text, View, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import asset from '../../../asset';
+
 const tabStyles = StyleSheet.create({
     button: {
         margin: 10,
         borderRadius: 0,
-        paddingTop: 20,
-        paddingBottom: 20,
+        paddingTop: 10,
         paddingLeft: 1,
         paddingRight: 1,
-        height: 30,
+        height: 20,
         backgroundColor: 'transparent',
         alignItems:'center'
     },
@@ -29,7 +29,6 @@ class AccountTab extends React.Component {
                 <Text style={tabStyles.text}>
 				{this.props.rowData.label}
                 </Text>
-                <Image source={asset.tabs[this.props.rowData.color]} style={{marginTop: 5}}/>
             </TouchableOpacity>
         );
     }

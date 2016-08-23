@@ -1,12 +1,11 @@
 import React from 'react';
 import { Text, View, ScrollView, ListView,  Image, TouchableOpacity, TouchableHighlight, StyleSheet, Dimensions } from 'react-native';
 import RecipientItem from './RecipientItem';
-
 import Title from '../../../component/Title.js';
-
 import baseStyles from '../../../asset/styles.js';
+import Contacts from 'react-native-contacts';
 import asset from '../../../asset';
-
+import baseStyles from '../../../styles/vars';
 
 const width = Dimensions.get('window').width;
 const styles = StyleSheet.create({
@@ -28,21 +27,30 @@ const styles = StyleSheet.create({
     }
 });
 
-export default
-class RecipientSelectionView extends React.Component {
+export default class RecipientSelectionView extends React.Component {
 
     constructor(props) {
-        const ds = new ListView.DataSource({
+
+        super(props);
+        this.ds = new ListView.DataSource({
             rowHasChanged: (r1, r2) => (r1 !== r2)
         });
 
-        super(props);
         this.state = {
             amount: this.props.amount,
-            dataSource: ds.cloneWithRows([{contactName: 'Faou ABAITGA ', subTitle: 'BIM', picture: ''},
-                {contactName: 'Faou ABAITGA ', subTitle: 'Societe generale', picture: ''},
-                {contactName: 'MAx lamark ', subTitle: '0658430239', picture: ''}])
+            contacts: this.ds.cloneWithRows([])
         };
+
+
+        Contacts.getAll((err, contacts) => {
+            if(err && err.type === 'permissionDenied'){
+                // x.x
+            } else {
+                console.log(contacts);
+                this.setState({contacts: this.ds.cloneWithRows(contacts)});
+            }
+        });
+
     }
 
     render() {
@@ -68,7 +76,7 @@ class RecipientSelectionView extends React.Component {
                 <View style={styles.bottom}>
                     <ListView
                     ref="listView"
-                    dataSource={this.state.dataSource}
+                    dataSource={this.state.contacts}
                     renderRow={this.renderRecipientRow.bind(this)}
                     enableEmptySections={true}
                     >
@@ -79,8 +87,10 @@ class RecipientSelectionView extends React.Component {
     }
 
     renderRecipientRow(rowData, key) {
+        console.log(this.props.confirm);
         return (
             <RecipientItem
+                confirm={this.props.confirm}
             rowData={rowData}
             key={key}
             />

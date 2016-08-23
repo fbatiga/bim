@@ -1,10 +1,13 @@
 import {StyleSheet} from 'react-native';
 
-const BaseStyle = StyleSheet.create({
+const ParametersStyle = StyleSheet.create({
     container: {
         flex: 1,
+        flexDirection: 'column',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        width:null,
+        height:null
     },
     bottom: {
         flex: 4
@@ -16,4 +19,4 @@ const BaseStyle = StyleSheet.create({
     }
 });
 
-export default BaseStyle;
+export default ParametersStyle;

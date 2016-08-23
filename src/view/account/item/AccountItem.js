@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text, View, TouchableOpacity, TouchableHighlight, StyleSheet } from 'react-native';
-import baseStyles from '../../../asset/styles.js';
+import baseStyles from '../../../styles/vars.js';
 
 
 const styles = StyleSheet.create({
