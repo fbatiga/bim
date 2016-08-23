@@ -9,7 +9,7 @@ import momentfr from 'moment/locale/fr';
 
 const initialState = {
     categories: [
-        {label: 'TOUTES', categoryId: "all", color: 'white'},
+        {label: 'TOUT', categoryId: "all", color: 'white'},
         {label: 'BANQUE', categoryId: "banque", color: 'violet'},
         {label: 'ABONNEMENTS', categoryId: "abonnements", color: 'orange'},
         {label: 'BARS & RESTAURANT', categoryId: "bar-restaurants", color: 'cyan'},

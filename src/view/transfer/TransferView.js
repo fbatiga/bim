@@ -60,7 +60,7 @@ class TransferView extends Component {
             case 3:
                 return (<TransferConfirmView
                 title={this.state.title}
-                subTitle={'Confirmer le B1M'}
+                subTitle={'Confirmer le B!M'}
                 amount={this.state.amount}
                 transferTitle={this.state.transferTitle}
                 transferRecipient={this.state.transferRecipient}

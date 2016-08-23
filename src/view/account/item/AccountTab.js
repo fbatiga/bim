@@ -1,20 +1,20 @@
 import React from 'react';
 import { Text, View, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import asset from '../../../asset';
+import AccountStyle from '../AccountStyle';
 
 const tabStyles = StyleSheet.create({
-    button: {
-        margin: 10,
-        borderRadius: 0,
-        paddingTop: 10,
-        paddingLeft: 1,
-        paddingRight: 1,
-        height: 20,
-        backgroundColor: 'transparent',
-        alignItems:'center'
-    },
+    // button: {
+    //     margin: 10,
+    //     borderRadius: 0,
+    //     paddingTop: 10,
+    //     paddingHorizontal: 25,
+    //     height: 20,
+    //     backgroundColor: 'transparent',
+    //     alignItems:'center'
+    // },
     text: {
-        color: '#fff',
+        color: '#120037',
         fontSize: 14
     }
 });
@@ -25,11 +25,13 @@ class AccountTab extends React.Component {
     render() {
         const flexStyle = {};
         return (
+          <View style={AccountStyle.tab}>
             <TouchableOpacity style={tabStyles.button} onPressIn={()=>{this.props.callback(this.props.rowData.categoryId)}} >
-                <Text style={tabStyles.text}>
-				{this.props.rowData.label}
-                </Text>
+              <Text style={tabStyles.text}>
+                {this.props.rowData.label}
+              </Text>
             </TouchableOpacity>
+          </View>
         );
     }
 

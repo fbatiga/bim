@@ -12,14 +12,23 @@ const Vars = {
         cyan: "cyan",
         green: "#47EBAE",
         lemon: "yellow",
-        lightblue: "lightblue",
+        lightblue: "#00DDFF",
         lightviolet: "#b8a4e6",
         mauve: "violet",
-        red: "red"
+        red: "red",
+        pink : '#FF4386',
+        lightGrey: '#DDE6EC'
     },
     titles: {
         h1: {
             color: '#6bf0cc',
+            fontSize: 40,
+            fontWeight: '700',
+            textAlign: "left",
+            marginTop: 20
+        },
+        h1Dark: {
+            color: '#120037',
             fontSize: 40,
             fontWeight: '700',
             textAlign: "left",
@@ -30,4 +39,3 @@ const Vars = {
 
 
 export default Vars;
-

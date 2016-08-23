@@ -1,69 +1,53 @@
-import React from 'react';
-import { Text, View, TextInput,  TouchableOpacity, TouchableHighlight, StyleSheet, Dimensions } from 'react-native';
+import React, { Component } from 'react';
+import { Text, View, TextInput,  TouchableOpacity, TouchableHighlight, StyleSheet, Dimensions, Image } from 'react-native';
 import baseStyles from '../../../styles/vars';
 import asset from '../../../asset';
 
-
 const width = Dimensions.get('window').width;
 const styles = StyleSheet.create({
-    container: {
-        backgroundColor: baseStyles.colors.deepBlue,
-        flex: 1,
-        alignItems: 'stretch',
-        flexDirection: "column"
-    },
-    top: {
-        flex: 1,
-        backgroundColor: baseStyles.colors.deepBlue,
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    box: {
-        alignItems: 'center'
-    }
+  container: {
+    backgroundColor: baseStyles.colors.deepBlue,
+    flex: 1
+  },
+  top: {
+    flex: 1,
+    backgroundColor: baseStyles.colors.deepBlue,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  image: {
+      height: 100,
+      width: 100,
+      resizeMode: 'stretch'
+  },
 });
 
-export default
-class TransferSuccessView extends React.Component {
+export default class TransferSuccessView extends Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {transferTitle: this.props.transferTitle};
-    }
+  constructor(props) {
+    super(props);
+    this.state = {transferTitle: this.props.transferTitle};
+  }
 
-    render() {
-        return (
-            <View style={styles.container}>
-                <Text style={baseStyles.titles.h1}>{this.props.title || 'B!M'}</Text>
-                <View style={styles.top}>
-                    <View style={styles.box}>
-                        <Text style={{
-                            flex: 1,
-                            color: baseStyles.colors.alternative,
-                            height: 30,
-                            marginTop: 10,
-                            width: null
-                        }}>
-                        {this.props.subTitle || 'YOUPI' }</Text>
-                        <View>
-                            <Text>
-                                <Text style={{
-                                    color: baseStyles.colors.alternative,
-                                }}>{this.props.transferTitle}</Text>
-                                <Text style={{color: '#fff'}}> de </Text>
-                                <Text style={{color: baseStyles.colors.alternative}}>{this.props.amount} €</Text>
-                                <Text  style={{color: '#fff'}}> pour </Text>
-                                <Text style={{color: baseStyles.colors.alternative}}>{this.props.transferRecipient}</Text>
-                            </Text>
-                        </View>
-                    </View>
-                </View>
-
-            </View>
-        );
-    }
+  render() {
+    return (
+      <View style={styles.container}>
+        <Text style={baseStyles.titles.h1}>{this.props.title || 'B!M'}</Text>
+        <View style={styles.top}>
+          <Image source={asset.success} style={styles.image}/>
+          <Text style={{
+            color: '#fff',
+            fontSize: 20,
+            marginTop: 25
+          }}>
+            {this.props.subTitle || 'Transfert effectué !' }
+          </Text>
+        </View>
+      </View>
+    );
+  }
 }
 
 TransferSuccessView.propTypes = {
-    title: React.PropTypes.string
+  title: React.PropTypes.string
 };
