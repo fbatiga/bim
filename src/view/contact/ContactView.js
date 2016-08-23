@@ -24,7 +24,7 @@ class ContactView extends Component {
     render() {
         return (
             <View style={ContactStyle.container}>
-                <PageViewer pages={[asset.screens.contactsList, asset.screens.contact]} />
+                <PageViewer pages={['contactsList', 'contact' ]} />
             </View>
         );
     }
