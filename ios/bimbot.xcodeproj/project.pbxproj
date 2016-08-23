@@ -432,7 +432,7 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						DevelopmentTeam = RWQG3N6Z69;
+						DevelopmentTeam = 5MD873H7K8;
 					};
 				};
 			};
@@ -754,7 +754,7 @@
 					"-lc++",
 				);
 				PRODUCT_NAME = bimbot;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -790,7 +790,7 @@
 					"-lc++",
 				);
 				PRODUCT_NAME = bimbot;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -877,7 +877,7 @@
 					"-lc++",
 				);
 				PRODUCT_NAME = bimbot;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Staging;
 		};
