@@ -2,12 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>UIAppFonts</key>
-	<array>
-		<string>Montserrat-ExtraBold.otf</string>
-	</array>
-	<key>LSApplicationCategoryType</key>
-	<string>public.app-category.finance</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>fr-FR</string>
 	<key>CFBundleDisplayName</key>
@@ -27,11 +21,13 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>8</string>
+	<string>9</string>
 	<key>CodePushDeploymentKey</key>
 	<string>$(CODEPUSH_KEY)</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
+	<key>LSApplicationCategoryType</key>
+	<string>public.app-category.finance</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -47,6 +43,10 @@
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Montserrat-ExtraBold.otf</string>
+	</array>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>remote-notification</string>
