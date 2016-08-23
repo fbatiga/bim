@@ -152,7 +152,7 @@ const AccountStyle = StyleSheet.create({
       marginTop: 20,
       paddingHorizontal: themePreview,
       alignItems: 'center',
-      // flex: 1
+      flex: 1
     },
     tab: {
       flex: 1,

@@ -20,13 +20,14 @@ const styles = StyleSheet.create({
         height: height / 2,
         flexWrap: 'wrap',
         alignItems: 'flex-start',
-        flexDirection: 'row'
+        flexDirection: 'row',
 
     },
     keyboardButton: {
         padding: 20,
         width: width * 0.33,
-        textAlign: 'center'
+        textAlign: 'center',
+        fontSize: 22
     }
 });
 
@@ -44,18 +45,20 @@ class AmountSelectionView extends React.Component {
                 <Text style={baseStyles.titles.h1}>{this.props.title || 'B!M'}</Text>
                 <View style={styles.top}>
                     <Text style={{
-                        flex: 1,
+                        // flex: 1,
                         color: baseStyles.colors.alternative,
                         height: 30,
                         marginTop: 10,
-                        width: null
+                        width: null,
+                        fontSize: 22,
+                        marginBottom: 25
                     }}>
-                    {this.props.subtitle || 'B!MER LA SOMME DE' }
+                    {this.props.subtitle || 'B!MMER LA SOMME DE' }
                     </Text>
                     <Text
                     ref="amountInput"
                     style={{
-                        flex: 1,
+                        // flex: 1,
                         color: 'white',
                         textAlign: 'center',
                         borderBottomWidth: 3,
@@ -76,7 +79,7 @@ class AmountSelectionView extends React.Component {
                     this.props.confirm(this.state.amount)
                 }}
                 >
-                    <Text style={{padding: 10, textAlign: 'center'}}>Confirmer</Text>
+                    <Text style={{padding: 10, textAlign: 'center', color: '#fff' }}>CONFIRMER</Text>
                 </TouchableOpacity>
                 <View style={styles.bottom}>
 

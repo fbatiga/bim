@@ -11,6 +11,8 @@ export default {
     close: require('./close.png'),
     transfer: require('./button-transfer.png'),
     c3po: require('./c3po.png'),
+    userTransfert: require('./user-transfert.png'),
+    success: require('./success.png'),
     keyboard:{
         1:  require('./keyboard/1.png'),
         2:  require('./keyboard/2.png'),

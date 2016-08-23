@@ -6,28 +6,25 @@ import asset from '../../../asset';
 
 const styles = StyleSheet.create({
     item: {
-        flex: 1,
         flexDirection: 'row',
         alignItems: 'center',
         margin: 0,
-        borderRadius: 0,
         borderColor: '#9FA2A7',
         borderBottomWidth: 1,
-        paddingTop: 15,
-        paddingBottom: 15,
+        paddingVertical: 15,
         paddingLeft: 20,
         backgroundColor: '#fff',
-        height : 98
+        height : 100
     },
 
     leftPart: {
-        flex: 2,
         backgroundColor: '#fff',
     },
     rightPart: {
-        alignItems: 'flex-start',
+        // alignItems: 'flex-start',
         backgroundColor: '#fff',
-        flex: 6
+        flex: 1,
+        paddingLeft: 20
     },
 
     image: {

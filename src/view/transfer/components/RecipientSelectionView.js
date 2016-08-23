@@ -5,7 +5,7 @@ import Contacts from 'react-native-contacts';
 import asset from '../../../asset';
 import baseStyles from '../../../styles/vars';
 
-const width = Dimensions.get('window').width;
+const {width, height} = Dimensions.get('window');
 const styles = StyleSheet.create({
     container: {
         backgroundColor: baseStyles.colors.deepBlue
@@ -14,14 +14,13 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: baseStyles.colors.deepBlue,
-        height: 200
+        height: (height / 2 - 70)
     },
     bottom: {
         backgroundColor: "white",
-        height: 400,
-        flexWrap: 'wrap',
-        alignItems: 'flex-start',
-        flexDirection: 'row'
+        height: (height / 2),
+        flexDirection: 'row',
+        // paddingBottom: 70
     }
 });
 
@@ -57,29 +56,26 @@ class RecipientSelectionView extends React.Component {
             <View style={styles.container}>
                 <Text style={baseStyles.titles.h1}>{this.props.title || 'B!M'}</Text>
                 <View style={styles.top}>
-                    <Text
-                    style={{
-                        flex: 1,
-                        color: baseStyles.colors.alternative,
-                        textAlign: 'center',
-                        borderBottomWidth: 3,
-                        borderBottomColor: "white",
-                        fontSize: 40,
-                        fontWeight: '200',
-                        marginTop: 100,
-                        width: null
-                    }}
-                    >{ 'Destinataire:'}</Text>
+                  <Text
+                  style={{
+                      color: baseStyles.colors.alternative,
+                      textAlign: 'center',
+                      borderBottomWidth: 3,
+                      borderBottomColor: "white",
+                      fontSize: 40,
+                      fontWeight: '200'
+                  }}
+                  >{ 'Destinataire:'}</Text>
                 </View>
 
                 <View style={styles.bottom}>
-                    <ListView
-                    ref="listView"
-                    dataSource={this.state.contacts}
-                    renderRow={this.renderRecipientRow.bind(this)}
-                    enableEmptySections={true}
-                    >
-                    </ListView>
+                  <ListView
+                  ref="listView"
+                  dataSource={this.state.contacts}
+                  renderRow={this.renderRecipientRow.bind(this)}
+                  enableEmptySections={true}
+                  >
+                  </ListView>
                 </View>
             </View>
         );
@@ -88,11 +84,11 @@ class RecipientSelectionView extends React.Component {
     renderRecipientRow(rowData, key) {
         console.log(this.props.confirm);
         return (
-            <RecipientItem
-                confirm={this.props.confirm}
+          <RecipientItem
+            confirm={this.props.confirm}
             rowData={rowData}
             key={key}
-            />
+          />
         );
     }
 }

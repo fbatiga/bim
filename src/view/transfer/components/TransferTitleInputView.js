@@ -6,6 +6,7 @@ const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 const styles = StyleSheet.create({
     container: {
+      flex: 1,
         backgroundColor: baseStyles.colors.deepBlue
     },
     top: {
@@ -13,13 +14,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: baseStyles.colors.deepBlue,
         height: height / 2
-    },
-    bottom : {
-        backgroundColor:"white",
-        height: height / 2,
-        flexWrap: 'wrap',
-        alignItems: 'flex-start',
-        flexDirection:'row'
     },
     keyboardButton: {
         padding: 40,
@@ -51,9 +45,13 @@ class TransferTitleInputView extends React.Component {
                         marginTop: 10,
                         width: null
                     }}>
-                   {this.props.subtitle || 'B!MER LA SOMME DE' }
+                   {this.props.subtitle || 'B!MMER LA SOMME DE' }
                     </Text>
                     <TextInput
+                    autoCapitalize='sentences'
+                    autoCorrect={false}
+                    autoFocus
+                    returnKeyType='next'
                     ref="titleInput"
                     style={{
                         flex: 1,
