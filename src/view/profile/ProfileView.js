@@ -7,13 +7,13 @@ import asset from '../../asset';
 import ViewWithBackground from '../../component/ViewWithBackground';
 
 import {connect} from 'react-redux';
-import {init} from './ContactDetailsAction';
+import {init} from './ProfileAction';
 
 
 const {width, height} = Dimensions.get('window');
 
 
-const ContactDetailsStyle = StyleSheet.create({
+const ProfileStyle = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'center',
@@ -22,7 +22,7 @@ const ContactDetailsStyle = StyleSheet.create({
 });
 
 
-class ContactDetailsView extends Component {
+class ProfileView extends Component {
 
     constructor(props) {
         super(props);
@@ -44,7 +44,7 @@ class ContactDetailsView extends Component {
     }
 
     render() {
-        return (<ViewWithBackground backgroundImage={asset.screens.contact} pixelRatio='2' ></ViewWithBackground>)
+        return (<ViewWithBackground backgroundImage={asset.screens.profile} pixelRatio='2' ></ViewWithBackground>)
     }
   /*  render() {
         this.imageStyle = {width: width};
@@ -70,8 +70,8 @@ class ContactDetailsView extends Component {
 
 function mapStateToProps(state) {
     return {
-        contactdetails: state.contactdetails
+        profile: state.profile
     };
 }
 
-export default connect(mapStateToProps)(ContactDetailsView);
+export default connect(mapStateToProps)(ProfileView);

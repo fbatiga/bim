@@ -1,4 +1,5 @@
 import LaunchReducer from '../view/launch/LaunchReducer';
+import ProfileReducer from '../view/profile/ProfileReducer';
 import MessengerReducer from '../view/messenger/MessengerReducer';
 import OverviewReducer from '../view/overview/OverviewReducer';
 import AccountReducer from '../view/account/AccountReducer';

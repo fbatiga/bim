@@ -40,7 +40,7 @@ export default class MenuView extends Component {
 
 		let menu = [
 
-		{text : 'PROFIL', action : Actions.messenger },
+		{text : 'PROFIL', action : Actions.profile },
 		{text : 'CONTACTS', action : Actions.contact },
 		{text : 'COMPTES', action : Actions.overview },
 		{text : 'JOURNAL', action : Actions.messenger },
