@@ -49,15 +49,24 @@ class AppLayout extends Component {
 		this.refs.swiper.scrollBy(1);
 	}
 
-	goToMessenger(){
+	home(){
 
-		this.setState({
-			messenger : true
-		});
+		console.log('home', this.state);
+		if(this.state.index == 1 &&  this.state.messenger == true){
+			this.refs.swiper.scrollBy(-1);
+		}else{
+			Actions.messenger();
+			if(this.state.index == 0){
+				this.refs.swiper.scrollBy(1);
+			}
 
+			if(this.state.messenger == false){
+				this.setState({
+					messenger : true
+				});
+			}
+		}
 
-		Actions.messenger();
-		this.refs.swiper.scrollBy(1);
 	}
 
 
@@ -88,7 +97,7 @@ class AppLayout extends Component {
 			</View>
 			</Swiper>
 			</Swiper>
-			<TouchableOpacity style={styles.button}  onPress={this.goToMessenger.bind(this)}>
+			<TouchableOpacity style={styles.button}  onPress={this.home.bind(this)}>
 			{ this.props.launch.start && (this.state.messenger == false  || this.state.index== 0 ) && <Image source={asset.bot}  style={styles.bot}  /> }
 			{ this.props.launch.start && (this.state.messenger == true && this.state.index== 1 ) &&  <Image source={asset.close}  style={styles.bot}  /> }
 			</TouchableOpacity>
