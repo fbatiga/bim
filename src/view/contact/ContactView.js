@@ -3,10 +3,13 @@
 import React, { Component } from 'react';
 import { View, Text, Image} from 'react-native';
 import { Actions } from 'react-native-router-flux';
+import stylesVars from '../../styles/vars';
 import ContactStyle from './ContactStyle';
 import asset from '../../asset';
 
+import Title from '../../component/Title';
 import PageViewer from '../base/PageViewer';
+import ContactList from '../contact/components/ContactList.js';
 
 import {connect} from 'react-redux';
 import {init} from './ContactAction';
@@ -23,10 +26,18 @@ class ContactView extends Component {
 
     render() {
         return (
-            <View style={ContactStyle.container}>
-                <PageViewer pages={['contactsList', 'contact' ]} />
+            <View style={{backgroundColor: '#fff'}}>
+                <Title title={'CONTACTS'} style={{color: stylesVars.colors.deepblue}}/>
+                <ContactList pages={['contactsList', 'contact']}  style={ContactStyle.container}
+                callback={this.openContact.bind(this)}
+                />
             </View>
         );
+    }
+
+    openContact(contact) {
+        console.log('contact');
+        Actions.contactdetails(contact)
     }
 }
 
