@@ -33,7 +33,7 @@ export default class MenuView extends Component {
 	render(){
 
 		let menu = [
-		{text : 'PROFIL', action : Actions.overview },
+		{text : 'PROFIL', action : Actions.profile },
 		{text : 'CONTACTS', action : Actions.contact },
 		{text : 'COMPTES', action : Actions.overview },
 		{text : 'JOURNAL', action : Actions.overview },

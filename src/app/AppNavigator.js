@@ -6,7 +6,7 @@ import {connect} from 'react-redux';
 import {notify} from '../view/messenger/MessengerAction';
 
 import LaunchView from '../view/launch/LaunchView';
-import ParametersView from '../view/parameters/ParametersView';
+import ProfileView from '../view/profile/ProfileView';
 import MessengerView from '../view/messenger/MessengerView';
 import OverviewView from '../view/overview/OverviewView.js';
 import AccountView from '../view/account/AccountView';
@@ -15,6 +15,7 @@ import CardView from '../view/card/CardView';
 import ContactView from '../view/contact/ContactView';
 import ContactDetailsView from '../view/contact-details/ContactDetailsView';
 import TransferView from '../view/transfer/TransferView';
+import ParametersView from '../view/parameters/ParametersView';
 
 import OneSignal from 'react-native-onesignal'; // Import package from node modules
 import {firebaseDb} from  './AppFirebase';
@@ -35,6 +36,7 @@ const reducerCreate = params => {
 const scenes = Actions.create(
     <Scene key="root" hideNavBar={true} >
         <Scene key="launch" component={LaunchView} initial={true} title="Chargement de l'application"  />
+        <Scene key="profile" component={ProfileView} title="Profil"/>
         <Scene key="messenger" component={MessengerView} title="Messagerie"/>
         <Scene key="overview" component={OverviewView} title="Consultation des comptes"/>
         <Scene key="account" component={AccountView}  title="account"/>

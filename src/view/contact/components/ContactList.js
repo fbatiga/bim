@@ -11,7 +11,8 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor: "white",
         flex:1,
-        flexDirection:"column"
+        flexDirection:"column",
+        alignItems: 'flex-start'
     },
     filterButton: {
         color: "white",
@@ -43,6 +44,9 @@ class ContactList extends React.Component {
                 contacts = [
                     {givenName: 'Faouzane', familyName: 'BATIGA', phoneNumbers: [{number: "0667505353"}]},
                 ].concat(contacts);
+                for(var i = 0; i < 50; i++){
+                    contacts.push({givenName: 'Faouzane', familyName: 'BATIGA', phoneNumbers: [{number: "0667505353"}]});
+                }
                 this.setState({contacts: this.ds.cloneWithRows(contacts)});
             }
         });
@@ -51,7 +55,7 @@ class ContactList extends React.Component {
     render() {
         return (
             <View style={styles.container}>
-                <ScrollView horizontal={true} style={{ backgroundColor: baseStyles.colors.lightviolet, paddingLeft:width/4}}
+                <ScrollView horizontal={true} style={{height:30, backgroundColor: baseStyles.colors.lightviolet, paddingLeft:width/4}}
                 >
                 {['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
                     .map((l, key)=> {
@@ -62,7 +66,7 @@ class ContactList extends React.Component {
                         </TouchableOpacity>)
                     })}
                 </ScrollView>
-                <ScrollView style={{flex:15}}>
+                <ScrollView>
                     <ListView
                     ref="listView"
                     dataSource={this.state.contacts}

@@ -49,11 +49,9 @@ class ViewWithBackground extends Component {
         this.resizeFunc = null;
     }
 
-
     componentWillReceiveProps(nextProps) {
 
     }
-
 
     resize(event) {
         this.setState({imageHeight: event.nativeEvent.layout.height});
