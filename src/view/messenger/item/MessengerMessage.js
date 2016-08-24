@@ -55,13 +55,29 @@ class Message extends Component {
 
 	componentDidMount(){
 
-		if( this.props.position == 'left'){
-			setTimeout(()=>{
+		if( this.props.position == 'left' && this.state.visibility == 'new'){
+
+			if( this.props.rowData.loaded == true){
 				this.setState({
-					visibility : 'loading'
+					visibility : 'show'
 				});
-			}, this.props.rowData.index*2000);
+
+				if(this.props.rowData.buttons.length >0){
+					this.props.setButtons(this.props.rowData.buttons);
+				}
+
+			}else{
+
+				setTimeout(()=>{
+					this.setState({
+						visibility : 'loading'
+					});
+				}, this.props.rowData.index*2000);
+
+			}
 		}
+
+
 	}
 
 	componentDidUpdate(){
@@ -77,6 +93,7 @@ class Message extends Component {
 
 			}, 1500);
 		}
+
 	}
 
 	render() {
@@ -91,7 +108,7 @@ class Message extends Component {
 		return(
 			<View style={[styles.rowContainer, {justifyContent: position === 'left' ? 'flex-start' : position === 'right' ? 'flex-end' : 'center'}]}>
 				{ this.state.visibility != 'new' && position === 'left' && <Bubble {...rowData}  loading={loading} />}
-				{ position  !== 'left'&& <Bubble {...rowData}  loading={false} />}
+				{ position  !== 'left'  && <Bubble {...rowData}  loading={false} />}
 			</View>
 		);
 

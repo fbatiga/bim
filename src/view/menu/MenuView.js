@@ -41,8 +41,8 @@ export default class MenuView extends Component {
 		let menu = [
 
 		{text : 'PROFIL', action : Actions.messenger },
-		{text : 'CONTACTS', action : Actions.transfer },
-		{text : 'COMPTES', action : Actions.account },
+		{text : 'CONTACTS', action : Actions.contact },
+		{text : 'COMPTES', action : Actions.overview },
 		{text : 'JOURNAL', action : Actions.messenger },
 		{text : 'CARTES', action : Actions.card }]
 		return (
@@ -52,7 +52,9 @@ export default class MenuView extends Component {
 								<Text style={style.title} >{item.text}</Text>
                             </TouchableOpacity>);
 				})}
+            <TouchableOpacity onPress={()=>{Actions.parameters(); this.props.swipe().scrollBy(1); } } >
 				<Image source={asset.setting}  style={style.setting} />
+                </TouchableOpacity>
 			</View>
 		);
 	}
