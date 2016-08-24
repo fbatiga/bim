@@ -55,10 +55,10 @@ class ContactList extends React.Component {
                 >
                 {['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
                     .map((l, key)=> {
-                        return (<TouchableOpacity  onPress={() => {
+                        return (<TouchableOpacity key={key} onPress={() => {
                             alert(l)
                         }}>
-                            <Text style={styles.filterButton} key={key}>{l}</Text>
+                            <Text style={styles.filterButton}>{l}</Text>
                         </TouchableOpacity>)
                     })}
                 </ScrollView>

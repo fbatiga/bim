@@ -8,7 +8,6 @@ import ContactStyle from './ContactStyle';
 import asset from '../../asset';
 
 import Title from '../../component/Title';
-import PageViewer from '../base/PageViewer';
 import ContactList from '../contact/components/ContactList.js';
 
 import {connect} from 'react-redux';
