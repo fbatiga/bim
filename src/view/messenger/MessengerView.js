@@ -23,29 +23,37 @@ class MessengerView extends Component {
 	componentDidMount(){
 
 
-		console.log('componentDidMount',  this.props);
+		console.log('componentDidMount',  this.props.messenger);
 
-		this.props.dispatch(getReply({
-			msg : 'hello',
-			session : this.props.messenger.session
-		}));
+		if(this.props.messenger.messages.length == 0){
 
-		this.firebaseNotificationRef.on('value', function(snapshot) {
+				this.props.dispatch(getReply({
+					msg : 'hello',
+					session : this.props.messenger.session
+				}));
 
-			let notification = snapshot.val();
-			console.log('firebaseNotificationRef', notification , this.props.messenger.notification);
-			if(notification !== null  && this.props.messenger.notification === false){
-				this.props.dispatch(notify(notification));
-			}
+				this.firebaseNotificationRef.on('value', function(snapshot) {
 
-			this.firebaseNotificationRef.set(null);
+					let notification = snapshot.val();
+					console.log('firebaseNotificationRef', notification , this.props.messenger.notification);
+					if(notification !== null  && this.props.messenger.notification === false){
+						this.props.dispatch(notify(notification));
+					}
 
-		}.bind(this));
+					this.firebaseNotificationRef.set(null);
+
+				}.bind(this));
+		}else{
+			this.props.messenger.messages.map((message)=>{
+				message.loaded = true;
+			})
+		}
+
 	}
 
 
 	componentWillReceiveProps(nextProps){
-		console.log('componentWillReceiveProps', this.props, nextProps);
+		console.log('componentWillReceiveProps', this.props.messenger, nextProps.messenger);
 
 		if(this.props.messenger.notification != nextProps.messenger.notification  && nextProps.messenger.notification != false){
 
@@ -68,7 +76,8 @@ class MessengerView extends Component {
 			this.props.dispatch(restartBot());
 		}
 
-		if(this.props.messenger.bot != nextProps.messenger.bot  && nextProps.messenger.bot == true){
+		console.log('firebaseMessagesRef',this.props.messenger.bot, nextProps.messenger.bot );
+		if(this.props.messenger.bot !== nextProps.messenger.bot  && nextProps.messenger.bot == true){
 			this.firebaseMessagesRef.off();
 
 			this.props.dispatch(getReply({
@@ -82,14 +91,10 @@ class MessengerView extends Component {
 
 	componentDidUpdate(){
 
-		if(this.props.messenger.bot == true  && this.props.messenger.messages.length == 0){
-/*
-			this.props.dispatch(getReply({
-				msg : 'hello',
-				session : this.props.messenger.session
-			}));
+		console.log('componentDidUpdate',this.props.messenger)
 
-			*/
+		if(this.props.messenger.bot == true  && this.props.messenger.messages.length == 0){
+
 
 		}
 
