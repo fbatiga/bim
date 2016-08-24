@@ -9,27 +9,29 @@ const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: baseStyles.colors.deepBlue
+      flex: 1,
+      backgroundColor: baseStyles.colors.deepBlue
     },
     top: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: baseStyles.colors.deepBlue,
-        height: (height / 2 - 70)
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: baseStyles.colors.deepBlue
     },
     bottom: {
-        backgroundColor: "white",
-        height: height / 2,
-        flexWrap: 'wrap',
-        alignItems: 'flex-start',
-        flexDirection: 'row',
+      // flex: 1,
+      backgroundColor: "white",
+      // height: (height / 2 + 70),
+      flexWrap: 'wrap',
+      alignItems: 'flex-start',
+      flexDirection: 'row',
 
     },
     keyboardButton: {
-        padding: 20,
-        width: width * 0.33,
-        textAlign: 'center',
-        fontSize: 22
+      padding: 20,
+      width: width * 0.33,
+      textAlign: 'center',
+      fontSize: 22
     }
 });
 
@@ -47,7 +49,7 @@ class AmountSelectionView extends React.Component {
                 <Title title={this.props.title} />
                 <View style={styles.top}>
                     <Text style={{
-                        // flex: 1,
+                        flex: 1,
                         color: baseStyles.colors.alternative,
                         height: 30,
                         marginTop: 10,
@@ -60,7 +62,7 @@ class AmountSelectionView extends React.Component {
                     <Text
                     ref="amountInput"
                     style={{
-                        // flex: 1,
+                        flex: 1,
                         color: 'white',
                         textAlign: 'center',
                         borderBottomWidth: 3,
@@ -72,7 +74,7 @@ class AmountSelectionView extends React.Component {
                     >{this.state.amount ? this.state.amount + ' €' : 'Votre montant...'}</Text>
                 </View>
                 <TouchableOpacity style={{
-                    flex: 1,
+                    // flex: 1,
                     backgroundColor: baseStyles.colors.lightviolet,
                     padding: 15,
                     height: 70

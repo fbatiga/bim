@@ -10,6 +10,7 @@ import ParametersView from '../view/parameters/ParametersView';
 import MessengerView from '../view/messenger/MessengerView';
 import OverviewView from '../view/overview/OverviewView.js';
 import AccountView from '../view/account/AccountView';
+import JackpotView from '../view/jackpot/JackpotView';
 import CardView from '../view/card/CardView';
 import ContactView from '../view/contact/ContactView';
 import ContactDetailsView from '../view/contact-details/ContactDetailsView';
@@ -34,10 +35,11 @@ const reducerCreate = params => {
 
 const scenes = Actions.create(
     <Scene key="root" hideNavBar={true} >
-        <Scene key="launch" component={LaunchView} title="Chargement de l'application"  />
+        <Scene key="launch" component={LaunchView} initial={true} title="Chargement de l'application"  />
         <Scene key="messenger" component={MessengerView} title="Messagerie"/>
-        <Scene key="overview" component={OverviewView} initial={true} title="Consultation des comptes"/>
+        <Scene key="overview" component={OverviewView} title="Consultation des comptes"/>
         <Scene key="account" component={AccountView}  title="account"/>
+        <Scene key="jackpot" component={JackpotView} title="jackpot"/>
         <Scene key="card" component={CardView}     title="Cartes"/>
         <Scene key="contact" component={ContactView}   title="Contacts"/>
         <Scene key="contactdetails" component={ContactDetailsView}   title="Contact detail"/>
@@ -104,4 +106,3 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps)(AppNavigator);
-
