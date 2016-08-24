@@ -49,12 +49,9 @@ class AmountSelectionView extends React.Component {
                 <Title title={this.props.title} />
                 <View style={styles.top}>
                     <Text style={{
-                        flex: 1,
                         color: baseStyles.colors.alternative,
-                        height: 30,
                         marginTop: 10,
-                        width: null,
-                        fontSize: 22,
+                        fontSize: 30,
                         marginBottom: 25
                     }}>
                     {this.props.subtitle || 'B!MMER LA SOMME DE' }
@@ -62,7 +59,6 @@ class AmountSelectionView extends React.Component {
                     <Text
                     ref="amountInput"
                     style={{
-                        flex: 1,
                         color: 'white',
                         textAlign: 'center',
                         borderBottomWidth: 3,

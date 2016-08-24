@@ -16,6 +16,10 @@ export default {
     success: require('./success.png'),
     setting: require('./setting.png'),
     jackpot: require('./jackpot.png'),
+    check: require('./Check_small_contact.png'),
+    cagnotteConfirm: require('./cagnotteConfirm.png'),
+    pointsSpeed: require('./point_speed.gif'),
+    pointsImage: require('./pointsImage.png'),
     keyboard:{
         1:  require('./keyboard/1.png'),
         2:  require('./keyboard/2.png'),
