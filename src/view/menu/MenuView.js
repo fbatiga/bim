@@ -29,30 +29,24 @@ const style = StyleSheet.create({
 
 export default class MenuView extends Component {
 
-	componentDidMount() {
-	}
-
-	componentWillReceiveProps(nextProps) {
-
-	}
 
 	render(){
 
 		let menu = [
-
-		{text : 'PROFIL', action : Actions.messenger },
+		{text : 'PROFIL', action : Actions.overview },
 		{text : 'CONTACTS', action : Actions.contact },
 		{text : 'COMPTES', action : Actions.overview },
-		{text : 'JOURNAL', action : Actions.messenger },
+		{text : 'JOURNAL', action : Actions.overview },
 		{text : 'CARTES', action : Actions.card }]
+
 		return (
 			<View style={style.container} >
 				{menu.map((item,index)=>{
-					return (<TouchableOpacity  key={index}  onPress={()=>{ item.action(); this.props.swipe().scrollBy(1)}}>
+					return (<TouchableOpacity  key={index}  onPress={()=>{ this.props.gotTo(item)}}>
 								<Text style={style.title} >{item.text}</Text>
                             </TouchableOpacity>);
 				})}
-            <TouchableOpacity onPress={()=>{Actions.parameters(); this.props.swipe().scrollBy(1); } } >
+            <TouchableOpacity onPress={()=>{ this.props.gotTo({action:Actions.parameters})}}  >
 				<Image source={asset.setting}  style={style.setting} />
                 </TouchableOpacity>
 			</View>

@@ -5,6 +5,8 @@ import Swiper from 'react-native-swiper';
 import MenuView from '../view/menu/MenuView';
 import asset from '../asset';
 import {connect} from 'react-redux';
+import {setVisibility} from '../view/messenger/MessengerAction';
+import { Actions } from 'react-native-router-flux';
 
 
 const styles = StyleSheet.create({
@@ -13,7 +15,17 @@ const styles = StyleSheet.create({
 		flexDirection: "column",
 		justifyContent: "flex-start",
 		alignItems: "stretch"
-	}
+	},
+	button :{
+		position: 'absolute',
+		top: 30,
+		right: -10
+	},
+	bot :{
+		borderRadius:30,
+		width:60,
+		height:60
+	},
 })
 
 
@@ -21,21 +33,51 @@ const styles = StyleSheet.create({
 class AppLayout extends Component {
 
 
-	getSwipe(){
-		return this.refs.swiper;
+	constructor(props){
+		super(props);
+		this.state = {
+			messenger : true,
+			index : 1
+		};
+	}
+
+	gotTo(item){
+		this.setState({
+			messenger : false
+		});
+		item.action();
+		this.refs.swiper.scrollBy(1);
+	}
+
+	goToMessenger(){
+
+		this.setState({
+			messenger : true
+		});
+
+
+		Actions.messenger();
+		this.refs.swiper.scrollBy(1);
 	}
 
 
-	render() {
+ 	_onMomentumScrollEnd(e, state, context) {
 
-		console.log('navigate', this.state, this.props);
+	    this.setState({
+			index : context.state.index
+		});
+	 }
+
+	render() {
 		return (
+			<View>
 			<Swiper
 			loop={false}
+			onMomentumScrollEnd ={this._onMomentumScrollEnd.bind(this)}
 			ref='swiper'
 			showsPagination={false}
 			index={1}>
-			<MenuView swipe={this.getSwipe.bind(this)} />
+			<MenuView gotTo={this.gotTo.bind(this)}/>
 			<Swiper
 			horizontal={false}
 			loop={false}
@@ -45,15 +87,21 @@ class AppLayout extends Component {
 			{this.props.children}
 			</View>
 			</Swiper>
-		</Swiper>)
+			</Swiper>
+			<TouchableOpacity style={styles.button}  onPress={this.goToMessenger.bind(this)}>
+			{ this.props.launch.start && (this.state.messenger == false  || this.state.index== 0 ) && <Image source={asset.bot}  style={styles.bot}  /> }
+			{ this.props.launch.start && (this.state.messenger == true && this.state.index== 1 ) &&  <Image source={asset.close}  style={styles.bot}  /> }
+			</TouchableOpacity>
+			</View>)
 	}
 }
 
 
 function mapStateToProps(state) {
-    return {
-        account: state.account
-    };
+	return {
+		messenger: state.messenger,
+		launch : state.launch
+	};
 }
 
 export default connect(mapStateToProps)(AppLayout);

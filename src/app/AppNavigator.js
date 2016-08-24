@@ -20,7 +20,6 @@ import OneSignal from 'react-native-onesignal'; // Import package from node modu
 import {firebaseDb} from  './AppFirebase';
 import { UserSlack } from './AppSlack';
 
-
 //const firebaseRef = firebaseDb.ref('alice/device');
 
 const reducerCreate = params => {
