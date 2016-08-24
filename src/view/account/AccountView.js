@@ -87,11 +87,13 @@ class AccountView extends Component {
 
     listenToTransactionChanges(source) {
         var that = this;
-        source.on('child_added', (snapshot)=> {
+        source.orderByChild('timestamp').on('child_added', (snapshot)=> {
             snapshot = snapshot.val();
             console.log(snapshot);
             snapshot.category = that.categories[snapshot.category];
-            that.props.account.transactions.push(snapshot);
+            // inserting at the beginning of the array
+
+            that.props.account.transactions.unshift(snapshot);
             that.setState({dataSource: this.state.dataSource.cloneWithRows(this.props.account.transactions)});
         });
     }

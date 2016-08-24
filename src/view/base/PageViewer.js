@@ -61,18 +61,8 @@ class PageViewer extends Component {
 
     render() {
         return (
-            <TouchableHighlight style={styles.container} onPress={()=> {
-
-                if (this.state.step < this.props.pages.length) {
-                    this.nextStep();
-                }
-                else {
-                    this.nextStep(0);
-                }
-            }}>
-            <Image style={{flex:1, width: width} }source={asset.screens[this.props.pages[this.state.step]]} >
+            <Image style={styles.container }source={asset.screens[this.props.pages[this.state.step]]} >
             </Image>
-                </TouchableHighlight>
         );
     }
 

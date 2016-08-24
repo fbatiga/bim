@@ -13,6 +13,7 @@ import AccountView from '../view/account/AccountView';
 import JackpotView from '../view/jackpot/JackpotView';
 import CardView from '../view/card/CardView';
 import ContactView from '../view/contact/ContactView';
+import ContactDetailsView from '../view/contact-details/ContactDetailsView';
 import TransferView from '../view/transfer/TransferView';
 
 import OneSignal from 'react-native-onesignal'; // Import package from node modules
@@ -41,6 +42,7 @@ const scenes = Actions.create(
         <Scene key="jackpot" component={JackpotView} title="jackpot"/>
         <Scene key="card" component={CardView}     title="Cartes"/>
         <Scene key="contact" component={ContactView}   title="Contacts"/>
+        <Scene key="contactdetails" component={ContactDetailsView}   title="Contact detail"/>
         <Scene key="transfer" component={TransferView} title="Virement"/>
         <Scene key="parameters" component={ParametersView} title="Paramètres"/>
     </Scene>
