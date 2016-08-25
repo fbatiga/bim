@@ -13,6 +13,7 @@ const initialState = {
 	messages: [],
 	buttons : [],
 	notification : false,
+	visibility : false,
 	bot: true
 };
 

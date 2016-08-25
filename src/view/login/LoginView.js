@@ -1,7 +1,7 @@
 'use strict';
 
 import React, { Component } from 'react';
-import { View, Text, Image, Dimensions} from 'react-native';
+import { View, Text, Image, Dimensions , TouchableOpacity} from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import LaunchStyle from './LaunchStyle';
 import {connect} from 'react-redux';
@@ -16,26 +16,30 @@ class LaunchView extends Component {
 
 	componentDidMount() {
 		this.props.dispatch(loadSession());
+		this.session = null;
 	}
 
 	componentWillReceiveProps(nextProps) {
 
 		if(nextProps.launch.start){
-			let result = nextProps.launch.start;
-			this.props.dispatch(registerSession(result.session));
-			Actions.messenger();
+			this.session = nextProps.launch.start.session;
 		}
 
+	}
+
+
+	login(){
+		this.props.dispatch(registerSession(this.session));
+		Actions.messenger();
 	}
 
 	render(){
 
 		return (
-				<View contentContainerStyle={[LaunchStyle.container]}>
-					<Image source={asset.launch}  style={{width:width, height: height}} resizeMode='cover' >
-					</Image>
-				</View>
-			);
+				<TouchableOpacity style={[LaunchStyle.container, { width:width, height: height}]} onPress={this.login.bind(this)} >
+					<Image source={asset.launch}  style={{width:width, height: height}} resizeMode='contain' ></Image>
+				</TouchableOpacity>
+		);
 	}
 }
 

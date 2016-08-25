@@ -125,7 +125,7 @@ class MessengerView extends Component {
 		return (
 
 			<View style={MessengerStyle.container}>
-			<View style={ { height: 20 } } />
+			<View style={ { height: 20} } />
 			<MessengerMain
 			style={MessengerStyle.main}
 			setButtons={this.setButtons.bind(this)}

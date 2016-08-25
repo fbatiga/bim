@@ -1,14 +1,7 @@
 'use strict';
 
 import React, { Component } from 'react';
-import {connect} from 'react-redux';
-import { View, Text, Image, StyleSheet, TouchableHighlight, ScrollView, Dimensions} from 'react-native';
-import { Actions } from 'react-native-router-flux';
-import  ScrollableTabView, { DefaultTabBar }  from 'react-native-scrollable-tab-view';
-import asset from '../asset';
-
-import baseStyles from '../styles/vars.js';
-
+import {Image, StyleSheet, ScrollView, Dimensions} from 'react-native';
 
 const ViewStyle = StyleSheet.create({
     container: {
@@ -36,7 +29,7 @@ const styles = StyleSheet.create({
 });
 
 
-class ViewWithBackground extends Component {
+export default  class ViewWithBackground extends Component {
 
     constructor(props) {
         super(props);
@@ -49,9 +42,6 @@ class ViewWithBackground extends Component {
         this.resizeFunc = null;
     }
 
-    componentWillReceiveProps(nextProps) {
-
-    }
 
     resize(event) {
         this.setState({imageHeight: event.nativeEvent.layout.height});
@@ -76,10 +66,3 @@ class ViewWithBackground extends Component {
 
 }
 
-function mapStateToProps(state) {
-    return {
-        base: state.base
-    };
-}
-
-export default connect(mapStateToProps)(ViewWithBackground);

@@ -36,23 +36,20 @@ class AppLayout extends Component {
 	constructor(props){
 		super(props);
 		this.state = {
-			messenger : true,
 			index : 1
 		};
 	}
 
 	gotTo(item){
-		this.setState({
-			messenger : false
-		});
+
+		this.props.dispatch(setVisibility(false));
 		item.action();
 		this.refs.swiper.scrollBy(1);
 	}
 
 	home(){
 
-		console.log('home', this.state);
-		if(this.state.index == 1 &&  this.state.messenger == true){
+		if(this.state.index == 1 &&  this.props.messenger.visibility == true){
 			this.refs.swiper.scrollBy(-1);
 		}else{
 			Actions.messenger();
@@ -60,10 +57,8 @@ class AppLayout extends Component {
 				this.refs.swiper.scrollBy(1);
 			}
 
-			if(this.state.messenger == false){
-				this.setState({
-					messenger : true
-				});
+			if(this.props.messenger.visibility == false){
+				this.props.dispatch(setVisibility(true));
 			}
 		}
 
@@ -71,7 +66,6 @@ class AppLayout extends Component {
 
 
  	_onMomentumScrollEnd(e, state, context) {
-
 	    this.setState({
 			index : context.state.index
 		});
@@ -98,8 +92,8 @@ class AppLayout extends Component {
 			</Swiper>
 			</Swiper>
 			<TouchableOpacity style={styles.button}  onPress={this.home.bind(this)}>
-			{ this.props.launch.start && (this.state.messenger == false  || this.state.index== 0 ) && <Image source={asset.bot}  style={styles.bot}  /> }
-			{ this.props.launch.start && (this.state.messenger == true && this.state.index== 1 ) &&  <Image source={asset.close}  style={styles.bot}  /> }
+			{ this.props.messenger.session != null && (this.props.messenger.visibility == false  || this.state.index== 0 ) && <Image source={asset.bot}  style={styles.bot}  /> }
+			{ this.props.messenger.session != null  && (this.props.messenger.visibility == true && this.state.index== 1 ) &&  <Image source={asset.close}  style={styles.bot}  /> }
 			</TouchableOpacity>
 			</View>)
 	}
@@ -108,8 +102,7 @@ class AppLayout extends Component {
 
 function mapStateToProps(state) {
 	return {
-		messenger: state.messenger,
-		launch : state.launch
+		messenger: state.messenger
 	};
 }
 

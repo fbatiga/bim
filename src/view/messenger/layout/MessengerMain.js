@@ -28,9 +28,9 @@ class MessengerMain extends Component {
 		});
 	}
 
-
 	renderRow(rowData = {}) {
 		return (
+
 			<View>
 				<MessengerMessage rowData={rowData}  setButtons={this.props.setButtons} position={rowData.position} />
 			</View>
@@ -42,9 +42,9 @@ class MessengerMain extends Component {
 		this.setMessages(this.props.messages);
 	}
 
-		componentWillReceiveProps(nextProps) {
-			this.setMessages(nextProps.messages);
-		}
+	componentWillReceiveProps(nextProps) {
+		this.setMessages(nextProps.messages);
+	}
 
 	scrollToBottom(contentWidth, contentHeight) {
 		if(contentHeight > this._listHeight){
@@ -58,6 +58,11 @@ class MessengerMain extends Component {
 
 	saveListHeight(event) {
 		this._listHeight = event.nativeEvent.layout.height;
+
+		this.scrollResponder.scrollTo({
+ 			y: -10,
+ 			x: 0
+ 		});
 	}
 
 	render(){
