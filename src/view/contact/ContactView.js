@@ -1,7 +1,7 @@
 'use strict';
 
 import React, { Component } from 'react';
-import { View, Text, Image} from 'react-native';
+import { View, Text, Image, Dimensions} from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import stylesVars from '../../styles/vars';
 import ContactStyle from './ContactStyle';
@@ -13,6 +13,8 @@ import ContactList from '../contact/components/ContactList.js';
 import {connect} from 'react-redux';
 import {init} from './ContactAction';
 
+
+const {width, height} = Dimensions.get('window');
 class ContactView extends Component {
 
     componentDidMount() {
@@ -26,8 +28,8 @@ class ContactView extends Component {
     render() {
         return (
             <View style={{backgroundColor: '#fff'}}>
-                <Title title={'CONTACTS'} style={{color: stylesVars.colors.deepblue}}/>
-                <ContactList pages={['contactsList', 'contact']}  style={ContactStyle.container}
+                <Title title={'CONTACTS'} style={{color: stylesVars.colors.deepblue, height: 80}}/>
+                <ContactList pages={['contactsList', 'contact']}  style={[ContactStyle.container, {height: height - (80)}]}
                 callback={this.openContact.bind(this)}
                 />
             </View>

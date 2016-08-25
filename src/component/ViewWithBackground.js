@@ -1,7 +1,9 @@
 'use strict';
 
 import React, { Component } from 'react';
-import {Image, StyleSheet, ScrollView, Dimensions} from 'react-native';
+import {Image,  Text, TouchableOpacity, StyleSheet, ScrollView, Dimensions} from 'react-native';
+import asset from '../asset';
+
 
 const ViewStyle = StyleSheet.create({
     container: {
@@ -29,7 +31,8 @@ const styles = StyleSheet.create({
 });
 
 
-export default  class ViewWithBackground extends Component {
+export default
+class ViewWithBackground extends Component {
 
     constructor(props) {
         super(props);
@@ -53,18 +56,20 @@ export default  class ViewWithBackground extends Component {
         this.resizeFunc = this.resize.bind(this);
         if (this.state.imageHeight > 0) {
             this.imageStyle.height = this.state.imageHeight / (this.pixelRatio);
-            if(this.imageStyle <= height){
+            if (this.imageStyle <= height) {
                 this.imageStyle.height = height;
             }
 
             this.resizeFunc = null;
         }
+        console.log(this.props.children);
         return (
             <ScrollView containContainerStyle={[ViewStyle]}>
                 <Image  onLayout={this.resizeFunc} source={this.props.backgroundImage}  resizeMode='contain'
                 style={this.imageStyle}>
-                {this.props.children}
                 </Image>
+
+            {this.props.children}
             </ScrollView>
         );
     }
