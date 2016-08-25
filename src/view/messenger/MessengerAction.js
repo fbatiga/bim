@@ -8,13 +8,21 @@ export const MESSENGER_MESSAGE = 'messenger.message';
 export const MESSENGER_BOT_MESSAGE = 'messenger.bot_message';
 export const MESSENGER_SESSION = 'messenger.session';
 export const MESSENGER_SLACK_MESSAGE = 'messenger.slack';
-export const MESSENGER_BOT_RESTART = 'messenger.bot_start';
+export const MESSENGER_BOT_RESTART = 'messenger.bot_restart';
 export const MESSENGER_NOTIFICATION = 'messenger.notification';
+export const MESSENGER_VISIBILITY = 'messenger.visibility';
 
 export function getReply(params) {
   return {
     types: [MESSENGER_REQUEST, MESSENGER_SUCCESS, MESSENGER_FAILURE],
     motion: '/messageBot',
+    params : params
+  };
+}
+
+export function setVisibility(params) {
+  return {
+    type: MESSENGER_VISIBILITY,
     params : params
   };
 }

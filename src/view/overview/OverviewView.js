@@ -10,7 +10,6 @@ import OverviewStyle from './OverviewStyle';
 import {init} from './OverviewAction';
 import asset from '../../asset';
 import baseStyles from '../../styles/vars.js';
-import MessengerFabButton from '../messenger/item/MessengerFabButton.js';
 import Title from '../../component/Title.js';
 
 import {connect} from 'react-redux';
@@ -50,7 +49,6 @@ class OverviewView extends Component {
             <View
             horizontal={false} style={[OverviewStyle.container, { flex: 1 }]}>
                 <View style={[OverviewStyle.top, { flex: 1 }]}>
-                    <MessengerFabButton />
                     <Text style={baseStyles.titles.h1}>Comptes</Text>
 
                     <View>

@@ -15,7 +15,6 @@ import {connect} from 'react-redux';
 import {init, filterByCredit, filterByDebit, clearFilter} from './AccountAction';
 import AccountItem from './item/AccountItem';
 import AccountTab from './item/AccountTab';
-import MessengerFabButton from '../messenger/item/MessengerFabButton.js';
 
 const {width, height} = Dimensions.get('window');
 const themePreview = 50;
@@ -150,7 +149,6 @@ class AccountView extends Component {
                   </Modal>
 
                   <View style={AccountStyle.top}>
-                      <MessengerFabButton />
 
                       <Text style={baseStyles.titles.h1Dark}>B!M</Text>
 

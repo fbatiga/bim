@@ -5,7 +5,7 @@ import { Actions, Scene, Router , Reducer} from 'react-native-router-flux';
 import {connect} from 'react-redux';
 import {notify} from '../view/messenger/MessengerAction';
 
-import LaunchView from '../view/launch/LaunchView';
+import LoginView from '../view/login/LoginView';
 import ProfileView from '../view/profile/ProfileView';
 import JournalView from '../view/journal/JournalView';
 import MessengerView from '../view/messenger/MessengerView';
@@ -22,7 +22,6 @@ import OneSignal from 'react-native-onesignal'; // Import package from node modu
 import {firebaseDb} from  './AppFirebase';
 import { UserSlack } from './AppSlack';
 
-
 //const firebaseRef = firebaseDb.ref('alice/device');
 
 const reducerCreate = params => {
@@ -37,7 +36,7 @@ const reducerCreate = params => {
 
 const scenes = Actions.create(
     <Scene key="root" hideNavBar={true} >
-        <Scene key="launch" component={LaunchView} initial={true} title="Chargement de l'application"  />
+        <Scene key="login" component={LoginView} initial={true} title="Chargement de l'application"  />
         <Scene key="profile" component={ProfileView} title="Profil"/>
         <Scene key="messenger" component={MessengerView} title="Messagerie"/>
         <Scene key="overview" component={OverviewView} title="Consultation des comptes"/>

@@ -1,4 +1,4 @@
-import LaunchReducer from '../view/launch/LaunchReducer';
+import LoginReducer from '../view/login/LoginReducer';
 import ProfileReducer from '../view/profile/ProfileReducer';
 import MessengerReducer from '../view/messenger/MessengerReducer';
 import OverviewReducer from '../view/overview/OverviewReducer';
@@ -10,7 +10,7 @@ import ContactDetailsReducer from '../view/contact-details/ContactDetailsReducer
 import TransferReducer from '../view/transfer/TransferReducer';
 
 export default {
-    launch : LaunchReducer,
+    login : LoginReducer,
     profile : ProfileReducer,
     messenger : MessengerReducer,
     overview : OverviewReducer,

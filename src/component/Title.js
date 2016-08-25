@@ -15,6 +15,7 @@ const style = StyleSheet.create({
 export default class Title extends Component {
 
 	componentDidMount() {
+
 	}
 
 	componentWillReceiveProps(nextProps) {
