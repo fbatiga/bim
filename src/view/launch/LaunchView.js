@@ -34,8 +34,7 @@ class LaunchView extends Component {
 
 		return (
 				<View style={LaunchStyle.container}>
-					<Image source={asset.launch} style={LaunchStyle.background} resizeMode='cover'>
-					</Image>
+					<Image source={asset.launch} style={LaunchStyle.background} resizeMode='cover' />
 				</View>
 			);
 	}
