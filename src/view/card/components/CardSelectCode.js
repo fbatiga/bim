@@ -53,20 +53,68 @@ class AmountSelectionView extends React.Component {
                     }}>
                     {this.props.subtitle || 'B!MMER LA SOMME DE' }
                     </Text>
-                    <Text
-                    ref="amountInput"
-                    style={{
-                        color: 'white',
-                        textAlign: 'center',
-                        fontSize: 40,
-                        height: 100,
-                        width: null
-                    }}
-                    >{
-                      this.state.amount ?
-                      this.state.amount + ' €' :
-                      'Votre montant...'
-                    }</Text>
+                    <View style={{ flexDirection: 'row' }}>
+                      <View style={{ borderBottomColor: baseStyles.colors.lightviolet, borderBottomWidth: 1, marginRight: 15 }}>
+                        <Text
+                        ref="amountInput"
+                        style={{
+                            color: 'white',
+                            textAlign: 'center',
+                            fontSize: 40,
+                            width: 30
+                        }}
+                        >
+                          {
+                            this.state.amount[0] || ' '
+                          }
+                        </Text>
+                      </View>
+                      <View style={{ borderBottomColor: baseStyles.colors.lightviolet, borderBottomWidth: 1, marginRight: 15 }}>
+                        <Text
+                        ref="amountInput"
+                        style={{
+                            color: 'white',
+                            textAlign: 'center',
+                            fontSize: 40,
+                            width: 30
+                        }}
+                        >
+                          {
+                            this.state.amount[1] || ' '
+                          }
+                        </Text>
+                      </View>
+                      <View style={{ borderBottomColor: baseStyles.colors.lightviolet, borderBottomWidth: 1, marginRight: 15 }}>
+                        <Text
+                        ref="amountInput"
+                        style={{
+                            color: 'white',
+                            textAlign: 'center',
+                            fontSize: 40,
+                            width: 30
+                        }}
+                        >
+                          {
+                            this.state.amount[2] || ' '
+                          }
+                        </Text>
+                      </View>
+                      <View style={{ borderBottomColor: baseStyles.colors.lightviolet, borderBottomWidth: 1 }}>
+                        <Text
+                        ref="amountInput"
+                        style={{
+                            color: 'white',
+                            textAlign: 'center',
+                            fontSize: 40,
+                            width: 30
+                        }}
+                        >
+                          {
+                            this.state.amount[3] || ' '
+                          }
+                        </Text>
+                      </View>
+                    </View>
                 </View>
                 <TouchableOpacity style={{
                     // flex: 1,
@@ -75,7 +123,10 @@ class AmountSelectionView extends React.Component {
                     height: 70
                 }}
                 onPress={()=> {
-                    this.props.confirm(this.state.amount)
+                  console.log(this.state.amount.length);
+                    if (this.state.amount.length === 4) {
+                        this.props.confirm(this.state.amount)
+                    }
                 }}
                 >
                     <Text style={{padding: 10, textAlign: 'center', color: '#fff' }}>CONFIRMER</Text>
@@ -93,7 +144,7 @@ class AmountSelectionView extends React.Component {
                         })
                             }
                     <TouchableOpacity style={{}} onPress={()=> {
-                        this.parseInput(',')
+                        // this.parseInput(',')
                     }} >
                         <Text style={styles.keyboardButton} >,</Text>
                     </TouchableOpacity>
@@ -115,14 +166,13 @@ class AmountSelectionView extends React.Component {
 
     parseInput(input) {
         console.log(this.state.amount, input);
+        console.log(this.state.amount[0]);
+        console.log(this.state.amount[1]);
+        console.log(this.state.amount[2]);
+        console.log(this.state.amount[3]);
         var ln = this.state.amount.length;
         var append = '';
         switch (input) {
-            case '0':
-                if (ln > 0) {
-                    append = '0';
-                }
-                break;
             case '<':
                 console.log(this.amount, this.state.amount.substr(0, this.state.amount.length - 2));
                 if (ln > 0) {
@@ -131,16 +181,10 @@ class AmountSelectionView extends React.Component {
                     append = undefined;
                 }
                 break;
-            case '.':
-                if (ln == '0') {
-                    append = '0.';
-                }
-                else if (this.state.amount.indexOf('.') == -1) {
-                    append = '.'
-                }
-                break;
             default:
-                append = input + "";
+                if (ln < 4) {
+                    append = input + "";
+                }
         }
 
         if (append) {

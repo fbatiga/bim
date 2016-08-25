@@ -8,6 +8,7 @@ import baseStyles from '../../../styles/vars';
 
 const {width, height} = Dimensions.get('window');
 const styles = StyleSheet.create({
+
     container: {
         backgroundColor: "white",
         flex: 1,
@@ -18,22 +19,23 @@ const styles = StyleSheet.create({
         fontSize:18
     }
 
+
 });
 
 export default
 class ContactList extends React.Component {
 
-    constructor(props) {
+	constructor(props) {
 
-        super(props);
-        this.ds = new ListView.DataSource({
-            rowHasChanged: (r1, r2) => (r1 !== r2)
-        });
+		super(props);
+		this.ds = new ListView.DataSource({
+			rowHasChanged: (r1, r2) => (r1 !== r2)
+		});
 
-        this.state = {
-            amount: this.props.amount,
-            contacts: this.ds.cloneWithRows([])
-        };
+		this.state = {
+			amount: this.props.amount,
+			contacts: this.ds.cloneWithRows([])
+		};
 
         console.time('START CONTACTRECUP');
         Contacts.getAll((err, contacts) => {
@@ -44,13 +46,6 @@ class ContactList extends React.Component {
                 contacts = [
                     {givenName: 'Faouzane', familyName: 'BATIGA', phoneNumbers: [{number: "0667505353"}]},
                 ].concat(contacts);
-                for (var i = 0; i < 1000; i++) {
-                    contacts.push({
-                        givenName: 'Faouzane',
-                        familyName: 'BATIGA',
-                        phoneNumbers: [{number: "0667505353"}]
-                    });
-                }
                 this.setState({contacts: this.ds.cloneWithRows(contacts)});
             }
         });
@@ -100,5 +95,5 @@ class ContactList extends React.Component {
 }
 
 ContactList.propTypes = {
-    title: React.PropTypes.string
+	title: React.PropTypes.string
 };

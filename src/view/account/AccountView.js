@@ -66,7 +66,7 @@ class AccountView extends Component {
                 elm = elm.val();
                 elm.category = that.categories[elm.category];
 
-                console.log(elm.category);
+                // console.log(elm.category);
                 that.props.account.transactions.push(elm);
             });
 
@@ -88,7 +88,7 @@ class AccountView extends Component {
         var that = this;
         source.orderByChild('timestamp').on('child_added', (snapshot)=> {
             snapshot = snapshot.val();
-            console.log(snapshot);
+            // console.log(snapshot);
             snapshot.category = that.categories[snapshot.category];
             // inserting at the beginning of the array
 

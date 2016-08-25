@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export default class JackpotSelectDuration extends Component {
+export default class CardSelectDuration extends Component {
   render() {
     return (
       <View style={styles.container}>
@@ -53,21 +53,21 @@ export default class JackpotSelectDuration extends Component {
         </View>
         <View style={styles.bottom}>
           <TouchableOpacity onPress={()=> {
-            this.props.confirm('un versement unique');
+            this.props.confirm('Un versement unique');
           }}>
             <View style={styles.lines}>
               <Text style={styles.linkText}>Un versement unique</Text>
             </View>
           </TouchableOpacity>
           <TouchableOpacity onPress={()=> {
-            this.props.confirm('un versement mensuel');
+            this.props.confirm('Tous les mois');
           }}>
             <View style={styles.lines}>
               <Text style={styles.linkText}>Tous les mois</Text>
             </View>
           </TouchableOpacity>
           <TouchableOpacity onPress={()=> {
-            this.props.confirm('un versement trimestriel');
+            this.props.confirm('Tous les trimestres');
           }}>
             <View style={styles.lines}>
               <Text style={styles.linkText}>Tous les trimestres</Text>
@@ -79,6 +79,6 @@ export default class JackpotSelectDuration extends Component {
   }
 }
 
-JackpotSelectDuration.propTypes = {
+CardSelectDuration.propTypes = {
   title: React.PropTypes.string
 };

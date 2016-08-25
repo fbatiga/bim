@@ -38,7 +38,7 @@ class TransferTitleInputView extends React.Component {
                         color: baseStyles.colors.alternative,
                         height: 30,
                         marginTop: 10,
-                        width: null
+                        fontSize: 25
                     }}>
                    {this.props.subtitle || 'B!MMER LA SOMME DE' }
                     </Text>

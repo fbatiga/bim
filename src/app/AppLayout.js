@@ -74,27 +74,21 @@ class AppLayout extends Component {
 	render() {
 		return (
 			<View>
-			<Swiper
-			loop={false}
-			onMomentumScrollEnd ={this._onMomentumScrollEnd.bind(this)}
-			ref='swiper'
-			showsPagination={false}
-			index={1}>
-			<MenuView gotTo={this.gotTo.bind(this)}/>
-			<Swiper
-			horizontal={false}
-			loop={false}
-			showsPagination={false}
-			index={1}>
-			<View style={styles.viewContainer} >
-			{this.props.children}
-			</View>
-			</Swiper>
-			</Swiper>
-			<TouchableOpacity style={styles.button}  onPress={this.home.bind(this)}>
-			{ this.props.messenger.session != null && (this.props.messenger.visibility == false  || this.state.index== 0 ) && <Image source={asset.bot}  style={styles.bot}  /> }
-			{ this.props.messenger.session != null  && (this.props.messenger.visibility == true && this.state.index== 1 ) &&  <Image source={asset.close}  style={styles.bot}  /> }
-			</TouchableOpacity>
+				<Swiper
+				loop={false}
+				onMomentumScrollEnd ={this._onMomentumScrollEnd.bind(this)}
+				ref='swiper'
+				showsPagination={false}
+				index={1}>
+					<MenuView gotTo={this.gotTo.bind(this)}/>
+					<View style={styles.viewContainer} >
+						{this.props.children}
+					</View>
+				</Swiper>
+				<TouchableOpacity style={styles.button}  onPress={this.home.bind(this)}>
+					{ this.props.messenger.session != null && (this.props.messenger.visibility == false  || this.state.index== 0 ) && <Image source={asset.bot}  style={styles.bot}  /> }
+					{ this.props.messenger.session != null  && (this.props.messenger.visibility == true && this.state.index== 1 ) &&  <Image source={asset.close}  style={styles.bot}  /> }
+				</TouchableOpacity>
 			</View>)
 	}
 }
@@ -107,5 +101,3 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps)(AppLayout);
-
-

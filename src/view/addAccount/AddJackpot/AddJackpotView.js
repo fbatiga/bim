@@ -2,8 +2,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Actions as routing } from 'react-native-router-flux';
-
-import MessengerFabButton from '../../messenger/item/MessengerFabButton.js';
 import JackpotSelectTitle from './JackpotSelectTitle';
 import JackpotSelectDesign from './JackpotSelectDesign';
 import JackpotSelectAccount from './JackpotSelectAccount';
@@ -19,8 +17,9 @@ class AddJackpot extends Component {
     super(props);
 
     this.state = {
-      title: 'Départ Sarah',
-      amount: 500,
+      title: '',
+      amount: 10,
+      duration: '',
       step: 0
     };
   }
@@ -30,7 +29,7 @@ class AddJackpot extends Component {
     switch (this.state.step) {
       case 0:
       default:
-        return (<JackpotSelectTitle title='Comptes' subtitle='Nommer cette cagnotte' name={this.state.title} confirm={() => { this.selectTitle(); }}/>);
+        return (<JackpotSelectTitle title='Comptes' subtitle='Nommer cette cagnotte' name={this.state.title} confirm={this.selectTitle.bind(this)}/>);
         break;
       case 1:
         return (<JackpotSelectDesign title='Comptes' subtitle='Design de la cagnotte :' confirm={() => { this.selectDesign(); }} />);
@@ -39,10 +38,10 @@ class AddJackpot extends Component {
         return (<JackpotSelectAccount title='Comptes' subtitle='Compte à débiter :' confirm={() => { this.selectAccount(); }} />);
         break;
       case 3:
-        return (<JackpotSelectAmmount title='Comptes'  subtitle={'Somme à verser'} amount={this.state.amount} confirm={() => { this.selectAmount(); }}/>);
+        return (<JackpotSelectAmmount title='Comptes'  subtitle={'Somme à verser'} amount={this.state.amount} confirm={this.selectAmount.bind(this)}/>);
         break;
       case 4:
-        return (<JackpotSelectDuration title='Comptes' subtitle='Fréquence des virements :' confirm={() => { this.selectDuration(); }} />);
+        return (<JackpotSelectDuration title='Comptes' subtitle='Fréquence des virements :' confirm={this.selectDuration.bind(this)} />);
         break;
       case 5:
         return (<JackpotSelectFriends title='Comptes' subtitle='Inviter des amis :' confirm={() => { this.selectFriends(); }} />);
@@ -50,9 +49,10 @@ class AddJackpot extends Component {
       case 6:
         return (<JackpotConfirmView
         title='Comptes'
-        subTitle='Confirmer la cagnotte'
+        subTitle='Confirmer la Cagnotte'
         name={this.state.title}
         amount={this.state.amount}
+        duration={this.state.duration}
         confirm={() => { this.confirmJackpot(); }} />);
         break;
       case 7:
@@ -66,10 +66,11 @@ class AddJackpot extends Component {
     }
   }
 
-  selectTitle() {
+  selectTitle(title) {
     this.setState({
       ...this.state,
-      step: this.state.step + 1
+      step: this.state.step + 1,
+      title
     })
   }
 
@@ -87,17 +88,19 @@ class AddJackpot extends Component {
     })
   }
 
-  selectAmount() {
+  selectAmount(amount) {
     this.setState({
       ...this.state,
-      step: this.state.step + 1
+      step: this.state.step + 1,
+      amount
     })
   }
 
-  selectDuration() {
+  selectDuration(duration) {
     this.setState({
       ...this.state,
-      step: this.state.step + 1
+      step: this.state.step + 1,
+      duration
     })
   }
 
