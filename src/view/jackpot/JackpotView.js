@@ -5,7 +5,6 @@ import { ScrollView, View, Text, Image } from 'react-native';
 import { Actions as routing } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { init } from './JackpotAction';
-import MessengerFabButton from '../messenger/item/MessengerFabButton.js';
 import JackpotStyle from './JackpotStyle';
 import asset from '../../asset';
 import baseStyles from '../../styles/vars.js';
@@ -23,7 +22,6 @@ class JackpotView extends Component {
     return (
       <View style={JackpotStyle.container}>
         <View style={JackpotStyle.top}>
-          <MessengerFabButton />
           <View>
             <Image source={asset.jackpot} style={JackpotStyle.jackpotImage} />
             <Text style={JackpotStyle.textTitle}>Cagnotte</Text>

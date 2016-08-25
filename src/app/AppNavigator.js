@@ -5,8 +5,9 @@ import { Actions, Scene, Router , Reducer} from 'react-native-router-flux';
 import {connect} from 'react-redux';
 import {notify} from '../view/messenger/MessengerAction';
 
-import LaunchView from '../view/launch/LaunchView';
-import ParametersView from '../view/parameters/ParametersView';
+import LoginView from '../view/login/LoginView';
+import ProfileView from '../view/profile/ProfileView';
+import JournalView from '../view/journal/JournalView';
 import MessengerView from '../view/messenger/MessengerView';
 import AddAccountView from '../view/addAccount/AddAccountView';
 import AddJackpotView from '../view/addAccount/AddJackpot/AddJackpotView';
@@ -17,11 +18,11 @@ import CardView from '../view/card/CardView';
 import ContactView from '../view/contact/ContactView';
 import ContactDetailsView from '../view/contact-details/ContactDetailsView';
 import TransferView from '../view/transfer/TransferView';
+import ParametersView from '../view/parameters/ParametersView';
 
 import OneSignal from 'react-native-onesignal'; // Import package from node modules
 import {firebaseDb} from  './AppFirebase';
 import { UserSlack } from './AppSlack';
-
 
 //const firebaseRef = firebaseDb.ref('alice/device');
 
@@ -37,7 +38,8 @@ const reducerCreate = params => {
 
 const scenes = Actions.create(
     <Scene key="root" hideNavBar={true} >
-        <Scene key="launch" component={LaunchView} title="Chargement de l'application" />
+        <Scene key="login" component={LoginView} initial={true} title="Chargement de l'application"  />
+        <Scene key="profile" component={ProfileView} title="Profil"/>
         <Scene key="messenger" component={MessengerView} title="Messagerie"/>
         <Scene key="overview" component={OverviewView} initial={true} title="Consultation des comptes"/>
         <Scene key="addAccount" component={AddAccountView} title="addAccount" schema='modal' direction='vertical'/>
@@ -46,6 +48,7 @@ const scenes = Actions.create(
         <Scene key="jackpot" component={JackpotView} title="jackpot"/>
         <Scene key="card" component={CardView}     title="Cartes"/>
         <Scene key="contact" component={ContactView}   title="Contacts"/>
+        <Scene key="journal" component={JournalView}   title="Journal"/>
         <Scene key="contactdetails" component={ContactDetailsView}   title="Contact detail"/>
         <Scene key="transfer" component={TransferView} title="Virement"/>
         <Scene key="parameters" component={ParametersView} title="Paramètres"/>

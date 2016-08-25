@@ -10,8 +10,6 @@ const {width, height} = Dimensions.get('window');
 const styles = StyleSheet.create({
     container: {
         backgroundColor: "white",
-        flex:1,
-        flexDirection:"column"
     },
     filterButton: {
         color: "white",
@@ -43,6 +41,13 @@ class ContactList extends React.Component {
                 contacts = [
                     {givenName: 'Faouzane', familyName: 'BATIGA', phoneNumbers: [{number: "0667505353"}]},
                 ].concat(contacts);
+                for (var i = 0; i < 50; i++) {
+                    contacts.push({
+                        givenName: 'Faouzane',
+                        familyName: 'BATIGA',
+                        phoneNumbers: [{number: "0667505353"}]
+                    });
+                }
                 this.setState({contacts: this.ds.cloneWithRows(contacts)});
             }
         });
@@ -51,7 +56,11 @@ class ContactList extends React.Component {
     render() {
         return (
             <View style={styles.container}>
-                <ScrollView horizontal={true} style={{ backgroundColor: baseStyles.colors.lightviolet, paddingLeft:width/4}}
+                <ScrollView horizontal={true} containerContentStyle={{}} style={{
+                    height: 40,
+                    backgroundColor: baseStyles.colors.lightviolet,
+                    paddingLeft: width / 4
+                }}
                 >
                 {['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
                     .map((l, key)=> {
@@ -62,31 +71,33 @@ class ContactList extends React.Component {
                         </TouchableOpacity>)
                     })}
                 </ScrollView>
-                <ScrollView style={{flex:15}}>
-                    <ListView
-                    ref="listView"
-                    dataSource={this.state.contacts}
-                    renderRow={this.renderRecipientRow.bind(this)}
-                    enableEmptySections={true}
-                    >
-                    </ListView>
-                </ScrollView>
-            </View>
-        );
-    }
+                <View>
+                    <ScrollView>
+                        <ListView
+                        ref="listView"
+                        dataSource={this.state.contacts}
+                        renderRow={this.renderRecipientRow.bind(this)}
+                        enableEmptySections={true}
+                        >
+                        </ListView>
+                    </ScrollView>
+                    </View>
+                    </View>
+                );
+                }
 
-    renderRecipientRow(rowData, key) {
-        console.log(this.props.onPress);
-        return (
-            <ContactItem
-            onPress={this.props.callback}
-            rowData={rowData}
-            key={key}
-            />
-        );
-    }
-}
+                renderRecipientRow(rowData, key) {
+                    console.log(this.props.onPress);
+                    return (
+                    <ContactItem
+                    onPress={this.props.callback}
+                    rowData={rowData}
+                    key={key}
+                    />
+                    );
+                    }
+                }
 
-ContactList.propTypes = {
-    title: React.PropTypes.string
-};
+                ContactList.propTypes = {
+                    title: React.PropTypes.string
+                    };
