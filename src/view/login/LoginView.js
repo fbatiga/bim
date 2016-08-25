@@ -37,7 +37,7 @@ class LoginView extends Component {
 
 		return (
 				<TouchableOpacity style={[LoginStyle.container, { width:width, height: height}]} onPress={this.login.bind(this)} >
-					<Image source={asset.login}  style={{width:width, height: height}} resizeMode='contain' ></Image>
+					<Image source={asset.screens.login}  style={{width:width, height: height}} resizeMode='contain' ></Image>
 				</TouchableOpacity>
 		);
 	}

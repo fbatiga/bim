@@ -1,6 +1,5 @@
 export default {
     logo : require('./logo.png'),
-    login : require('./login.png'),
     bottomButton : require('./bottomButton.png'),
     graphCircle: require('./circle.png'),
     graphCircled: require('./circleAccount.png'),
@@ -55,6 +54,7 @@ export default {
         contactsList: require('./screens/contactsList.png'),
         contact: require('./screens/contact.png'),
         profile: require('./screens/profile.png'),
-        journal: require('./screens/profile.png')
+        journal: require('./screens/journal.png'),
+        login: require('./screens/login.png')
     }
 };
