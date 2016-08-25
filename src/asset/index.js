@@ -16,6 +16,9 @@ export default {
     success: require('./success.png'),
     setting: require('./setting.png'),
     jackpot: require('./jackpot.png'),
+    back: require('./back.png'),
+    next: require('./next.png'),
+    pin: require('./pin.png'),
     keyboard:{
         1:  require('./keyboard/1.png'),
         2:  require('./keyboard/2.png'),
