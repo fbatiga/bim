@@ -2,8 +2,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Actions as routing } from 'react-native-router-flux';
-
-import MessengerFabButton from '../../messenger/item/MessengerFabButton.js';
 import JackpotSelectTitle from './JackpotSelectTitle';
 import JackpotSelectDesign from './JackpotSelectDesign';
 import JackpotSelectAccount from './JackpotSelectAccount';

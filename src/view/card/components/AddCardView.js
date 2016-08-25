@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Actions as routing } from 'react-native-router-flux';
 
-import MessengerFabButton from '../../messenger/item/MessengerFabButton.js';
 import CardSelectAccount from './CardSelectAccount';
 import CardSelectDuration from './CardSelectDuration';
 import CardSelectAmmount from '../../transfer/components/AmountSelectionView';
