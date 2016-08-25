@@ -19,13 +19,10 @@ const styles = StyleSheet.create({
       backgroundColor: baseStyles.colors.deepBlue
     },
     bottom: {
-      // flex: 1,
       backgroundColor: "white",
-      // height: (height / 2 + 70),
       flexWrap: 'wrap',
       alignItems: 'flex-start',
       flexDirection: 'row',
-
     },
     keyboardButton: {
       padding: 20,
@@ -67,7 +64,13 @@ class AmountSelectionView extends React.Component {
                         height: 100,
                         width: null
                     }}
-                    >{this.state.amount ? this.state.amount + ' €' : 'Votre montant...'}</Text>
+                    >{
+                      this.props.code ?
+                      this.state.amount :
+                      this.state.amount ?
+                      this.state.amount + ' €' :
+                      'Votre montant...'
+                    }</Text>
                 </View>
                 <TouchableOpacity style={{
                     // flex: 1,
