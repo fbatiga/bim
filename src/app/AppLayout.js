@@ -80,7 +80,7 @@ class AppLayout extends Component {
 				ref='swiper'
 				showsPagination={false}
 				index={1}>
-					<MenuView gotTo={this.gotTo.bind(this)}/>
+					{ this.props.messenger.session != null && <MenuView gotTo={this.gotTo.bind(this)}/> }
 					<View style={styles.viewContainer} >
 						{this.props.children}
 					</View>
