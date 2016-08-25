@@ -11,7 +11,7 @@ const ViewStyle = StyleSheet.create({
     }
 });
 
-const width = Dimensions.get('window').width;
+const {width,height} = Dimensions.get('window');
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -35,6 +35,7 @@ export default  class ViewWithBackground extends Component {
         super(props);
 
         this.state = {
+            imageWidth: 0,
             imageHeight: 0
         };
         this.pixelRatio = this.props.pixelRatio || 2;
@@ -52,6 +53,10 @@ export default  class ViewWithBackground extends Component {
         this.resizeFunc = this.resize.bind(this);
         if (this.state.imageHeight > 0) {
             this.imageStyle.height = this.state.imageHeight / (this.pixelRatio);
+            if(this.imageStyle <= height){
+                this.imageStyle.height = height;
+            }
+
             this.resizeFunc = null;
         }
         return (

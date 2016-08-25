@@ -7,6 +7,7 @@ import {notify} from '../view/messenger/MessengerAction';
 
 import LoginView from '../view/login/LoginView';
 import ProfileView from '../view/profile/ProfileView';
+import JournalView from '../view/journal/JournalView';
 import MessengerView from '../view/messenger/MessengerView';
 import OverviewView from '../view/overview/OverviewView.js';
 import AccountView from '../view/account/AccountView';
@@ -43,6 +44,7 @@ const scenes = Actions.create(
         <Scene key="jackpot" component={JackpotView} title="jackpot"/>
         <Scene key="card" component={CardView}     title="Cartes"/>
         <Scene key="contact" component={ContactView}   title="Contacts"/>
+        <Scene key="journal" component={JournalView}   title="Journal"/>
         <Scene key="contactdetails" component={ContactDetailsView}   title="Contact detail"/>
         <Scene key="transfer" component={TransferView} title="Virement"/>
         <Scene key="parameters" component={ParametersView} title="Paramètres"/>

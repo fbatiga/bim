@@ -54,6 +54,7 @@ export default {
         parameters: require('./screens/parameters.png'),
         contactsList: require('./screens/contactsList.png'),
         contact: require('./screens/contact.png'),
-        profile: require('./screens/profile.png')
+        profile: require('./screens/profile.png'),
+        journal: require('./screens/journal.png')
     }
 };

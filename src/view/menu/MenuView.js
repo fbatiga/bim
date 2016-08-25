@@ -36,7 +36,7 @@ export default class MenuView extends Component {
 		{text : 'PROFIL', action : Actions.profile },
 		{text : 'CONTACTS', action : Actions.contact },
 		{text : 'COMPTES', action : Actions.overview },
-		{text : 'JOURNAL', action : Actions.overview },
+		{text : 'JOURNAL', action : Actions.journal },
 		{text : 'CARTES', action : Actions.card }]
 
 		return (

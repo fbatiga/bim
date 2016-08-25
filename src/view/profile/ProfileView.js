@@ -26,12 +26,6 @@ class ProfileView extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            imageHeight: 0
-        };
-
-        this.imageStyle = {};
-        this.resizeFunc;
     }
 
 
