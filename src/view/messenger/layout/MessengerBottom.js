@@ -224,14 +224,15 @@ class MessengerBottom extends Component {
 
 				</View>
 				<View style={styles.bottom}>
-				<TouchableOpacity onPress={this.favorite.bind(this)}>
+				{this.state.buttons.length>0 && (<TouchableOpacity onPress={this.favorite.bind(this)}>
 					{(this.state.backgroundColor == this.backgroundColor[0]) && (
 						<Image source={asset.star} style={{ bottom: 10, left: 10}} />
 					)}
 					{(this.state.backgroundColor == this.backgroundColor[1]) && (
 						<Image source={asset.cross} style={{ bottom: 10, left: 10}} />
 					)}
-				</TouchableOpacity>
+				</TouchableOpacity>)
+			}
 				</View>
 
 			</View>
