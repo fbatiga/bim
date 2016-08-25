@@ -17,6 +17,7 @@ import ContactView from '../view/contact/ContactView';
 import ContactDetailsView from '../view/contact-details/ContactDetailsView';
 import TransferView from '../view/transfer/TransferView';
 import ParametersView from '../view/parameters/ParametersView';
+import AddCardView from '../view/card/components/AddCardView';
 
 import OneSignal from 'react-native-onesignal'; // Import package from node modules
 import {firebaseDb} from  './AppFirebase';
@@ -40,9 +41,10 @@ const scenes = Actions.create(
         <Scene key="profile" component={ProfileView} title="Profil"/>
         <Scene key="messenger" component={MessengerView} title="Messagerie"/>
         <Scene key="overview" component={OverviewView} title="Consultation des comptes"/>
-        <Scene key="account" component={AccountView}  title="account"/>
+        <Scene key="account" component={AccountView} title="account"/>
         <Scene key="jackpot" component={JackpotView} title="jackpot"/>
         <Scene key="card" component={CardView}     title="Cartes"/>
+        <Scene key="addCard" component={AddCardView} title="Ajouter une carte"/>
         <Scene key="contact" component={ContactView}   title="Contacts"/>
         <Scene key="journal" component={JournalView}   title="Journal"/>
         <Scene key="contactdetails" component={ContactDetailsView}   title="Contact detail"/>

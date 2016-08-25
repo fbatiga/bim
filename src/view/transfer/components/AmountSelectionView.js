@@ -19,13 +19,10 @@ const styles = StyleSheet.create({
       backgroundColor: baseStyles.colors.deepBlue
     },
     bottom: {
-      // flex: 1,
       backgroundColor: "white",
-      // height: (height / 2 + 70),
       flexWrap: 'wrap',
       alignItems: 'flex-start',
       flexDirection: 'row',
-
     },
     keyboardButton: {
       padding: 20,
@@ -49,12 +46,12 @@ class AmountSelectionView extends React.Component {
                 <Title title={this.props.title} />
                 <View style={styles.top}>
                     <Text style={{
-                        flex: 1,
+                        // flex: 1,
                         color: baseStyles.colors.alternative,
                         height: 30,
                         marginTop: 10,
                         width: null,
-                        fontSize: 22,
+                        fontSize: 30,
                         marginBottom: 25
                     }}>
                     {this.props.subtitle || 'B!MMER LA SOMME DE' }
@@ -62,7 +59,7 @@ class AmountSelectionView extends React.Component {
                     <Text
                     ref="amountInput"
                     style={{
-                        flex: 1,
+                        // flex: 1,
                         color: 'white',
                         textAlign: 'center',
                         borderBottomWidth: 3,
@@ -71,7 +68,13 @@ class AmountSelectionView extends React.Component {
                         height: 100,
                         width: null
                     }}
-                    >{this.state.amount ? this.state.amount + ' €' : 'Votre montant...'}</Text>
+                    >{
+                      this.props.code ?
+                      this.state.amount :
+                      this.state.amount ?
+                      this.state.amount + ' €' :
+                      'Votre montant...'
+                    }</Text>
                 </View>
                 <TouchableOpacity style={{
                     // flex: 1,
