@@ -9,6 +9,8 @@ import LoginView from '../view/login/LoginView';
 import ProfileView from '../view/profile/ProfileView';
 import JournalView from '../view/journal/JournalView';
 import MessengerView from '../view/messenger/MessengerView';
+import AddAccountView from '../view/addAccount/AddAccountView';
+import AddJackpotView from '../view/addAccount/AddJackpot/AddJackpotView';
 import OverviewView from '../view/overview/OverviewView.js';
 import AccountView from '../view/account/AccountView';
 import JackpotView from '../view/jackpot/JackpotView';
@@ -39,8 +41,10 @@ const scenes = Actions.create(
         <Scene key="login" component={LoginView} initial={true} title="Chargement de l'application"  />
         <Scene key="profile" component={ProfileView} title="Profil"/>
         <Scene key="messenger" component={MessengerView} title="Messagerie"/>
-        <Scene key="overview" component={OverviewView} title="Consultation des comptes"/>
-        <Scene key="account" component={AccountView}  title="account"/>
+        <Scene key="overview" component={OverviewView} initial={true} title="Consultation des comptes"/>
+        <Scene key="addAccount" component={AddAccountView} title="addAccount" schema='modal' direction='vertical'/>
+        <Scene key="addJackpot" component={AddJackpotView} title="addJackpot"/>
+        <Scene key="account" component={AccountView} title="account"/>
         <Scene key="jackpot" component={JackpotView} title="jackpot"/>
         <Scene key="card" component={CardView}     title="Cartes"/>
         <Scene key="contact" component={ContactView}   title="Contacts"/>

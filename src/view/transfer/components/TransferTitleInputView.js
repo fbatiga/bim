@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, TextInput,  TouchableOpacity, TouchableHighlight, StyleSheet, Dimensions } from 'react-native';
+import { Text, View, TextInput, StyleSheet, Dimensions } from 'react-native';
 import Title from '../../../component/Title.js';
 import baseStyles from '../../../styles/vars';
 
@@ -15,12 +15,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: baseStyles.colors.deepBlue,
         height: height / 2
-    },
-    keyboardButton: {
-        padding: 40,
-        fontSize: 50,
-        width: width * 0.33,
-        textAlign:'center'
     }
 });
 

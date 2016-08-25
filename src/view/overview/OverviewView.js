@@ -80,10 +80,14 @@ class OverviewView extends Component {
                 </View>
 
                 <View style={OverviewStyle.addIcon}>
-                  <Image source={asset.add}  style={{
-                    width: 70,
-                    height: 70
-                  }} />
+                  <TouchableOpacity style={OverviewStyle.graph} onPress={()=> {
+                      Actions.addAccount()
+                  }}>
+                    <Image source={asset.add} style={{
+                      width: 70,
+                      height: 70
+                    }} />
+                  </TouchableOpacity>
                 </View>
             </View>
         );
