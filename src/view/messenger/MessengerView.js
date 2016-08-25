@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import { Text, View, ListView,  StyleSheet } from 'react-native';
-import {getReply, addMessage, addSlackMessage,loadButtons,restartBot , notify} from './MessengerAction';
+import {getReply, addMessage, addSlackMessage,loadButtons,restartBot , notify, setVisibility} from './MessengerAction';
 import MessengerMain from './layout/MessengerMain';
 import MessengerBottom from './layout/MessengerBottom';
 import MessengerStyle from './MessengerStyle';
@@ -22,8 +22,8 @@ class MessengerView extends Component {
 
 	componentDidMount(){
 
-
-		console.log('componentDidMount',  this.props.messenger);
+		this.props.dispatch(setVisibility(true));
+		//console.log('componentDidMount',  this.props.messenger);
 
 		if(this.props.messenger.messages.length == 0){
 
@@ -35,7 +35,7 @@ class MessengerView extends Component {
 				this.firebaseNotificationRef.on('value', function(snapshot) {
 
 					let notification = snapshot.val();
-					console.log('firebaseNotificationRef', notification , this.props.messenger.notification);
+					//console.log('firebaseNotificationRef', notification , this.props.messenger.notification);
 					if(notification !== null  && this.props.messenger.notification === false){
 						this.props.dispatch(notify(notification));
 					}
@@ -51,15 +51,19 @@ class MessengerView extends Component {
 
 	}
 
+	componentWillUnmount(){
+		this.props.dispatch(setVisibility(false));
+	}
+
 
 	componentWillReceiveProps(nextProps){
-		console.log('componentWillReceiveProps', this.props.messenger, nextProps.messenger);
+		//console.log('componentWillReceiveProps', this.props.messenger, nextProps.messenger);
 
 		if(this.props.messenger.notification != nextProps.messenger.notification  && nextProps.messenger.notification != false){
 
 			this.firebaseMessagesRef.on("child_added", function(snapshot) {
 				let message = snapshot.val();
-				console.log('child_added ', message);
+				//console.log('child_added ', message);
 
 				if(message.user !== undefined && message.user != 'slackbot' && message.text !== 'fin'){
 					this.props.dispatch(addSlackMessage(message.text));
@@ -76,7 +80,7 @@ class MessengerView extends Component {
 			this.props.dispatch(restartBot());
 		}
 
-		console.log('firebaseMessagesRef',this.props.messenger.bot, nextProps.messenger.bot );
+		//console.log('firebaseMessagesRef',this.props.messenger.bot, nextProps.messenger.bot );
 		if(this.props.messenger.bot !== nextProps.messenger.bot  && nextProps.messenger.bot == true){
 			this.firebaseMessagesRef.off();
 
@@ -91,7 +95,7 @@ class MessengerView extends Component {
 
 	componentDidUpdate(){
 
-		console.log('componentDidUpdate',this.props.messenger)
+		//console.log('componentDidUpdate',this.props.messenger)
 
 		if(this.props.messenger.bot == true  && this.props.messenger.messages.length == 0){
 
@@ -121,7 +125,7 @@ class MessengerView extends Component {
 		return (
 
 			<View style={MessengerStyle.container}>
-			<View style={ { height: 20 } } />
+			<View style={ { height: 20} } />
 			<MessengerMain
 			style={MessengerStyle.main}
 			setButtons={this.setButtons.bind(this)}

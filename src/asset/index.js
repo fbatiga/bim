@@ -1,6 +1,5 @@
 export default {
     logo : require('./logo.png'),
-    launch : require('./launch.png'),
     bottomButton : require('./bottomButton.png'),
     graphCircle: require('./circle.png'),
     graphCircled: require('./circleAccount.png'),
@@ -19,6 +18,10 @@ export default {
     back: require('./back.png'),
     next: require('./next.png'),
     pin: require('./pin.png'),
+    check: require('./Check_small_contact.png'),
+    cagnotteConfirm: require('./cagnotteConfirm.png'),
+    pointsSpeed: require('./point_speed.gif'),
+    pointsImage: require('./pointsImage.png'),
     keyboard:{
         1:  require('./keyboard/1.png'),
         2:  require('./keyboard/2.png'),
@@ -58,6 +61,7 @@ export default {
         contactsList: require('./screens/contactsList.png'),
         contact: require('./screens/contact.png'),
         profile: require('./screens/profile.png'),
-        journal: require('./screens/journal.png')
+        journal: require('./screens/journal.png'),
+        login: require('./screens/login.png')
     }
 };

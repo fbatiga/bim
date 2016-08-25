@@ -7,7 +7,6 @@ import {connect} from 'react-redux';
 import {init} from './TransferAction';
 import { Actions } from 'react-native-router-flux';
 
-import MessengerFabButton from '../messenger/item/MessengerFabButton.js';
 import AmountSelectionView from './components/AmountSelectionView.js';
 import TransferConfirmView from './components/TransferConfirmView.js';
 import TransferTitleInputView from './components/TransferTitleInputView.js';
