@@ -3,16 +3,16 @@
 import React, { Component } from 'react';
 import { View, Text, Image, Dimensions , TouchableOpacity} from 'react-native';
 import {Actions} from 'react-native-router-flux';
-import LaunchStyle from './LaunchStyle';
+import LoginStyle from './LoginStyle';
 import {connect} from 'react-redux';
-import {loadSession} from './LaunchAction';
+import {loadSession} from './LoginAction';
 import asset from '../../asset';
 import {loadChoices, registerSession, addMessage, addBotMessage} from '../messenger/MessengerAction';
 
 
 const {width, height} = Dimensions.get('window');
 
-class LaunchView extends Component {
+class LoginView extends Component {
 
 	componentDidMount() {
 		this.props.dispatch(loadSession());
@@ -21,8 +21,8 @@ class LaunchView extends Component {
 
 	componentWillReceiveProps(nextProps) {
 
-		if(nextProps.launch.start){
-			this.session = nextProps.launch.start.session;
+		if(nextProps.login.start){
+			this.session = nextProps.login.start.session;
 		}
 
 	}
@@ -36,8 +36,8 @@ class LaunchView extends Component {
 	render(){
 
 		return (
-				<TouchableOpacity style={[LaunchStyle.container, { width:width, height: height}]} onPress={this.login.bind(this)} >
-					<Image source={asset.launch}  style={{width:width, height: height}} resizeMode='contain' ></Image>
+				<TouchableOpacity style={[LoginStyle.container, { width:width, height: height}]} onPress={this.login.bind(this)} >
+					<Image source={asset.login}  style={{width:width, height: height}} resizeMode='contain' ></Image>
 				</TouchableOpacity>
 		);
 	}
@@ -45,8 +45,8 @@ class LaunchView extends Component {
 
 function mapStateToProps(state) {
 	return {
-		launch : state.launch
+		login : state.login
 	};
 }
 
-export default connect(mapStateToProps)(LaunchView);
+export default connect(mapStateToProps)(LoginView);

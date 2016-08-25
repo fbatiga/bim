@@ -1,6 +1,6 @@
 export default {
     logo : require('./logo.png'),
-    launch : require('./launch.png'),
+    login : require('./login.png'),
     bottomButton : require('./bottomButton.png'),
     graphCircle: require('./circle.png'),
     graphCircled: require('./circleAccount.png'),
