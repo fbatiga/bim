@@ -48,11 +48,11 @@ const scenes = Actions.create(
         <Scene key="account" component={AccountView} title="account" type='replace'/>
         <Scene key="jackpot" component={JackpotView} title="jackpot"/>
         <Scene key="card" component={CardView} title="Cartes" type='replace'/>
-        <Scene key="addCard" component={AddCardView} title="Ajouter une carte"/>
+        <Scene key="addCard" component={AddCardView} title="Ajouter une carte" schema='modal' direction='vertical'/>
         <Scene key="contact" component={ContactView} title="Contacts" type='replace'/>
         <Scene key="journal" component={JournalView} title="Journal" type='replace'/>
         <Scene key="contactdetails" component={ContactDetailsView} title="Contact detail"/>
-        <Scene key="transfer" component={TransferView} title="Virement" />
+        <Scene key="transfer" component={TransferView} title="Virement" schema='modal' direction='vertical'/>
         <Scene key="parameters" component={ParametersView} title="Paramètres"/>
     </Scene>
 );

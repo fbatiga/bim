@@ -10,12 +10,13 @@ const styles = StyleSheet.create({
   },
   top: {
     flex: 1,
-    backgroundColor: baseStyles.colors.deepBlue,
     justifyContent: 'center',
-    alignItems: 'center'
+    backgroundColor: baseStyles.colors.deepBlue,
   },
   imageContainer: {
-    marginTop: 100
+    marginBottom: 80,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   image: {
     height: 200,
@@ -29,22 +30,25 @@ export default class JackportConfirmView extends Component {
       <View style={styles.container}>
         <Text style={baseStyles.titles.h1}>{this.props.title || 'B!M'}</Text>
         <View style={styles.top}>
-          <Text style={{
-            color: baseStyles.colors.white,
-            marginTop: 10,
-            marginBottom: 25,
-            fontSize: 25
-          }}>
-          {this.props.subTitle || 'Confirmer le B!M' }</Text>
-          <View style={{ flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'center' }}>
-            <Text style={{color: baseStyles.colors.alternative, fontSize: 25}}>{this.props.name}</Text>
-            <Text style={{color: '#fff', fontSize: 25 }}> avec </Text>
-            <Text style={{color: '#fff', fontSize: 25 }}>un versement unique de </Text>
-            <Text style={{color: baseStyles.colors.alternative, fontSize: 25 }}>{this.props.amount} €.</Text>
+          <View style={{ alignItems: 'center' }}>
+            <Text style={{
+              color: baseStyles.colors.white,
+              marginTop: 10,
+              fontSize: 25,
+              height: 40
+            }}>
+            {this.props.subTitle || 'Confirmer le B!M' }</Text>
           </View>
-          <View style={styles.imageContainer}>
-            <Image source={asset.cagnotteConfirm} style={styles.image} resizeMode='contain'/>
+          <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center' }}>
+            <Text style={{color: baseStyles.colors.alternative, fontSize: 25, height: 40}}>{this.props.name}</Text>
+            <Text style={{color: '#fff', fontSize: 25, height: 40 }}> avec </Text>
+            <Text style={{color: baseStyles.colors.alternative, fontSize: 25, height: 40}}>{this.props.duration}</Text>
+            <Text style={{color: '#fff', fontSize: 25, height: 40 }}> de </Text>
+            <Text style={{color: baseStyles.colors.alternative, fontSize: 25, height: 40 }}>{this.props.amount} €.</Text>
           </View>
+        </View>
+        <View style={styles.imageContainer}>
+          <Image source={asset.cagnotteConfirm} style={styles.image} resizeMode='contain'/>
         </View>
         <TouchableOpacity style={{
           backgroundColor: baseStyles.colors.lightviolet,

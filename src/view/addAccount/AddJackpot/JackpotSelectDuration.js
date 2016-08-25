@@ -53,21 +53,21 @@ export default class JackpotSelectDuration extends Component {
         </View>
         <View style={styles.bottom}>
           <TouchableOpacity onPress={()=> {
-            this.props.confirm();
+            this.props.confirm('un versement unique');
           }}>
             <View style={styles.lines}>
               <Text style={styles.linkText}>Un versement unique</Text>
             </View>
           </TouchableOpacity>
           <TouchableOpacity onPress={()=> {
-            this.props.confirm();
+            this.props.confirm('un versement mensuel');
           }}>
             <View style={styles.lines}>
               <Text style={styles.linkText}>Tous les mois</Text>
             </View>
           </TouchableOpacity>
           <TouchableOpacity onPress={()=> {
-            this.props.confirm();
+            this.props.confirm('un versement trimestriel');
           }}>
             <View style={styles.lines}>
               <Text style={styles.linkText}>Tous les trimestres</Text>
