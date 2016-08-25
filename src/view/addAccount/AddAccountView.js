@@ -18,7 +18,6 @@ class addAccount extends Component {
     return (
       <View style={AddAccountStyle.container}>
         <Text style={baseStyles.titles.h1}>Comptes</Text>
-        <MessengerFabButton />
 
         <View style={AddAccountStyle.top}>
           <View>
