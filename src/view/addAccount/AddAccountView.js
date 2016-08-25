@@ -4,7 +4,6 @@ import { View, Text, TouchableOpacity } from 'react-native';
 import { Actions as routing } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { init } from './AddAccountAction';
-import MessengerFabButton from '../messenger/item/MessengerFabButton.js';
 import AddAccountStyle from './AddAccountStyle';
 import asset from '../../asset';
 import baseStyles from '../../styles/vars.js';
@@ -18,8 +17,6 @@ class addAccount extends Component {
     return (
       <View style={AddAccountStyle.container}>
         <Text style={baseStyles.titles.h1}>Comptes</Text>
-        <MessengerFabButton />
-
         <View style={AddAccountStyle.top}>
           <View>
             <Text style={AddAccountStyle.textTitle}>Type de</Text>
