@@ -13,19 +13,23 @@ const styles = StyleSheet.create({
 		backgroundColor : '#FFFFFF'
 	},
 	container :{
-		backgroundColor: '#79F0CC',
 		flex: 1,
 		flexDirection:'column',
-		alignItems: 'center',
-		justifyContent:  'center',
+	},
+	bottom :{
+		height :20,
+		flexDirection:'row',
+		alignItems: 'flex-start',
+		justifyContent:  'flex-start',
 	},
 	content :{
+		flex:1,
 		padding : 5,
 		alignSelf : 'center',
 		flexDirection:'row',
 		flexWrap : 'wrap',
-		alignItems: 'flex-start',
-		justifyContent:  'flex-end',
+		alignItems: 'center',
+		justifyContent:  'space-between',
 	},
 	spacer: {
 		height: 5,
@@ -48,17 +52,33 @@ class MessengerBottom extends Component {
 		super(props);
 		this.items = [];
 		this.position= 0;
+		this.backgroundColor = ['#79F0CC','#B8A4E6'];
 		this.state = {
 			buttons: [],
-			icon : 0
+			icon : 0,
+			backgroundColor : this.backgroundColor[0]
 		};
 	}
 
 
 	setButtons(buttons) {
 		this.setState({
-			buttons: buttons.concat([])
+			buttons: buttons.concat([]),
+			backgroundColor : this.backgroundColor[0]
 		});
+	}
+
+
+	favorite(){
+		if(this.state.backgroundColor == this.backgroundColor[0]){
+			this.setState({
+				backgroundColor : this.backgroundColor[1]
+			});
+		}else{
+			this.setState({
+				backgroundColor : this.backgroundColor[0]
+			});
+		}
 	}
 
 	setShadow(index){
@@ -175,7 +195,12 @@ class MessengerBottom extends Component {
 			//
 	render(){
 		return (
-			<View   style={[styles.container, this.props.style]} >
+			<View   style={[styles.container, this.props.style, {backgroundColor: this.state.backgroundColor}]} >
+
+			{this.state.backgroundColor == this.backgroundColor[1] && (
+				<Image source={asset.bigStar} style={{ position:'absolute', bottom: 10, left: -15}} />
+			)}
+
 
 			<View
 			ref="listView"
@@ -196,12 +221,25 @@ class MessengerBottom extends Component {
 				// 	return ( <View style={styles.spacer} key={index} />);
 				// }
 			})}
-			</View>
+
+				</View>
+				<View style={styles.bottom}>
+				<TouchableOpacity onPress={this.favorite.bind(this)}>
+					{(this.state.backgroundColor == this.backgroundColor[0]) && (
+						<Image source={asset.star} style={{ bottom: 10, left: 10}} />
+					)}
+					{(this.state.backgroundColor == this.backgroundColor[1]) && (
+						<Image source={asset.cross} style={{ bottom: 10, left: 10}} />
+					)}
+				</TouchableOpacity>
+				</View>
+
 			</View>
 			);
 	}
 }
 
+				//this.state.buttons.length == 0
 
 
 export default MessengerBottom;
