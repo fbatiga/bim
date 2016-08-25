@@ -35,13 +35,12 @@ class ContactList extends React.Component {
 
         Contacts.getAll((err, contacts) => {
             if (err && err.type === 'permissionDenied') {
-                // x.x
+                console.log(err);
             } else {
-                console.log(contacts);
                 contacts = [
                     {givenName: 'Faouzane', familyName: 'BATIGA', phoneNumbers: [{number: "0667505353"}]},
                 ].concat(contacts);
-                for (var i = 0; i < 50; i++) {
+                for (var i = 0; i < 10; i++) {
                     contacts.push({
                         givenName: 'Faouzane',
                         familyName: 'BATIGA',
@@ -72,31 +71,284 @@ class ContactList extends React.Component {
                     })}
                 </ScrollView>
                 <View>
-                    <ScrollView>
-                        <ListView
-                        ref="listView"
-                        dataSource={this.state.contacts}
-                        renderRow={this.renderRecipientRow.bind(this)}
-                        enableEmptySections={true}
-                        >
-                        </ListView>
+                    <ScrollView horizontal={false}>
+                        <ContactItem
+                        rowData={[]}
+                        />
+                        <ContactItem
+                        rowData={[]}
+                        />
+
+                        <ContactItem
+                        rowData={[]}
+                        />
+                        <ContactItem
+                        rowData={[]}
+                        />
+
+                        <ContactItem
+                        rowData={[]}
+                        />
+                        <ContactItem
+                        rowData={[]}
+                        />
+
+                        <ContactItem
+                        rowData={[]}
+                        />
+                        <ContactItem
+                        rowData={[]}
+                        />
+
+                        <ContactItem
+                        rowData={[]}
+                        />
+                        <ContactItem
+                        rowData={[]}
+                        />
+
+                        <ContactItem
+                        rowData={[]}
+                        />
+                        <ContactItem
+                        rowData={[]}
+                        />
+
+                        <ContactItem
+                        rowData={[]}
+                        />
+                        <ContactItem
+                        rowData={[]}
+                        />
+
+                        <ContactItem
+                        rowData={[]}
+                        />
+                        <ContactItem
+                        rowData={[]}
+                        />
+
+                        <ContactItem
+                        rowData={[]}
+                        />
+                        <ContactItem
+                        rowData={[]}
+                        />
+
+                        <ContactItem
+                        rowData={[]}
+                        />
+                        <ContactItem
+                        rowData={[]}
+                        />
+
+                        <ContactItem
+                        rowData={[]}
+                        />
+                        <ContactItem
+                        rowData={[]}
+                        />
+
+                        <ContactItem
+                        rowData={[]}
+                        />
+                        <ContactItem
+                        rowData={[]}
+                        />
+
+                        <ContactItem
+                        rowData={[]}
+                        />
+                        <ContactItem
+                        rowData={[]}
+                        />
+
+                        <ContactItem
+                        rowData={[]}
+                        />
+                        <ContactItem
+                        rowData={[]}
+                        />
+
+                        <ContactItem
+                        rowData={[]}
+                        />
+                        <ContactItem
+                        rowData={[]}
+                        />
+
+                        <ContactItem
+                        rowData={[]}
+                        />
+                        <ContactItem
+                        rowData={[]}
+                        />
+
+                        <ContactItem
+                        rowData={[]}
+                        />
+                        <ContactItem
+                        rowData={[]}
+                        />
+
+                        <ContactItem
+                        rowData={[]}
+                        />
+                        <ContactItem
+                        rowData={[]}
+                        />
+
+                        <ContactItem
+                        rowData={[]}
+                        />
+                        <ContactItem
+                        rowData={[]}
+                        />
+
+                        <ContactItem
+                        rowData={[]}
+                        />
+                        <ContactItem
+                        rowData={[]}
+                        />
+
+                        <ContactItem
+                        rowData={[]}
+                        />
+                        <ContactItem
+                        rowData={[]}
+                        />
+
+                        <ContactItem
+                        rowData={[]}
+                        />
+                        <ContactItem
+                        rowData={[]}
+                        />
+
+                        <ContactItem
+                        rowData={[]}
+                        />
+                        <ContactItem
+                        rowData={[]}
+                        />
+
+                        <ContactItem
+                        rowData={[]}
+                        />
+                        <ContactItem
+                        rowData={[]}
+                        />
+
+                        <ContactItem
+                        rowData={[]}
+                        />
+                        <ContactItem
+                        rowData={[]}
+                        />
+
+                        <ContactItem
+                        rowData={[]}
+                        />
+                        <ContactItem
+                        rowData={[]}
+                        />
+
+                        <ContactItem
+                        rowData={[]}
+                        />
+                        <ContactItem
+                        rowData={[]}
+                        />
+
+                        <ContactItem
+                        rowData={[]}
+                        />
+                        <ContactItem
+                        rowData={[]}
+                        />
+
+                        <ContactItem
+                        rowData={[]}
+                        />
+                        <ContactItem
+                        rowData={[]}
+                        />
+
+                        <ContactItem
+                        rowData={[]}
+                        />
+                        <ContactItem
+                        rowData={[]}
+                        />
+
+                        <ContactItem
+                        rowData={[]}
+                        />
+                        <ContactItem
+                        rowData={[]}
+                        />
+
+                        <ContactItem
+                        rowData={[]}
+                        />
+                        <ContactItem
+                        rowData={[]}
+                        />
+
+                        <ContactItem
+                        rowData={[]}
+                        />
+                        <ContactItem
+                        rowData={[]}
+                        />
+
+                        <ContactItem
+                        rowData={[]}
+                        />
+                        <ContactItem
+                        rowData={[]}
+                        />
+
+                        <ContactItem
+                        rowData={[]}
+                        />
+                        <ContactItem
+                        rowData={[]}
+                        />
+
+                        <ContactItem
+                        rowData={[]}
+                        />
+                        <ContactItem
+                        rowData={[]}
+                        />
+
+                        <ContactItem
+                        rowData={[]}
+                        />
+                        <ContactItem
+                        rowData={[]}
+                        />
+
+
                     </ScrollView>
-                    </View>
-                    </View>
-                );
-                }
+                </View>
+            </View>
+        );
+    }
 
-                renderRecipientRow(rowData) {
-                   // console.log(this.props.onPress);
-                    return (
-                    <ContactItem
-                    onPress={this.props.callback}
-                    rowData={rowData}
-                    />
-                    );
-                    }
-                }
 
-                ContactList.propTypes = {
-                    title: React.PropTypes.string
-                    };
+    renderRecipientRow(rowData) {
+        return (
+            <ContactItem
+            onPress={this.props.callback}
+            rowData={rowData}
+            />
+        );
+    }
+}
+
+ContactList.propTypes = {
+    title: React.PropTypes.string
+};

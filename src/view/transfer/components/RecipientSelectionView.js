@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
     },
     top: {
         justifyContent: 'center',
-        alignItems: 'center',
+        // alignItems: 'center',
         backgroundColor: baseStyles.colors.deepBlue,
         height: (height / 2 - 70)
     },
@@ -59,13 +59,11 @@ export default class RecipientSelectionView extends React.Component {
                   <Text
                   style={{
                       color: baseStyles.colors.alternative,
-                      textAlign: 'center',
-                      borderBottomWidth: 3,
-                      borderBottomColor: "white",
+                      marginLeft: 50,
                       fontSize: 40,
-                      fontWeight: '200'
+                      width: width / 2
                   }}
-                  >{ 'Destinataire:'}</Text>
+                  >{this.props.subTitle || 'Destinataire:'}</Text>
                 </View>
 
                 <View style={styles.bottom}>

@@ -1,35 +1,29 @@
 'use strict';
-
 import React, { Component } from 'react';
-import { View, Text, Image} from 'react-native';
+import { View, Image, TouchableOpacity } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import CardStyle from './CardStyle';
-
-import {connect} from 'react-redux';
-import {init} from './CardAction';
+import { connect } from 'react-redux';
+import { init } from './CardAction';
+import asset from '../../asset';
 
 class CardView extends Component {
-
 	componentDidMount() {
 		this.props.dispatch(init());
-	}
-
-	componentWillReceiveProps(nextProps) {
-
 	}
 
 	render(){
 		return (
 			<View style={CardStyle.container}>
+				<TouchableOpacity style={CardStyle.bottomRighticon} onPress={() => { Actions.addCard(); }}>
+					<Image source={asset.add}  style={{
+						width: 70,
+						height: 70
+					}} />
+				</TouchableOpacity>
 			</View>
 		);
 	}
 }
 
-function mapStateToProps(state) {
-	return {
-		card : state.card
-	};
-}
-
-export default connect(mapStateToProps)(CardView);
+export default connect()(CardView);
