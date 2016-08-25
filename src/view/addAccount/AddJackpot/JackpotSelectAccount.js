@@ -5,6 +5,9 @@ import baseStyles from '../../../styles/vars';
 import asset from '../../../asset';
 
 const { width, height } = Dimensions.get('window');
+const boxMargin = 10;
+const boxPreview = 25;
+const boxSize = width - (boxMargin + boxPreview ) * 2;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -30,16 +33,21 @@ const styles = StyleSheet.create({
   lines: {
     borderBottomWidth: 1,
     borderBottomColor: baseStyles.colors.lightGrey,
-    height: height / 6,
+    flexDirection: 'row',
+    height: height / 4,
     paddingHorizontal: 25,
-    justifyContent: 'center'
+    alignItems: 'center'
   },
   linkText: {
+    color: baseStyles.colors.deepBlue,
+    flex: 1
+  },
+  amount: {
     color: baseStyles.colors.deepBlue
   }
 });
 
-export default class CardSelectDuration extends Component {
+export default class JackpotSelectAccount extends Component {
   render() {
     return (
       <View style={styles.container}>
@@ -53,24 +61,19 @@ export default class CardSelectDuration extends Component {
         </View>
         <View style={styles.bottom}>
           <TouchableOpacity onPress={()=> {
-            this.props.confirm('Un versement unique');
+            this.props.confirm();
           }}>
             <View style={styles.lines}>
-              <Text style={styles.linkText}>Un versement unique</Text>
+              <Text style={styles.linkText}>BiM</Text>
+              <Text style={styles.amount}>2500 €</Text>
             </View>
           </TouchableOpacity>
           <TouchableOpacity onPress={()=> {
-            this.props.confirm('Tous les mois');
+            this.props.confirm();
           }}>
             <View style={styles.lines}>
-              <Text style={styles.linkText}>Tous les mois</Text>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={()=> {
-            this.props.confirm('Tous les trimestres');
-          }}>
-            <View style={styles.lines}>
-              <Text style={styles.linkText}>Tous les trimestres</Text>
+              <Text style={styles.linkText}>Société générale</Text>
+              <Text style={styles.amount}>1800 €</Text>
             </View>
           </TouchableOpacity>
         </View>
@@ -79,6 +82,6 @@ export default class CardSelectDuration extends Component {
   }
 }
 
-CardSelectDuration.propTypes = {
+JackpotSelectAccount.propTypes = {
   title: React.PropTypes.string
 };

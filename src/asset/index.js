@@ -26,6 +26,10 @@ export default {
     carte2: require('./Carte2.png'),
     carte3: require('./Carte3.png'),
     carte4: require('./Carte4.png'),
+    check: require('./Check_small_contact.png'),
+    cagnotteConfirm: require('./cagnotteConfirm.png'),
+    pointsSpeed: require('./point_speed.gif'),
+    pointsImage: require('./pointsImage.png'),
     keyboard:{
         1:  require('./keyboard/1.png'),
         2:  require('./keyboard/2.png'),

@@ -11,56 +11,60 @@ import CardSelectRecipient from '../../transfer/components/RecipientSelectionVie
 import CardSelectDesign from './CardSelectDesign';
 import CardConfirmView from '../../transfer/components/TransferConfirmView';
 import CardSuccessView from './CardSuccessView';
+import CardPointsView from '../../addAccount/AddJackpot/JackpotPointsView';
 
 class AddJackpot extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      title: 'Départ Sarah',
-      amount: 500,
-      step: 0
+      duration: '',
+      amount: 10,
+      recipient: {},
+      design: 0,
+      step: 0,
     };
   }
 
   render() {
     console.log('STEP', this.state.step);
+
     switch (this.state.step) {
       case 0:
       default:
-        return (<CardSelectAccount title='Cartes' subtitle='Compte à débiter' confirm={() => { this.selectAccount(); }}/>);
+        return (<CardSelectAccount title='Cartes' subtitle='Compte à débiter' confirm={this.selectAccount.bind(this)}/>);
         break;
       case 1:
-        return (<CardSelectDuration title='Cartes' subtitle='Fréquence des virements :' confirm={() => { this.selectDuration(); }} />);
+        return (<CardSelectDuration title='Cartes' subtitle='Fréquence des virements :' confirm={this.selectDuration.bind(this)} />);
         break;
       case 2:
-        return (<CardSelectAmmount title='Cartes' subtitle={'Somme à verser :'} amount={this.state.amount} confirm={() => { this.selectAmount(); }}/>);
+        return (<CardSelectAmmount title='Cartes' subtitle={'Somme à verser :'} amount={this.state.amount} confirm={this.selectAmount.bind(this)}/>);
         break;
       case 3:
-        return (<CardSelectRecipient title='Cartes' subTitle={'Porteur de la carte :'} confirm={() => { this.selectRecipient(); }}/>);
+        return (<CardSelectRecipient title='Cartes' subTitle={'Porteur de la carte :'} confirm={this.selectRecipient.bind(this)}/>);
         break;
       case 4:
-        return (<CardSelectDesign title='Cartes' subtitle='Design de la carte :' confirm={() => { this.selectDuration(); }} />);
+        return (<CardSelectDesign title='Cartes' subtitle='Design de la carte :' confirm={this.selectDesign.bind(this)} />);
         break;
       case 5:
-        return (<CardSelectAmmount title='Cartes' subtitle='Code de la carte' code={true} amount='0000' confirm={() => { this.selectCode(); }} />);
+        return (<CardSelectAmmount title='Cartes' subtitle='Code de la carte' code={true} amount='0000' confirm={this.selectCode.bind(this)} />);
         break;
       case 6:
         return (<CardConfirmView
           card={true}
           title='Cartes'
-          duration='versement mensuel'
-          amount='100'
-          recipient='Louise Delbosse'
-          confirm={() => { this.confirmJackpot(); }} />);
+          duration={this.state.duration}
+          amount={this.state.amount}
+          recipient={this.state.recipient}
+          confirm={this.confirmCard.bind(this)} />);
         break;
       case 7:
-        // setTimeout(() => { this.setState({ ...this.state, step: this.state.step + 1 }) },1500);
-        return (<CardSuccessView title='Cartes' subTitle='Carte crée !' />);
+        setTimeout(() => { this.setState({ ...this.state, step: this.state.step + 1 }) },1500);
+        return (<CardSuccessView title='Cartes' subTitle='Carte crée !' design={this.state.design} />);
         break;
       case 8:
-        // setTimeout(() => { routing.overview() },1500);
-        return (<JackpotPointsView title='Comptes' value='+150 pts' />);
+        setTimeout(() => { routing.overview() },1500);
+        return (<CardPointsView title='Cartes' value='+100 pts' />);
         break;
     }
   }
@@ -72,31 +76,35 @@ class AddJackpot extends Component {
     })
   }
 
-  selectDuration() {
+  selectDuration(duration) {
     this.setState({
       ...this.state,
-      step: this.state.step + 1
+      step: this.state.step + 1,
+      duration
     })
   }
 
-  selectAmount() {
+  selectAmount(amount) {
     this.setState({
       ...this.state,
-      step: this.state.step + 1
+      step: this.state.step + 1,
+      amount
     })
   }
 
-  selectRecipient() {
+  selectRecipient(recipient) {
     this.setState({
       ...this.state,
-      step: this.state.step + 1
+      step: this.state.step + 1,
+      recipient: recipient.familyName + ' ' + recipient.givenName
     })
   }
 
-  selectDesign() {
+  selectDesign(design) {
     this.setState({
       ...this.state,
-      step: this.state.step + 1
+      step: this.state.step + 1,
+      design
     })
   }
 
@@ -107,23 +115,7 @@ class AddJackpot extends Component {
     })
   }
 
-
-
-  selectTitle() {
-    this.setState({
-      ...this.state,
-      step: this.state.step + 1
-    })
-  }
-
-  selectDesign() {
-    this.setState({
-      ...this.state,
-      step: this.state.step + 1
-    })
-  }
-
-  confirmJackpot() {
+  confirmCard() {
     this.setState({
       ...this.state,
       step: this.state.step + 1

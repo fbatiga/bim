@@ -27,13 +27,34 @@ const styles = StyleSheet.create({
 });
 
 export default class CardSuccessView extends Component {
+  renderCardDesign() {
+    const { design } = this.props;
+
+    switch (design) {
+      case 1:
+        return <Image source={asset.carte1} style={styles.cardImage}/>
+        break;
+      case 2:
+        return <Image source={asset.carte2} style={styles.cardImage}/>
+        break;
+      case 3:
+        return <Image source={asset.carte3} style={styles.cardImage}/>
+        break;
+      case 4:
+        return <Image source={asset.carte4} style={styles.cardImage}/>
+        break;
+      default:
+        return <Image source={asset.carte1} style={styles.cardImage}/>
+
+    }
+  }
   render() {
     return (
       <View style={styles.container}>
         <Text style={baseStyles.titles.h1}>{this.props.title || 'Cartes'}</Text>
         <View style={styles.top}>
           <View style={{ alignItems: 'center' }}>
-            <Image source={asset.carte1} style={styles.cardImage}/>
+            {this.renderCardDesign()}
           </View>
             <Image source={asset.success} style={styles.image}/>
             <Text style={{
