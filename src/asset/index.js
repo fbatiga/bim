@@ -10,7 +10,6 @@ export default {
     wait: require('./wait.gif'),
     close: require('./close.png'),
     transfer: require('./button-transfer.png'),
-    c3po: require('./c3po.png'),
     userTransfert: require('./user-transfert.png'),
     success: require('./success.png'),
     setting: require('./setting.png'),
