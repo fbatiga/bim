@@ -10,10 +10,12 @@ const {width, height} = Dimensions.get('window');
 const styles = StyleSheet.create({
     container: {
         backgroundColor: "white",
+        flex: 1,
     },
     filterButton: {
         color: "white",
-        padding: 10
+        padding: 10,
+        fontSize:18
     }
 
 });
@@ -33,14 +35,16 @@ class ContactList extends React.Component {
             contacts: this.ds.cloneWithRows([])
         };
 
+        console.time('START CONTACTRECUP');
         Contacts.getAll((err, contacts) => {
             if (err && err.type === 'permissionDenied') {
                 console.log(err);
             } else {
+                console.timeEnd('START CONTACTRECUP');
                 contacts = [
                     {givenName: 'Faouzane', familyName: 'BATIGA', phoneNumbers: [{number: "0667505353"}]},
                 ].concat(contacts);
-                for (var i = 0; i < 10; i++) {
+                for (var i = 0; i < 1000; i++) {
                     contacts.push({
                         givenName: 'Faouzane',
                         familyName: 'BATIGA',
@@ -54,13 +58,25 @@ class ContactList extends React.Component {
 
     render() {
         return (
-            <View style={styles.container}>
-                <ScrollView horizontal={true} containerContentStyle={{}} style={{
-                    height: 40,
-                    backgroundColor: baseStyles.colors.lightviolet,
-                    paddingLeft: width / 4
-                }}
-                >
+            <ListView
+            ref="listView"
+            style={[styles.container, this.props.style]}
+            dataSource={this.state.contacts}
+            renderRow={this.renderRecipientRow.bind(this)}
+            renderSectionHeader={this.renderHeader.bind(this)}
+            enableEmptySections={true}
+            >
+            </ListView>
+        );
+    }
+
+    renderHeader() {
+        return (<ScrollView horizontal={true} containerContentStyle={{}} style={{
+            height: 45,
+            backgroundColor: baseStyles.colors.lightviolet,
+            paddingLeft: width / 4
+        }}
+        >
                 {['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
                     .map((l, key)=> {
                         return (<TouchableOpacity key={key} onPress={() => {
@@ -69,281 +85,15 @@ class ContactList extends React.Component {
                             <Text style={styles.filterButton}>{l}</Text>
                         </TouchableOpacity>)
                     })}
-                </ScrollView>
-                <View>
-                    <ScrollView horizontal={false}>
-                        <ContactItem
-                        rowData={[]}
-                        />
-                        <ContactItem
-                        rowData={[]}
-                        />
+        </ScrollView>)
 
-                        <ContactItem
-                        rowData={[]}
-                        />
-                        <ContactItem
-                        rowData={[]}
-                        />
-
-                        <ContactItem
-                        rowData={[]}
-                        />
-                        <ContactItem
-                        rowData={[]}
-                        />
-
-                        <ContactItem
-                        rowData={[]}
-                        />
-                        <ContactItem
-                        rowData={[]}
-                        />
-
-                        <ContactItem
-                        rowData={[]}
-                        />
-                        <ContactItem
-                        rowData={[]}
-                        />
-
-                        <ContactItem
-                        rowData={[]}
-                        />
-                        <ContactItem
-                        rowData={[]}
-                        />
-
-                        <ContactItem
-                        rowData={[]}
-                        />
-                        <ContactItem
-                        rowData={[]}
-                        />
-
-                        <ContactItem
-                        rowData={[]}
-                        />
-                        <ContactItem
-                        rowData={[]}
-                        />
-
-                        <ContactItem
-                        rowData={[]}
-                        />
-                        <ContactItem
-                        rowData={[]}
-                        />
-
-                        <ContactItem
-                        rowData={[]}
-                        />
-                        <ContactItem
-                        rowData={[]}
-                        />
-
-                        <ContactItem
-                        rowData={[]}
-                        />
-                        <ContactItem
-                        rowData={[]}
-                        />
-
-                        <ContactItem
-                        rowData={[]}
-                        />
-                        <ContactItem
-                        rowData={[]}
-                        />
-
-                        <ContactItem
-                        rowData={[]}
-                        />
-                        <ContactItem
-                        rowData={[]}
-                        />
-
-                        <ContactItem
-                        rowData={[]}
-                        />
-                        <ContactItem
-                        rowData={[]}
-                        />
-
-                        <ContactItem
-                        rowData={[]}
-                        />
-                        <ContactItem
-                        rowData={[]}
-                        />
-
-                        <ContactItem
-                        rowData={[]}
-                        />
-                        <ContactItem
-                        rowData={[]}
-                        />
-
-                        <ContactItem
-                        rowData={[]}
-                        />
-                        <ContactItem
-                        rowData={[]}
-                        />
-
-                        <ContactItem
-                        rowData={[]}
-                        />
-                        <ContactItem
-                        rowData={[]}
-                        />
-
-                        <ContactItem
-                        rowData={[]}
-                        />
-                        <ContactItem
-                        rowData={[]}
-                        />
-
-                        <ContactItem
-                        rowData={[]}
-                        />
-                        <ContactItem
-                        rowData={[]}
-                        />
-
-                        <ContactItem
-                        rowData={[]}
-                        />
-                        <ContactItem
-                        rowData={[]}
-                        />
-
-                        <ContactItem
-                        rowData={[]}
-                        />
-                        <ContactItem
-                        rowData={[]}
-                        />
-
-                        <ContactItem
-                        rowData={[]}
-                        />
-                        <ContactItem
-                        rowData={[]}
-                        />
-
-                        <ContactItem
-                        rowData={[]}
-                        />
-                        <ContactItem
-                        rowData={[]}
-                        />
-
-                        <ContactItem
-                        rowData={[]}
-                        />
-                        <ContactItem
-                        rowData={[]}
-                        />
-
-                        <ContactItem
-                        rowData={[]}
-                        />
-                        <ContactItem
-                        rowData={[]}
-                        />
-
-                        <ContactItem
-                        rowData={[]}
-                        />
-                        <ContactItem
-                        rowData={[]}
-                        />
-
-                        <ContactItem
-                        rowData={[]}
-                        />
-                        <ContactItem
-                        rowData={[]}
-                        />
-
-                        <ContactItem
-                        rowData={[]}
-                        />
-                        <ContactItem
-                        rowData={[]}
-                        />
-
-                        <ContactItem
-                        rowData={[]}
-                        />
-                        <ContactItem
-                        rowData={[]}
-                        />
-
-                        <ContactItem
-                        rowData={[]}
-                        />
-                        <ContactItem
-                        rowData={[]}
-                        />
-
-                        <ContactItem
-                        rowData={[]}
-                        />
-                        <ContactItem
-                        rowData={[]}
-                        />
-
-                        <ContactItem
-                        rowData={[]}
-                        />
-                        <ContactItem
-                        rowData={[]}
-                        />
-
-                        <ContactItem
-                        rowData={[]}
-                        />
-                        <ContactItem
-                        rowData={[]}
-                        />
-
-                        <ContactItem
-                        rowData={[]}
-                        />
-                        <ContactItem
-                        rowData={[]}
-                        />
-
-                        <ContactItem
-                        rowData={[]}
-                        />
-                        <ContactItem
-                        rowData={[]}
-                        />
-
-                        <ContactItem
-                        rowData={[]}
-                        />
-                        <ContactItem
-                        rowData={[]}
-                        />
-
-
-                    </ScrollView>
-                </View>
-            </View>
-        );
     }
 
-    renderRecipientRow(rowData, key) {
+    renderRecipientRow(rowData) {
         return (
             <ContactItem
             onPress={this.props.callback}
             rowData={rowData}
-            key={key}
             />
         );
     }

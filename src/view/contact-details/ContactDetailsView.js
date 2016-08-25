@@ -50,11 +50,8 @@ class ContactDetailsView extends Component {
 
     render() {
         return (
-            <ViewWithBackground backgroundImage={asset.screens.contact} pixelRatio={2} >
-                <TouchOpacity style={[style.back]}>
-                    <Image source={asset.back} />
-                </TouchOpacity>
-            </ViewWithBackground>)
+            <ViewWithBackground backgroundImage={asset.screens.contact} pixelRatio="2" >
+            </ViewWithBackground>);
     }
 
 
