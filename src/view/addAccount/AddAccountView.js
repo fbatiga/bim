@@ -27,13 +27,13 @@ class addAccount extends Component {
           <View style={AddAccountStyle.lines}>
             <Text style={AddAccountStyle.text}>Ajouter un compte éxistant</Text>
           </View>
-          <View style={AddAccountStyle.lines}>
-            <TouchableOpacity onPress={()=> {
-                routing.addJackpot();
-            }}>
+          <TouchableOpacity onPress={()=> {
+              routing.addJackpot();
+          }}>
+            <View style={AddAccountStyle.lines}>
               <Text style={AddAccountStyle.text}>Créer une cagnotte</Text>
-            </TouchableOpacity>
-          </View>
+            </View>
+          </TouchableOpacity>
           <View style={AddAccountStyle.lines}>
             <Text style={AddAccountStyle.text}>Ouvrir un compte épargne </Text>
             <Text style={AddAccountStyle.textLight}>(Bientôt disponible)</Text>

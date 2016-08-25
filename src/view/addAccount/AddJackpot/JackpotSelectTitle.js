@@ -46,7 +46,6 @@ export default class JackpotSelectTitle extends Component {
             autoCapitalize='sentences'
             autoCorrect={false}
             autoFocus
-            value={this.props.name}
             returnKeyType='next'
             ref="titleInput"
             style={styles.input}

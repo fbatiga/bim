@@ -61,7 +61,6 @@ export default class RecipientSelectionView extends React.Component {
                       color: baseStyles.colors.alternative,
                       marginLeft: 50,
                       fontSize: 40,
-                      width: width / 2
                   }}
                   >{this.props.subTitle || 'Destinataire:'}</Text>
                 </View>

@@ -12,10 +12,11 @@ const styles = StyleSheet.create({
   top: {
     flex: 1,
     backgroundColor: baseStyles.colors.deepBlue,
-    marginHorizontal: 20
+    marginHorizontal: 20,
+    justifyContent: 'center'
   },
   imageContainer: {
-    marginTop: 125,
+    marginBottom: 80,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center'
@@ -51,7 +52,7 @@ export default class TransferConfirmView extends React.Component {
     }
 
     return (
-      <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+      <View style={{ flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'center' }}>
         <Text style={{color: baseStyles.colors.alternative, fontSize: 22}}>{this.props.transferTitle}</Text>
         <Text style={{color: '#fff', fontSize: 22 }}> de </Text>
         <Text style={{color: baseStyles.colors.alternative, fontSize: 22 }}>{this.props.amount} €</Text>
@@ -66,23 +67,25 @@ export default class TransferConfirmView extends React.Component {
       <View style={styles.container}>
         <Text style={baseStyles.titles.h1}>{this.props.title || 'B!M'}</Text>
         <View style={styles.top}>
-          <Text style={{
-            color: baseStyles.colors.alternative,
-            marginTop: 10,
-            marginBottom: 25,
-            fontSize: 22
-          }}>
-          {
-            this.props.card ?
-            null :
-            this.props.subTitle || 'Confirmer le B!M'
-          }</Text>
-          {this.renderConfimtext()}
-          <View style={styles.imageContainer}>
-            <Image source={asset.transfertConfirm1} style={styles.imageUser}/>
-            <Image source={asset.virementSpeed} style={styles.imageGif}/>
-            <Image source={asset.transfertConfirm1} style={styles.imageUser}/>
+          <View style={{ alignItems: 'center' }}>
+            <Text style={{
+              color: baseStyles.colors.white,
+              marginTop: 10,
+              marginBottom: 25,
+              fontSize: 22
+            }}>
+            {
+              this.props.card ?
+              null :
+              this.props.subTitle || 'Confirmer le B!M'
+            }</Text>
           </View>
+          {this.renderConfimtext()}
+        </View>
+        <View style={styles.imageContainer}>
+          <Image source={asset.transfertConfirm2} style={styles.imageUser}/>
+          <Image source={asset.virementSpeed} style={styles.imageGif}/>
+          <Image source={asset.transfertConfirm1} style={styles.imageUser}/>
         </View>
         <TouchableOpacity style={{
           backgroundColor: baseStyles.colors.lightviolet,

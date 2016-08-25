@@ -48,13 +48,13 @@ class TransferView extends Component {
         switch (this.state.step) {
             case 0:
             default:
-                return (<AmountSelectionView title={this.state.title}  subtitle={'B!MMER LA SOMME DE'} amount={this.state.amount} confirm={this.confirmAmount.bind(this)}/>);
+                return (<AmountSelectionView title={this.state.title}  subtitle={'Sommer à verser'} amount={this.state.amount} confirm={this.confirmAmount.bind(this)}/>);
                 break;
             case 1:
                 return (<RecipientSelectionView title={this.state.title}  contacts={this.state.contacts} subtitle={'Destinataire'}  confirm={this.confirmRecipient.bind(this)} />);
                 break;
             case 2:
-                return (<TransferTitleInputView title={this.state.title}  subtitle={'NOMMER CE BIM'}  confirm={this.confirmTitle.bind(this)} />);
+                return (<TransferTitleInputView title={this.state.title}  subtitle={'Nommer ce B!M'}  confirm={this.confirmTitle.bind(this)} />);
                 break;
             case 3:
                 return (<TransferConfirmView
@@ -67,7 +67,7 @@ class TransferView extends Component {
                 break;
             case 4:
                 setTimeout(function(){Actions.account()},1500);
-                return (<TransferSuccessView />);
+                return (<TransferSuccessView subTitle='B!M envoyé !' />);
                 break;
         }
     }
