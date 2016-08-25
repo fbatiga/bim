@@ -86,13 +86,12 @@ class ContactList extends React.Component {
                 );
                 }
 
-                renderRecipientRow(rowData, key) {
-                    console.log(this.props.onPress);
+                renderRecipientRow(rowData) {
+                   // console.log(this.props.onPress);
                     return (
                     <ContactItem
                     onPress={this.props.callback}
                     rowData={rowData}
-                    key={key}
                     />
                     );
                     }
