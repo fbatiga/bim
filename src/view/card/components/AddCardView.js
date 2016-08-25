@@ -9,6 +9,7 @@ import CardSelectDuration from './CardSelectDuration';
 import CardSelectAmmount from '../../transfer/components/AmountSelectionView';
 import CardSelectRecipient from '../../transfer/components/RecipientSelectionView';
 import CardSelectDesign from './CardSelectDesign';
+import CardSelectCode from './CardSelectCode';
 import CardConfirmView from '../../transfer/components/TransferConfirmView';
 import CardSuccessView from './CardSuccessView';
 import CardPointsView from '../../addAccount/AddJackpot/JackpotPointsView';
@@ -47,7 +48,7 @@ class AddJackpot extends Component {
         return (<CardSelectDesign title='Cartes' subtitle='Design de la carte :' confirm={this.selectDesign.bind(this)} />);
         break;
       case 5:
-        return (<CardSelectAmmount title='Cartes' subtitle='Code de la carte' code={true} amount='0000' confirm={this.selectCode.bind(this)} />);
+        return (<CardSelectCode title='Cartes' subtitle='Code de la carte' code={true} amount='' confirm={this.selectCode.bind(this)} />);
         break;
       case 6:
         return (<CardConfirmView
