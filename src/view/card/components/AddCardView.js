@@ -64,7 +64,7 @@ class AddJackpot extends Component {
         return (<CardSuccessView title='Cartes' subTitle='Carte crée !' design={this.state.design} />);
         break;
       case 8:
-        setTimeout(() => { routing.overview() },1500);
+        setTimeout(() => { routing.card() },1500);
         return (<CardPointsView title='Cartes' value='+100 pts' />);
         break;
     }

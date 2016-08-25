@@ -11,6 +11,15 @@ const CardStyle = StyleSheet.create({
     bottom: 20,
     right: 0,
     marginRight: -10
+  },
+  top: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  cardImage: {
+    width: 271,
+    height: 171
   }
 });
 
