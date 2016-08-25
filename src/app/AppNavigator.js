@@ -15,6 +15,7 @@ import OverviewView from '../view/overview/OverviewView.js';
 import AccountView from '../view/account/AccountView';
 import JackpotView from '../view/jackpot/JackpotView';
 import CardView from '../view/card/CardView';
+import CardDetailsView from '../view/card-details/CardDetailsView';
 import ContactView from '../view/contact/ContactView';
 import ContactDetailsView from '../view/contact-details/ContactDetailsView';
 import TransferView from '../view/transfer/TransferView';
@@ -49,6 +50,7 @@ const scenes = Actions.create(
         <Scene key="jackpot" component={JackpotView} title="jackpot"/>
         <Scene key="card" component={CardView} title="Cartes" type='replace'/>
         <Scene key="addCard" component={AddCardView} title="Ajouter une carte" schema='modal' direction='vertical'/>
+        <Scene key="cardDetails" component={CardDetailsView} title="Mes cartes"/>
         <Scene key="contact" component={ContactView} title="Contacts" type='replace'/>
         <Scene key="journal" component={JournalView} title="Journal" type='replace'/>
         <Scene key="contactdetails" component={ContactDetailsView} title="Contact detail"/>
