@@ -43,7 +43,10 @@ export default class MenuView extends Component {
 		{text : 'PROFIL', action : Actions.profile },
 		{text : 'CONTACTS', action : Actions.contact },
 		{text : 'COMPTES', action : Actions.overview },
-		{text : 'JOURNAL', action : Actions.messenger },
+
+		{text : 'JOURNAL', action : Actions.journal },
+
+		{text : 'BOT', action : Actions.messenger },
 		{text : 'CARTES', action : Actions.card }]
 		return (
 			<View style={style.container} >
