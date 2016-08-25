@@ -18,7 +18,9 @@ class CardView extends Component {
 			<View style={CardStyle.container}>
 				<Title title='Cartes' />
 				<View style={CardStyle.top}>
-					<Image source={asset.carte1} style={CardStyle.cardImage}/>
+					<TouchableOpacity onPress={() => { Actions.cardDetails(); }}>
+						<Image source={asset.carte4} style={CardStyle.cardImage}/>
+					</TouchableOpacity>
 				</View>
 				<TouchableOpacity style={CardStyle.bottomRighticon} onPress={() => { Actions.addCard(); }}>
 					<Image source={asset.add}  style={{
