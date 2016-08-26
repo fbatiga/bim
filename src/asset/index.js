@@ -87,5 +87,11 @@ export default {
         profile: require('./screens/profile.png'),
         journal: require('./screens/journal.png'),
         login: require('./screens/login.png')
+    },
+    login : {
+        logo: require('./login/logo.png'),
+        fingerPrint : require('./login/fingerprint.gif'),
+        pass : require('./login/pass.png'),
+        subtitle : require('./login/subtitle.png'),
     }
 };
