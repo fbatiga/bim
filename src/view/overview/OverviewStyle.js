@@ -26,7 +26,7 @@ const OverviewStyle = StyleSheet.create({
         height: 200,
         padding: 10,
         marginBottom: 10,
-        backgroundColor:  baseStyles.colors.alternative,
+        // backgroundColor:  baseStyles.colors.alternative,
         borderRadius: 145
     },
     graphLabel: {
