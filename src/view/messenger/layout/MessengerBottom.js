@@ -57,7 +57,7 @@ class MessengerBottom extends Component {
 			buttons: [],
 			icon : 0,
 			backgroundColor : this.backgroundColor[0],
-			leftTransition: new Animated.Value(-150),
+			leftTransition: new Animated.Value(-200),
 			rotation: new Animated.Value(0)
 		};
 	}
