@@ -90,12 +90,6 @@ export default class MessengerButton extends Component {
 	}
 
 	render() {
-		const flexStyle = {};
-		if (this.props.text) {
-			if (this.props.text.length > 40) {
-				flexStyle.flex = 1;
-			}
-		}
 
 		return (
 			<TouchableOpacity style={[styles.button]} onLayout={this.save.bind(this)}  onPress={()=> {this.props.onPress(this.props.text)}} >

@@ -4,6 +4,8 @@ import {StyleSheet} from 'react-native';
 const MessengerStyle = StyleSheet.create({
 	bottom : {
 		flex : 4,
+
+		backgroundColor : '#79F0CC',
 		flexDirection:'column',
 	},
 	main: {
