@@ -32,23 +32,32 @@ class ContactList extends React.Component {
 			rowHasChanged: (r1, r2) => (r1 !== r2)
 		});
 
+			let  contacts = [
+                    {givenName: 'Faouzane', familyName: 'BATIGA', phoneNumbers: [{number: "0667505353"}]},
+                    {givenName: 'Faouzane', familyName: 'BATIGA', phoneNumbers: [{number: "0667505353"}]},
+                    {givenName: 'Faouzane', familyName: 'BATIGA', phoneNumbers: [{number: "0667505353"}]},
+                    {givenName: 'Faouzane', familyName: 'BATIGA', phoneNumbers: [{number: "0667505353"}]},
+                    {givenName: 'Faouzane', familyName: 'BATIGA', phoneNumbers: [{number: "0667505353"}]},
+                ];
+
 		this.state = {
 			amount: this.props.amount,
-			contacts: this.ds.cloneWithRows([])
+			contacts: this.ds.cloneWithRows(contacts)
 		};
 
-        console.time('START CONTACTRECUP');
-        Contacts.getAll((err, contacts) => {
-            if (err && err.type === 'permissionDenied') {
-                console.log(err);
-            } else {
-                console.timeEnd('START CONTACTRECUP');
-                contacts = [
-                    {givenName: 'Faouzane', familyName: 'BATIGA', phoneNumbers: [{number: "0667505353"}]},
-                ].concat(contacts);
-                this.setState({contacts: this.ds.cloneWithRows(contacts)});
-            }
-        });
+
+        // console.time('START CONTACTRECUP');
+        // Contacts.getAll((err, contacts) => {
+        //     if (err && err.type === 'permissionDenied') {
+        //         console.log(err);
+        //     } else {
+        //         console.timeEnd('START CONTACTRECUP');
+        //         contacts = [
+        //             {givenName: 'Faouzane', familyName: 'BATIGA', phoneNumbers: [{number: "0667505353"}]},
+        //         ].concat(contacts);
+        //         this.setState({contacts: this.ds.cloneWithRows(contacts)});
+        //     }
+        // });
     }
 
     render() {

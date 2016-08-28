@@ -33,23 +33,8 @@ const {width, height} = Dimensions.get('window');
 
 class LoginView extends Component {
 
-	componentDidMount() {
-		this.props.dispatch(loadSession());
-		this.session = null;
-	}
-
-	componentWillReceiveProps(nextProps) {
-
-		if(nextProps.login.start){
-			this.session = nextProps.login.start.session;
-		}
-
-	}
-
-
 	login(){
-		this.props.dispatch(registerSession(this.session));
-		Actions.messenger();
+		this.props.dispatch(loadSession());
 	}
 
 	render(){

@@ -134,7 +134,9 @@ class MessengerView extends Component {
 
 
 
-
+	onLayout(){
+		this.props.dispatch(setVisibility(true));
+	}
 
 	setButtons(buttons) {
 		this.props.dispatch(loadButtons(buttons));
@@ -144,7 +146,7 @@ class MessengerView extends Component {
 	render(){
 		return (
 
-			<View style={MessengerStyle.container}>
+			<View style={MessengerStyle.container} onLayout={this.onLayout.bind(this)}>
 			<View style={ { height: 20} } />
 			<MessengerMain
 			style={MessengerStyle.main}
@@ -164,8 +166,7 @@ class MessengerView extends Component {
 				<Text style={{color:'#B8A4E6', fontFamily : 'Montserrat-SemiBold',
 		letterSpacing: 3, margin:5 , lineHeight: 30, }}>ENVOYER</Text>
 				</View>
-
-					<KeyboardSpacer/>
+				<KeyboardSpacer/>
 
 				</View>)}
 			{!this.state.input && (<MessengerBottom

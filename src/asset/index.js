@@ -90,7 +90,7 @@ export default {
     },
     login : {
         logo: require('./login/logo.png'),
-        fingerPrint : require('./login/fingerprint.gif'),
+        fingerPrint : require('./login/fingerprint.png'),
         pass : require('./login/pass.png'),
         subtitle : require('./login/subtitle.png'),
     }

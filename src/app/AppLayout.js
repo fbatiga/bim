@@ -5,7 +5,7 @@ import Swiper from 'react-native-swiper';
 import MenuView from '../view/menu/MenuView';
 import asset from '../asset';
 import {connect} from 'react-redux';
-import {setVisibility} from '../view/messenger/MessengerAction';
+import {setVisibility,registerSession} from '../view/messenger/MessengerAction';
 import { Actions } from 'react-native-router-flux';
 
 
@@ -36,67 +36,122 @@ class AppLayout extends Component {
 	constructor(props){
 		super(props);
 		this.state = {
-			index : 1
+			index : 1,
+			login : false
 		};
 	}
 
 	gotTo(item){
-
-		this.props.dispatch(setVisibility(false));
 		item.action();
+		this.props.dispatch(setVisibility(false));
 		this.refs.swiper.scrollBy(1);
 	}
 
 	home(){
-
-		if(this.state.index == 1 &&  this.props.messenger.visibility == true){
-			this.refs.swiper.scrollBy(-1);
-		}else{
+		if(this.props.messenger.visibility == false){
 			Actions.messenger();
-			if(this.state.index == 0){
-				this.refs.swiper.scrollBy(1);
-			}
-
-			if(this.props.messenger.visibility == false){
-				this.props.dispatch(setVisibility(true));
-			}
 		}
+
+		if(this.state.index == 0){
+			this.refs.swiper.scrollBy(1);
+		}else 	if(this.state.index == 1 && this.props.messenger.visibility ==true){
+			this.refs.swiper.scrollBy(-1);
+		}
+
+
+
 
 	}
 
 
- 	_onMomentumScrollEnd(e, state, context) {
-	    this.setState({
+	componentDidMount(){
+
+	}
+
+
+	componentWillReceiveProps(nextProps) {
+
+
+		if(nextProps.login.session != false && nextProps.messenger.session == null ){
+
+				//Action.messenger();
+//this.refs.swiper.scrollBy(1);
+		//Actions.messenger();
+	//	this.props.dispatch(registerSession(this.props.login.session));
+		//	alert(nextProps.messenger.session);
+			//Actions.messenger();
+		}
+
+
+	}
+
+	componentDidUpdate() {
+
+		console.log( 'componentDidUpdate',this.props.messenger);
+
+		if(this.props.login.session != false && this.props.messenger.session == null ){
+			this.props.dispatch(registerSession(this.props.login.session));
+			Actions.messenger();
+		}
+
+
+	}
+
+
+
+	_onMomentumScrollEnd(e, state, context) {
+
+
+		if(context.state.index == 1 && this.props.messenger.visibility == true){
+			this.props.dispatch(setVisibility(true));
+		}
+
+		this.setState({
 			index : context.state.index
 		});
-	 }
+	}
 
 	render() {
-		return (
-			<View>
+
+		console.log('render', this.props , this.state  )
+
+
+		if(this.props.login.loading != false || this.props.login.session != false ){
+			return (
+				<View>
 				<Swiper
 				loop={false}
 				onMomentumScrollEnd ={this._onMomentumScrollEnd.bind(this)}
 				ref='swiper'
 				showsPagination={false}
 				index={1}>
-					{ this.props.messenger.session != null && <MenuView gotTo={this.gotTo.bind(this)}/> }
-					<View style={styles.viewContainer} >
-						{this.props.children}
-					</View>
+				<MenuView gotTo={this.gotTo.bind(this)}/>
+				<View style={styles.viewContainer} >
+				{this.props.children}
+				</View>
 				</Swiper>
 				<TouchableOpacity style={styles.button}  onPress={this.home.bind(this)}>
-					{ this.props.messenger.session != null && (this.props.messenger.visibility == false  || this.state.index== 0 ) && <Image source={asset.bot}  style={styles.bot}  /> }
-					{ this.props.messenger.session != null  && (this.props.messenger.visibility == true && this.state.index== 1 ) &&  <Image source={asset.close}  style={styles.bot}  /> }
+				{(this.props.messenger.visibility == false || this.state.index == 0) && <Image source={asset.bot}  style={styles.bot}  /> }
+				{(this.props.messenger.visibility == true  && this.state.index == 1) &&  <Image source={asset.close}  style={styles.bot}  /> }
 				</TouchableOpacity>
-			</View>)
+				</View>);
+
+		}else{
+
+			return (
+				<View style={styles.viewContainer} >
+				{this.props.children}
+				</View>
+				);
+		}
 	}
 }
 
 
 function mapStateToProps(state) {
 	return {
-		messenger: state.messenger
+		messenger: state.messenger,
+		login: state.login
 	};
 }
 

@@ -64,9 +64,7 @@ class MessengerBottom extends Component {
 	setButtons(buttons) {
 
 
-		if(buttons.length >0){
-			buttons.push('...');
-		}
+
 
 		this.setState({
 			buttons: buttons.concat([]),
@@ -228,6 +226,15 @@ class MessengerBottom extends Component {
 				// }
 			})}
 
+			{this.state.buttons.length>0 && (
+						<MessengerButton text='...'
+							save={this.save.bind(this)}
+							key={0}
+							index={0}
+							scrollTo={this.scrollTo.bind(this)}
+							setShadow={this.setShadow.bind(this)}
+							onPress={this.props.onPress} />
+			)}
 				</View>
 				<View style={styles.bottom}>
 				{this.state.buttons.length>0 && (<TouchableOpacity style={{  bottom: 10, left: 10, height:20, width:20}} onPress={this.favorite.bind(this)}>
