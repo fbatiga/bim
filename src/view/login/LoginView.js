@@ -34,7 +34,8 @@ const {width, height} = Dimensions.get('window');
 class LoginView extends Component {
 
 	login(){
-		this.props.dispatch(loadSession());
+		this.props.dispatch(registerSession(this.props.login.session));
+		Actions.messenger();
 	}
 
 	render(){

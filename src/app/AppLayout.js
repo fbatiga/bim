@@ -5,7 +5,8 @@ import Swiper from 'react-native-swiper';
 import MenuView from '../view/menu/MenuView';
 import asset from '../asset';
 import {connect} from 'react-redux';
-import {setVisibility,registerSession} from '../view/messenger/MessengerAction';
+import {loadSession} from '../view/login/LoginAction';
+import {setVisibility} from '../view/messenger/MessengerAction';
 import { Actions } from 'react-native-router-flux';
 
 
@@ -32,12 +33,14 @@ const styles = StyleSheet.create({
 
 class AppLayout extends Component {
 
+	componentDidMount(){
+		this.props.dispatch(loadSession());
+	}
 
 	constructor(props){
 		super(props);
 		this.state = {
-			index : 1,
-			login : false
+			index : 1
 		};
 	}
 
@@ -58,49 +61,9 @@ class AppLayout extends Component {
 			this.refs.swiper.scrollBy(-1);
 		}
 
-
-
-
 	}
-
-
-	componentDidMount(){
-
-	}
-
-
-	componentWillReceiveProps(nextProps) {
-
-
-		if(nextProps.login.session != false && nextProps.messenger.session == null ){
-
-				//Action.messenger();
-//this.refs.swiper.scrollBy(1);
-		//Actions.messenger();
-	//	this.props.dispatch(registerSession(this.props.login.session));
-		//	alert(nextProps.messenger.session);
-			//Actions.messenger();
-		}
-
-
-	}
-
-	componentDidUpdate() {
-
-		console.log( 'componentDidUpdate',this.props.messenger);
-
-		if(this.props.login.session != false && this.props.messenger.session == null ){
-			this.props.dispatch(registerSession(this.props.login.session));
-			Actions.messenger();
-		}
-
-
-	}
-
-
 
 	_onMomentumScrollEnd(e, state, context) {
-
 
 		if(context.state.index == 1 && this.props.messenger.visibility == true){
 			this.props.dispatch(setVisibility(true));
@@ -112,9 +75,6 @@ class AppLayout extends Component {
 	}
 
 	render() {
-
-		console.log('render', this.props , this.state  )
-
 
 		if(this.props.login.loading != false || this.props.login.session != false ){
 			return (
@@ -130,10 +90,13 @@ class AppLayout extends Component {
 				{this.props.children}
 				</View>
 				</Swiper>
-				<TouchableOpacity style={styles.button}  onPress={this.home.bind(this)}>
-				{(this.props.messenger.visibility == false || this.state.index == 0) && <Image source={asset.bot}  style={styles.bot}  /> }
-				{(this.props.messenger.visibility == true  && this.state.index == 1) &&  <Image source={asset.close}  style={styles.bot}  /> }
-				</TouchableOpacity>
+				{ this.props.messenger.visibility != null &&
+				(<TouchableOpacity style={styles.button}  onPress={this.home.bind(this)}>
+					{(this.props.messenger.visibility == false || this.state.index == 0) && <Image source={asset.bot}  style={styles.bot}  /> }
+					{(this.props.messenger.visibility == true  && this.state.index == 1) &&  <Image source={asset.close}  style={styles.bot}  /> }
+					</TouchableOpacity>
+				)}
+
 				</View>);
 
 		}else{
