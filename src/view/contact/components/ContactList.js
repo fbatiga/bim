@@ -37,19 +37,19 @@ class ContactList extends React.Component {
 			contacts: this.ds.cloneWithRows([])
 		};
 
-        console.time('START CONTACTRECUP');
-        Contacts.getAll((err, contacts) => {
-            if (err && err.type === 'permissionDenied') {
-                console.log(err);
-            } else {
-                console.timeEnd('START CONTACTRECUP');
-                contacts = [
-                    {givenName: 'Faouzane', familyName: 'BATIGA', phoneNumbers: [{number: "0667505353"}]},
-                ].concat(contacts);
-                this.setState({contacts: this.ds.cloneWithRows(contacts)});
-            }
-        });
-    }
+    console.time('START CONTACTRECUP');
+    Contacts.getAll((err, contacts) => {
+        if (err && err.type === 'permissionDenied') {
+            console.log(err);
+        } else {
+            console.timeEnd('START CONTACTRECUP');
+            contacts = [
+                {givenName: 'Faouzane', familyName: 'BATIGA', phoneNumbers: [{number: "0667505353"}]},
+            ].concat(contacts);
+            this.setState({contacts: this.ds.cloneWithRows(contacts)});
+        }
+    });
+  }
 
     render() {
         return (
@@ -59,29 +59,36 @@ class ContactList extends React.Component {
             dataSource={this.state.contacts}
             renderRow={this.renderRecipientRow.bind(this)}
             renderSectionHeader={this.renderHeader.bind(this)}
-            enableEmptySections={true}
+            enableEmptySections
             >
             </ListView>
         );
     }
 
     renderHeader() {
-        return (<ScrollView horizontal={true} containerContentStyle={{}} style={{
-            height: 45,
-            backgroundColor: baseStyles.colors.lightviolet,
-            paddingLeft: width / 4
-        }}
-        >
+        return (
+          <View>
+            <View style={{ width: 40, height: 40, backgroundColor: '#FFF', borderRadius: 20, opacity: 0.5, position: 'absolute', zIndex: 1, left: (width/2 - 20), top: 10 }} />
+            <ScrollView showsHorizontalScrollIndicator={false} horizontal={true} containerContentStyle={{}} style={{
+              height: 60,
+              paddingVertical: 10,
+              backgroundColor: baseStyles.colors.lightviolet,
+              paddingLeft: (width / 2 - 15),
+              paddingRight: (width / 2 + 15),
+            }}>
                 {['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
-                    .map((l, key)=> {
-                        return (<TouchableOpacity key={key} onPress={() => {
-                            alert(l)
-                        }}>
-                            <Text style={styles.filterButton}>{l}</Text>
-                        </TouchableOpacity>)
-                    })}
-        </ScrollView>)
-
+                  .map((l, key)=> {
+                    return (
+                      <TouchableOpacity key={key} onPress={() => {
+                        alert(l)
+                      }}>
+                      <Text style={styles.filterButton}>{l}</Text>
+                      </TouchableOpacity>
+                    )
+                })}
+            </ScrollView>
+          </View>
+      )
     }
 
     renderRecipientRow(rowData) {

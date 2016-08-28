@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, Image, View, StyleSheet } from 'react-native';
+import { Text, Image, View, StyleSheet, Animated } from 'react-native';
 import { UserLeft, UserRight } from './MessengerUser';
 import asset from '../../../asset';
 
@@ -44,7 +44,34 @@ const styles = StyleSheet.create({
 });
 
 export default class Bubble extends React.Component {
+	constructor(props) {
+		super(props);
 
+		this.state = {
+			slideIn: new Animated.Value(200),
+			fadeIn: new Animated.Value(0)
+		};
+	}
+
+	componentDidMount() {
+		Animated.timing(
+      this.state.fadeIn,
+      {
+        toValue: 1,
+        duration: 50
+      }
+    ).start();
+
+		Animated.spring(
+			this.state.slideIn,
+			{
+				duration: 200,
+				toValue: 0,
+				friction: 6,
+				tension: 40
+			}
+		).start();
+	}
 
 	content(){
 
@@ -75,12 +102,12 @@ export default class Bubble extends React.Component {
 		let bubbleStyle = (isLeft ? styles.bubbleLeft :  styles.bubbleRight );
 
 		return (
-			<View style={[styles.bubble, bubbleStyle ]}>
+			<Animated.View style={[styles.bubble, bubbleStyle, { position: 'relative', top: this.state.slideIn, opacity: this.state.fadeIn } ]}>
 
 				{isLeft && <UserLeft loading={this.props.loading} />}
 				{this.content()}
 				{!isLeft && !this.props.loading && <UserRight />}
-			</View>
+			</Animated.View>
 			);
 	}
 }
