@@ -16,40 +16,82 @@ const styles = StyleSheet.create({
     filterButton: {
         color: "white",
         padding: 10,
-        fontSize:18
+        fontSize: 18
     }
 
 
 });
 
+const letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+const lettersIndex = {
+    'A': false,
+    'B': false,
+    'C': false,
+    'D': false,
+    'E': false,
+    'F': false,
+    'G': false,
+    'H': false,
+    'I': false,
+    'J': false,
+    'K': false,
+    'L': false,
+    'M': false,
+    'N': false,
+    'O': false,
+    'P': false,
+    'Q': false,
+    'R': false,
+    'S': false,
+    'T': false,
+    'U': false,
+    'V': false,
+    'W': false,
+    'X': false,
+    'Y': false,
+    'Z': false
+};
+
 export default
 class ContactList extends React.Component {
 
-	constructor(props) {
+    constructor(props) {
+        super(props);
+        this.ds = new ListView.DataSource({
+            rowHasChanged: (r1, r2) => (r1 !== r2)
+        });
 
-		super(props);
-		this.ds = new ListView.DataSource({
-			rowHasChanged: (r1, r2) => (r1 !== r2)
-		});
+        this.state = {
+            amount: this.props.amount,
+            contacts: this.ds.cloneWithRows([]),
+            scrollHeight: 0
+        };
 
-		this.state = {
-			amount: this.props.amount,
-			contacts: this.ds.cloneWithRows([])
-		};
+        console.time('START CONTACTRECUP');
+        Contacts.getAll((err, contacts) => {
+            if (err && err.type === 'permissionDenied') {
+                console.log(err);
+            } else {
+                console.timeEnd('START CONTACTRECUP');
+                contacts = [
+                    {givenName: 'Faouzane', familyName: 'BATIGA', phoneNumbers: [{number: "0667505353"}]},
+                ].concat(contacts);
 
-    console.time('START CONTACTRECUP');
-    Contacts.getAll((err, contacts) => {
-        if (err && err.type === 'permissionDenied') {
-            console.log(err);
-        } else {
-            console.timeEnd('START CONTACTRECUP');
-            contacts = [
-                {givenName: 'Faouzane', familyName: 'BATIGA', phoneNumbers: [{number: "0667505353"}]},
-            ].concat(contacts);
-            this.setState({contacts: this.ds.cloneWithRows(contacts)});
-        }
-    });
-  }
+
+
+                // GET CONTACT HEADERS
+                var idx = 0;
+                for(var i in contacts){
+                    var l = contacts[i].givenName.substring(0,1);
+                    if(!lettersIndex[l]){
+                        lettersIndex[l] = idx;
+                    }
+                    idx++;
+                }
+                this.setState({contacts: this.ds.cloneWithRows(contacts)});
+            }
+        });
+    }
 
     render() {
         return (
@@ -59,36 +101,31 @@ class ContactList extends React.Component {
             dataSource={this.state.contacts}
             renderRow={this.renderRecipientRow.bind(this)}
             renderSectionHeader={this.renderHeader.bind(this)}
-            enableEmptySections
+            renderScrollComponent={(prop)=> {
+                return (<ScrollView contentOffset={{x: 0, y: this.state.scrollHieght}}></ScrollView>);
+            }}
+            enableEmptySections={true}
             >
             </ListView>
         );
     }
 
     renderHeader() {
-        return (
-          <View>
-            <View style={{ width: 40, height: 40, backgroundColor: '#FFF', borderRadius: 20, opacity: 0.5, position: 'absolute', zIndex: 1, left: (width/2 - 20), top: 10 }} />
-            <ScrollView showsHorizontalScrollIndicator={false} horizontal={true} containerContentStyle={{}} style={{
-              height: 60,
-              paddingVertical: 10,
-              backgroundColor: baseStyles.colors.lightviolet,
-              paddingLeft: (width / 2 - 15),
-              paddingRight: (width / 2 + 15),
-            }}>
-                {['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
-                  .map((l, key)=> {
-                    return (
-                      <TouchableOpacity key={key} onPress={() => {
-                        alert(l)
-                      }}>
-                      <Text style={styles.filterButton}>{l}</Text>
-                      </TouchableOpacity>
-                    )
+
+        return (<ScrollView horizontal={true} containerContentStyle={{}} style={{
+            height: 45,
+            backgroundColor: baseStyles.colors.lightviolet,
+            paddingLeft: width / 4
+        }}
+        >
+                {letters.map((l, key)=> {
+                    return (<TouchableOpacity key={key} onPress={() => {
+                        this._scrollTo(lettersIndex[l]);
+                    }}>
+                        <Text style={styles.filterButton}>{l}</Text>
+                    </TouchableOpacity>)
                 })}
-            </ScrollView>
-          </View>
-      )
+        </ScrollView>)
     }
 
     renderRecipientRow(rowData) {
@@ -99,8 +136,12 @@ class ContactList extends React.Component {
             />
         );
     }
+
+    _scrollTo(y) {
+
+    }
 }
 
 ContactList.propTypes = {
-	title: React.PropTypes.string
+    title: React.PropTypes.string
 };
