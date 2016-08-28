@@ -1,7 +1,7 @@
 'use strict';
 
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, PanResponder, TouchableOpacity, ScrollView, Image} from 'react-native';
+import { View, Text, StyleSheet, PanResponder, TouchableOpacity, ScrollView, Image, Animated } from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import MessengerButton from '../item/MessengerButton';
 import asset from '../../../asset';
@@ -56,7 +56,9 @@ class MessengerBottom extends Component {
 		this.state = {
 			buttons: [],
 			icon : 0,
-			backgroundColor : this.backgroundColor[0]
+			backgroundColor : this.backgroundColor[0],
+			leftTransition: new Animated.Value(-200),
+			rotation: new Animated.Value(0)
 		};
 	}
 
@@ -75,10 +77,48 @@ class MessengerBottom extends Component {
 
 	favorite(){
 		if(this.state.backgroundColor == this.backgroundColor[0]){
+			Animated.parallel([
+				Animated.spring(
+					this.state.leftTransition,
+					{
+						duration: 200,
+						toValue: -15,
+						friction: 7,
+						tension: 40
+					}
+				).start(),
+				Animated.timing(
+					this.state.rotation,
+					{
+						toValue: 2,
+						duration: 200
+					}
+				).start(),
+			]);
+
 			this.setState({
 				backgroundColor : this.backgroundColor[1]
 			});
 		}else{
+			Animated.parallel([
+				Animated.spring(
+					this.state.leftTransition,
+					{
+						duration: 200,
+						toValue: -200,
+						friction: 7,
+						tension: 40
+					}
+				).start(),
+				Animated.timing(
+					this.state.rotation,
+					{
+						toValue: 0,
+						duration: 200
+					}
+				).start(),
+  		]),
+
 			this.setState({
 				backgroundColor : this.backgroundColor[0]
 			});
@@ -199,11 +239,9 @@ class MessengerBottom extends Component {
 			//
 	render(){
 		return (
-			<View   style={[styles.container, this.props.style, {backgroundColor: this.state.backgroundColor}]} >
+			<View style={[styles.container, this.props.style, {backgroundColor: this.state.backgroundColor}]} >
 
-			{this.state.backgroundColor == this.backgroundColor[1] && (
-				<Image source={asset.bigStar} style={{ position:'absolute', bottom: 10, left: -15}} />
-			)}
+			<Animated.Image source={asset.bigStar} style={{ position:'absolute', bottom: 10, left: this.state.leftTransition, transform: [{rotate: this.state.rotation.interpolate({ inputRange: [0, 0.75], outputRange: [ '-100deg', '-63deg' ]})} ] }} />
 
 
 			<View

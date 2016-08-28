@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Text, View, TouchableOpacity, StyleSheet } from 'react-native';
+import { Text, View, TouchableOpacity, StyleSheet, Animated } from 'react-native';
 
 const styles = StyleSheet.create({
 	button: {
@@ -68,7 +68,9 @@ export default class MessengerButton extends Component {
 	constructor(props){
 		super(props);
 		this.state = {
-			opacity : 1
+			opacity : 1,
+			slideIn: new Animated.Value(200),
+			fadeIn: new Animated.Value(0)
 		};
 	}
 
@@ -76,6 +78,26 @@ export default class MessengerButton extends Component {
 		this.layout = event.nativeEvent.layout;
 		this.props.save(this);
 
+	}
+
+	componentDidMount() {
+		Animated.timing(
+      this.state.fadeIn,
+      {
+        toValue: 1,
+        duration: 50
+      }
+    ).start();
+
+		Animated.spring(
+			this.state.slideIn,
+			{
+				duration: 200,
+				toValue: 0,
+				friction: 6,
+				tension: 40
+			}
+		).start();
 	}
 
 	componentDidUpdate(){
@@ -92,14 +114,16 @@ export default class MessengerButton extends Component {
 	render() {
 
 		return (
-			<TouchableOpacity style={[styles.button]} onLayout={this.save.bind(this)}  onPress={()=> {this.props.onPress(this.props.text)}} >
-			<View   style={[styles.content]} >
-			<Text style={styles.text}>
-			{this.props.text}
-			</Text>
-			</View>
-			<TriangleCorner style={[styles.triangleRight]} />
-			</TouchableOpacity>
+				<Animated.View style={{ position: 'relative', top: this.state.slideIn, opacity: this.state.fadeIn }}>
+					<TouchableOpacity style={[styles.button]} onLayout={this.save.bind(this)}  onPress={()=> {this.props.onPress(this.props.text)}} >
+						<View   style={[styles.content]} >
+							<Text style={styles.text}>
+								{this.props.text}
+							</Text>
+						</View>
+						<TriangleCorner style={[styles.triangleRight]} />
+					</TouchableOpacity>
+				</Animated.View>
 			);
 	}
 }
