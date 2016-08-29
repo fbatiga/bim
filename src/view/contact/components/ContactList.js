@@ -111,6 +111,7 @@ class ContactList extends React.Component {
     }
 
     renderHeader() {
+
         return (<ScrollView horizontal={true} containerContentStyle={{}} style={{
             height: 45,
             backgroundColor: baseStyles.colors.lightviolet,

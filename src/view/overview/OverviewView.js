@@ -1,7 +1,7 @@
 'use strict';
 
 import React, { Component } from 'react';
-import { View, Text,ListView, Image, ScrollView, TouchableOpacity} from 'react-native';
+import { View, Text,ListView, Image, ScrollView, TouchableOpacity, Animated } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import  ScrollableTabView, { ScrollableTabBar }  from 'react-native-scrollable-tab-view';
 import moment from 'moment';
@@ -14,6 +14,18 @@ import Title from '../../component/Title.js';
 
 import {connect} from 'react-redux';
 
+var custom = {
+  circle: {
+    backgroundColor: 'transparent',
+    // height: 10,
+    // width: 10,
+    // position: 'absolute',
+    // top: 50,
+    // left: 0,
+    // right: 0,
+    // justifyContent: 'center'
+  }
+}
 
 class OverviewView extends Component {
 
@@ -29,7 +41,9 @@ class OverviewView extends Component {
             filterIndex: 0,
             currentTab: 'all',
             currentMonth: 'JUIN',
-            dataSource: ds.cloneWithRows(this.props.overview.accounts)
+            dataSource: ds.cloneWithRows(this.props.overview.accounts),
+            bounceValue: new Animated.Value(1),
+            fadeAnim: new Animated.Value(1),
         };
     }
 
@@ -49,9 +63,10 @@ class OverviewView extends Component {
             <View
             horizontal={false} style={[OverviewStyle.container, { flex: 1 }]}>
                 <View style={[OverviewStyle.top, { flex: 1 }]}>
-                    <Text style={baseStyles.titles.h1}>Comptes</Text>
+                    <Animated.Text style={[baseStyles.titles.h1, { opacity: this.state.fadeAnim }]}>Comptes</Animated.Text>
 
-                    <View>
+                    {/* <Animated.View style={[custom.circle, { transform: [ {scale: this.state.bounceValue} ] }]} /> */}
+                    <Animated.View style={[custom.circle, { transform: [ {scale: this.state.bounceValue} ] }]}>
                       <ScrollableTabView
                       style={{marginTop: 20}}
                       initialPage={0}
@@ -65,27 +80,28 @@ class OverviewView extends Component {
                                  return (
                                      <View tabLabel={value.label} key={key}>
                                          <TouchableOpacity style={OverviewStyle.graph} onPress={()=> {
-                                             value.type === 'jackpot' ? Actions.jackpot() : Actions.account()
+                                            this.transition(value.type);
                                          }}>
-                                             <View style={[OverviewStyle.graphCircle , {backgroundColor: (value.type== 'internal' ? baseStyles.colors.alternative :this.randomizeColor())}]}>
-                                                 <Text style={OverviewStyle.graphLabel} >SOLDE ACTUEL</Text>
-                                                 <Text style={OverviewStyle.graphBalance} >{value.balance} €</Text>
+                                             <View style={[OverviewStyle.graphCircle, { backgroundColor: this.selectColor(value.type) } ]}>
+                                                <Animated.Text style={[OverviewStyle.graphLabel, { opacity: this.state.fadeAnim }]} >SOLDE ACTUEL</Animated.Text>
+                                                <Animated.Text style={[OverviewStyle.graphBalance, { opacity: this.state.fadeAnim }]} >{value.balance} €</Animated.Text>
                                              </View>
                                          </TouchableOpacity>
                                      </View>
                                  );
                              })}
                       </ScrollableTabView>
-                    </View>
+                    </Animated.View>
                 </View>
 
                 <View style={OverviewStyle.addIcon}>
                   <TouchableOpacity style={OverviewStyle.graph} onPress={()=> {
                       Actions.addAccount()
                   }}>
-                    <Image source={asset.add} style={{
+                    <Animated.Image source={asset.add} style={{
                       width: 70,
-                      height: 70
+                      height: 70,
+                      opacity: this.state.fadeAnim
                     }} />
                   </TouchableOpacity>
                 </View>
@@ -110,6 +126,49 @@ class OverviewView extends Component {
         default:
           return baseStyles.colors.lightblue
       }
+    }
+
+    selectColor(type) {
+      if (type === 'internal') {
+        return baseStyles.colors.alternative;
+      } else {
+        return this.randomizeColor();
+      }
+    }
+
+    transition(type) {
+      var custom = {
+        circle: {
+          backgroundColor: baseStyles.colors.alternative,
+          borderRadius: 145
+        }
+      }
+
+      Animated.timing(
+        this.state.fadeAnim,
+        {
+          toValue: 0,
+          duration: 50
+        }
+      ).start();
+
+      Animated.timing(
+        this.state.bounceValue,
+        {
+          duration: 300,
+          toValue: 8,
+          friction: 5,
+          tension: 40
+        }
+      ).start();
+
+      setTimeout(() => {
+        if (type === 'jackpot') {
+          Actions.jackpot();
+        } else {
+          Actions.account();
+        }
+      },300);
     }
 
     renderRow(rowData) {
