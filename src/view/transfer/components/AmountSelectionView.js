@@ -29,6 +29,10 @@ const styles = StyleSheet.create({
       width: width * 0.33,
       textAlign: 'center',
       fontSize: 22
+    },
+    keyboardImage: {
+        padding: 20,
+        width: width * 0.33
     }
 });
 
@@ -102,7 +106,7 @@ class AmountSelectionView extends React.Component {
                     }} >
                         <Text style={styles.keyboardButton} >0</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={[styles.keyboardButton,{alignItems:'center'}]} onPress={()=> {
+                    <TouchableOpacity style={[styles.keyboardImage , {alignItems:'center'}]} onPress={()=> {
                         this.parseInput('<')
                     }}>
                         <Image source={asset.keyboard['effacer']} style={{resizeMode: 'contain', width: 20}} />

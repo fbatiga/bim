@@ -64,7 +64,7 @@ export default class AccountItem extends React.Component {
             </View>
             <View style={styles.rightPart}>
               <Text style={styles.amount}>
-                {this.props.rowData.amount}
+              {(this.props.rowData.type === 'debit' ? '-' :'')  +   this.props.rowData.amount}
               </Text>
               <Text style={styles.amount}> €</Text>
             </View>

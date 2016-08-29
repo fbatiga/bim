@@ -102,7 +102,7 @@ class ContactList extends React.Component {
             renderRow={this.renderRecipientRow.bind(this)}
             renderSectionHeader={this.renderHeader.bind(this)}
             renderScrollComponent={(prop)=> {
-                return (<ScrollView contentOffset={{x: 0, y: this.state.scrollHieght}}></ScrollView>);
+                return (<ScrollView contentOffset={{x: 0, y: this.state.scrollHeight}}></ScrollView>);
             }}
             enableEmptySections={true}
             >

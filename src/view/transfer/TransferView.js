@@ -25,10 +25,10 @@ class TransferView extends Component {
         const rootRef = firebaseDb.ref();
         this.transactionsRef = rootRef.child('alice/transactions');
         this.recipentTransactionsRef = rootRef.child('eloise/transactions');
-
+        console.log('APP PROPS', props);
         this.state = {
             title: 'B!M',
-            amount: '1',
+            amount: null,
             transferTitle: '',
             transferRecipient: '',
             step: 0
@@ -86,7 +86,9 @@ class TransferView extends Component {
     confirmRecipient(recipient) {
         console.log(recipient);
         this.state.step = this.state.step + 1;
-        this.setState({transferRecipient: recipient.familyName + ' ' + recipient.givenName, step: this.state.step});
+        var name = (recipient.familyName ? recipient.familyName : recipient.familyName) + ' '
+            + (recipient.givenName ? recipient.givenName : recipient.givenName);
+        this.setState({transferRecipient: name, step: this.state.step});
     }
 
     confirmTitle(title) {
@@ -103,7 +105,7 @@ class TransferView extends Component {
             amount: parseFloat(this.state.amount),
             type: "debit",
             category: 'retraits',
-            timestamp: new Date() + "",
+            timestamp: Date.now(),
             recipient: this.state.transferRecipient
         });
 
@@ -113,7 +115,7 @@ class TransferView extends Component {
                 amount: parseFloat(this.state.amount),
                 type: "credit",
                 category: 'retraits',
-                timestamp: new Date() + "",
+                timestamp: Date.now(),
                 originator: 'Alice'
             }
         );

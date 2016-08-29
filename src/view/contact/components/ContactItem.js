@@ -63,7 +63,7 @@ class ContactItem extends React.Component {
                     </View>
                     <View style={styles.rightPart}>
                         <Text style={styles.label}>
-                        {this.props.rowData.givenName} {this.props.rowData.familyName}
+                        {this.props.rowData.givenName ? this.props.rowData.givenName : ''} {this.props.rowData.familyName ? this.props.rowData.familyName : ''}
                         </Text>
                         <Text style={styles.category}>
                          {this.props.rowData.phoneNumbers !== undefined && this.props.rowData.phoneNumbers[0] !== undefined && this.props.rowData.phoneNumbers[0].number}
