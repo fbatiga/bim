@@ -65,7 +65,7 @@ class MessengerView extends Component {
 
 	componentDidMount(){
 
-		this.props.dispatch(setVisibility(true));
+		//this.props.dispatch(setVisibility(true));
 		//console.log('componentDidMount',  this.props.messenger);
 
 		if(this.props.messenger.messages.length == 0){
@@ -190,7 +190,7 @@ class MessengerView extends Component {
 	}
 
 	onLayout(){
-		this.props.dispatch(setVisibility(true));
+		//
 	}
 
 	setButtons(buttons) {

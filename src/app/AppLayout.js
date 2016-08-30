@@ -51,8 +51,11 @@ class AppLayout extends Component {
 	}
 
 	home(){
+
 		if(this.props.messenger.visibility == false){
 			Actions.messenger();
+			this.props.dispatch(setVisibility(true));
+
 		}
 
 		if(this.state.index == 0){
@@ -66,6 +69,10 @@ class AppLayout extends Component {
 	_onMomentumScrollEnd(e, state, context) {
 
 		if(context.state.index == 1 && this.props.messenger.visibility == true){
+			this.props.dispatch(setVisibility(null));
+		}
+
+		if(context.state.index == 0 && this.props.messenger.visibility == null){
 			this.props.dispatch(setVisibility(true));
 		}
 
