@@ -1,7 +1,7 @@
 'use strict'
 import React, { Component } from 'react';
 import { Navigator, Text,  AppState, Platform , View } from 'react-native';
-import { Actions, Scene, Router , Reducer} from 'react-native-router-flux';
+import { Actions, Scene, StatusBar, Router , Reducer} from 'react-native-router-flux';
 import {connect} from 'react-redux';
 import {notify} from '../view/messenger/MessengerAction';
 

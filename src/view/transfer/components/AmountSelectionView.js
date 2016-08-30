@@ -29,6 +29,10 @@ const styles = StyleSheet.create({
       width: width * 0.33,
       textAlign: 'center',
       fontSize: 22
+    },
+    keyboardImage: {
+        padding: 20,
+        width: width * 0.33
     }
 });
 
@@ -37,7 +41,7 @@ class AmountSelectionView extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {amount: this.props.amount};
+        this.state = {amount: this.props.amount ?  this.props.amount : ''   };
     }
 
     render() {
@@ -102,7 +106,7 @@ class AmountSelectionView extends React.Component {
                     }} >
                         <Text style={styles.keyboardButton} >0</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={[styles.keyboardButton,{alignItems:'center'}]} onPress={()=> {
+                    <TouchableOpacity style={[styles.keyboardImage , {alignItems:'center'}]} onPress={()=> {
                         this.parseInput('<')
                     }}>
                         <Image source={asset.keyboard['effacer']} style={{resizeMode: 'contain', width: 20}} />
@@ -115,7 +119,7 @@ class AmountSelectionView extends React.Component {
 
     parseInput(input) {
         console.log(this.state.amount, input);
-        var ln = this.state.amount.length;
+        var ln = this.state.amount ? this.state.amount.length : 0;
         var append = '';
         switch (input) {
             case '0':

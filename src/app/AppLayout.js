@@ -1,6 +1,6 @@
 'use strict'
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity , Image} from 'react-native';
+import { View, Text, StatusBar,  StyleSheet, TouchableOpacity , Image} from 'react-native';
 import Swiper from 'react-native-swiper';
 import MenuView from '../view/menu/MenuView';
 import asset from '../asset';
@@ -79,6 +79,7 @@ class AppLayout extends Component {
 		if(this.props.login.session != false ){
 			return (
 				<View>
+                <StatusBar hidden={true} />
 				<Swiper
 				loop={false}
 				onMomentumScrollEnd ={this._onMomentumScrollEnd.bind(this)}

@@ -25,14 +25,18 @@ const Vars = {
             fontSize: 40,
             fontWeight: '700',
             textAlign: "left",
-            marginTop: 20
+            marginTop: 20,
+            marginLeft: -1,
+            paddingLeft: 0
         },
         h1Dark: {
             color: '#120037',
             fontSize: 40,
             fontWeight: '700',
             textAlign: "left",
-            marginTop: 20
+            marginTop: 20,
+            marginLeft: -2,
+            paddingLeft: 0
         }
     }
 };

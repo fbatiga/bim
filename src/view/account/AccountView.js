@@ -97,7 +97,7 @@ class AccountView extends Component {
                 elm.category = that.categories[elm.category];
 
                 // console.log(elm.category);
-                that.props.account.transactions.push(elm);
+                that.props.account.transactions.unshift(elm);
             });
 
             that.setState({dataSource: that.state.dataSource.cloneWithRows(that.props.account.transactions)});

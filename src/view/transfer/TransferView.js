@@ -22,15 +22,19 @@ class TransferView extends Component {
     constructor(props) {
         super(props);
 
-        const rootRef = firebaseDb.ref();
-        this.transactionsRef = rootRef.child('alice/transactions');
-        this.recipentTransactionsRef = rootRef.child('eloise/transactions');
+        this.firebaseRootRef = firebaseDb.ref();
+        this.transactionsRef = this.firebaseRootRef.child('alice/transactions');
 
+        console.log('APP PROPS', props);
         this.state = {
-            title: 'B!M',
-            amount: '1',
-            transferTitle: '',
+            amount: null,
+            transferLabel: this.props.mode === 'transfer' ? 'Nommer ce transfert' : 'Nommer ce B!M',
             transferRecipient: '',
+
+            title: this.props.mode === 'transfer' ? 'TRANSFERT' : 'B!M',
+            transferInputSubtitle: this.props.mode === 'transfer' ? 'Nommer ce transfert' : 'Nommer ce B!M',
+            transferConfirmSubtitle: this.props.mode === 'transfer' ? 'Confirmer le transfert' : 'Confirmer le B!M',
+            transferSuccessSubtitle: this.props.mode === 'transfer' ? 'Transfert effectué' : 'B!M envoyé',
             step: 0
         };
     }
@@ -48,20 +52,20 @@ class TransferView extends Component {
         switch (this.state.step) {
             case 0:
             default:
-                return (<AmountSelectionView title={this.state.title}  subtitle={'Sommer à verser'} amount={this.state.amount} confirm={this.confirmAmount.bind(this)}/>);
+                return (<AmountSelectionView title={this.state.title}     subtitle={'Somme à verser'} amount={this.state.amount} confirm={this.confirmAmount.bind(this)}/>);
                 break;
             case 1:
-                return (<RecipientSelectionView title={this.state.title}  contacts={this.state.contacts} subtitle={'Destinataire'}  confirm={this.confirmRecipient.bind(this)} />);
+                return (<RecipientSelectionView title={this.state.title}  subtitle={'Destinataire'} contacts={this.state.contacts} confirm={this.confirmRecipient.bind(this)} />);
                 break;
             case 2:
-                return (<TransferTitleInputView title={this.state.title}  subtitle={'Nommer ce B!M'}  confirm={this.confirmTitle.bind(this)} />);
+                return (<TransferTitleInputView title={this.state.title}  subtitle={this.state.transferInputSubtitle}  confirm={this.confirmTitle.bind(this)} />);
                 break;
             case 3:
                 return (<TransferConfirmView
                 title={this.state.title}
-                subTitle={'Confirmer le B!M'}
+                subTitle={this.state.transferConfirmSubtitle}
                 amount={this.state.amount}
-                transferTitle={this.state.transferTitle}
+                transferLabel={this.state.transferLabel}
                 transferRecipient={this.state.transferRecipient}
                 confirm={this.confirmTransfer.bind(this)} />);
                 break;
@@ -86,35 +90,44 @@ class TransferView extends Component {
     confirmRecipient(recipient) {
         console.log(recipient);
         this.state.step = this.state.step + 1;
-        this.setState({transferRecipient: recipient.familyName + ' ' + recipient.givenName, step: this.state.step});
+        var name = (recipient.familyName ? recipient.familyName : recipient.familyName) + ' '
+            + (recipient.givenName ? recipient.givenName : recipient.givenName);
+        this.setState({transferRecipient: name, step: this.state.step});
     }
 
     confirmTitle(title) {
         console.log(title);
         this.state.step = this.state.step + 1;
-        this.setState({transferTitle: title, step: this.state.step});
+        this.setState({transferLabel: title, step: this.state.step});
     }
 
-    confirmTransfer(title) {
+    confirmTransfer() {
         this.state.step = this.state.step + 1;
-        this.setState({transferTitle: title, step: this.state.step});
+        this.setState({step: this.state.step});
+        var key = this.state.transferRecipient.replace(" ","_").toLowerCase();
+
         this.transactionsRef.push({
-            label: this.state.transferTitle + ' (' + this.state.transferRecipient + ')',
+            label: this.state.transferLabel + ' (' + this.state.transferRecipient + ')',
             amount: parseFloat(this.state.amount),
             type: "debit",
             category: 'retraits',
-            timestamp: new Date() + "",
-            recipient: this.state.transferRecipient
+            timestamp: Date.now(),
+            recipient: this.state.transferRecipient,
+            recipientId: key
+
         });
+
+
+        this.recipentTransactionsRef = this.firebaseRootRef.child(key + '/transactions');
 
         this.recipentTransactionsRef.push(
             {
-                label: this.state.transferTitle,
+                label: this.state.transferLabel,
                 amount: parseFloat(this.state.amount),
                 type: "credit",
                 category: 'retraits',
-                timestamp: new Date() + "",
-                originator: 'Alice'
+                timestamp: Date.now(),
+                originator: 'alice'
             }
         );
     }

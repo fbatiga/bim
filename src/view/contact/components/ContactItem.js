@@ -16,7 +16,6 @@ const styles = StyleSheet.create({
 		backgroundColor: '#fff',
 		height: 100
 	},
-
 	leftPart: {
 		backgroundColor: '#fff',
 	},
@@ -51,35 +50,27 @@ const styles = StyleSheet.create({
 
 export default
 class ContactItem extends React.Component {
-
-	render() {
-
-		let familyName = this.props.rowData.familyName ?this.props.rowData.familyName  : "";
-		let givenName = this.props.rowData.givenName ?this.props.rowData.givenName  : "";
-
-		return (
-			<TouchableHighlight onPress={() => {
-				this.props.onPress(this.props.rowData)
-			} }>
-			<View style={styles.item}>
-			{asset.users !== undefined && asset.users['1'] !== undefined && (
-				<View style={styles.leftPart}>
-				<Image source={asset.users['1']} style={styles.image}/>
-				</View> )}
-			<View style={styles.rightPart}>
-			<Text style={styles.label}>
-			{givenName} {familyName}
-			</Text>
-			{this.props.rowData.phoneNumbers !== undefined && this.props.rowData.phoneNumbers[0] !== undefined &&
-				(  <Text style={styles.category}>
-					{this.props.rowData.phoneNumbers[0].number}
-					</Text> )
-			}
-			</View>
-			</View>
-			</TouchableHighlight>
-			);
-	}
+    render() {
+        return (
+            <TouchableHighlight onPress={() => {
+                this.props.onPress(this.props.rowData)
+            } }>
+                <View style={styles.item}>
+                    <View style={styles.leftPart}>
+                        <Image source={asset.users['1']} style={styles.image}/>
+                    </View>
+                    <View style={styles.rightPart}>
+                        <Text style={styles.label}>
+                        {this.props.rowData.givenName ? this.props.rowData.givenName : ''} {this.props.rowData.familyName ? this.props.rowData.familyName : ''}
+                        </Text>
+                        <Text style={styles.category}>
+                         {this.props.rowData.phoneNumbers !== undefined && this.props.rowData.phoneNumbers[0] !== undefined && this.props.rowData.phoneNumbers[0].number}
+                        </Text>
+                    </View>
+                </View>
+            </TouchableHighlight>
+        );
+    }
 }
 
 ContactItem.propTypes = {

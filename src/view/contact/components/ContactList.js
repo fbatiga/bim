@@ -91,17 +91,26 @@ class ContactList extends React.Component {
                 console.log(err);
             } else {
                 console.timeEnd('START CONTACTRECUP');
+                contacts = contacts.sort((a,b) => {
+                    if(a.givenName >  b.givenName){
+                        return 1;
+                    } else if (a.givenName ===  b.givenName){
+                        return 0;
+                    }
+                    else {
+                        return -1
+                    }
+                });
                 contacts = [
-                    {givenName: 'Faouzane', familyName: 'BATIGA', phoneNumbers: [{number: "0667505353"}]},
+                    {givenName: 'Faouzane', familyName: 'BATIGA', phoneNumbers: [{number: "0667505353"}], type:'bim'},
                 ].concat(contacts);
-
 
 
                 // GET CONTACT HEADERS
                 var idx = 0;
-                for(var i in contacts){
-                    var l = contacts[i].givenName.substring(0,1);
-                    if(!lettersIndex[l]){
+                for (var i in contacts) {
+                    var l = contacts[i].givenName.substring(0, 1);
+                    if (!lettersIndex[l]) {
                         lettersIndex[l] = idx;
                     }
                     idx++;
@@ -118,18 +127,23 @@ class ContactList extends React.Component {
         return (
             <ListView
             ref="listView"
-            style={[styles.container, this.props.style]}
             dataSource={this.state.contacts}
+            style={[styles.container, this.props.style]}
             renderRow={this.renderRecipientRow.bind(this)}
             renderSectionHeader={this.renderHeader.bind(this)}
-            renderScrollComponent={(prop)=> {
-                return (<ScrollView contentOffset={{x: 0, y: this.state.scrollHieght}}></ScrollView>);
-            }}
             enableEmptySections={true}
+            initialListSize={this.state.contacts.length}
+
             >
             </ListView>
         );
     }
+
+
+    componentDidMount() {
+        this.scrollResponder = this.refs.listView.getScrollResponder();
+    }
+
 
     renderHeader() {
 
@@ -159,6 +173,16 @@ class ContactList extends React.Component {
     }
 
     _scrollTo(y) {
+        console.log('INDEX LIST', y, this, this.refs);
+        /*if (y) {
+            this.refs.listView.scrollTo({scrollHeight: y * 100})
+        }*/
+
+        this.scrollResponder.scrollTo({
+            y: y * 100,
+            x: 0,
+            animated:  true,
+        });
 
     }
 }
