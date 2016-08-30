@@ -107,17 +107,22 @@ class ContactList extends React.Component {
             <ListView
             ref="listView"
             dataSource={this.state.contacts}
+            style={[styles.container, this.props.style]}
             renderRow={this.renderRecipientRow.bind(this)}
             renderSectionHeader={this.renderHeader.bind(this)}
             enableEmptySections={true}
             initialListSize={this.state.contacts.length}
-            renderScrollComponent={(prop)=> {
-                return (<ScrollView ref='_scrollView' style={[styles.container, this.props.style]} contentOffset={{x: 0, y: this.state.scrollHeight}}></ScrollView>);
-            }}
+
             >
             </ListView>
         );
     }
+
+
+    componentDidMount() {
+        this.scrollResponder = this.refs.listView.getScrollResponder();
+    }
+
 
     renderHeader() {
 
@@ -148,9 +153,16 @@ class ContactList extends React.Component {
 
     _scrollTo(y) {
         console.log('INDEX LIST', y, this, this.refs);
-        if (y) {
+        /*if (y) {
             this.refs.listView.scrollTo({scrollHeight: y * 100})
-        }
+        }*/
+
+        this.scrollResponder.scrollTo({
+            y: y * 100,
+            x: 0,
+            animated:  true,
+        });
+
     }
 }
 
