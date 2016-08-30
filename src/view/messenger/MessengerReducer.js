@@ -128,7 +128,7 @@ const MessengerReducer = handleActions({
 	},
 
 	[MESSENGER_NOTIFICATION]: (state, action) => {
-		return { ...state, messages : [], buttons:[], bot: false, notification : action.params};
+		return { ...state, bot: false, notification : action.params};
 	},
 
 	[MESSENGER_VISIBILITY]: (state, action) => {

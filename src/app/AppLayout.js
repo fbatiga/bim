@@ -76,7 +76,7 @@ class AppLayout extends Component {
 
 	render() {
 
-		if(this.props.login.loading != false || this.props.login.session != false ){
+		if(this.props.login.session != false ){
 			return (
 				<View>
 				<Swiper
