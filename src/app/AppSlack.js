@@ -27,33 +27,27 @@ class SlackUser {
 			};
 
 			if (image != false){
-			payload.attachments.push({
-				text : image,
-				"color": "#3AA3E3",
-				"image_url": image
-			});
-		}
-
-
+				payload.attachments.push({
+					text : image,
+					"color": "#3AA3E3",
+					"image_url": image
+				});
+			}
 
 		}else{
+
 			payload = {
 				text,
 				attachments: []
 			};
 
 			if (image != false){
-			payload.attachments.push({
-				text : image,
-				"image_url": image
-			});
+				payload.attachments.push({
+					text : image,
+					"image_url": image
+				});
+			}
 		}
-
-		}
-
-
-
-
 
 		return this.post(payload);
 	}

@@ -43,7 +43,10 @@
                                                       moduleName:@"bimbot"
                                                initialProperties:nil
                                                    launchOptions:launchOptions];
-  rootView.backgroundColor = [[UIColor alloc] initWithRed:1.0f green:1.0f blue:1.0f alpha:1];
+  
+  rootView.backgroundColor = [[UIColor alloc] initWithRed:0.4745 green:0.9412 blue:0.8 alpha:1];
+  rootView.loadingViewFadeDelay = 0.0;
+  rootView.loadingViewFadeDuration = 0.25;
   
   self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
   UIViewController *rootViewController = [UIViewController new];
@@ -59,5 +62,4 @@
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)notification {
   [RCTOneSignal didReceiveRemoteNotification:notification];
 }
-
 @end

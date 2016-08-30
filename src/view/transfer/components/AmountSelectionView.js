@@ -19,19 +19,20 @@ const styles = StyleSheet.create({
       backgroundColor: baseStyles.colors.deepBlue
     },
     bottom: {
-      // flex: 1,
       backgroundColor: "white",
-      // height: (height / 2 + 70),
       flexWrap: 'wrap',
       alignItems: 'flex-start',
       flexDirection: 'row',
-
     },
     keyboardButton: {
       padding: 20,
       width: width * 0.33,
       textAlign: 'center',
       fontSize: 22
+    },
+    keyboardImage: {
+        padding: 20,
+        width: width * 0.33
     }
 });
 
@@ -40,7 +41,7 @@ class AmountSelectionView extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {amount: this.props.amount};
+        this.state = {amount: this.props.amount ?  this.props.amount : ''   };
     }
 
     render() {
@@ -61,13 +62,15 @@ class AmountSelectionView extends React.Component {
                     style={{
                         color: 'white',
                         textAlign: 'center',
-                        borderBottomWidth: 3,
-                        borderBottomColor: "white",
                         fontSize: 40,
                         height: 100,
                         width: null
                     }}
-                    >{this.state.amount ? this.state.amount + ' €' : 'Votre montant...'}</Text>
+                    >{
+                      this.state.amount ?
+                      this.state.amount + ' €' :
+                      'Votre montant...'
+                    }</Text>
                 </View>
                 <TouchableOpacity style={{
                     // flex: 1,
@@ -103,7 +106,7 @@ class AmountSelectionView extends React.Component {
                     }} >
                         <Text style={styles.keyboardButton} >0</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={[styles.keyboardButton,{alignItems:'center'}]} onPress={()=> {
+                    <TouchableOpacity style={[styles.keyboardImage , {alignItems:'center'}]} onPress={()=> {
                         this.parseInput('<')
                     }}>
                         <Image source={asset.keyboard['effacer']} style={{resizeMode: 'contain', width: 20}} />
@@ -116,7 +119,7 @@ class AmountSelectionView extends React.Component {
 
     parseInput(input) {
         console.log(this.state.amount, input);
-        var ln = this.state.amount.length;
+        var ln = this.state.amount ? this.state.amount.length : 0;
         var append = '';
         switch (input) {
             case '0':

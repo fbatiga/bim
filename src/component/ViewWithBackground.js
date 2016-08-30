@@ -1,13 +1,8 @@
 'use strict';
 
 import React, { Component } from 'react';
-import {connect} from 'react-redux';
-import { View, Text, Image, StyleSheet, TouchableHighlight, ScrollView, Dimensions} from 'react-native';
-import { Actions } from 'react-native-router-flux';
-import  ScrollableTabView, { DefaultTabBar }  from 'react-native-scrollable-tab-view';
+import {Image,  Text, TouchableOpacity, StyleSheet, ScrollView, Dimensions} from 'react-native';
 import asset from '../asset';
-
-import baseStyles from '../styles/vars.js';
 
 
 const ViewStyle = StyleSheet.create({
@@ -18,7 +13,7 @@ const ViewStyle = StyleSheet.create({
     }
 });
 
-const width = Dimensions.get('window').width;
+const {width,height} = Dimensions.get('window');
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -36,22 +31,19 @@ const styles = StyleSheet.create({
 });
 
 
+export default
 class ViewWithBackground extends Component {
 
     constructor(props) {
         super(props);
 
         this.state = {
+            imageWidth: 0,
             imageHeight: 0
         };
         this.pixelRatio = this.props.pixelRatio || 2;
         this.imageStyle = {};
         this.resizeFunc = null;
-    }
-
-
-    componentWillReceiveProps(nextProps) {
-
     }
 
 
@@ -64,24 +56,23 @@ class ViewWithBackground extends Component {
         this.resizeFunc = this.resize.bind(this);
         if (this.state.imageHeight > 0) {
             this.imageStyle.height = this.state.imageHeight / (this.pixelRatio);
+            if (this.imageStyle <= height) {
+                this.imageStyle.height = height;
+            }
+
             this.resizeFunc = null;
         }
+        console.log(this.props.children);
         return (
             <ScrollView containContainerStyle={[ViewStyle]}>
                 <Image  onLayout={this.resizeFunc} source={this.props.backgroundImage}  resizeMode='contain'
                 style={this.imageStyle}>
-                {this.props.children}
                 </Image>
+
+            {this.props.children}
             </ScrollView>
         );
     }
 
 }
 
-function mapStateToProps(state) {
-    return {
-        base: state.base
-    };
-}
-
-export default connect(mapStateToProps)(ViewWithBackground);

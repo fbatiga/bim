@@ -3,7 +3,7 @@
 import { handleActions } from 'redux-actions';
 
 import {
-	MESSENGER_NOTIFICATION, MESSENGER_BOT_RESTART, MESSENGER_SLACK_MESSAGE, MESSENGER_HELLO, MESSENGER_REQUEST, MESSENGER_SUCCESS, MESSENGER_FAILURE, MESSENGER_BUTTONS, MESSENGER_MESSAGE, MESSENGER_BOT_MESSAGE, MESSENGER_SESSION
+	MESSENGER_NOTIFICATION, MESSENGER_VISIBILITY, MESSENGER_BOT_RESTART, MESSENGER_SLACK_MESSAGE, MESSENGER_HELLO, MESSENGER_REQUEST, MESSENGER_SUCCESS, MESSENGER_FAILURE, MESSENGER_BUTTONS, MESSENGER_MESSAGE, MESSENGER_BOT_MESSAGE, MESSENGER_SESSION
 } from './MessengerAction';
 
 import { UserSlack, BimSlack } from '../../app/AppSlack';
@@ -13,6 +13,7 @@ const initialState = {
 	messages: [],
 	buttons : [],
 	notification : false,
+	visibility : null,
 	bot: true
 };
 
@@ -22,6 +23,7 @@ function createMessage(text, image, buttons, isBot, index){
 		image,
 		buttons,
 		index,
+		visibility : false,
 		position: isBot ? 'left':'right',
 		date: new Date()
 	};
@@ -126,7 +128,11 @@ const MessengerReducer = handleActions({
 	},
 
 	[MESSENGER_NOTIFICATION]: (state, action) => {
-		return { ...state, messages : [], buttons:[], bot: false, notification : action.params};
+		return { ...state, bot: false, notification : action.params};
+	},
+
+	[MESSENGER_VISIBILITY]: (state, action) => {
+		return { ...state, visibility : action.params};
 	},
 
 	[MESSENGER_MESSAGE]: (state, action) => {

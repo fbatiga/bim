@@ -17,7 +17,6 @@
 		139105C61AF99C1200B5F7CC /* libRCTSettings.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139105C11AF99BAD00B5F7CC /* libRCTSettings.a */; };
 		139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139FDEF41B06529B00C62182 /* libRCTWebSocket.a */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
-		13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB11A68108700A75B9A /* LaunchScreen.xib */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		140ED2AC1D01E1AD002B40FF /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
@@ -25,6 +24,10 @@
 		378AD5F41D64A86500EC7528 /* libRCTContacts.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 378AD5E91D64A83D00EC7528 /* libRCTContacts.a */; };
 		52072F581D539B010027843C /* libRCTOneSignal.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 52072F571D539AE10027843C /* libRCTOneSignal.a */; };
 		52072F5C1D539BED0027843C /* OneSignal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52072F5B1D539BED0027843C /* OneSignal.framework */; };
+		5275D50C1D7067F600F3C516 /* Montserrat-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5275D4FA1D7067DC00F3C516 /* Montserrat-Bold.otf */; };
+		5275D50D1D7067F600F3C516 /* Montserrat-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5275D4FC1D7067DC00F3C516 /* Montserrat-Light.otf */; };
+		5275D50E1D7067F600F3C516 /* Montserrat-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5275D4FD1D7067DC00F3C516 /* Montserrat-SemiBold.otf */; };
+		5275D50F1D7067F600F3C516 /* Montserrat-UltraLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5275D4FE1D7067DC00F3C516 /* Montserrat-UltraLight.otf */; };
 		529A63941D6714710040D8E6 /* Montserrat-ExtraBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 529A63931D6714710040D8E6 /* Montserrat-ExtraBold.otf */; };
 		529A7CCC1D5BE6F100A3B935 /* libCodePush.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 529A7CC01D5BE63300A3B935 /* libCodePush.a */; };
 		529A7CCE1D5BE77500A3B935 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 529A7CCD1D5BE77500A3B935 /* libz.tbd */; };
@@ -148,7 +151,6 @@
 		13B07F961A680F5B00A75B9A /* bimbot.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = bimbot.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = bimbot/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = bimbot/AppDelegate.m; sourceTree = "<group>"; };
-		13B07FB21A68108700A75B9A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = bimbot/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = bimbot/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = bimbot/main.m; sourceTree = "<group>"; };
@@ -156,9 +158,12 @@
 		378AD5E21D64A83C00EC7528 /* RCTContacts.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTContacts.xcodeproj; path = "../node_modules/react-native-contacts/ios/RCTContacts.xcodeproj"; sourceTree = "<group>"; };
 		52072F521D539AE10027843C /* RCTOneSignal.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTOneSignal.xcodeproj; path = "../node_modules/react-native-onesignal/ios/RCTOneSignal.xcodeproj"; sourceTree = "<group>"; };
 		52072F5B1D539BED0027843C /* OneSignal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OneSignal.framework; sourceTree = "<group>"; };
+		5275D4FA1D7067DC00F3C516 /* Montserrat-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Montserrat-Bold.otf"; path = "../src/asset/font/Montserrat-Bold.otf"; sourceTree = "<group>"; };
+		5275D4FC1D7067DC00F3C516 /* Montserrat-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Montserrat-Light.otf"; path = "../src/asset/font/Montserrat-Light.otf"; sourceTree = "<group>"; };
+		5275D4FD1D7067DC00F3C516 /* Montserrat-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Montserrat-SemiBold.otf"; path = "../src/asset/font/Montserrat-SemiBold.otf"; sourceTree = "<group>"; };
+		5275D4FE1D7067DC00F3C516 /* Montserrat-UltraLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Montserrat-UltraLight.otf"; path = "../src/asset/font/Montserrat-UltraLight.otf"; sourceTree = "<group>"; };
 		529A63931D6714710040D8E6 /* Montserrat-ExtraBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Montserrat-ExtraBold.otf"; path = "../src/asset/font/Montserrat-ExtraBold.otf"; sourceTree = "<group>"; };
 		529A7CCD1D5BE77500A3B935 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
-		529A7D0C1D5C7F7C00A3B935 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		52C392231D59DBCA0042EDB8 /* Launch.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Launch.xcassets; path = bimbot/Launch.xcassets; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		7D5ABD87BF90402084E97619 /* CodePush.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = CodePush.xcodeproj; path = "../node_modules/react-native-code-push/ios/CodePush.xcodeproj"; sourceTree = "<group>"; };
@@ -280,7 +285,6 @@
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
-				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
 				52C392231D59DBCA0042EDB8 /* Launch.xcassets */,
 			);
@@ -359,6 +363,10 @@
 			isa = PBXGroup;
 			children = (
 				529A63931D6714710040D8E6 /* Montserrat-ExtraBold.otf */,
+				5275D4FA1D7067DC00F3C516 /* Montserrat-Bold.otf */,
+				5275D4FC1D7067DC00F3C516 /* Montserrat-Light.otf */,
+				5275D4FD1D7067DC00F3C516 /* Montserrat-SemiBold.otf */,
+				5275D4FE1D7067DC00F3C516 /* Montserrat-UltraLight.otf */,
 				529A7CCD1D5BE77500A3B935 /* libz.tbd */,
 				52072F5B1D539BED0027843C /* OneSignal.framework */,
 				13B07FAE1A68108700A75B9A /* bimbot */,
@@ -615,10 +623,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5275D50C1D7067F600F3C516 /* Montserrat-Bold.otf in Resources */,
 				529A63941D6714710040D8E6 /* Montserrat-ExtraBold.otf in Resources */,
+				5275D50D1D7067F600F3C516 /* Montserrat-Light.otf in Resources */,
+				5275D50E1D7067F600F3C516 /* Montserrat-SemiBold.otf in Resources */,
+				5275D50F1D7067F600F3C516 /* Montserrat-UltraLight.otf in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				52C392241D59DBCA0042EDB8 /* Launch.xcassets in Resources */,
-				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -668,19 +679,6 @@
 			targetProxy = 00E356F41AD99517003FC87E /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		13B07FB11A68108700A75B9A /* LaunchScreen.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				13B07FB21A68108700A75B9A /* Base */,
-				529A7D0C1D5C7F7C00A3B935 /* fr */,
-			);
-			name = LaunchScreen.xib;
-			path = bimbot;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {

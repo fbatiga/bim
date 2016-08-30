@@ -1,7 +1,7 @@
 'use strict';
 
 import React, { Component } from 'react';
-import { View, Text, Modal, ListView, Image, ScrollView, SegmentedControlIOS, TouchableOpacity, TouchableHighlight, Dimensions} from 'react-native';
+import { View, Text, Modal, ListView, Image, ScrollView, SegmentedControlIOS, TouchableOpacity, TouchableHighlight, Dimensions, Animated } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import moment from 'moment';
 import {firebaseDb} from  '../../app/AppFirebase';
@@ -15,7 +15,6 @@ import {connect} from 'react-redux';
 import {init, filterByCredit, filterByDebit, clearFilter} from './AccountAction';
 import AccountItem from './item/AccountItem';
 import AccountTab from './item/AccountTab';
-import MessengerFabButton from '../messenger/item/MessengerFabButton.js';
 
 const {width, height} = Dimensions.get('window');
 const themePreview = 50;
@@ -51,11 +50,41 @@ class AccountView extends Component {
             currentMonth: 'Juin',
             balance: this.props.account.balance,
             dataSource: ds,
-            modalVisible: false
+            modalVisible: false,
+            fadeAnim: new Animated.Value(0),
+            bounceValue: new Animated.Value(0),
+            slideIn: new Animated.Value(100)
         };
     }
 
     componentDidMount() {
+      Animated.timing(
+        this.state.fadeAnim,
+        {
+          toValue: 1
+        }
+      ).start();
+
+      Animated.timing(
+        this.state.bounceValue,
+        {
+          delay: 200,
+          toValue: 1,
+          friction: 10,
+          tension: 40
+        }
+      ).start();
+
+      Animated.timing(
+        this.state.slideIn,
+        {
+          delay: 200,
+          toValue: 0,
+          friction: 10,
+          tension: 40
+        }
+      ).start();
+
         this.props.dispatch(init());
 
         var that = this;
@@ -67,34 +96,27 @@ class AccountView extends Component {
                 elm = elm.val();
                 elm.category = that.categories[elm.category];
 
-                console.log(elm.category);
-                that.props.account.transactions.push(elm);
+                // console.log(elm.category);
+                that.props.account.transactions.unshift(elm);
             });
 
-            that.setState({dataSource: this.state.dataSource.cloneWithRows(this.props.account.transactions)});
+            that.setState({dataSource: that.state.dataSource.cloneWithRows(that.props.account.transactions)});
         }, function (err) {
             console.log(err);
         });
         this.listenToTransactionChanges(this.transactionsRef);
     }
 
-    componentWillReceiveProps(nextProps) {
-        /* this.state = {
-         dataSource: nextProps.dataSource.cloneWithRows(this.props.account.transactions)
-         };
-         */
-    }
-
     listenToTransactionChanges(source) {
         var that = this;
         source.orderByChild('timestamp').on('child_added', (snapshot)=> {
             snapshot = snapshot.val();
-            console.log(snapshot);
+            // console.log(snapshot);
             snapshot.category = that.categories[snapshot.category];
             // inserting at the beginning of the array
 
             that.props.account.transactions.unshift(snapshot);
-            that.setState({dataSource: this.state.dataSource.cloneWithRows(this.props.account.transactions)});
+            this.setState({dataSource: this.state.dataSource.cloneWithRows(this.props.account.transactions)});
         });
     }
 
@@ -110,9 +132,6 @@ class AccountView extends Component {
               <Image source={asset.transfer}  style={AccountStyle.transferButtonImage} />
             </TouchableOpacity>
             <ScrollView>
-              {/* <View
-              horizontal={false} style={AccountStyle.container}> */}
-
                   <Modal
                   animationType={"slide"}
                   transparent={true}
@@ -150,16 +169,15 @@ class AccountView extends Component {
                   </Modal>
 
                   <View style={AccountStyle.top}>
-                      <MessengerFabButton />
 
                       <Text style={baseStyles.titles.h1Dark}>B!M</Text>
 
-                      <View style={AccountStyle.graph}>
+                      <Animated.View style={[AccountStyle.graph, { transform: [ {scale: this.state.bounceValue} ] }]}>
                           <Image source={asset.graphCircled}  style={AccountStyle.graphCircle}>
                               <Text style={AccountStyle.graphLabel} >SOLDE ACTUEL</Text>
                               <Text style={AccountStyle.graphBalance} >{this.state.balance} €</Text>
                           </Image>
-                      </View>
+                      </Animated.View>
 
                       <View style={AccountStyle.tabs}>
                         <ScrollView
@@ -177,7 +195,7 @@ class AccountView extends Component {
                       </View>
                   </View>
 
-                  <View style={AccountStyle.bottom}>
+                  <Animated.View style={[AccountStyle.bottom, { marginTop: this.state.slideIn }]}>
                       <View style={AccountStyle.dateContainer}>
                           <View style={AccountStyle.dateLeft}>
                             <Text style={AccountStyle.previousMonth} >{this.state.previousMonth}</Text>
@@ -212,8 +230,7 @@ class AccountView extends Component {
                       renderRow={this.renderRow.bind(this)}
                       enableEmptySections={true}
                       />
-                  </View>
-              {/* </View> */}
+                  </Animated.View>
             </ScrollView>
           </View>
         );

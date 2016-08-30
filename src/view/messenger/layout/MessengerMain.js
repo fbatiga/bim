@@ -5,12 +5,14 @@ import { View, Text, Animated, StyleSheet, ListView} from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import MessengerMessage from '../item/MessengerMessage';
 
+
+let scrollPosition = 0;
+
 class MessengerMain extends Component {
 
 
 	constructor(props) {
 		super(props);
-		this._firstDisplay = true;
 		const ds = new ListView.DataSource({
 			rowHasChanged: (r1, r2) => (r1 !== r2)
 		});
@@ -28,9 +30,9 @@ class MessengerMain extends Component {
 		});
 	}
 
-
 	renderRow(rowData = {}) {
 		return (
+
 			<View>
 				<MessengerMessage rowData={rowData}  setButtons={this.props.setButtons} position={rowData.position} />
 			</View>
@@ -42,14 +44,15 @@ class MessengerMain extends Component {
 		this.setMessages(this.props.messages);
 	}
 
-		componentWillReceiveProps(nextProps) {
-			this.setMessages(nextProps.messages);
-		}
+	componentWillReceiveProps(nextProps) {
+		this.setMessages(nextProps.messages);
+	}
 
 	scrollToBottom(contentWidth, contentHeight) {
 		if(contentHeight > this._listHeight){
+			scrollPosition = - (this._listHeight - contentHeight)+ 20;
 			this.scrollResponder.scrollTo({
-				y: - (this._listHeight - contentHeight)+ 10,
+				y: scrollPosition,
 				x: 0,
 				animated:  true,
 			});
@@ -57,7 +60,13 @@ class MessengerMain extends Component {
 	}
 
 	saveListHeight(event) {
+
 		this._listHeight = event.nativeEvent.layout.height;
+
+		this.scrollResponder.scrollTo({
+				y:scrollPosition-10,
+		 		animated:  true,
+		});
 	}
 
 	render(){

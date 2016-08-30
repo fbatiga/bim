@@ -2,7 +2,6 @@ import {Dimensions, StyleSheet} from 'react-native';
 import baseStyles from '../../styles/vars.js';
 
 
-var width = Dimensions.get('window').width;
 const width = Dimensions.get('window').width;
 
 const TransferStyle = StyleSheet.create({

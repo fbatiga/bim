@@ -8,82 +8,182 @@ import baseStyles from '../../../styles/vars';
 
 const {width, height} = Dimensions.get('window');
 const styles = StyleSheet.create({
+
     container: {
         backgroundColor: "white",
-        flex:1,
-        flexDirection:"column"
+        flex: 1,
     },
     filterButton: {
         color: "white",
-        padding: 10
+        padding: 10,
+        fontSize: 18
     }
 
+
 });
+
+const letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+const lettersIndex = {
+    'A': false,
+    'B': false,
+    'C': false,
+    'D': false,
+    'E': false,
+    'F': false,
+    'G': false,
+    'H': false,
+    'I': false,
+    'J': false,
+    'K': false,
+    'L': false,
+    'M': false,
+    'N': false,
+    'O': false,
+    'P': false,
+    'Q': false,
+    'R': false,
+    'S': false,
+    'T': false,
+    'U': false,
+    'V': false,
+    'W': false,
+    'X': false,
+    'Y': false,
+    'Z': false
+};
 
 export default
 class ContactList extends React.Component {
 
     constructor(props) {
-
         super(props);
         this.ds = new ListView.DataSource({
             rowHasChanged: (r1, r2) => (r1 !== r2)
         });
 
-        this.state = {
-            amount: this.props.amount,
-            contacts: this.ds.cloneWithRows([])
-        };
+		let  contacts = [
+                    {givenName: 'Faouzane', familyName: 'BATIGA', phoneNumbers: [{number: "0667505353"}]},
+                    {givenName: 'Faouzane', familyName: 'BATIGA', phoneNumbers: [{number: "0667505353"}]},
+                    {givenName: 'Faouzane', familyName: 'BATIGA', phoneNumbers: [{number: "0667505353"}]},
+                    {givenName: 'Faouzane', familyName: 'BATIGA', phoneNumbers: [{number: "0667505353"}]},
+                    {givenName: 'Faouzane', familyName: 'BATIGA', phoneNumbers: [{number: "0667505353"}]},
+                ];
 
+         var idx = 0;
+        for(var i in contacts){
+            var l = contacts[i].givenName.substring(0,1);
+            if(!lettersIndex[l]){
+                lettersIndex[l] = idx;
+            }
+            idx++;
+        }
+
+		this.state = {
+			amount: this.props.amount,
+			contacts: this.ds.cloneWithRows(contacts),
+            scrollHeight: 0
+		};
+
+
+       /* console.time('START CONTACTRECUP');
         Contacts.getAll((err, contacts) => {
             if (err && err.type === 'permissionDenied') {
-                // x.x
+                console.log(err);
             } else {
-                console.log(contacts);
+                console.timeEnd('START CONTACTRECUP');
+                contacts = contacts.sort((a,b) => {
+                    if(a.givenName >  b.givenName){
+                        return 1;
+                    } else if (a.givenName ===  b.givenName){
+                        return 0;
+                    }
+                    else {
+                        return -1
+                    }
+                });
                 contacts = [
-                    {givenName: 'Faouzane', familyName: 'BATIGA', phoneNumbers: [{number: "0667505353"}]},
+                    {givenName: 'Faouzane', familyName: 'BATIGA', phoneNumbers: [{number: "0667505353"}], type:'bim'},
                 ].concat(contacts);
+
+
+                // GET CONTACT HEADERS
+                var idx = 0;
+                for (var i in contacts) {
+                    var l = contacts[i].givenName.substring(0, 1);
+                    if (!lettersIndex[l]) {
+                        lettersIndex[l] = idx;
+                    }
+                    idx++;
+                }
                 this.setState({contacts: this.ds.cloneWithRows(contacts)});
             }
         });
+
+        */
+
     }
 
     render() {
         return (
-            <View style={styles.container}>
-                <ScrollView horizontal={true} style={{ backgroundColor: baseStyles.colors.lightviolet, paddingLeft:width/4}}
-                >
-                {['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
-                    .map((l, key)=> {
-                        return (<TouchableOpacity key={key} onPress={() => {
-                            alert(l)
-                        }}>
-                            <Text style={styles.filterButton}>{l}</Text>
-                        </TouchableOpacity>)
-                    })}
-                </ScrollView>
-                <ScrollView style={{flex:15}}>
-                    <ListView
-                    ref="listView"
-                    dataSource={this.state.contacts}
-                    renderRow={this.renderRecipientRow.bind(this)}
-                    enableEmptySections={true}
-                    >
-                    </ListView>
-                </ScrollView>
-            </View>
+            <ListView
+            ref="listView"
+            dataSource={this.state.contacts}
+            style={[styles.container, this.props.style]}
+            renderRow={this.renderRecipientRow.bind(this)}
+            renderSectionHeader={this.renderHeader.bind(this)}
+            enableEmptySections={true}
+            initialListSize={this.state.contacts.length}
+
+            >
+            </ListView>
         );
     }
 
-    renderRecipientRow(rowData, key) {
-        console.log(this.props.onPress);
+
+    componentDidMount() {
+        this.scrollResponder = this.refs.listView.getScrollResponder();
+    }
+
+
+    renderHeader() {
+
+        return (<ScrollView horizontal={true} containerContentStyle={{}} style={{
+            height: 45,
+            backgroundColor: baseStyles.colors.lightviolet,
+            paddingLeft: width / 4
+        }}
+        >
+                {letters.map((l, key)=> {
+                    return (<TouchableOpacity key={key} onPress={() => {
+                        this._scrollTo(lettersIndex[l]);
+                    }}>
+                        <Text style={styles.filterButton}>{l}</Text>
+                    </TouchableOpacity>)
+                })}
+        </ScrollView>)
+    }
+
+    renderRecipientRow(rowData) {
         return (
             <ContactItem
             onPress={this.props.callback}
             rowData={rowData}
-            key={key}
             />
         );
+    }
+
+    _scrollTo(y) {
+        console.log('INDEX LIST', y, this, this.refs);
+        /*if (y) {
+            this.refs.listView.scrollTo({scrollHeight: y * 100})
+        }*/
+
+        this.scrollResponder.scrollTo({
+            y: y * 100,
+            x: 0,
+            animated:  true,
+        });
+
     }
 }
 
