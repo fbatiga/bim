@@ -64,6 +64,10 @@ class MessengerBottom extends Component {
 
 
 	setButtons(buttons) {
+
+
+
+
 		this.setState({
 			buttons: buttons.concat([]),
 			backgroundColor : this.backgroundColor[0]
@@ -260,14 +264,23 @@ class MessengerBottom extends Component {
 				// }
 			})}
 
+			{this.state.buttons.length>0 && (
+						<MessengerButton text='...'
+							save={this.save.bind(this)}
+							key={0}
+							index={0}
+							scrollTo={this.scrollTo.bind(this)}
+							setShadow={this.setShadow.bind(this)}
+							onPress={this.props.onPress} />
+			)}
 				</View>
 				<View style={styles.bottom}>
-				{this.state.buttons.length>0 && (<TouchableOpacity onPress={this.favorite.bind(this)}>
+				{this.state.buttons.length>0 && (<TouchableOpacity style={{  bottom: 10, left: 10, height:20, width:20}} onPress={this.favorite.bind(this)}>
 					{(this.state.backgroundColor == this.backgroundColor[0]) && (
-						<Image source={asset.star} style={{ bottom: 10, left: 10}} />
+						<Image source={asset.star}  />
 					)}
 					{(this.state.backgroundColor == this.backgroundColor[1]) && (
-						<Image source={asset.cross} style={{ bottom: 10, left: 10}} />
+						<Image source={asset.cross}  />
 					)}
 				</TouchableOpacity>)
 			}

@@ -112,12 +112,6 @@ export default class MessengerButton extends Component {
 	}
 
 	render() {
-		const flexStyle = {};
-		if (this.props.text) {
-			if (this.props.text.length > 40) {
-				flexStyle.flex = 1;
-			}
-		}
 
 		return (
 				<Animated.View style={{ position: 'relative', top: this.state.slideIn, opacity: this.state.fadeIn }}>

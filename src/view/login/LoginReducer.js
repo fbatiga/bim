@@ -7,7 +7,8 @@ import {
 import {Actions} from 'react-native-router-flux';
 
 const initialState = {
-   start: false
+   session: false,
+   loading : false
 };
 
 const LoginReducer = handleActions({
@@ -17,12 +18,12 @@ const LoginReducer = handleActions({
     },
 
     [LOGIN_SUCCESS]: (state, action) => {
-        return { ...state, loading: false, start: action.result};
+        return { ...state, loading: false, session: action.result.session};
     },
 
     [LOGIN_FAILURE]: (state, action) => {
     	console.error(action.error.stack);
-        return { ...state, loading: false, start: false, loginError: action.error };
+        return { ...state, loading: false, session: false, loginError: action.error };
     }
 
 }, initialState);

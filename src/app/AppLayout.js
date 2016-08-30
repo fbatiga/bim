@@ -5,6 +5,7 @@ import Swiper from 'react-native-swiper';
 import MenuView from '../view/menu/MenuView';
 import asset from '../asset';
 import {connect} from 'react-redux';
+import {loadSession} from '../view/login/LoginAction';
 import {setVisibility} from '../view/messenger/MessengerAction';
 import { Actions } from 'react-native-router-flux';
 
@@ -32,6 +33,9 @@ const styles = StyleSheet.create({
 
 class AppLayout extends Component {
 
+	componentDidMount(){
+		this.props.dispatch(loadSession());
+	}
 
 	constructor(props){
 		super(props);
@@ -41,39 +45,40 @@ class AppLayout extends Component {
 	}
 
 	gotTo(item){
-
-		this.props.dispatch(setVisibility(false));
 		item.action();
+		this.props.dispatch(setVisibility(false));
 		this.refs.swiper.scrollBy(1);
 	}
 
 	home(){
-
-		if(this.state.index == 1 &&  this.props.messenger.visibility == true){
-			this.refs.swiper.scrollBy(-1);
-		}else{
+		if(this.props.messenger.visibility == false){
 			Actions.messenger();
-			if(this.state.index == 0){
-				this.refs.swiper.scrollBy(1);
-			}
+		}
 
-			if(this.props.messenger.visibility == false){
-				this.props.dispatch(setVisibility(true));
-			}
+		if(this.state.index == 0){
+			this.refs.swiper.scrollBy(1);
+		}else 	if(this.state.index == 1 && this.props.messenger.visibility ==true){
+			this.refs.swiper.scrollBy(-1);
 		}
 
 	}
 
+	_onMomentumScrollEnd(e, state, context) {
 
- 	_onMomentumScrollEnd(e, state, context) {
-	    this.setState({
+		if(context.state.index == 1 && this.props.messenger.visibility == true){
+			this.props.dispatch(setVisibility(true));
+		}
+
+		this.setState({
 			index : context.state.index
 		});
-	 }
+	}
 
 	render() {
-		return (
-			<View>
+
+		if(this.props.login.session != false ){
+			return (
+				<View>
                 <StatusBar hidden={true} />
 				<Swiper
 				loop={false}
@@ -81,23 +86,36 @@ class AppLayout extends Component {
 				ref='swiper'
 				showsPagination={false}
 				index={1}>
-					{ this.props.messenger.session != null && <MenuView gotTo={this.gotTo.bind(this)}/> }
-					<View style={styles.viewContainer} >
-						{this.props.children}
-					</View>
+				<MenuView gotTo={this.gotTo.bind(this)}/>
+				<View style={styles.viewContainer} >
+				{this.props.children}
+				</View>
 				</Swiper>
-				<TouchableOpacity style={styles.button}  onPress={this.home.bind(this)}>
-					{ this.props.messenger.session != null && (this.props.messenger.visibility == false  || this.state.index== 0 ) && <Image source={asset.bot}  style={styles.bot}  /> }
-					{ this.props.messenger.session != null  && (this.props.messenger.visibility == true && this.state.index== 1 ) &&  <Image source={asset.close}  style={styles.bot}  /> }
-				</TouchableOpacity>
-			</View>)
+				{ this.props.messenger.visibility != null &&
+				(<TouchableOpacity style={styles.button}  onPress={this.home.bind(this)}>
+					{(this.props.messenger.visibility == false || this.state.index == 0) && <Image source={asset.bot}  style={styles.bot}  /> }
+					{(this.props.messenger.visibility == true  && this.state.index == 1) &&  <Image source={asset.close}  style={styles.bot}  /> }
+					</TouchableOpacity>
+				)}
+
+				</View>);
+
+		}else{
+
+			return (
+				<View style={styles.viewContainer} >
+				{this.props.children}
+				</View>
+				);
+		}
 	}
 }
 
 
 function mapStateToProps(state) {
 	return {
-		messenger: state.messenger
+		messenger: state.messenger,
+		login: state.login
 	};
 }
 

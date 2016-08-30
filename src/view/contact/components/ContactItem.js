@@ -5,22 +5,21 @@ import asset from '../../../asset';
 
 
 const styles = StyleSheet.create({
-    item: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        margin: 0,
-        borderColor: '#9FA2A7',
-        borderBottomWidth: 1,
-        paddingVertical: 15,
-        paddingLeft: 20,
-        backgroundColor: '#fff',
-        height: 100
-    },
-
-    leftPart: {
-        backgroundColor: '#fff',
-    },
-    rightPart: {
+	item: {
+		flexDirection: 'row',
+		alignItems: 'center',
+		margin: 0,
+		borderColor: '#9FA2A7',
+		borderBottomWidth: 1,
+		paddingVertical: 15,
+		paddingLeft: 20,
+		backgroundColor: '#fff',
+		height: 100
+	},
+	leftPart: {
+		backgroundColor: '#fff',
+	},
+	rightPart: {
         // alignItems: 'flex-start',
         backgroundColor: '#fff',
         flex: 1,
@@ -28,30 +27,29 @@ const styles = StyleSheet.create({
     },
 
     image: {
-        height: 50,
-        width: 50,
-        resizeMode: 'stretch'
+    	height: 50,
+    	width: 50,
+    	resizeMode: 'stretch'
     },
 
     category: {
-        color: '#9FA2A7',
-        fontSize: 12
+    	color: '#9FA2A7',
+    	fontSize: 12
     },
     label: {
-        color: '#4F4367',
-        fontSize: 14,
-        fontWeight: '500'
+    	color: '#4F4367',
+    	fontSize: 14,
+    	fontWeight: '500'
     },
     amount: {
-        color: baseStyles.colors.deepBlue,
-        textAlign: 'right',
-        fontSize: 18
+    	color: baseStyles.colors.deepBlue,
+    	textAlign: 'right',
+    	fontSize: 18
     }
 });
 
 export default
 class ContactItem extends React.Component {
-
     render() {
         return (
             <TouchableHighlight onPress={() => {
@@ -76,12 +74,12 @@ class ContactItem extends React.Component {
 }
 
 ContactItem.propTypes = {
-    text: React.PropTypes.string
+	text: React.PropTypes.string
     //onPress : React.PropTypes.func
 };
 
 function mapStateToProps(state) {
-    return {
-        account: state.transfer
-    };
+	return {
+		account: state.transfer
+	};
 }

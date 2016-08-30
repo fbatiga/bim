@@ -28,7 +28,6 @@ class ProfileView extends Component {
         super(props);
     }
 
-
     componentDidMount() {
         this.props.dispatch(init());
     }
