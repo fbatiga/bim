@@ -65,7 +65,7 @@ class MessengerView extends Component {
 
 	componentDidMount(){
 
-		this.props.dispatch(setVisibility(true));
+		//this.props.dispatch(setVisibility(true));
 		//console.log('componentDidMount',  this.props.messenger);
 
 		if(this.props.messenger.messages.length == 0){
@@ -92,10 +92,6 @@ class MessengerView extends Component {
 			})
 		}
 
-	}
-
-	componentWillUnmount(){
-		this.props.dispatch(setVisibility(false));
 	}
 
 	componentWillReceiveProps(nextProps){
@@ -157,8 +153,6 @@ class MessengerView extends Component {
 
 
 	onSend(text) {
-		console.log('onSend');
-
 
 		console.log('onSend', arguments);
 
@@ -189,20 +183,15 @@ class MessengerView extends Component {
 		this.setState({text});
 	}
 
-	onLayout(){
-		this.props.dispatch(setVisibility(true));
-	}
-
 	setButtons(buttons) {
 		this.props.dispatch(loadButtons(buttons));
 	}
 
 	render(){
 
-		console.log(this.state.text);
 		return (
 
-			<View style={style.container} onLayout={this.onLayout.bind(this)}>
+			<View style={style.container} >
 			<View style={ { height: 20} } />
 			<MessengerMain
 			style={style.main}

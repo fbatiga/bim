@@ -1,6 +1,6 @@
 'use strict'
 import React, { Component } from 'react';
-import { View, Text, StatusBar,  StyleSheet, TouchableOpacity , Image} from 'react-native';
+import { View, Text, StatusBar,  StyleSheet, TouchableOpacity , Image, Animated} from 'react-native';
 import Swiper from 'react-native-swiper';
 import MenuView from '../view/menu/MenuView';
 import asset from '../asset';
@@ -40,46 +40,128 @@ class AppLayout extends Component {
 	constructor(props){
 		super(props);
 		this.state = {
-			index : 1
+			index : 1,
+			bounceValue: new Animated.Value(0.0001),
 		};
 	}
 
 	gotTo(item){
-		item.action();
 		this.props.dispatch(setVisibility(false));
 		this.refs.swiper.scrollBy(1);
+		item.action();
 	}
 
 	home(){
-		if(this.props.messenger.visibility == false){
-			Actions.messenger();
+
+		if(this.state.index == 1){
+			if(this.props.messenger.visibility == false){
+				Actions.messenger();
+				if(this.state.index == 1 ){
+					this.props.dispatch(setVisibility(true));
+				}
+			}else{
+				this.refs.swiper.scrollBy(-1);
+			}
 		}
 
 		if(this.state.index == 0){
 			this.refs.swiper.scrollBy(1);
-		}else 	if(this.state.index == 1 && this.props.messenger.visibility ==true){
-			this.refs.swiper.scrollBy(-1);
 		}
-
 	}
 
+
 	_onMomentumScrollEnd(e, state, context) {
-
-		if(context.state.index == 1 && this.props.messenger.visibility == true){
-			this.props.dispatch(setVisibility(true));
-		}
-
 		this.setState({
 			index : context.state.index
 		});
 	}
 
+	componentDidUpdate(prevProps, prevState) {
+		console.log('componentDidUpdate');
+		console.log('prevProps' , prevProps.messenger.visibility, prevState.index);
+		console.log('this.props.messenger' , this.props.messenger.visibility);
+
+		if(prevProps.messenger.visibility == null ){
+
+			if( this.state.index == 0 ){
+
+				Animated.timing(
+					this.state.bounceValue,
+					{
+						duration: 300,
+						toValue: 1,
+						friction: 8,
+						tension: 100
+					}).start();
+
+			}else if( this.state.index == 1 ){
+
+				Animated.timing(
+					this.state.bounceValue,
+					{
+						duration: 300,
+						toValue: 0.0001,
+						friction: 8,
+						tension: 100
+					}).start();
+
+			}
+
+		}else if( prevProps.messenger.visibility !== this.props.messenger.visibility ){
+
+
+			var sequence = [];
+
+
+			if(prevProps.messenger.visibility != null ){
+				sequence.push(
+					Animated.timing(
+						this.state.bounceValue,
+						{
+							duration: 300,
+							toValue: 0.0001,
+							friction: 8,
+							tension: 100
+						})
+					);
+			}
+
+			if( this.props.messenger.visibility != null ){
+				sequence.push(
+					Animated.timing(
+						this.state.bounceValue,
+						{
+							duration: 300,
+							toValue: 1,
+							friction: 8,
+							tension: 100
+						})
+					);
+			}
+
+			if(sequence.length > 0){
+				Animated.sequence(sequence).start();
+			}
+
+
+		}
+
+	}
+
 	render() {
+
+		let imageAnimation = { transform: [ {scale: this.state.bounceValue}] };
+
+		let image = asset.bot;
+
+		if(this.props.messenger.visibility == true  && this.state.index == 1) {
+			image = asset.close;
+		}
 
 		if(this.props.login.session != false ){
 			return (
 				<View>
-                <StatusBar hidden={true} />
+				<StatusBar hidden={true} />
 				<Swiper
 				loop={false}
 				onMomentumScrollEnd ={this._onMomentumScrollEnd.bind(this)}
@@ -91,13 +173,9 @@ class AppLayout extends Component {
 				{this.props.children}
 				</View>
 				</Swiper>
-				{ this.props.messenger.visibility != null &&
-				(<TouchableOpacity style={styles.button}  onPress={this.home.bind(this)}>
-					{(this.props.messenger.visibility == false || this.state.index == 0) && <Image source={asset.bot}  style={styles.bot}  /> }
-					{(this.props.messenger.visibility == true  && this.state.index == 1) &&  <Image source={asset.close}  style={styles.bot}  /> }
-					</TouchableOpacity>
-				)}
-
+				<TouchableOpacity style={styles.button}  onPress={this.home.bind(this)}>
+				<Animated.Image source={image} style={[styles.bot, imageAnimation ]} />
+				</TouchableOpacity>
 				</View>);
 
 		}else{
