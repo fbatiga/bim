@@ -94,10 +94,6 @@ class MessengerView extends Component {
 
 	}
 
-	componentWillUnmount(){
-		this.props.dispatch(setVisibility(false));
-	}
-
 	componentWillReceiveProps(nextProps){
 		//console.log('componentWillReceiveProps', this.props.messenger, nextProps.messenger);
 
@@ -157,8 +153,6 @@ class MessengerView extends Component {
 
 
 	onSend(text) {
-		console.log('onSend');
-
 
 		console.log('onSend', arguments);
 
@@ -189,20 +183,15 @@ class MessengerView extends Component {
 		this.setState({text});
 	}
 
-	onLayout(){
-		//
-	}
-
 	setButtons(buttons) {
 		this.props.dispatch(loadButtons(buttons));
 	}
 
 	render(){
 
-		console.log(this.state.text);
 		return (
 
-			<View style={style.container} onLayout={this.onLayout.bind(this)}>
+			<View style={style.container} >
 			<View style={ { height: 20} } />
 			<MessengerMain
 			style={style.main}
