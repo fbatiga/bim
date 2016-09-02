@@ -20,8 +20,7 @@ class CardView extends Component {
 				top: new Animated.Value(0),
 				left: new Animated.Value(14),
 				transform : [{
-					scale : new Animated.Value(0.7),
-					rotate : new Animated.Value(0)
+					scale : new Animated.Value(0.7)
 				}]
 			}
 		},
@@ -31,8 +30,7 @@ class CardView extends Component {
 			top: new Animated.Value(30),
 			left: new Animated.Value(12),
 			transform : [{
-				scale : new Animated.Value(0.8),
-				rotate : new Animated.Value(0)
+				scale : new Animated.Value(0.8)
 			}]
 		}
 	},
@@ -42,8 +40,7 @@ class CardView extends Component {
 		top: new Animated.Value(60),
 		left: new Animated.Value(10),
 		transform : [{
-			scale : new Animated.Value(0.9),
-			rotate : new Animated.Value(0)
+			scale : new Animated.Value(0.9)
 		}]
 	}
 },
@@ -53,8 +50,7 @@ class CardView extends Component {
 	top: new Animated.Value(90),
 	left: new Animated.Value(8),
 	transform : [{
-		scale : new Animated.Value(1),
-		rotate : new Animated.Value(0)
+		scale : new Animated.Value(1)
 	}]
 }
 }]
@@ -64,15 +60,7 @@ this.newCards = [];
 
 this.elements = this.state.cards.map((card, index)=>{
 
-	return (<Animated.View  key={index} style={[card.style, {
-			transform : [
-			{ scale : card.style.transform[0].scale,
-			 rotate : card.style.transform[0].rotate.interpolate({
-					inputRange: [0, 25],
-					outputRange: ['0deg', '25deg']
-				})
-			}]
-} ]} >
+	return (<Animated.View  key={index} style={card.style} >
 <TouchableWithoutFeedback  onPress={this.move.bind(this)}>
 <Image source={card.src} style= {CardStyle.cardImage} />
 </TouchableWithoutFeedback>
@@ -148,17 +136,7 @@ removeCard(card){
 		});
 
 
-	let rotation = Animated.timing(
-		card.transform[0].rotate,
-		{
-			toValue: 25,
-			duration,
-			friction,
-			tension
-		});
-
-
-	return [left, rotation];
+	return [left];
 }
 
 
@@ -180,17 +158,8 @@ addCard(card){
 			tension
 		});
 
-	let rotation = Animated.timing(
-		card.transform[0].rotate,
-		{
-			toValue: 0,
-			duration,
-			friction,
-			tension
-		});
 
-
-	return [Animated.parallel([scale,top]), Animated.parallel([left,rotation]) ];
+	return [Animated.parallel([scale,top]), left ];
 }
 
 move(){
