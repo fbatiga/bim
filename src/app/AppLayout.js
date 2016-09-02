@@ -109,9 +109,7 @@ class AppLayout extends Component {
 
 		}else if( prevProps.messenger.visibility !== this.props.messenger.visibility ){
 
-
 			var sequence = [];
-
 
 			if(prevProps.messenger.visibility != null ){
 				sequence.push(
