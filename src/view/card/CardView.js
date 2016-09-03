@@ -23,6 +23,8 @@ class CardView extends Component {
 					left: new Animated.Value(14),
 					transform : [{
 						scale : new Animated.Value(0.7)
+					},{
+						rotate : new Animated.Value(0)
 					}]
 				}
 			},
@@ -35,6 +37,8 @@ class CardView extends Component {
 					left: new Animated.Value(12),
 					transform : [{
 						scale : new Animated.Value(0.8)
+					},{
+						rotate : new Animated.Value(0)
 					}]
 				}
 			},
@@ -46,6 +50,8 @@ class CardView extends Component {
 					left: new Animated.Value(10),
 					transform : [{
 						scale : new Animated.Value(0.9)
+					},{
+						rotate : new Animated.Value(0)
 					}]
 				}
 			},
@@ -57,6 +63,8 @@ class CardView extends Component {
 					left: new Animated.Value(8),
 					transform : [{
 						scale : new Animated.Value(1)
+					},{
+						rotate : new Animated.Value(0)
 					}]
 				}
 			}]
@@ -66,11 +74,17 @@ class CardView extends Component {
 
 		this.elements = this.state.cards.map((card, index)=>{
 
-			return (<Animated.View key={index} style={card.style} >
-				<TouchableWithoutFeedback onPress={Actions.cardDetails}>
-				<Image source={card.src} style= {CardStyle.cardImage} />
-				</TouchableWithoutFeedback>
-				</Animated.View>);
+			return (<Animated.View key={index} style={[card.style, {
+				transform : [{ scale : card.style.transform[0].scale},
+				{ rotate : card.style.transform[1].rotate.interpolate({
+					inputRange: [0, 360],
+					outputRange: ['0deg', '360deg'],
+				})}]
+			}]} >
+			<TouchableWithoutFeedback onPress={Actions.cardDetails}>
+			<Image source={card.src} style= {CardStyle.cardImage} />
+			</TouchableWithoutFeedback>
+			</Animated.View>);
 
 		})
 
@@ -138,8 +152,16 @@ class CardView extends Component {
 				tension
 			});
 
+		let rotation = Animated.timing(
+			card.transform[1].rotate,
+			{
+				toValue: 45,
+				duration,
+				friction,
+				tension
+			});
 
-		return [left];
+		return [left,rotation];
 	}
 
 
@@ -162,7 +184,18 @@ class CardView extends Component {
 			});
 
 
-		return [Animated.parallel([scale,top]), left ];
+		let rotation = Animated.timing(
+			card.transform[1].rotate,
+			{
+				toValue: 0,
+				duration,
+				friction,
+				tension
+			});
+
+
+
+		return [Animated.parallel([scale,top]), Animated.parallel([left,rotation])  ];
 	}
 
 	move(){
@@ -192,8 +225,8 @@ class CardView extends Component {
 
 	componentWillMount() {
 		this._panResponder = PanResponder.create({
-		    onPanResponderTerminationRequest: () => false,
-		    onStartShouldSetPanResponderCapture: () => false,
+			onPanResponderTerminationRequest: () => false,
+			onStartShouldSetPanResponderCapture: () => false,
 			onStartShouldSetPanResponder: () => false,
 			onMoveShouldSetPanResponder: () => true,
 			onPanResponderGrant : this.move.bind(this)
@@ -228,9 +261,9 @@ class CardView extends Component {
 			<View style={CardStyle.container}>
 			<Title title='Cartes' />
 			<View style={CardStyle.top}>
-				<ScrollView scrollEnabled={false} contentContainerStyle={{top : 120 , alignItems: 'center'}} >
-					<View  style={{ width: 300, height: 300 }}  {...this._panResponder.panHandlers} >{this.elements}</View>
-				</ScrollView>
+			<ScrollView scrollEnabled={false} contentContainerStyle={{top : 120 , alignItems: 'center'}} >
+			<View  style={{ width: 300, height: 300 }}  {...this._panResponder.panHandlers} >{this.elements}</View>
+			</ScrollView>
 			</View>
 			<TouchableOpacity style={CardStyle.bottomRighticon} onPress={() => { Actions.addCard(); }}>
 			<Image source={asset.add}  style={{
@@ -268,9 +301,9 @@ const CardStyle = StyleSheet.create({
 
 
 function mapStateToProps(state) {
-    return {
-        card: state.card
-    };
+	return {
+		card: state.card
+	};
 }
 
 export default connect(mapStateToProps)(CardView);
