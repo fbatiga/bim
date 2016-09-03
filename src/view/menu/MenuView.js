@@ -40,7 +40,7 @@ export default class MenuView extends Component {
 		{text : 'CARTES', action : Actions.card }]
 
 		return (
-			<View style={style.container} >
+			<View style={[style.container, this.props.style]} >
 				{menu.map((item,index)=>{
 					return (<TouchableOpacity  key={index}  onPress={()=>{ this.props.gotTo(item)}}>
 								<Text style={style.title} >{item.text}</Text>

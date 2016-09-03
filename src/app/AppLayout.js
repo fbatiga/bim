@@ -71,15 +71,19 @@ class AppLayout extends Component {
 
 
 	_onMomentumScrollEnd(e, state, context) {
+
 		this.setState({
 			index : context.state.index
 		});
+
 	}
 
 	componentDidUpdate(prevProps, prevState) {
 		console.log('componentDidUpdate');
 		console.log('prevProps' , prevProps.messenger.visibility, prevState.index);
 		console.log('this.props.messenger' , this.props.messenger.visibility);
+
+
 
 		if(prevProps.messenger.visibility == null ){
 
@@ -164,9 +168,11 @@ class AppLayout extends Component {
 				loop={false}
 				onMomentumScrollEnd ={this._onMomentumScrollEnd.bind(this)}
 				ref='swiper'
+				scrollEnabled={!this.props.card.moving}
+				horizontal={!this.props.card.moving}
 				showsPagination={false}
 				index={1}>
-				<MenuView gotTo={this.gotTo.bind(this)}/>
+				<MenuView gotTo={this.gotTo.bind(this)} />
 				<View style={styles.viewContainer} >
 				{this.props.children}
 				</View>
@@ -190,6 +196,7 @@ class AppLayout extends Component {
 
 function mapStateToProps(state) {
 	return {
+		card : state.card,
 		messenger: state.messenger,
 		login: state.login
 	};

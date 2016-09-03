@@ -5,8 +5,9 @@ import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import asset from '../../asset';
 import Title from '../../component/Title';
-import { init } from './CardAction'
+import { moveStarted, moveEnded  } from './CardAction'
 import baseStyles from '../../styles/vars.js';
+
 
 class CardView extends Component {
 
@@ -62,7 +63,6 @@ class CardView extends Component {
 		};
 
 		this.newCards = [];
-		this.onMove = false;
 
 		this.elements = this.state.cards.map((card, index)=>{
 
@@ -167,9 +167,9 @@ class CardView extends Component {
 
 	move(){
 
-		if(this.onMove == false ){
+		if(this.props.card.moving == false ){
 
-			this.onMove = true;
+			this.props.dispatch(moveStarted());
 
 			let cardToMove = this.state.cards.pop();
 
@@ -192,12 +192,11 @@ class CardView extends Component {
 
 	componentWillMount() {
 		this._panResponder = PanResponder.create({
-			onStartShouldSetPanResponder: (evt, gestureState) => true,
-			onStartShouldSetPanResponderCapture: (evt, gestureState) => true,
-			onMoveShouldSetPanResponder: (evt, gestureState) => true,
-			onMoveShouldSetPanResponderCapture: (evt, gestureState) => true,
-			onPanResponderTerminationRequest: (evt, gestureState) => true,
-			onPanResponderMove: this.move.bind(this)
+		    onPanResponderTerminationRequest: () => false,
+		    onStartShouldSetPanResponderCapture: () => false,
+			onStartShouldSetPanResponder: () => false,
+			onMoveShouldSetPanResponder: () => true,
+			onPanResponderGrant : this.move.bind(this)
 		});
 	}
 
@@ -216,7 +215,7 @@ class CardView extends Component {
 
 		let sequence = this.addCard(cardToMove.style);
 
-		Animated.sequence(sequence).start(()=>{ this.onMove = false; });
+		Animated.sequence(sequence).start(()=>{ this.props.dispatch(moveEnded()); });
 
 		this.setState({
 			cards : newCards
@@ -229,8 +228,8 @@ class CardView extends Component {
 			<View style={CardStyle.container}>
 			<Title title='Cartes' />
 			<View style={CardStyle.top}>
-				<ScrollView scrollEnabled={false} contentContainerStyle={{top : 120 , alignItems: 'center'}} {...this._panResponder.panHandlers}>
-					<View  style={{ width: 300, height: 300 }}  >{this.elements}</View>
+				<ScrollView scrollEnabled={false} contentContainerStyle={{top : 120 , alignItems: 'center'}} >
+					<View  style={{ width: 300, height: 300 }}  {...this._panResponder.panHandlers} >{this.elements}</View>
 				</ScrollView>
 			</View>
 			<TouchableOpacity style={CardStyle.bottomRighticon} onPress={() => { Actions.addCard(); }}>
@@ -267,4 +266,12 @@ const CardStyle = StyleSheet.create({
 	}
 });
 
-export default connect()(CardView);
+
+function mapStateToProps(state) {
+    return {
+        card: state.card
+    };
+}
+
+export default connect(mapStateToProps)(CardView);
+
