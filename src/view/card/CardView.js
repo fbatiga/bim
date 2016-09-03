@@ -109,7 +109,7 @@ class CardView extends Component {
 		});
 
 
-		let leftTo = 7 + ( pos * 2);
+		let leftTo = 8 + ( pos * 2);
 
 		let  left = Animated.timing(
 			card.left,
@@ -171,13 +171,21 @@ class CardView extends Component {
 		let tension = 100;
 		let duration = 300;
 
-		let scale = Animated.timing(card.transform[0].scale,{ toValue: 0.7, duration: 0 });
-		let top = Animated.timing(card.top,{ toValue: 0 , duration: 0 });
+		let pos = this.state.cards.length ;
+
+
+		let topTo = 90 - pos * 30;
+		let leftTo = 8 + ( pos * 2);
+		let scaleTo = 1 - ( pos * 0.1 );
+
+
+		let scale = Animated.timing(card.transform[0].scale,{ toValue: scaleTo, duration: 0 });
+		let top = Animated.timing(card.top,{ toValue: topTo , duration: 0 });
 
 		let left = Animated.timing(
 			card.left,
 			{
-				toValue: 14,
+				toValue: leftTo,
 				duration,
 				friction,
 				tension
@@ -192,8 +200,6 @@ class CardView extends Component {
 				friction,
 				tension
 			});
-
-
 
 		return [Animated.parallel([scale,top]), Animated.parallel([left,rotation])  ];
 	}
