@@ -187,11 +187,19 @@ class MessengerView extends Component {
 		this.props.dispatch(loadButtons(buttons));
 	}
 
+
+	onLayout(){
+
+		if(this.props.messenger.visibility != null){
+			this.props.dispatch(setVisibility(true));
+		}
+	}
+
 	render(){
 
 		return (
 
-			<View style={style.container} >
+			<View style={style.container} onLayout={this.onLayout.bind(this)}>
 			<View style={ { height: 20} } />
 			<MessengerMain
 			style={style.main}
@@ -203,20 +211,20 @@ class MessengerView extends Component {
 				(
 					<View>
 					<View  style={style.text}>
-						<TextInput
-							autoCapitalize='sentences'
-							autoCorrect={false}
-							ref="textInput"
-							value={this.state.text}
-							autoFocus={true}
-							returnKeyType='send'
-							placeholder='Entrez votre message...'
-							onChangeText={this.onChangeText.bind(this)}
-							onSubmitEditing={(event)=>{this.onSend(event.nativeEvent.text);}}
-							style={style.input}
-							/>
-						</View>
-						<KeyboardSpacer/>
+					<TextInput
+					autoCapitalize='sentences'
+					autoCorrect={false}
+					ref="textInput"
+					value={this.state.text}
+					autoFocus={true}
+					returnKeyType='send'
+					placeholder='Entrez votre message...'
+					onChangeText={this.onChangeText.bind(this)}
+					onSubmitEditing={(event)=>{this.onSend(event.nativeEvent.text);}}
+					style={style.input}
+					/>
+					</View>
+					<KeyboardSpacer/>
 					</View>
 					)}
 				{!this.state.input &&

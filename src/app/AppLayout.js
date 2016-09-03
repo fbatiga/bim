@@ -53,13 +53,12 @@ class AppLayout extends Component {
 
 	home(){
 
+		if(this.props.messenger.visibility == false){
+			Actions.messenger();
+		}
+
 		if(this.state.index == 1){
-			if(this.props.messenger.visibility == false){
-				Actions.messenger();
-				if(this.state.index == 1 ){
-					this.props.dispatch(setVisibility(true));
-				}
-			}else{
+			if(this.props.messenger.visibility == true){
 				this.refs.swiper.scrollBy(-1);
 			}
 		}
@@ -67,6 +66,8 @@ class AppLayout extends Component {
 		if(this.state.index == 0){
 			this.refs.swiper.scrollBy(1);
 		}
+
+
 	}
 
 
@@ -79,11 +80,6 @@ class AppLayout extends Component {
 	}
 
 	componentDidUpdate(prevProps, prevState) {
-		console.log('componentDidUpdate');
-		console.log('prevProps' , prevProps.messenger.visibility, prevState.index);
-		console.log('this.props.messenger' , this.props.messenger.visibility);
-
-
 
 		if(prevProps.messenger.visibility == null ){
 
