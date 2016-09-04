@@ -725,7 +725,9 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODEPUSH_KEY = aksUewAl_9lFLlReuQXXqj6JNGJkE1VdA43dZ;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -751,7 +753,9 @@
 					"-ObjC",
 					"-lc++",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = laposte.alpha.bim;
 				PRODUCT_NAME = bimbot;
+				PROVISIONING_PROFILE = "55478263-2519-4f26-97ed-4c2b4503cb7e";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -762,7 +766,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
+				CURRENT_PROJECT_VERSION = 1;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -787,7 +793,9 @@
 					"-ObjC",
 					"-lc++",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = laposte.alpha.bim;
 				PRODUCT_NAME = bimbot;
+				PROVISIONING_PROFILE = "55478263-2519-4f26-97ed-4c2b4503cb7e";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
@@ -845,7 +853,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
+				CURRENT_PROJECT_VERSION = 1;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -874,7 +884,9 @@
 					"-ObjC",
 					"-lc++",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = laposte.alpha.bim;
 				PRODUCT_NAME = bimbot;
+				PROVISIONING_PROFILE = "55478263-2519-4f26-97ed-4c2b4503cb7e";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Staging;

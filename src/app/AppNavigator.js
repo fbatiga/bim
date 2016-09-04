@@ -86,7 +86,6 @@ class AppNavigator extends Component {
 
     handleAppStateChange(appState) {
 
-        console.log('handleAppStateChange', appState);
         if (appState === 'background') {
             // if (Platform.OS === 'ios') {
             // 	date = date.toISOString();
