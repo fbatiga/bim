@@ -90,9 +90,16 @@ class TransferView extends Component {
     confirmRecipient(recipient) {
         console.log(recipient);
         this.state.step = this.state.step + 1;
-        var name = (recipient.familyName ? recipient.familyName : recipient.familyName) + ' '
-            + (recipient.givenName ? recipient.givenName : recipient.givenName);
-        this.setState({transferRecipient: name, step: this.state.step});
+        let name = [];
+        if(recipient.familyName != undefined){
+        	name.push(recipient.familyName);
+        }
+
+        if(recipient.givenName != undefined){
+        	name.push(recipient.givenName);
+        }
+
+        this.setState({transferRecipient: name.join(''), step: this.state.step});
     }
 
     confirmTitle(title) {

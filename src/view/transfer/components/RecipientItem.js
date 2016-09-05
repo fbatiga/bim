@@ -61,7 +61,7 @@ class RecipientItem extends React.Component {
 			</View>
 			<View style={styles.rightPart}>
 			<Text style={styles.label}>
-			{this.props.rowData.givenName} {this.props.rowData.familyName}
+			{this.props.rowData.givenName !== undefined && this.props.rowData.givenName} {this.props.rowData.familyName !== undefined && this.props.rowData.familyName}
 			</Text>
 			{this.props.rowData.phoneNumbers !== undefined && this.props.rowData.phoneNumbers[0] !== undefined &&
 				(  <Text style={styles.category}>
