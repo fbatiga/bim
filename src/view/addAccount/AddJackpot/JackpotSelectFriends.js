@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View, ScrollView, StyleSheet, Dimensions, Image, TouchableOpacity } from 'react-native';
 import Title from '../../../component/Title.js';
+import SubTitle from '../../../component/SubTitle.js';
 import baseStyles from '../../../styles/vars';
 import asset from '../../../asset';
 
@@ -92,9 +93,7 @@ export default class JackpotSelectFriends extends Component {
         <View style={styles.top}>
         <Title>{this.props.title}</Title>
           <View style={styles.topContent}>
-            <Text style={styles.text}>
-              {this.props.subtitle}
-            </Text>
+ 			<SubTitle>{this.props.subtitle}</SubTitle>
           </View>
         </View>
         <ScrollView style={styles.bottom}>

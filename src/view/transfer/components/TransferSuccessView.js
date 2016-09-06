@@ -5,49 +5,50 @@ import asset from '../../../asset';
 
 const width = Dimensions.get('window').width;
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: baseStyles.colors.deepBlue,
-    flex: 1
-  },
-  top: {
-    flex: 1,
-    backgroundColor: baseStyles.colors.deepBlue,
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  image: {
-      height: 100,
-      width: 100,
-      resizeMode: 'stretch'
-  },
+	container: {
+		backgroundColor: baseStyles.colors.deepBlue,
+		flex: 1
+	},
+	top: {
+		flex: 1,
+		backgroundColor: baseStyles.colors.deepBlue,
+		alignItems: 'center',
+		justifyContent: 'center'
+	},
+	image: {
+		height: 100,
+		width: 100,
+		resizeMode: 'stretch'
+	},
 });
 
 export default class TransferSuccessView extends Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {transferTitle: this.props.transferTitle};
-  }
+	constructor(props) {
+		super(props);
+		this.state = {transferTitle: this.props.transferTitle};
+	}
 
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text style={baseStyles.titles.h1}>{this.props.title || 'B!M'}</Text>
-        <View style={styles.top}>
-          <Image source={asset.success} style={styles.image}/>
-          <Text style={{
-            color: '#fff',
-            fontSize: 20,
-            marginTop: 25
-          }}>
-            {this.props.subTitle || 'Transfert effectué !' }
-          </Text>
-        </View>
-      </View>
-    );
-  }
+	render() {
+		return (
+			<View style={styles.container}>
+			<Text style={baseStyles.titles.h1}>{this.props.title || 'B!M'}</Text>
+			<View style={styles.top}>
+			<Image source={asset.success} style={styles.image}/>
+			<Text style={{
+				color: '#fff',
+				fontSize:15,
+				fontFamily : 'Montserrat-Bold',
+				marginTop: 24
+			}}>
+			{this.props.subTitle || 'Transfert effectué !' }
+			</Text>
+			</View>
+			</View>
+			);
+	}
 }
 
 TransferSuccessView.propTypes = {
-  title: React.PropTypes.string
+	title: React.PropTypes.string
 };

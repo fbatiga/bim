@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View, StyleSheet, Dimensions, Image, TouchableOpacity } from 'react-native';
 import Title from '../../../component/Title.js';
+import SubTitle from '../../../component/SubTitle.js';
 import baseStyles from '../../../styles/vars';
 import asset from '../../../asset';
 
@@ -23,12 +24,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 25
-  },
-  text: {
-    color: baseStyles.colors.alternative,
-    marginTop: 10,
-    fontSize: 35,
-    marginLeft: 50
   },
   redBox: {
     backgroundColor: baseStyles.colors.pink,
@@ -63,11 +58,9 @@ export default class JackpotSelectDesign extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Title title={this.props.title} />
+        <Title>{this.props.title}</Title>
         <View style={styles.top}>
-          <Text style={styles.text}>
-            {this.props.subtitle || 'Design de la cagnotte' }
-          </Text>
+        <SubTitle>{this.props.subtitle || 'Design de la cagnotte'}</SubTitle>
         </View>
         <View style={styles.bottom}>
           <View style={styles.greenBox} />

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
 import Title from '../../../component/Title.js';
+import SubTitle from '../../../component/SubTitle.js';
 import baseStyles from '../../../styles/vars';
 import asset from '../../../asset';
 
@@ -36,14 +37,20 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     height: height / 4,
     paddingHorizontal: 25,
-    alignItems: 'center'
+    alignItems: 'center',
   },
   linkText: {
     color: baseStyles.colors.deepBlue,
+    fontFamily : 'Montserrat-UltraLight',
+    fontSize: 14,
+	lineHeight : 14,
     flex: 1
   },
   amount: {
-    color: baseStyles.colors.deepBlue
+    color: baseStyles.colors.deepBlue,
+    fontFamily : 'Montserrat-UltraLight',
+    fontSize: 14,
+	lineHeight : 14,
   }
 });
 
@@ -52,11 +59,9 @@ export default class JackpotSelectAccount extends Component {
     return (
       <View style={styles.container}>
         <View style={styles.top}>
-          <Title title={this.props.title} />
+        <Title>{this.props.title}</Title>
           <View style={styles.topContent}>
-            <Text style={styles.text}>
-              {this.props.subtitle || 'Compte à débiter' }
-            </Text>
+         	 <SubTitle>{this.props.subtitle || 'Compte à débiter'}</SubTitle>
           </View>
         </View>
         <View style={styles.bottom}>

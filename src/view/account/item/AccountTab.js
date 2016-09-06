@@ -15,7 +15,8 @@ const tabStyles = StyleSheet.create({
     // },
     text: {
         color: '#120037',
-        fontSize: 14
+        fontSize: 14,
+    	fontFamily: 'Montserrat',
     }
 });
 

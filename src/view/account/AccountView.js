@@ -15,6 +15,7 @@ import {connect} from 'react-redux';
 import {init, filterByCredit, filterByDebit, clearFilter} from './AccountAction';
 import AccountItem from './item/AccountItem';
 import AccountTab from './item/AccountTab';
+import Title from '../../component/Title';
 
 const {width, height} = Dimensions.get('window');
 const themePreview = 50;
@@ -170,7 +171,7 @@ class AccountView extends Component {
 
                   <View style={AccountStyle.top}>
 
-                      <Text style={baseStyles.titles.h1Dark}>B!M</Text>
+                      <Title style={{color :baseStyles.colors.deepBlue}} >B!M</Title>
 
                       <Animated.View style={[AccountStyle.graph, { transform: [ {scale: this.state.bounceValue} ] }]}>
                           <Image source={asset.graphCircled}  style={AccountStyle.graphCircle}>

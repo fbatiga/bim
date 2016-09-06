@@ -32,7 +32,10 @@ const AccountStyle = StyleSheet.create({
         resizeMode: 'stretch',
     },
     graphLabel: {
+
         fontSize: 10,
+        letterSpacing : 1.5,
+    	fontFamily: 'Montserrat',
         color: '#120037',
         fontWeight: '300',
         marginBottom: 5,
@@ -94,15 +97,15 @@ const AccountStyle = StyleSheet.create({
     },
     bottomTitle: {
       color: baseStyles.colors.deepBlue,
+	  fontFamily: 'Montserrat-Bold',
       fontSize: 24,
       textAlign: 'center',
-      fontWeight: '400',
       marginTop: 0
     },
     previousMonth: {
       color: baseStyles.colors.lightGrey,
       fontSize: 24,
-      fontWeight: '400'
+      fontFamily: 'Montserrat-Bold',
     },
     switchContainer: {
         justifyContent: 'center',

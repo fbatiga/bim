@@ -17,8 +17,10 @@ const AddAccountStyle = StyleSheet.create({
     backgroundColor: baseStyles.colors.white
   },
   textTitle: {
-    fontSize: 30,
-    marginBottom: 3,
+    fontFamily : 'Montserrat-UltraLight',
+    fontSize: 36,
+	lineHeight : 36,
+	marginTop: 24,
     marginLeft: width / 8,
     color: baseStyles.colors.alternative
   },
@@ -32,7 +34,10 @@ const AddAccountStyle = StyleSheet.create({
     // flexWrap: 'wrap'
   },
   text: {
-    color: baseStyles.colors.deepBlue
+    color: baseStyles.colors.deepBlue,
+    fontFamily : 'Montserrat-UltraLight',
+    fontSize: 14,
+	lineHeight : 14,
   },
   textLight: {
     color: baseStyles.colors.alternative

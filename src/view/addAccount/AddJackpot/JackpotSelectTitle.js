@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View, TextInput, StyleSheet, Dimensions } from 'react-native';
 import Title from '../../../component/Title.js';
+import SubTitle from '../../../component/SubTitle.js';
 import baseStyles from '../../../styles/vars';
 
 const height = Dimensions.get('window').height;
@@ -14,22 +15,16 @@ const styles = StyleSheet.create({
     backgroundColor: baseStyles.colors.deepBlue,
     height: height / 2
   },
-  text: {
-    // flex: 1,
-    color: baseStyles.colors.alternative,
-    marginTop: 10,
-    fontSize: 35,
-    marginLeft: 50,
-    marginTop: 50
-  },
   input: {
     flex: 1,
     color: 'white',
     textAlign: 'center',
     borderBottomWidth: 3,
     borderBottomColor: "white",
-    fontSize: 40,
-    height: 100
+    height: 100,
+    fontFamily : 'Montserrat-Bold',
+    fontSize: 36,
+	lineHeight : 36,
   }
 });
 
@@ -39,9 +34,7 @@ export default class JackpotSelectTitle extends Component {
       <View style={styles.container}>
         <Title>{this.props.title}</Title>
         <View style={styles.top}>
-          <Text style={styles.text}>
-            {this.props.subtitle || 'Nommer cette cagnotte' }
-          </Text>
+          <SubTitle>{this.props.subtitle || 'Nommer cette cagnotte' }</SubTitle>
           <TextInput
             autoCapitalize='sentences'
             autoCorrect={false}

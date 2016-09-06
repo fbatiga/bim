@@ -6,7 +6,9 @@ import moment from 'moment';
 const styles = StyleSheet.create({
   date: {
     color: '#BDC4C8',
-    fontSize: 22
+    fontSize: 24,
+    fontFamily : 'Montserrat-Bold',
+    width : 30
   },
   button: {
     flex: 1,
@@ -32,16 +34,21 @@ const styles = StyleSheet.create({
   },
   category: {
     color: '#BDC4C8',
-    fontSize: 8,
+    fontFamily : 'Montserrat-UltraLight',
+    fontSize: 10,
     marginTop: 3
   },
   label: {
-    color: '#4F4367',
-    fontSize: 14
+    color: '#120037',
+    fontFamily : 'Montserrat-Light',
+    fontSize: 14,
+	lineHeight : 14
   },
   amount: {
     color: baseStyles.colors.deepBlue,
-    fontSize: 15
+    fontFamily : 'Montserrat-Light',
+    fontSize: 14,
+	lineHeight : 14
   }
 });
 

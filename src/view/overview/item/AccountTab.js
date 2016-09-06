@@ -19,8 +19,7 @@ const tabStyles = StyleSheet.create({
     }
 });
 
-export default
-class AccountTab extends React.Component {
+export default class AccountTab extends React.Component {
 
     render() {
         const flexStyle = {};

@@ -3,6 +3,7 @@ import React from 'react';
 import { Text, View, Image, TouchableOpacity, TouchableHighlight, StyleSheet, Dimensions } from 'react-native';
 import baseStyles from '../../../styles/vars.js';
 import Title from '../../../component/Title.js';
+import CenteredTitle from '../../../component/CenteredTitle.js';
 import asset from '../../../asset';
 
 const width = Dimensions.get('window').width;
@@ -47,16 +48,9 @@ class AmountSelectionView extends React.Component {
     render() {
         return (
             <View style={styles.container}>
-        <Title>{this.props.title}</Title>
+        		<Title>{this.props.title}</Title>
                 <View style={styles.top}>
-                    <Text style={{
-                        color: baseStyles.colors.alternative,
-                        marginTop: 10,
-                        fontSize: 30,
-                        marginBottom: 25
-                    }}>
-                    {this.props.subtitle || 'B!MMER LA SOMME DE' }
-                    </Text>
+                    <CenteredTitle>{this.props.subtitle || 'B!MMER LA SOMME DE' }</CenteredTitle>
                     <Text
                     ref="amountInput"
                     style={{
@@ -64,6 +58,9 @@ class AmountSelectionView extends React.Component {
                         textAlign: 'center',
                         fontSize: 40,
                         height: 100,
+
+                    fontSize:36,
+                    fontFamily : 'Montserrat-Bold',
                         width: null
                     }}
                     >{
@@ -82,7 +79,9 @@ class AmountSelectionView extends React.Component {
                     this.props.confirm(this.state.amount)
                 }}
                 >
-                    <Text style={{padding: 10, textAlign: 'center', color: '#fff' }}>CONFIRMER</Text>
+                    <Text style={{padding: 10,
+                    fontSize:15,
+                    fontFamily : 'Montserrat-SemiBold', textAlign: 'center', color: '#fff' }}>CONFIRMER</Text>
                 </TouchableOpacity>
                 <View style={styles.bottom}>
 

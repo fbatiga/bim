@@ -1,12 +1,10 @@
 'use strict';
 
 import React, { Component } from 'react';
-import { View, Text,ListView, Image, ScrollView, TouchableOpacity, Animated } from 'react-native';
+import { View, Text,ListView, Image, ScrollView, StyleSheet, TouchableOpacity, Animated } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import  ScrollableTabView, { ScrollableTabBar }  from 'react-native-scrollable-tab-view';
 import moment from 'moment';
-
-import OverviewStyle from './OverviewStyle';
 import {init} from './OverviewAction';
 import asset from '../../asset';
 import baseStyles from '../../styles/vars.js';
@@ -27,6 +25,9 @@ var custom = {
     }
 }
 
+
+
+paddingLeft : 160
 class OverviewView extends Component {
 
     constructor(props) {
@@ -63,18 +64,18 @@ class OverviewView extends Component {
             <View
             horizontal={false} style={[OverviewStyle.container, {flex: 1}]}>
                 <View style={[OverviewStyle.top, {flex: 1}]}>
-                    <Title style={{opacity: this.state.fadeAnim}}>COMPTES</Title>
+                    <Title style={{opacity: this.state.fadeAnim, marginBottom: 70}}>COMPTES</Title>
 
                     {/* <Animated.View style={[custom.circle, { transform: [ {scale: this.state.bounceValue} ] }]} /> */}
                     <Animated.View style={[custom.circle, {transform: [{scale: this.state.bounceValue}]}]}>
                         <ScrollableTabView
-                        style={{marginTop: 20}}
+                        style={{marginTop: 20,  borderBottomWidth: 0}}
                         initialPage={0}
                         tabBarPosition={'bottom'}
                         tabBarUnderlineColor={'transparent'}
                         tabBarActiveTextColor={'white'}
                         tabBarInactiveTextColor={baseStyles.colors.lightviolet}
-                        renderTabBar={() => <ScrollableTabBar style={{borderBottomWidth: 0}} 	tabsContainerStyle={{ paddingLeft : 160}} />}
+                        renderTabBar={() => <ScrollableTabBar style={OverviewStyle.tabs} tabsContainerStyle={OverviewStyle.tabBar} />}
                         >
 			        {this.props.overview.accounts.map((value, key) => {
                                  return (
@@ -84,7 +85,7 @@ class OverviewView extends Component {
                                                  this.transition(value.type);
                                              }
                                          }}>
-                                             <View style={[OverviewStyle.graphCircle, {backgroundColor: this.selectColor(value.type)}]}>
+                                             <View style={[OverviewStyle.graphCircle, {backgroundColor: this.selectColor(value.type, key)}]}>
                                                  <Animated.Text style={[OverviewStyle.graphLabel, {opacity: this.state.fadeAnim}]} >SOLDE ACTUEL</Animated.Text>
                                                  <Animated.Text style={[OverviewStyle.graphBalance, {opacity: this.state.fadeAnim}]} >{value.balance} €</Animated.Text>
                                              </View>
@@ -111,8 +112,8 @@ class OverviewView extends Component {
         );
     }
 
-    randomizeColor() {
-        switch (Math.floor(Math.random() * 3)) {
+    randomizeColor(index) {
+        switch ( index % 3 ) {
             case 0:
                 return baseStyles.colors.white;
                 break;
@@ -130,11 +131,11 @@ class OverviewView extends Component {
         }
     }
 
-    selectColor(type) {
+    selectColor(type, key) {
         if (type === 'internal') {
             return baseStyles.colors.alternative;
         } else {
-            return this.randomizeColor();
+            return this.randomizeColor(key);
         }
     }
 
@@ -181,6 +182,104 @@ class OverviewView extends Component {
         );
     }
 }
+
+
+const OverviewStyle = StyleSheet.create({
+    container: {
+        backgroundColor:  baseStyles.colors.deepBlue,
+    },
+    top: {
+        alignItems: 'stretch',
+        backgroundColor: baseStyles.colors.deepBlue,
+        top: 0,
+        left: 0,
+    },
+    tabs: {
+        overflow: 'hidden',
+        height: 150,
+        borderWidth: 0
+    },
+    tabBar: {
+        fontSize: 15,
+    	fontFamily: 'Montserrat',
+    	marginTop : 50,
+        borderWidth: 0,
+    	paddingLeft : 160
+    },
+    graph: {
+        alignItems: 'center'
+    },
+    graphCircle: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: 200,
+        height: 200,
+        padding: 10,
+        marginBottom: 10,
+        // backgroundColor:  baseStyles.colors.alternative,
+        borderRadius: 145
+    },
+    graphLabel: {
+        fontSize: 10,
+        letterSpacing : 1.5,
+    	fontFamily: 'Montserrat',
+        color: baseStyles.colors.deepBlue,
+        fontWeight: '300',
+        marginBottom: 5,
+        overflow: 'hidden',
+        textAlign: "center"
+    },
+    graphBalance: {
+        fontSize: 36,
+        color: baseStyles.colors.deepBlue,
+        fontWeight: 'bold'
+    },
+
+    bottom: {
+       /*
+
+            justifyContent: 'flex-start',
+            flexDirection: "column",
+            alignItems: 'stretch',
+
+        */
+        backgroundColor: '#fff'
+    },
+    bottomTitle: {
+        color: baseStyles.colors.deepBlue,
+        alignItems: 'center',
+        justifyContent: 'center',
+        textAlign: 'center'
+
+    },
+    switchContainer: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: 100,
+        marginBottom: 10
+    },
+
+    switch: {
+        backgroundColor: 'white',
+        borderRadius: 0,
+        borderWidth: 0,
+        justifyContent: 'center',
+        width: 200,
+        alignItems: 'center'
+    },
+
+    listView: {
+        flex: 10,
+        borderColor: "red"
+    },
+    addIcon: {
+      alignItems: 'flex-end',
+      marginRight: -15,
+      marginBottom: 15
+    }
+
+});
+
 
 function mapStateToProps(state) {
     return {

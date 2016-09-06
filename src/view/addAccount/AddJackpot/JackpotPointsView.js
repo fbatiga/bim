@@ -62,7 +62,8 @@ export default class JackpotPointsView extends Component {
           </View>
           <Text style={{
             color: baseStyles.colors.yellow,
-            fontSize: 25,
+                    fontSize:36,
+                    fontFamily : 'Montserrat-Bold',
             marginTop: 25
           }}>
             {this.props.value}

@@ -5,21 +5,20 @@ import { View, Text, StyleSheet, Animated} from 'react-native';
 import stylesVars from '../styles/vars';
 
 const style = StyleSheet.create({
-	title : {
-		fontFamily : 'Montserrat-Bold',
-		fontSize : 36,
+	subtitle : {
+	    fontFamily : 'Montserrat-UltraLight',
+	    fontSize: 36,
 		lineHeight : 36,
-		letterSpacing: 1.5,
-		left : -1,
-		marginTop : 45,
+		marginBottom: 20,
+		textAlign : 'center',
 	    color: stylesVars.colors.alternative
 	}
 });
 
-export default class Title extends Component {
+export default class SubTitle extends Component {
 	render(){
 		return (
-			<Animated.Text {...this.props} style={[style.title, this.props.style]}>{this.props.children || 'B!M'}</Animated.Text>
+			<Animated.Text {...this.props} style={[style.subtitle, this.props.style]}>{this.props.children}</Animated.Text>
 		);
 	}
 }

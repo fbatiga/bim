@@ -37,8 +37,9 @@ class TransferTitleInputView extends React.Component {
 				flex: 1,
 				color: baseStyles.colors.alternative,
 				height: 30,
-				marginTop: 10,
-				fontSize: 25
+				marginTop: 80,
+				fontSize:36,
+				fontFamily : 'Montserrat-UltraLight'
 			}}>
 			{this.props.subtitle || 'B!MMER LA SOMME DE' }
 			</Text>
@@ -54,7 +55,8 @@ class TransferTitleInputView extends React.Component {
 				textAlign: 'center',
 				borderBottomWidth: 3,
 				borderBottomColor: "white",
-				fontSize: 40,
+				fontSize:36,
+				fontFamily : 'Montserrat-Bold',
 				height: 100,
 				width: null
 			}}
