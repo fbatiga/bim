@@ -11,15 +11,16 @@ const style = StyleSheet.create({
     	flex : 1,
     	flexDirection : 'column',
         backgroundColor : '#120037',
-        justifyContent: 'center',
+        justifyContent: 'flex-start',
         alignItems: 'center',
+        paddingTop : 70
     },
     title : {
-		fontFamily : 'Montserrat-ExtraBold',
-		letterSpacing: 3,
-		margin : 20,
+		fontFamily : 'Montserrat-Bold',
+		letterSpacing: 10,
+		margin : 30,
 		color : '#B8A4E6',
-		fontSize: 28
+		fontSize: 25
 	},
 	setting : {
 		marginTop : 50
@@ -33,11 +34,11 @@ export default class MenuView extends Component {
 	render(){
 
 		let menu = [
-		{text : 'PROFIL', action : Actions.profile },
-		{text : 'CONTACTS', action : Actions.contact },
+		{text : 'PAYER', action :  Actions.transfer},
 		{text : 'COMPTES', action : Actions.overview },
-		{text : 'JOURNAL', action : Actions.journal },
-		{text : 'CARTES', action : Actions.card }]
+		{text : 'CONTACTS', action : Actions.contact },
+		{text : 'CARTES', action : Actions.card },
+		{text : 'JOURNAL', action : Actions.journal }]
 
 		return (
 			<View style={[style.container, this.props.style]} >
@@ -46,7 +47,7 @@ export default class MenuView extends Component {
 								<Text style={style.title} >{item.text}</Text>
                             </TouchableOpacity>);
 				})}
-            <TouchableOpacity onPress={()=>{ this.props.gotTo({action:Actions.parameters})}}  >
+            <TouchableOpacity onPress={()=>{ this.props.gotTo({action: Actions.profile})}}  >
 				<Image source={asset.setting}  style={style.setting} />
                 </TouchableOpacity>
 			</View>

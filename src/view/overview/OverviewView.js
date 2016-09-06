@@ -63,7 +63,7 @@ class OverviewView extends Component {
             <View
             horizontal={false} style={[OverviewStyle.container, {flex: 1}]}>
                 <View style={[OverviewStyle.top, {flex: 1}]}>
-                    <Animated.Text style={[baseStyles.titles.h1, {opacity: this.state.fadeAnim}]}>Comptes</Animated.Text>
+                    <Title style={{opacity: this.state.fadeAnim}}>COMPTES</Title>
 
                     {/* <Animated.View style={[custom.circle, { transform: [ {scale: this.state.bounceValue} ] }]} /> */}
                     <Animated.View style={[custom.circle, {transform: [{scale: this.state.bounceValue}]}]}>
@@ -74,9 +74,9 @@ class OverviewView extends Component {
                         tabBarUnderlineColor={'transparent'}
                         tabBarActiveTextColor={'white'}
                         tabBarInactiveTextColor={baseStyles.colors.lightviolet}
-                        renderTabBar={() => <ScrollableTabBar style={{borderBottomWidth: 0}}/>}
+                        renderTabBar={() => <ScrollableTabBar style={{borderBottomWidth: 0}} 	tabsContainerStyle={{ paddingLeft : 160}} />}
                         >
-                             {this.props.overview.accounts.map((value, key) => {
+			        {this.props.overview.accounts.map((value, key) => {
                                  return (
                                      <View tabLabel={value.label} key={key}>
                                          <TouchableOpacity style={OverviewStyle.graph} onPress={()=> {

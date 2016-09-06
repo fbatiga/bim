@@ -14,11 +14,10 @@ const styles = StyleSheet.create({
 		maxWidth : 240
 	},
 	text: {
-		fontSize : 14,
+		fontSize : 15,
 		flex: 1,
 		color: '#4F4367',
-		//fontFamily : 'Verdana',
-		fontWeight: '100'
+		fontFamily : 'Roboto-Light'
 	},
 	triangle: {
 		width : 0,

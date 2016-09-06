@@ -90,7 +90,7 @@ export default class JackpotSelectFriends extends Component {
     return (
       <View style={styles.container}>
         <View style={styles.top}>
-          <Title title={this.props.title} />
+        <Title>{this.props.title}</Title>
           <View style={styles.topContent}>
             <Text style={styles.text}>
               {this.props.subtitle}

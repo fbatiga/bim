@@ -52,7 +52,7 @@ export default class JackpotSelectDesign extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Title title={this.props.title} />
+        <Title>{this.props.title}</Title>
         <View style={styles.top}>
           <Text style={styles.text}>
             {this.props.subtitle || 'Design de la cagnotte' }

@@ -54,7 +54,7 @@ export default class RecipientSelectionView extends React.Component {
     render() {
         return (
             <View style={styles.container}>
-                <Title title={this.props.title} />
+        <Title>{this.props.title}</Title>
                 <View style={styles.top}>
                   <Text
                   style={{

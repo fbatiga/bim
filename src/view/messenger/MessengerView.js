@@ -200,7 +200,7 @@ class MessengerView extends Component {
 		return (
 
 			<View style={style.container} onLayout={this.onLayout.bind(this)}>
-			<View style={ { height: 20} } />
+			<View style={ { height: 5} } />
 			<MessengerMain
 			style={style.main}
 			setButtons={this.setButtons.bind(this)}

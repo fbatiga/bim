@@ -28,7 +28,7 @@ class ContactView extends Component {
     render() {
         return (
             <View style={{backgroundColor: '#fff'}}>
-                <Title title={'CONTACTS'} style={{color: stylesVars.colors.deepblue, height: 80}}/>
+                <Title style={{color: stylesVars.colors.deepblue, height: 80}} >CONTACTS</Title>
                 <ContactList pages={['contactsList', 'contact']}  style={[ContactStyle.container, {height: height - (80)}]}
                 callback={this.openContact.bind(this)}
                 />

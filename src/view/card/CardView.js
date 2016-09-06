@@ -265,7 +265,8 @@ class CardView extends Component {
 
 		return (
 			<View style={CardStyle.container}>
-			<Title title='Cartes' />
+			<Title>Cartes</Title>
+
 			<View style={CardStyle.top}>
 			<ScrollView scrollEnabled={false} contentContainerStyle={{top : 120 , alignItems: 'center'}} >
 			<View  style={{ width: 300, height: 300 }}  {...this._panResponder.panHandlers} >{this.elements}</View>

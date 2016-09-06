@@ -26,12 +26,14 @@ const styles = StyleSheet.create({
 		borderWidth: 8
 	},
 	text: {
-		fontSize : 14,
+		fontSize : 15,
 		flex: 1,
+		paddingLeft: 6,
+		paddingRight: 8,
+		paddingBottom: 6,
 		color: '#4F4367',
 		maxWidth : 220,
-		//fontFamily : 'Verdana',
-		fontWeight: '100'
+		fontFamily : 'Roboto-Light'
 	},
 	bubbleLeft: {
 		marginRight: 70,
