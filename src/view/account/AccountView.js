@@ -171,7 +171,7 @@ class AccountView extends Component {
 
                   <View style={AccountStyle.top}>
 
-                      <Title style={{color :baseStyles.colors.deepBlue}} >B!M</Title>
+                      <Title style={{color :baseStyles.colors.deepBlue, marginBottom: 20}} >B!M</Title>
 
                       <Animated.View style={[AccountStyle.graph, { transform: [ {scale: this.state.bounceValue} ] }]}>
                           <Image source={asset.graphCircled}  style={AccountStyle.graphCircle}>

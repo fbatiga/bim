@@ -13,7 +13,6 @@ const AccountStyle = StyleSheet.create({
     top: {
         height: (height - 225),
         backgroundColor: baseStyles.colors.alternative,
-        paddingTop: 15,
         overflow: 'visible',
         zIndex: 10
     },
