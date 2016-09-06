@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
     color: '#BDC4C8',
     fontSize: 24,
     fontFamily : 'Montserrat-Bold',
-    width : 30
+    width : 33
   },
   button: {
     flex: 1,
