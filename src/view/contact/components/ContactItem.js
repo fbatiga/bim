@@ -48,11 +48,21 @@ const styles = StyleSheet.create({
     }
 });
 
-export default
-class ContactItem extends React.Component {
+export default class ContactItem extends React.Component {
+
+	save(event){
+		this.layout = event.nativeEvent.layout;
+		this.props.save(this);
+	}
+
+
+ 	componentWillUnMount(){
+		this.props.delete(this);
+	}
+
     render() {
         return (
-            <TouchableHighlight onPress={() => {
+            <TouchableHighlight  onLayout={this.save.bind(this)} onPress={() => {
                 this.props.onPress(this.props.rowData)
             } }>
                 <View style={styles.item}>
@@ -61,7 +71,7 @@ class ContactItem extends React.Component {
                     </View>
                     <View style={styles.rightPart}>
                         <Text style={styles.label}>
-                        {this.props.rowData.givenName ? this.props.rowData.givenName : ''} {this.props.rowData.familyName ? this.props.rowData.familyName : ''}
+                        {this.props.rowData.name}
                         </Text>
                         <Text style={styles.category}>
                          {this.props.rowData.phoneNumbers !== undefined && this.props.rowData.phoneNumbers[0] !== undefined && this.props.rowData.phoneNumbers[0].number}
