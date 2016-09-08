@@ -5,46 +5,11 @@ import LetterItem from './LetterItem';
 import Title from '../../../component/Title.js';
 import Contacts from 'react-native-contacts';
 import asset from '../../../asset';
-import baseStyles from '../../../styles/vars';
+import baseStyles from '../../../styles/vars'
 
 const {width, height} = Dimensions.get('window');
-const styles = StyleSheet.create({
-
-	container: {
-		backgroundColor: "white",
-		flex: 1,
-	}
-});
 
 const letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
-const lettersIndex = {
-	'A': false,
-	'B': false,
-	'C': false,
-	'D': false,
-	'E': false,
-	'F': false,
-	'G': false,
-	'H': false,
-	'I': false,
-	'J': false,
-	'K': false,
-	'L': false,
-	'M': false,
-	'N': false,
-	'O': false,
-	'P': false,
-	'Q': false,
-	'R': false,
-	'S': false,
-	'T': false,
-	'U': false,
-	'V': false,
-	'W': false,
-	'X': false,
-	'Y': false,
-	'Z': false
-};
 
 export default
 class ContactList extends React.Component {
@@ -60,23 +25,24 @@ class ContactList extends React.Component {
 
 		this.spacerWidth = width / 2 - 35/2;
 
-		this.selected = null;
+		this.scrollPos = null;
 		let  contacts = [ ];
 
 		var idx = 0;
-		for(var i in contacts){
-			var l = contacts[i].givenName.substring(0,1);
-			if(!lettersIndex[l]){
-				lettersIndex[l] = idx;
-			}
-			idx++;
+
+
+		for(var i in letters){
+			this.letters[i] = this.letters[letters[i-1]] ;
 		}
+
 
 		this.state = {
 			amount: this.props.amount,
 			contacts: contacts,
-			scrollHeight: 0
 		};
+
+
+
 
 
 		console.time('START CONTACTRECUP');
@@ -87,10 +53,6 @@ class ContactList extends React.Component {
 				console.timeEnd('START CONTACTRECUP');
 
 				contacts = [
-				{givenName: 'Faouzane', familyName: 'BATIGA', phoneNumbers: [{number: "0667505353"}], type:'bim'},
-				{givenName: 'Faouzane', familyName: 'BATIGA', phoneNumbers: [{number: "0667505353"}], type:'bim'},
-				{givenName: 'Faouzane', familyName: 'BATIGA', phoneNumbers: [{number: "0667505353"}], type:'bim'},
-				{givenName: 'Faouzane', familyName: 'BATIGA', phoneNumbers: [{number: "0667505353"}], type:'bim'},
 				{givenName: 'Faouzane', familyName: 'BATIGA', phoneNumbers: [{number: "0667505353"}], type:'bim'},
 				].concat(contacts);
 
@@ -107,29 +69,13 @@ class ContactList extends React.Component {
 				});
 
 
-
-                // GET CONTACT HEADERS
-                var idx = 0;
-                for (var i in contacts) {
-                	var l = contacts[i].givenName.substring(0, 1);
-                	if (!lettersIndex[l]) {
-                		lettersIndex[l] = idx;
-                	}
-                	idx++;
-                }
-                this.setState({contacts: contacts});
-            }
-        });
+				this.setState({contacts: contacts});
+			}
+		});
 
 
 
 	}
-
-
-	setPosition(index){
-		console.log("setPosition", index);
-	}
-
 
 
 	componentDidMount(){
@@ -138,131 +84,133 @@ class ContactList extends React.Component {
 	}
 
 
+	save(item){
+		if(this.items[item.props.rowData.name[0]] == undefined || this.items[item.props.rowData.name[0]].layout.y > item.layout.y){
+			this.items[item.props.rowData.name[0]] = item;
+		}
+	}
 
-	handlePanResponderRelease(evt, gestureState) {
-		let start = gestureState.moveX;
-		let dest = gestureState.x0;
-		let distance = dest - start;
+	saveLetter(item){
+		this.letters[item.props.children] = item;
 
- 		// this.headerScroll.scrollTo({
- 		// 	y: 0,
- 		// 	x: distance,
- 		// 	animated : true
- 		// });
- 		//alert(distance);
+	}
 
- 		//this.setPosition(this.position + direction);
- 	}
+	onScroll(event){
 
+		this.scrollPos = event.nativeEvent.contentOffset.x;
 
- 	save(item){
- 		if(this.items[item.props.rowData.name[0]] == undefined || this.items[item.props.rowData.name[0]].layout.y > item.layout.y){
- 			this.items[item.props.rowData.name[0]] = item;
- 		}
- 	}
+	}
 
- 	saveLetter(item){
- 		this.letters[item.props.children] = item;
+	onLetterPress(index){
 
- 		console.log('letter',item.props.children, item.layout.x);
+		let letter = letters[index];
 
- 	}
-
- 	onScroll(event){
-
- 		console.log('letter', event.nativeEvent.contentOffset);
+		let pos =  this.letters[letter].layout.x - this.spacerWidth ;
+		this.headerScroll.scrollTo({
+			y: 0,
+			x: pos,
+			animated : true
+		});
 
 
-
- 		for(var letter in this.letters ){
- 			let item = this.letters[letter];
-
- 			if( (event.nativeEvent.contentOffset.x + this.spacerWidth ) > ( item.layout.x ) && ( event.nativeEvent.contentOffset.x + this.spacerWidth ) <= (item.layout.x + item.layout.width ) ) {
- 				console.log('letter',letter);
-
- 				item.setState({
- 					color : 'black'
- 				});
-
- 				this.selected = item;
-
- 			}else{
- 				item.setState({
- 					color : 'white'
- 				});
-
- 			}
- 		}
-
- 	}
+		this.scrollToLetter(index);
+	}
 
 
- 	render() {
- 		return (
- 			<View
- 			style={[styles.container, this.props.style]} >
- 			<View style={{ height: 80, paddingTop:20, backgroundColor: baseStyles.colors.lightviolet }}>
- 			<View style={{ position: 'absolute',  backgroundColor: 'red', left: width / 2 - 35/2, top: 22.5, width:35, height: 35 , borderRadius: 20}}></View>
- 			<ScrollView horizontal={true}
- 			scrollEventThrottle={200}
+	scrollToLetter(index){
 
- 			onScroll={this.onScroll.bind(this)}
- 			ref='header'
- 			>
- 			<View style={{ width: width / 2 - 35/2, backgroundColor: 'transparent'}} />
- 			{letters.map((letter, index)=> {
- 				return ( <LetterItem key={index} save={this.saveLetter.bind(this)}>{letter}</LetterItem>)
- 			})}
- 			<View style={{ width : width / 2 - 35/2, backgroundColor: 'transparent'}} />
- 			</ScrollView>
+		if(letters[index] != undefined){
+			let letter = letters[index];
 
- 			</View>
- 			<View  style={{flex:1}}>
- 			<ScrollView
- 			horizontal={false}
- 			scrollEventThrottle={200}
- 			ref='listView'
+			if(this.items[letter] != undefined){
+				this.listViewScroll.scrollTo({
+					y: this.items[letter].layout.y,
+					x: 0,
+					animated : true
+				});
+			}else{
+				this.scrollToLetter(index-1);
+			}
 
- 			>
- 			{this.state.contacts.map((contact, index) =>{
-
- 				let name = [];
+		}
+	}
 
 
- 				if(contact.givenName != undefined){
- 					name.push(contact.givenName);
- 				}
+	render() {
+		return (
+			<View
+			style={[styles.container, this.props.style]} >
+			<View style={{ height: 80, paddingTop:20, backgroundColor: baseStyles.colors.lightviolet }}>
+			<View style={{ position: 'absolute',  backgroundColor: '#998BB8', left: width / 2 - 35/2, top: 22.5, width:35, height: 35 , borderRadius: 20}}></View>
+			<ScrollView horizontal={true}
+			scrollEventThrottle={200}
 
- 				if(contact.familyName != undefined){
- 					name.push(contact.familyName);
- 				}
+			onScroll={this.onScroll.bind(this)}
+			ref='header'
+			>
+			<View style={{ width: width / 2 - 35/2, backgroundColor: 'transparent'}} />
+			{letters.map((letter, index)=> {
+				return ( <LetterItem key={index} onPress={()=>{ this.onLetterPress(index) }} save={this.saveLetter.bind(this)}>{letter}</LetterItem>)
+			})}
+			<View style={{ width : width / 2 - 35/2, backgroundColor: 'transparent'}} />
+			</ScrollView>
 
- 				contact.name = name.join(' ');
+			</View>
+			<View  style={{flex:1}}>
+			<ScrollView
+			horizontal={false}
+			scrollEventThrottle={200}
+			ref='listView'
 
- 				return (
- 					<ContactItem
- 					onPress={this.props.callback}
- 					rowData={contact}
- 					save={this.save.bind(this)}
- 					rowData={contact}
- 					/>
- 					);
+			>
+			{this.state.contacts.map((contact, index) =>{
 
- 			})}
+				let name = [];
 
- 			</ScrollView>
- 			</View>
+				if(contact.givenName != undefined){
+					name.push(contact.givenName);
+				}
+
+				if(contact.familyName != undefined){
+					name.push(contact.familyName);
+				}
+
+				contact.name = name.join(' ');
+
+				return (
+					<ContactItem
+					onPress={this.props.callback}
+					rowData={contact}
+					save={this.save.bind(this)}
+					rowData={contact}
+					/>
+					);
+
+			})}
+
+			</ScrollView>
+			</View>
 
 
 
- 			</View>
- 			);
- 	}
+			</View>
+			);
+	}
 
 
 
- }
+}
 
- ContactList.propTypes = {
- 	title: React.PropTypes.string
- };
+
+const styles = StyleSheet.create({
+
+	container: {
+		backgroundColor: "white",
+		flex: 1,
+	}
+});
+
+
+ContactList.propTypes = {
+	title: React.PropTypes.string
+};

@@ -6,8 +6,7 @@ import asset from '../../../asset';
 const styles = StyleSheet.create({
 
 	button: {
-		padding: 10,
-		fontSize: 18,
+		paddingTop: 10,
 		width:35,
 		height: 80,
 		backgroundColor: 'transparent'
@@ -36,7 +35,8 @@ export default class LetterItem extends React.Component {
 			onPress={() => {
 				this.props.onPress(this.props.children)
 			}} >
-				<Text style={{textAlign: 'center', color: this.state.color }}>{this.props.children}</Text>
+				<Text style={{textAlign: 'center', color: this.state.color,
+		fontSize: 18 }}>{this.props.children}</Text>
 			</TouchableOpacity>
 		);
 	}

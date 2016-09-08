@@ -93,5 +93,10 @@ export default {
         fingerPrint : require('./login/fingerprint.png'),
         pass : require('./login/pass.png'),
         subtitle : require('./login/subtitle.png'),
+    },
+    contact : {
+        profile: require('./contact/profile.png'),
+        form : require('./contact/form.png'),
+        back : require('./contact/back.png'),
     }
 };
