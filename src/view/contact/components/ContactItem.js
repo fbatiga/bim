@@ -9,8 +9,8 @@ const styles = StyleSheet.create({
 		flexDirection: 'row',
 		alignItems: 'center',
 		margin: 0,
-		borderColor: '#9FA2A7',
 		borderBottomWidth: 1,
+		borderColor: '#ECECED',
 		paddingVertical: 15,
 		paddingLeft: 20,
 		backgroundColor: '#fff',
@@ -64,8 +64,8 @@ export default class ContactItem extends React.Component {
         return (
             <TouchableHighlight  onLayout={this.save.bind(this)} onPress={() => {
                 this.props.onPress(this.props.rowData)
-            } }>
-                <View style={styles.item}>
+            } }  >
+                <View style={styles.item} >
                     <View style={styles.leftPart}>
                         <Image source={asset.users['1']} style={styles.image}/>
                     </View>
