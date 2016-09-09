@@ -2,6 +2,7 @@ import React from 'react';
 import { Text, View, TextInput,  TouchableOpacity, TouchableHighlight, StyleSheet, Dimensions, Image } from 'react-native';
 import baseStyles from '../../../styles/vars';
 import asset from '../../../asset';
+import BackButton from '../../../component/BackButton.js';
 
 const width = Dimensions.get('window').width;
 const styles = StyleSheet.create({
@@ -91,6 +92,7 @@ class TransferConfirmView extends React.Component {
 	render() {
 		return (
 			<View style={styles.container}>
+			<BackButton image={asset.back_green} back={this.props.back} />
 			<Text style={baseStyles.titles.h1}>{this.props.title || 'B!M'}</Text>
 			<View style={styles.top}>
 			<View style={{alignItems: 'center'}}>

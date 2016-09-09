@@ -1,7 +1,8 @@
 import React from 'react';
-import { Text, View, TextInput, StyleSheet, Dimensions } from 'react-native';
+import { Text, View, TextInput, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
 import Title from '../../../component/Title.js';
 import baseStyles from '../../../styles/vars';
+import BackButton from '../../../component/BackButton.js';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -31,6 +32,7 @@ class TransferTitleInputView extends React.Component {
 	render() {
 		return (
 			<View style={styles.container}>
+			<BackButton image={asset.back_green} back={this.props.back} />
 			<Title>{this.props.title}</Title>
 			<View style={styles.top}>
 			<Text style={{

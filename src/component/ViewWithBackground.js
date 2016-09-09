@@ -67,9 +67,8 @@ class ViewWithBackground extends Component {
             <ScrollView containContainerStyle={[ViewStyle]}>
                 <Image  onLayout={this.resizeFunc} source={this.props.backgroundImage}  resizeMode='contain'
                 style={this.imageStyle}>
+                 {this.props.children}
                 </Image>
-
-            {this.props.children}
             </ScrollView>
         );
     }

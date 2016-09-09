@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Text, View, StyleSheet, Image, Dimensions } from 'react-native';
 import baseStyles from '../../../styles/vars';
 import asset from '../../../asset';
+import BackButton from '../../../component/BackButton.js';
+import Title from '../../../component/Title.js';
 
 const { width, height } = Dimensions.get('window');
 const styles = StyleSheet.create({
@@ -50,7 +52,7 @@ export default class JackpotPointsView extends Component {
 	render() {
 		return (
 			<View style={styles.container}>
-			<Text style={baseStyles.titles.h1}>{this.props.title || 'B!M'}</Text>
+			<Title>{this.props.title|| 'B!M'}</Title>
 			<View style={styles.top}>
 			<View style={styles.imageBloc}>
 			<View style={styles.gifContainer}>

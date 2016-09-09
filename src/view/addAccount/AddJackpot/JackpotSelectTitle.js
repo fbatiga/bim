@@ -3,6 +3,8 @@ import { Text, View, TextInput, StyleSheet, Dimensions } from 'react-native';
 import Title from '../../../component/Title.js';
 import SubTitle from '../../../component/SubTitle.js';
 import baseStyles from '../../../styles/vars';
+import BackButton from '../../../component/BackButton.js';
+import asset from '../../../asset';
 
 const height = Dimensions.get('window').height;
 const styles = StyleSheet.create({
@@ -32,7 +34,8 @@ export default class JackpotSelectTitle extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Title>{this.props.title}</Title>
+			<BackButton image={asset.back_green} back={this.props.back} />
+			<Title>{this.props.title}</Title>
         <View style={styles.top}>
           <SubTitle>{this.props.subtitle || 'Nommer cette cagnotte' }</SubTitle>
           <TextInput

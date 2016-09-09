@@ -1,27 +1,22 @@
-'use strict';
-
-import React, { Component} from 'react';
-import { View, Text, Image, StyleSheet, TouchOpacity} from 'react-native';
-import stylesVars from '../styles/vars';
+import React from 'react';
+import { View, Image, TouchableOpacity, StyleSheet } from 'react-native';
+import asset from '../asset';
 
 const style = StyleSheet.create({
-	title : {
-		letterSpacing: 3,
-	},
-	h1 : stylesVars.titles.h1
+	button :{
+		position:'absolute',
+		top: 25,
+		left: 4,
+	}
 });
 
 export default class BackButton extends React.Component {
 
-	componentDidMount() {
-	}
-
-	componentWillReceiveProps(nextProps) {
-	}
-
-	render(){
+	render() {
 		return (
-			<TouchOpacity style={[style.h1, style.title, this.props.style]}></TouchOpacity>
+			<TouchableOpacity style={[style.button,this.props.style]} onPress={this.props.back} >
+				<Image source={this.props.image} />
+			</TouchableOpacity>
 		);
 	}
 }

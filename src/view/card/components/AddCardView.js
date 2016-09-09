@@ -1,7 +1,7 @@
 'use strict';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Actions as routing } from 'react-native-router-flux';
+import { Actions } from 'react-native-router-flux';
 
 import CardSelectAccount from './CardSelectAccount';
 import CardSelectDuration from './CardSelectDuration';
@@ -26,28 +26,39 @@ class AddJackpot extends Component {
     };
   }
 
+
+  back(){
+  	if(this.state.step == 0){
+  		Actions.pop();
+  	}else{
+  		this.setState({
+  			step: this.state.step - 1
+  		});
+  	}
+  }
+
   render() {
     console.log('STEP', this.state.step);
 
     switch (this.state.step) {
       case 0:
       default:
-        return (<CardSelectAccount title='Cartes' subtitle='Compte à débiter' confirm={this.selectAccount.bind(this)}/>);
+        return (<CardSelectAccount title='Cartes' subtitle='Compte à débiter' back={this.back.bind(this)} confirm={this.selectAccount.bind(this)}/>);
         break;
       case 1:
-        return (<CardSelectDuration title='Cartes' subtitle='Fréquence des virements :' confirm={this.selectDuration.bind(this)} />);
+        return (<CardSelectDuration title='Cartes' subtitle='Fréquence des virements :' back={this.back.bind(this)} confirm={this.selectDuration.bind(this)} />);
         break;
       case 2:
-        return (<CardSelectAmmount title='Cartes' subtitle={'Somme à verser :'} amount={this.state.amount} confirm={this.selectAmount.bind(this)}/>);
+        return (<CardSelectAmmount title='Cartes' subtitle={'Somme à verser :'} back={this.back.bind(this)} amount={this.state.amount} confirm={this.selectAmount.bind(this)}/>);
         break;
       case 3:
-        return (<CardSelectRecipient title='Cartes' subTitle={'Porteur de la carte :'} confirm={this.selectRecipient.bind(this)}/>);
+        return (<CardSelectRecipient title='Cartes' subTitle={'Porteur de la carte :'} back={this.back.bind(this)} confirm={this.selectRecipient.bind(this)}/>);
         break;
       case 4:
-        return (<CardSelectDesign title='Cartes' subtitle='Design de la carte :' confirm={this.selectDesign.bind(this)} />);
+        return (<CardSelectDesign title='Cartes' subtitle='Design de la carte :' back={this.back.bind(this)} confirm={this.selectDesign.bind(this)} />);
         break;
       case 5:
-        return (<CardSelectCode title='Cartes' subtitle='Code de la carte' code={true} amount='' confirm={this.selectCode.bind(this)} />);
+        return (<CardSelectCode title='Cartes' subtitle='Code de la carte' code={true} amount='' back={this.back.bind(this)} confirm={this.selectCode.bind(this)} />);
         break;
       case 6:
         return (<CardConfirmView
@@ -63,7 +74,7 @@ class AddJackpot extends Component {
         return (<CardSuccessView title='Cartes' subTitle='Carte crée !' design={this.state.design} />);
         break;
       case 8:
-        setTimeout(() => { routing.card() },1500);
+        setTimeout(() => { Actions.pop() },1500);
         return (<CardPointsView title='Cartes' value='+100 pts' />);
         break;
     }
@@ -71,14 +82,12 @@ class AddJackpot extends Component {
 
   selectAccount() {
     this.setState({
-      ...this.state,
       step: this.state.step + 1
     })
   }
 
   selectDuration(duration) {
     this.setState({
-      ...this.state,
       step: this.state.step + 1,
       duration
     })
@@ -86,7 +95,6 @@ class AddJackpot extends Component {
 
   selectAmount(amount) {
     this.setState({
-      ...this.state,
       step: this.state.step + 1,
       amount
     })
@@ -94,7 +102,6 @@ class AddJackpot extends Component {
 
   selectRecipient(recipient) {
     this.setState({
-      ...this.state,
       step: this.state.step + 1,
       recipient: recipient.familyName + ' ' + recipient.givenName
     })
@@ -102,7 +109,6 @@ class AddJackpot extends Component {
 
   selectDesign(design) {
     this.setState({
-      ...this.state,
       step: this.state.step + 1,
       design
     })
@@ -110,14 +116,12 @@ class AddJackpot extends Component {
 
   selectCode() {
     this.setState({
-      ...this.state,
       step: this.state.step + 1
     })
   }
 
   confirmCard() {
     this.setState({
-      ...this.state,
       step: this.state.step + 1
     })
   }

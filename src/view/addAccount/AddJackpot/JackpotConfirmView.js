@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Text, View,  TouchableOpacity, StyleSheet, Image } from 'react-native';
 import baseStyles from '../../../styles/vars';
 import asset from '../../../asset';
+import BackButton from '../../../component/BackButton.js';
+import Title from '../../../component/Title.js';
 
 const styles = StyleSheet.create({
 	container: {
@@ -35,7 +37,8 @@ export default class JackportConfirmView extends Component {
 	render() {
 		return (
 			<View style={styles.container}>
-			<Text style={baseStyles.titles.h1}>{this.props.title || 'B!M'}</Text>
+			<BackButton image={asset.back_green} back={this.props.back} />
+			<Title>{this.props.title|| 'B!M'}</Title>
 			<View style={styles.top}>
 			<View style={{ alignItems: 'center' }}>
 			<Text style={[styles.text , {

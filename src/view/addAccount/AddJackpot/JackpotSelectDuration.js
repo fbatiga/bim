@@ -4,6 +4,7 @@ import Title from '../../../component/Title.js';
 import SubTitle from '../../../component/SubTitle.js';
 import baseStyles from '../../../styles/vars';
 import asset from '../../../asset';
+import BackButton from '../../../component/BackButton.js';
 
 const { width, height } = Dimensions.get('window');
 const styles = StyleSheet.create({
@@ -48,6 +49,7 @@ export default class JackpotSelectDuration extends Component {
 		return (
 			<View style={styles.container}>
 			<View style={styles.top}>
+			<BackButton image={asset.back_green} back={this.props.back} />
 			<Title>{this.props.title}</Title>
 			<View style={styles.topContent}>
 			<SubTitle>{this.props.subtitle || 'Compte à débiter'}</SubTitle>

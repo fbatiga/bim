@@ -29,6 +29,8 @@ export default {
     carte3: require('./Carte3.png'),
     carte4: require('./Carte4.png'),
     back: require('./back.png'),
+    back_green: require('./back_green.png'),
+    back_dark: require('./back_dark.png'),
     next: require('./next.png'),
     pin: require('./pin.png'),
     check: require('./Check_small_contact.png'),
@@ -98,5 +100,7 @@ export default {
         profile: require('./contact/profile.png'),
         form : require('./contact/form.png'),
         back : require('./contact/back.png'),
+        info : require('./contact/info.png'),
+        pic : require('./contact/pic.png'),
     }
 };

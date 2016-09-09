@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Text, View, TextInput,  TouchableOpacity, TouchableHighlight, StyleSheet, Dimensions, Image } from 'react-native';
 import baseStyles from '../../../styles/vars';
 import asset from '../../../asset';
+import BackButton from '../../../component/BackButton.js';
+import Title from '../../../component/Title.js';
 
 const { width, height } = Dimensions.get('window');
 const styles = StyleSheet.create({
@@ -51,7 +53,7 @@ export default class CardSuccessView extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={baseStyles.titles.h1}>{this.props.title || 'Cartes'}</Text>
+        <Title>{this.props.title || 'Cartes'}</Title>
         <View style={styles.top}>
           <View style={{ alignItems: 'center' }}>
             {this.renderCardDesign()}

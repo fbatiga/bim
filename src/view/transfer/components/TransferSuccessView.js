@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Text, View, TextInput,  TouchableOpacity, TouchableHighlight, StyleSheet, Dimensions, Image } from 'react-native';
 import baseStyles from '../../../styles/vars';
 import asset from '../../../asset';
+import BackButton from '../../../component/BackButton.js';
+import Title from '../../../component/Title.js';
 
 const width = Dimensions.get('window').width;
 const styles = StyleSheet.create({
@@ -32,7 +34,8 @@ export default class TransferSuccessView extends Component {
 	render() {
 		return (
 			<View style={styles.container}>
-			<Text style={baseStyles.titles.h1}>{this.props.title || 'B!M'}</Text>
+			<Title>{this.props.title|| 'B!M'}</Title>
+
 			<View style={styles.top}>
 			<Image source={asset.success} style={styles.image}/>
 			<Text style={{

@@ -1,12 +1,14 @@
 'use strict'
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
-import { Actions as routing } from 'react-native-router-flux';
+import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { init } from './AddAccountAction';
 import AddAccountStyle from './AddAccountStyle';
 import asset from '../../asset';
 import baseStyles from '../../styles/vars.js';
+import BackButton from '../../component/BackButton.js';
+import Title from '../../component/Title.js';
 
 class addAccount extends Component {
   componentDidMount() {
@@ -16,7 +18,8 @@ class addAccount extends Component {
   render() {
     return (
       <View style={AddAccountStyle.container}>
-        <Text style={baseStyles.titles.h1}>Comptes</Text>
+  		<BackButton image={asset.back_green} back={Actions.pop} />
+		<Title>Comptes</Title>
         <View style={AddAccountStyle.top}>
           <View>
             <Text style={AddAccountStyle.textTitle}>Type de</Text>
@@ -28,7 +31,7 @@ class addAccount extends Component {
             <Text style={AddAccountStyle.text}>Ajouter un compte éxistant</Text>
           </View>
           <TouchableOpacity onPress={()=> {
-              routing.addJackpot();
+              Actions.addJackpot();
           }}>
             <View style={AddAccountStyle.lines}>
               <Text style={AddAccountStyle.text}>Créer une cagnotte</Text>

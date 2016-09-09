@@ -1,10 +1,9 @@
 'use strict';
 
 import React, { Component } from 'react';
-import { View, Text, Image, Dimensions, ScrollView, TouchOpacity, StyleSheet} from 'react-native';
+import { View, Text, Image, Dimensions, ScrollView, TouchableOpacity, StyleSheet} from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import asset from '../../asset';
-import ViewWithBackground from '../../component/ViewWithBackground';
 
 import {connect} from 'react-redux';
 import {init} from './ContactDetailsAction';
@@ -14,56 +13,41 @@ const {width, height} = Dimensions.get('window');
 
 
 const style = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        flexDirection: 'column'
-    },
-    back: {
-        position: 'absolute',
-        top: 0,
-        left: 0
-    }
+	container: {
+		flex: 1
+	},
+	back: {
+		position:'absolute',
+		top: 20,
+		left: -1,
+	}
 });
 
 
 class ContactDetailsView extends Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            imageHeight: 0
-        };
+	render() {
+		return (
+			<View style={style.container}>
 
-        this.imageStyle = {};
-        this.resizeFunc;
-    }
+				<View style= {{flex:1}} >
+					<ScrollView   style= {{flex:1}} contentContainerStyle={{alignItems: 'center'}} bounces={false}>
+						<Image source={asset.contact.pic}  style= {{ marginBottom : 30}} />
+						<Image source={asset.contact.info} />
+					</ScrollView>
+				</View>
+					<TouchableOpacity style={style.back} onPress={Actions.pop} >
+						<Image source={asset.contact.back}  style={{}} />
+				</TouchableOpacity>
+			</View>);
+	}
 
-
-    componentDidMount() {
-        this.props.dispatch(init());
-    }
-
-    componentWillReceiveProps(nextProps) {
-
-    }
-
-    render() {
-        return (
-            <ViewWithBackground backgroundImage={asset.screens.contact} pixelRatio="2" >
-            </ViewWithBackground>);
-    }
-
-
-    resize(event) {
-        this.setState({imageHeight: event.nativeEvent.layout.height});
-    }
 }
 
 function mapStateToProps(state) {
-    return {
-        contactdetails: state.contactdetails
-    };
+	return {
+		contactdetails: state.contactdetails
+	};
 }
 
 export default connect(mapStateToProps)(ContactDetailsView);

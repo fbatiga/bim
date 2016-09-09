@@ -64,6 +64,7 @@ class OverviewView extends Component {
             <View
             horizontal={false} style={[OverviewStyle.container, {flex: 1}]}>
                 <View style={[OverviewStyle.top, {flex: 1}]}>
+
                     <Title style={{opacity: this.state.fadeAnim, marginBottom: 70}}>COMPTES</Title>
 
                     {/* <Animated.View style={[custom.circle, { transform: [ {scale: this.state.bounceValue} ] }]} /> */}
@@ -188,6 +189,11 @@ const OverviewStyle = StyleSheet.create({
     container: {
         backgroundColor:  baseStyles.colors.deepBlue,
     },
+	back: {
+		position:'absolute',
+		top: 20,
+		left: -1,
+	},
     top: {
         alignItems: 'stretch',
         backgroundColor: baseStyles.colors.deepBlue,
