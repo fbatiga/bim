@@ -2,12 +2,13 @@
 
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
-import { Text, View, ListView,  StyleSheet , ScrollView, TextInput, TouchableOpacity } from 'react-native';
+import { Text, View, ListView,  StyleSheet , Image, ScrollView, TextInput, TouchableOpacity } from 'react-native';
 import {getReply, addMessage, addSlackMessage,loadButtons,restartBot , notify, setVisibility} from './MessengerAction';
 import MessengerMain from './layout/MessengerMain';
 import MessengerBottom from './layout/MessengerBottom';
 import {firebaseDb} from  '../../app/AppFirebase';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
+import asset from '../../asset';
 
 const style = StyleSheet.create({
 	bottom : {
@@ -37,13 +38,19 @@ const style = StyleSheet.create({
 		margin:10,
 		flex: 1,
 		padding:4,
+		borderWidth : 1,
+		borderColor : '#DDE6EC',
 		backgroundColor:'white',
 		height:35
+	},
+	close : {
+		padding:5,
+		width :40
 	},
 	text : {
 		flexDirection:'row',
 		backgroundColor: '#F0F3F5',
-		alignItems: 'flex-start',
+		alignItems: 'center',
 		justifyContent: 'center'
 	}
 });
@@ -54,6 +61,7 @@ class MessengerView extends Component {
 	constructor(props){
 		super(props);
 
+		this.buttons = [];
 		const rootRef = firebaseDb.ref();
 		this.firebaseMessagesRef = rootRef.child('alice/slack');
 		this.firebaseNotificationRef = rootRef.child('alice/notification');
@@ -154,8 +162,6 @@ class MessengerView extends Component {
 
 	onSend(text) {
 
-		console.log('onSend', arguments);
-
 		if (this.state.input== false  && text == '...') {
 			this.setState({
 				input: true
@@ -223,7 +229,15 @@ class MessengerView extends Component {
 					onSubmitEditing={(event)=>{this.onSend(event.nativeEvent.text);}}
 					style={style.input}
 					/>
+					<TouchableOpacity style={style.close} onPress={()=>{
+						this.setState({
+							input: false
+						});
+					}}>
+					<Image source={asset.messenger.close} />
+					</TouchableOpacity>
 					</View>
+
 					<KeyboardSpacer/>
 					</View>
 					)}

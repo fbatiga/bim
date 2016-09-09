@@ -40,7 +40,7 @@ const reducerCreate = params => {
 
 const scenes = Actions.create(
     <Scene key="root" hideNavBar={true}>
-        <Scene key="login" component={LoginView} title="Chargement de l'application"/>
+        <Scene key="login" component={LoginView} initial={true} title="Chargement de l'application"/>
         <Scene key="profile" component={ProfileView} title="Profil" type='replace'/>
         <Scene key="messenger" component={MessengerView} title="Messagerie"/>
         <Scene key="overview" component={OverviewView} title="Consultation des comptes" type='replace'/>
@@ -51,7 +51,7 @@ const scenes = Actions.create(
         <Scene key="card" component={CardView} title="Cartes" type='replace'/>
         <Scene key="addCard" component={AddCardView} title="Ajouter une carte" schema='modal' direction='vertical'/>
         <Scene key="cardDetails" component={CardDetailsView} title="Mes cartes"/>
-        <Scene key="contact" component={ContactView}  initial={true} title="Contacts" type='replace'/>
+        <Scene key="contact" component={ContactView} title="Contacts" type='replace'/>
         <Scene key="journal" component={JournalView} title="Journal" type='replace'/>
         <Scene key="contactdetails" component={ContactDetailsView} title="Contact detail"/>
         <Scene key="transfer" component={TransferView} title="Virement" schema='modal' direction='vertical'/>

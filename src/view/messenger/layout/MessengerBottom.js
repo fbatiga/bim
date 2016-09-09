@@ -62,19 +62,6 @@ class MessengerBottom extends Component {
 		};
 	}
 
-
-	setButtons(buttons) {
-
-
-
-
-		this.setState({
-			buttons: buttons.concat([]),
-			backgroundColor : this.backgroundColor[0]
-		});
-	}
-
-
 	favorite(){
 		if(this.state.backgroundColor == this.backgroundColor[0]){
 			Animated.parallel([
@@ -125,118 +112,8 @@ class MessengerBottom extends Component {
 		}
 	}
 
-	setShadow(index){
-
-			if(this.items[index-1] !== undefined){
-				this.items[index-1].setState({
-					opacity: 0.7
-				});
-			}
-
-			if(this.items[index+1] !== undefined){
-				this.items[index+1].setState({
-					opacity: 0.7
-				});
-			}
-
-			if(this.items[index-2] !== undefined){
-				this.items[index-2].setState({
-					opacity: 0.4
-				});
-			}
-
-			if(this.items[index+2] !== undefined){
-				this.items[index+2].setState({
-					opacity: 0.4
-				});
-			}
-
-			if(this.items[index-3] !== undefined){
-				this.items[index-3].setState({
-					opacity: 0.15
-				});
-			}
-
-			if(this.items[index+3] !== undefined){
-				this.items[index+3].setState({
-					opacity: 0.15
-				});
-			}
-	}
-
-	setPosition(index){
-
-		if(this.items[index] !== undefined ){
-
-			this.items[index].setState({
-				opacity: 1
-			});
-
-			this.position = index;
-		}
-	}
-
-	componentWillMount() {
-		this._panResponder = PanResponder.create({
-			onStartShouldSetPanResponder: (evt, gestureState) => true,
-			onStartShouldSetPanResponderCapture: (evt, gestureState) => true,
-			onMoveShouldSetPanResponder: (evt, gestureState) => true,
-			onMoveShouldSetPanResponderCapture: (evt, gestureState) => true,
-			onPanResponderTerminationRequest: (evt, gestureState) => true,
-			onPanResponderRelease:this.handlePanResponderRelease.bind(this)
-		});
-	}
-
-	componentDidMount() {
-	//	this.scrollResponder = this.refs.listView.getScrollResponder();
-	}
 
 
-
-	handlePanResponderRelease(evt, gestureState) {
-		let start = gestureState.moveY;
-		let dest = gestureState.y0;
-		let distance = gestureState.moveY- gestureState.y0;
-
-		let direction = Math.sign(-distance);
-
-		this.setPosition(this.position+ direction);
-	}
-
-
-	delete(item){
-		delete this.items[item.props.index];
-	}
-
-	save(item){
-		this.items[item.props.index] = item;
-		if(item.props.index == this.position){
-			this.setPosition(this.position);
-		}
-	}
-
-
-	componentWillReceiveProps(nextProps) {
-		this.setButtons(nextProps.buttons);
-		this.position = 0;
-	}
-
-
-	scrollTo(y){
-		// this.scrollResponder.scrollTo({
-		// 	y: y,
-		// 	x: 0
-		// });
-	}
-
-			// ScrollView
-			// ref="listView"
-			// {...this._panResponder.panHandlers}
-			// contentContainerStyle={styles.content}
-			// scrollEventThrottle={200}
-			// bounces={false}
-			// scrollEnabled={false}
-			//
 	render(){
 		return (
 			<View style={[styles.container, this.props.style, {backgroundColor: this.state.backgroundColor}]} >
@@ -249,14 +126,11 @@ class MessengerBottom extends Component {
 			style={styles.content}
 
 			>
-			{this.state.buttons.map((text, index)=>{
+			{this.props.buttons.map((text, index)=>{
 				if(text != ''){
 					return (<MessengerButton text={text}
-						save={this.save.bind(this)}
 						key={index}
 						index={index}
-						scrollTo={this.scrollTo.bind(this)}
-						setShadow={this.setShadow.bind(this)}
 						onPress={this.props.onPress} />);
 				}
 				// }else{
@@ -264,18 +138,15 @@ class MessengerBottom extends Component {
 				// }
 			})}
 
-			{this.state.buttons.length>0 && (
+			{this.props.buttons.length>0 && (
 						<MessengerButton text='...'
-							save={this.save.bind(this)}
 							key={0}
 							index={0}
-							scrollTo={this.scrollTo.bind(this)}
-							setShadow={this.setShadow.bind(this)}
 							onPress={this.props.onPress} />
 			)}
 				</View>
 				<View style={styles.bottom}>
-				{this.state.buttons.length>0 && (<TouchableOpacity style={{  bottom: 10, left: 10, height:20, width:20}} onPress={this.favorite.bind(this)}>
+				{this.props.buttons.length>0 && (<TouchableOpacity style={{  bottom: 10, left: 10, height:20, width:20}} onPress={this.favorite.bind(this)}>
 					{(this.state.backgroundColor == this.backgroundColor[0]) && (
 						<Image source={asset.star}  />
 					)}

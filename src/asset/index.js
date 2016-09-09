@@ -68,6 +68,9 @@ export default {
 		3:  require('./users/3.png'),
 		4:  require('./users/4.png')
 	},
+    messenger:{
+		close:  require('./messenger/close.png'),
+	},
     tabs: {
         white: require('./tabs/white.png'),
         yellow: require('./tabs/yellow.png'),
