@@ -1,7 +1,7 @@
 'use strict';
 
 import React, { Component } from 'react';
-import { View, Text, Image, ScrollView, StyleSheet, PanResponder} from 'react-native';
+import { View, Text, Image,  StyleSheet, ScrollView, PanResponder} from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import ViewWithBackground from '../../component/ViewWithBackground';
 import Swiper from 'react-native-swiper';

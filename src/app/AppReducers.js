@@ -8,6 +8,7 @@ import JournalReducer from '../view/journal/JournalReducer';
 import ContactReducer from '../view/contact/ContactReducer';
 import ContactDetailsReducer from '../view/contact-details/ContactDetailsReducer';
 import TransferReducer from '../view/transfer/TransferReducer';
+import MenuReducer from '../view/menu/MenuReducer';
 
 export default {
     login : LoginReducer,
@@ -19,5 +20,6 @@ export default {
     journal : JournalReducer,
     contact : ContactReducer,
     contactdetails : ContactDetailsReducer,
-    transfer : TransferReducer
+    transfer : TransferReducer,
+    menu : MenuReducer
 };

@@ -206,10 +206,6 @@ class CardView extends Component {
 
 	move(){
 
-		if(this.props.card.moving == false ){
-
-			this.props.dispatch(moveStarted());
-
 			let cardToMove = this.state.cards.pop();
 
 			let parallels = [];
@@ -224,16 +220,13 @@ class CardView extends Component {
 			parallels = parallels.concat(this.removeCard(cardToMove.style));
 
 			Animated.parallel(parallels).start(()=>{ this.onCardRemoved(newCards,cardToMove); });
-
-		}
-
 	}
 
 	componentWillMount() {
 		this._panResponder = PanResponder.create({
-			onPanResponderTerminationRequest: () => false,
-			onStartShouldSetPanResponderCapture: () => false,
-			onStartShouldSetPanResponder: () => false,
+			onPanResponderTerminationRequest: () => true,
+			onStartShouldSetPanResponderCapture: () => true,
+			onStartShouldSetPanResponder: () => true,
 			onMoveShouldSetPanResponder: () => true,
 			onPanResponderGrant : this.move.bind(this)
 		});
@@ -254,7 +247,7 @@ class CardView extends Component {
 
 		let sequence = this.addCard(cardToMove.style);
 
-		Animated.sequence(sequence).start(()=>{ this.props.dispatch(moveEnded()); });
+		Animated.sequence(sequence).start();
 
 		this.setState({
 			cards : newCards
@@ -268,8 +261,12 @@ class CardView extends Component {
 			<Title>Cartes</Title>
 
 			<View style={CardStyle.top}>
-			<ScrollView scrollEnabled={false} contentContainerStyle={{top : 120 , alignItems: 'center'}} >
-			<View  style={{ width: 300, height: 300 }}  {...this._panResponder.panHandlers} >{this.elements}</View>
+			<ScrollView
+			scrollEnabled={false}
+			contentContainerStyle={{top : 120 , alignItems: 'center'}} >
+			<View  style={{ width: 300, height: 300 }}
+			{...this._panResponder.panHandlers} >
+			{this.elements}</View>
 			</ScrollView>
 			</View>
 			<TouchableOpacity style={CardStyle.bottomRighticon} onPress={() => { Actions.addCard(); }}>

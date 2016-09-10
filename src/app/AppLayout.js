@@ -1,8 +1,9 @@
 'use strict'
 import React, { Component } from 'react';
-import { View, Text, StatusBar,  StyleSheet, TouchableOpacity , Image, Animated} from 'react-native';
+import { View, Text, StatusBar, Dimensions,  StyleSheet, TouchableOpacity , Image, Animated, ScrollView, PanResponder} from 'react-native';
 import Swiper from 'react-native-swiper';
 import MenuView from '../view/menu/MenuView';
+import {swipeTo} from '../view/menu/MenuAction';
 import asset from '../view/../app/AppAsset';
 import {connect} from 'react-redux';
 import {loadSession} from '../view/login/LoginAction';
@@ -10,12 +11,28 @@ import {setVisibility} from '../view/messenger/MessengerAction';
 import { Actions } from 'react-native-router-flux';
 
 
+const {width, height} = Dimensions.get('window');
+
 const styles = StyleSheet.create({
 	viewContainer: {
 		flex: 1,
 		flexDirection: "column",
 		justifyContent: "flex-start",
 		alignItems: "stretch"
+	},
+	container: {
+		backgroundColor: 'transparent',
+	},
+	slide: {
+		backgroundColor: 'transparent',
+	},
+	swipe: {
+		backgroundColor: 'transparent',
+		position: 'relative',
+		flexDirection: 'row',
+		justifyContent: 'center',
+		alignItems: 'center',
+		backgroundColor:'transparent',
 	},
 	button :{
 		position: 'absolute',
@@ -33,21 +50,63 @@ const styles = StyleSheet.create({
 
 class AppLayout extends Component {
 
-	componentDidMount(){
-		this.props.dispatch(loadSession());
-	}
-
 	constructor(props){
 		super(props);
+		this.layout = [];
 		this.state = {
-			index : 1,
-			bounceValue: new Animated.Value(0.0001),
+			bounceValue: new Animated.Value(0.0001)
 		};
+
+		this.scroll = null;
+	}
+
+	componentDidMount(){
+		this.props.dispatch(loadSession());
+		this.scroll = this.refs.swiper.getScrollResponder();
+		this.scroll.scrollTo({
+			y: 0,
+			x: width,
+			false
+		});
+	}
+
+	componentWillMount() {
+		this._panResponder = PanResponder.create({
+			onStartShouldSetPanResponder: (evt, gestureState) => true,
+			onStartShouldSetPanResponderCapture: (evt, gestureState) => true,
+			onMoveShouldSetPanResponder: (evt, gestureState) => true,
+			onMoveShouldSetPanResponderCapture: (evt, gestureState) => true,
+			onPanResponderTerminationRequest: (evt, gestureState) => true,
+			onPanResponderRelease:this.handlePanResponderRelease.bind(this)
+		});
+	}
+
+	handlePanResponderRelease(evt, gestureState) {
+		let distance = gestureState.moveX- gestureState.x0;
+		let limit = width/3;
+		if(distance > limit){
+			this.props.dispatch(swipeTo('menu'));
+		}else if(distance < -limit){
+			this.props.dispatch(swipeTo('main'));
+		}
+	}
+
+	onLayout(ref, event){
+
+		if(this.refs.swiper != undefined && this.scroll == null ){
+		}
+		switch(ref){
+			case 0 : ref = 'menu'; break;
+			case 1 : ref = 'main'; break;
+		}
+
+		this.layout[ref] = event.nativeEvent.layout;
+
 	}
 
 	gotTo(item){
 		this.props.dispatch(setVisibility(false));
-		this.refs.swiper.scrollBy(1);
+		this.props.dispatch(swipeTo('main'));
 		item.action();
 	}
 
@@ -57,33 +116,48 @@ class AppLayout extends Component {
 			Actions.messenger();
 		}
 
-		if(this.state.index == 1){
+		if(this.props.menu.ref == 'main'){
 			if(this.props.messenger.visibility == true){
-				this.refs.swiper.scrollBy(-1);
+				this.props.dispatch(swipeTo('menu'));
 			}
 		}
 
-		if(this.state.index == 0){
-			this.refs.swiper.scrollBy(1);
+		if(this.props.menu.ref  == 'menu'){
+			this.props.dispatch(swipeTo('main'));
+		}
+	}
+
+	componentWillReceiveProps(nextProps){
+
+
+
+		if( nextProps.menu.ref != this.props.menu.ref && nextProps.messenger.session != null ){
+			this.swipeTo(nextProps.menu.ref);
 		}
 
 
 	}
 
+	swipeTo(ref, animated = true){
+		if(this.layout[ref] != undefined  ){
 
-	_onMomentumScrollEnd(e, state, context) {
+			this.scroll.scrollTo({
+				y: 0,
+				x: this.layout[ref].x,
+				animated
+			});
 
-		this.setState({
-			index : context.state.index
-		});
 
+
+		}
 	}
 
 	componentDidUpdate(prevProps, prevState) {
 
-		if(prevProps.messenger.visibility == null ){
+		if( this.props.messenger.visibility == null){
 
-			if( this.state.index == 0 ){
+			if( this.props.menu.ref == 'menu' ){
+
 
 				Animated.timing(
 					this.state.bounceValue,
@@ -94,7 +168,8 @@ class AppLayout extends Component {
 						tension: 100
 					}).start();
 
-			}else if( this.state.index == 1 ){
+			}else if( this.props.menu.ref == 'main'){
+
 
 				Animated.timing(
 					this.state.bounceValue,
@@ -107,7 +182,7 @@ class AppLayout extends Component {
 
 			}
 
-		}else if( prevProps.messenger.visibility !== this.props.messenger.visibility ){
+		}else if( prevProps.messenger.visibility !== this.props.messenger.visibility && this.props.messenger.visibility == null  ){
 
 			var sequence = [];
 
@@ -152,46 +227,53 @@ class AppLayout extends Component {
 
 		let image = asset.bot;
 
-		if(this.props.messenger.visibility == true  && this.state.index == 1) {
+		if(this.props.messenger.visibility == true  && this.props.menu.ref == 'main') {
 			image = asset.close;
 		}
 
-		if(this.props.login.session != false ){
-			return (
-				<View>
-				<StatusBar hidden={true} />
-				<Swiper
-				loop={false}
-				onMomentumScrollEnd ={this._onMomentumScrollEnd.bind(this)}
-				ref='swiper'
-				scrollEnabled={!this.props.card.moving}
-				horizontal={!this.props.card.moving}
-				showsPagination={false}
-				index={1}>
-				<MenuView gotTo={this.gotTo.bind(this)} />
-				<View style={styles.viewContainer} >
-				{this.props.children}
-				</View>
-				</Swiper>
+		let pageStyle = [{width: width, height: height}, styles.slide];
+
+		let pages = [
+		<MenuView gotTo={this.gotTo.bind(this)} />,
+		<View style={styles.viewContainer} >
+		{this.props.children}
+		</View>
+		];
+
+		pages = pages.map((page, i) => {
+			return <View style={pageStyle} onLayout={(event)=>{ this.onLayout(i,event);}} key={i}>{page}</View>
+		});
+
+		return (
+			<View>
+			<StatusBar hidden={true} />
+			<View style={[styles.container, {
+				width: width,
+				height: height
+			}]}>
+			<ScrollView
+			ref='swiper'
+			horizontal={true}
+			scrollEnabled={false}
+			bounces={false}
+			{...this._panResponder.panHandlers}
+			>
+			{pages}
+			</ScrollView>
+			{this.props.messenger.session != null  && (
 				<TouchableOpacity style={styles.button}  onPress={this.home.bind(this)}>
 				<Animated.Image source={image} style={[styles.bot, imageAnimation ]} />
-				</TouchableOpacity>
-				</View>);
+				</TouchableOpacity>)}
+			</View>
+			</View>);
 
-		}else{
-
-			return (
-				<View style={styles.viewContainer} >
-				{this.props.children}
-				</View>
-				);
-		}
 	}
 }
 
 
 function mapStateToProps(state) {
 	return {
+		menu : state.menu,
 		card : state.card,
 		messenger: state.messenger,
 		login: state.login
