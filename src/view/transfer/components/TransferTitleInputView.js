@@ -1,8 +1,8 @@
 import React from 'react';
 import { Text, View, TextInput, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
-import Title from '../../../component/Title.js';
+import Title from '../../../component/Title';
 import baseStyles from '../../../styles/vars';
-import BackButton from '../../../component/BackButton.js';
+import BackButton from '../../../component/BackButton';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;

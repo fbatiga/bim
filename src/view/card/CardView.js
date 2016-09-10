@@ -3,10 +3,10 @@ import React, { Component } from 'react';
 import { View, Image, TouchableOpacity, TouchableWithoutFeedback , PanResponder, Text, StyleSheet, Animated, ScrollView } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
-import asset from '../common/asset';
+import asset from '../../app/AppAsset';
 import Title from '../../component/Title';
 import { moveStarted, moveEnded  } from './CardAction'
-import baseStyles from '../../styles/vars.js';
+import baseStyles from '../../styles/vars';
 
 
 class CardView extends Component {

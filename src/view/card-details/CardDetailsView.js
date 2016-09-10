@@ -2,8 +2,8 @@
 import React, { Component } from 'react';
 import { ScrollView, View, Image, TouchableOpacity, Text , StyleSheet} from 'react-native';
 import { Actions } from 'react-native-router-flux';
-import asset from '../common/asset';
-import baseStyles from '../../styles/vars.js';
+import asset from '../../app/AppAsset';
+import baseStyles from '../../styles/vars';
 
 
 

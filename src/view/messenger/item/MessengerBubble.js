@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, Image, View, StyleSheet, Animated } from 'react-native';
 import { UserLeft, UserRight } from './MessengerUser';
-import asset from '..//common/asset';
+import asset from '../../../app/AppAsset';
 
 const styles = StyleSheet.create({
 	bubble: {

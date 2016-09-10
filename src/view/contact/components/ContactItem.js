@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, View, Image, TouchableOpacity, TouchableHighlight, StyleSheet } from 'react-native';
 import baseStyles from '../../../styles/vars';
-import asset from '..//common/asset';
+import asset from '../../../app/AppAsset';
 
 
 const styles = StyleSheet.create({

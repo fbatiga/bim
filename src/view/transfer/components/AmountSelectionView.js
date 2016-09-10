@@ -1,11 +1,11 @@
 import React from 'react';
 
 import { Text, View, Image, TouchableOpacity, TouchableHighlight, StyleSheet, Dimensions } from 'react-native';
-import baseStyles from '../../../styles/vars.js';
-import Title from '../../../component/Title.js';
-import CenteredTitle from '../../../component/CenteredTitle.js';
-import BackButton from '../../../component/BackButton.js';
-import asset from '..//common/asset';
+import baseStyles from '../../../styles/vars';
+import Title from '../../../component/Title';
+import CenteredTitle from '../../../component/CenteredTitle';
+import BackButton from '../../../component/BackButton';
+import asset from '../../../app/AppAsset';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;

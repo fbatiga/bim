@@ -8,7 +8,7 @@ import MessengerMain from './layout/MessengerMain';
 import MessengerBottom from './layout/MessengerBottom';
 import {firebaseDb} from  '../../app/AppFirebase';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
-import asset from '../common/asset';
+import asset from '../../app/AppAsset';
 
 const style = StyleSheet.create({
 	bottom : {

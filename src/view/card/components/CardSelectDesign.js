@@ -1,10 +1,10 @@
 'use strict'
 import React, { Component } from 'react';
 import { Text, View, ScrollView, StyleSheet, Dimensions, Image, TouchableOpacity } from 'react-native';
-import Title from '../../../component/Title.js';
+import Title from '../../../component/Title';
 import baseStyles from '../../../styles/vars';
-import asset from '..//common/asset';
-import BackButton from '../../../component/BackButton.js';
+import asset from '../../../app/AppAsset';
+import BackButton from '../../../component/BackButton';
 
 const { width, height } = Dimensions.get('window');
 const boxMargin = 10;

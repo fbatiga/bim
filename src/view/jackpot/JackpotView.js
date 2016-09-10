@@ -6,8 +6,8 @@ import { Actions as routing } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { init } from './JackpotAction';
 import JackpotStyle from './JackpotStyle';
-import asset from '../common/asset';
-import baseStyles from '../../styles/vars.js';
+import asset from '../../app/AppAsset';
+import baseStyles from '../../styles/vars';
 
 class JackpotView extends Component {
 	constructor(props) {

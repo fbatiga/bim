@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import { View, Text, Image, TouchableOpacity} from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import BaseStyle from '../base/BaseStyle';
-import asset from '../common/asset';
+import asset from '../../app/AppAsset';
 import ParametersStyle from './ParametersStyle';
 
 import {connect} from 'react-redux';

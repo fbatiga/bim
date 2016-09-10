@@ -7,14 +7,14 @@ import {connect} from 'react-redux';
 import {init} from './TransferAction';
 import { Actions } from 'react-native-router-flux';
 
-import AmountSelectionView from './components/AmountSelectionView.js';
-import TransferConfirmView from './components/TransferConfirmView.js';
-import TransferTitleInputView from './components/TransferTitleInputView.js';
-import RecipientSelectionView from './components/RecipientSelectionView.js';
-import TransferSuccessView from './components/TransferSuccessView.js';
+import AmountSelectionView from './components/AmountSelectionView';
+import TransferConfirmView from './components/TransferConfirmView';
+import TransferTitleInputView from './components/TransferTitleInputView';
+import RecipientSelectionView from './components/RecipientSelectionView';
+import TransferSuccessView from './components/TransferSuccessView';
 
-import baseStyles from '../../styles/vars.js';
-import asset from '../common/asset';
+import baseStyles from '../../styles/vars';
+import asset from '../../app/AppAsset';
 import TransferStyle from './TransferStyle';
 
 class TransferView extends Component {

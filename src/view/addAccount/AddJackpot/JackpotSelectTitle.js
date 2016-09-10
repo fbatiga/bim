@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Text, View, TextInput, StyleSheet, Dimensions } from 'react-native';
-import Title from '../../../component/Title.js';
-import SubTitle from '../../../component/SubTitle.js';
+import Title from '../../../component/Title';
+import SubTitle from '../../../component/SubTitle';
 import baseStyles from '../../../styles/vars';
-import BackButton from '../../../component/BackButton.js';
-import asset from '..//common/asset';
+import BackButton from '../../../component/BackButton';
+import asset from '../../../app/AppAsset';
 
 const height = Dimensions.get('window').height;
 const styles = StyleSheet.create({

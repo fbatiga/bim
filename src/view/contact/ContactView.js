@@ -4,10 +4,10 @@ import React, { Component } from 'react';
 import { View, Text, Image, Dimensions} from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import stylesVars from '../../styles/vars';
-import asset from '../common/asset';
+import asset from '../../app/AppAsset';
 
 import Title from '../../component/Title';
-import ContactList from '../contact/components/ContactList.js';
+import ContactList from '../contact/components/ContactList';
 
 import {connect} from 'react-redux';
 import {init} from './ContactAction';

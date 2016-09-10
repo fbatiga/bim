@@ -5,8 +5,8 @@ import { View, Text, Image, ScrollView, StyleSheet, PanResponder} from 'react-na
 import { Actions } from 'react-native-router-flux';
 import ViewWithBackground from '../../component/ViewWithBackground';
 import Swiper from 'react-native-swiper';
-import BackButton from '../../component/BackButton.js';
-import CommonAsset from '../common/CommonAsset';
+import BackButton from '../../component/BackButton';
+import AppAsset from '../../app/AppAsset';
 
 import {connect} from 'react-redux';
 import {init} from './ProfileAction';
@@ -35,16 +35,16 @@ class ProfileView extends Component {
 	handlePanResponderRelease(evt, gestureState) {
 		let distance = gestureState.moveY- gestureState.y0;
 		if(distance >0){
-			if(this.position ==  0){
-				this.scrollTo(this.pointPosition);
-			}else if(this.position ==  this.pointPosition ){
-				this.scrollTo(this.trophyPosition);
-			}
-		}else{
 			if(this.position ==  this.pointPosition ){
 				this.scrollTo(0);
 			}else if(this.position ==  this.trophyPosition ){
 				this.scrollTo(this.pointPosition);
+			}
+		}else{
+			if(this.position ==  0){
+				this.scrollTo(this.pointPosition);
+			}else if(this.position ==  this.pointPosition ){
+				this.scrollTo(this.trophyPosition);
 			}
 		}
 	}
@@ -76,7 +76,7 @@ class ProfileView extends Component {
 				bounces={false}
 				>
 
-				<BackButton image={asset.back} back={this.props.back} />
+				<BackButton image={AppAsset.back} back={this.props.back} />
 
 				<View style={style.row}>
 				<Image source={asset.alice}/>
@@ -154,10 +154,10 @@ const style = StyleSheet.create({
 	});
 
 const asset = {
-	alice: require('./view/common/asset/alice.png'),
-	trophy : require('./view/common/asset/trophy.png'),
-	point : require('./view/common/asset/point.png'),
-	modify : require('./view/common/asset/modify.png'),
+	alice: require('./asset/alice.png'),
+	trophy : require('./asset/trophy.png'),
+	point : require('./asset/point.png'),
+	modify : require('./asset/modify.png'),
 }
 
 function mapStateToProps(state) {

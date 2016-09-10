@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 import { View, Text, Image, Dimensions, ScrollView, StyleSheet} from 'react-native';
 import { Actions } from 'react-native-router-flux';
-import asset from '../common/asset';
+import asset from '../../app/AppAsset';
 import ViewWithBackground from '../../component/ViewWithBackground';
 
 import {connect} from 'react-redux';

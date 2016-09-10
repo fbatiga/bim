@@ -5,10 +5,10 @@ import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { init } from './AddAccountAction';
 import AddAccountStyle from './AddAccountStyle';
-import asset from '../common/asset';
-import baseStyles from '../../styles/vars.js';
-import BackButton from '../../component/BackButton.js';
-import Title from '../../component/Title.js';
+import asset from '../../app/AppAsset';
+import baseStyles from '../../styles/vars';
+import BackButton from '../../component/BackButton';
+import Title from '../../component/Title';
 
 class addAccount extends Component {
 	componentDidMount() {

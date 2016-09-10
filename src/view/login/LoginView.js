@@ -5,7 +5,7 @@ import { View, Text, Image, Dimensions , TouchableOpacity, StyleSheet} from 'rea
 import {Actions} from 'react-native-router-flux';
 import {connect} from 'react-redux';
 import {loadSession} from './LoginAction';
-import asset from '../common/asset';
+import asset from '../../app/AppAsset';
 import {loadChoices, registerSession, addMessage, addBotMessage} from '../messenger/MessengerAction';
 
 

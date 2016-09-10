@@ -1,24 +1,24 @@
 import {Dimensions, StyleSheet} from 'react-native';
-import baseStyles from '../../styles/vars.js';
+import baseStyles from '../../styles/vars';
 
 
 const width = Dimensions.get('window').width;
 
 const TransferStyle = StyleSheet.create({
 	container: {
-        backgroundColor: baseStyles.colors.deepBlue
+		backgroundColor: baseStyles.colors.deepBlue
 	},
-    top: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: baseStyles.colors.deepBlue,
+	top: {
+		justifyContent: 'center',
+		alignItems: 'center',
+		backgroundColor: baseStyles.colors.deepBlue,
 
-    },
+	},
 	bottom : {
-        backgroundColor:"white",
-        flexWrap: 'wrap',
-        alignItems: 'flex-start',
-        flexDirection:'row'
+		backgroundColor:"white",
+		flexWrap: 'wrap',
+		alignItems: 'flex-start',
+		flexDirection:'row'
 
 	},
 });

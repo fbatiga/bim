@@ -2,9 +2,9 @@ import React from 'react';
 import { Text, View, ScrollView, ListView, PanResponder, Image, TouchableOpacity, TouchableHighlight, StyleSheet, Dimensions } from 'react-native';
 import ContactItem from './ContactItem';
 import LetterItem from './LetterItem';
-import Title from '../../../component/Title.js';
+import Title from '../../../component/Title';
 import Contacts from 'react-native-contacts';
-import asset from '..//common/asset';
+import asset from '../../../app/AppAsset';
 import baseStyles from '../../../styles/vars'
 
 const {width, height} = Dimensions.get('window');

@@ -11,7 +11,7 @@ import JournalView from '../view/journal/JournalView';
 import MessengerView from '../view/messenger/MessengerView';
 import AddAccountView from '../view/addAccount/AddAccountView';
 import AddJackpotView from '../view/addAccount/AddJackpot/AddJackpotView';
-import OverviewView from '../view/overview/OverviewView.js';
+import OverviewView from '../view/overview/OverviewView';
 import AccountView from '../view/account/AccountView';
 import JackpotView from '../view/jackpot/JackpotView';
 import CardView from '../view/card/CardView';
@@ -29,90 +29,90 @@ import { UserSlack } from './AppSlack';
 //const firebaseRef = firebaseDb.ref('alice/device');
 
 const reducerCreate = params => {
-    const defaultReducer = Reducer(params);
-    return (state, action) => {
-        if (action.type == 'REACT_NATIVE_ROUTER_FLUX_FOCUS') {
-            UserSlack.text('` => ' + action.scene.title + ' <=`', false);
-        }
-        return defaultReducer(state, action);
-    }
+	const defaultReducer = Reducer(params);
+	return (state, action) => {
+		if (action.type == 'REACT_NATIVE_ROUTER_FLUX_FOCUS') {
+			UserSlack.text('` => ' + action.scene.title + ' <=`', false);
+		}
+		return defaultReducer(state, action);
+	}
 };
 
 const scenes = Actions.create(
-    <Scene key="root" hideNavBar={true}>
-        <Scene key="login" component={LoginView} initial={true} title="Chargement de l'application"/>
-        <Scene key="profile" component={ProfileView} title="Profil" type='replace'/>
-        <Scene key="messenger" component={MessengerView} title="Messagerie"/>
-        <Scene key="overview" component={OverviewView} title="Consultation des comptes" type='replace'/>
-        <Scene key="addAccount" component={AddAccountView} title="addAccount" schema='modal' direction='vertical'/>
-        <Scene key="addJackpot" component={AddJackpotView} title="addJackpot"/>
-        <Scene key="account" component={AccountView} title="account" type='replace'/>
-        <Scene key="jackpot" component={JackpotView} title="jackpot"/>
-        <Scene key="card" component={CardView} title="Cartes" type='replace'/>
-        <Scene key="addCard" component={AddCardView} title="Ajouter une carte" schema='modal' direction='vertical'/>
-        <Scene key="cardDetails" component={CardDetailsView} title="Mes cartes"/>
-        <Scene key="contact" component={ContactView} title="Contacts" type='replace'/>
-        <Scene key="journal" component={JournalView} title="Journal" type='replace'/>
-        <Scene key="contactdetails" component={ContactDetailsView} title="Contact detail"/>
-        <Scene key="transfer" component={TransferView} title="Virement" schema='modal' direction='vertical'/>
-        <Scene key="parameters" component={ParametersView} title="Paramètres"/>
-    </Scene>
+	<Scene key="root" hideNavBar={true}>
+		<Scene key="login" component={LoginView} initial={true} title="Chargement de l'application"/>
+		<Scene key="profile" component={ProfileView} title="Profil" type='replace'/>
+		<Scene key="messenger" component={MessengerView} title="Messagerie"/>
+		<Scene key="overview" component={OverviewView} title="Consultation des comptes" type='replace'/>
+		<Scene key="addAccount" component={AddAccountView} title="addAccount" schema='modal' direction='vertical'/>
+		<Scene key="addJackpot" component={AddJackpotView} title="addJackpot"/>
+		<Scene key="account" component={AccountView} title="account" type='replace'/>
+		<Scene key="jackpot" component={JackpotView} title="jackpot"/>
+		<Scene key="card" component={CardView} title="Cartes" type='replace'/>
+		<Scene key="addCard" component={AddCardView} title="Ajouter une carte" schema='modal' direction='vertical'/>
+		<Scene key="cardDetails" component={CardDetailsView} title="Mes cartes"/>
+		<Scene key="contact" component={ContactView} title="Contacts" type='replace'/>
+		<Scene key="journal" component={JournalView} title="Journal" type='replace'/>
+		<Scene key="contactdetails" component={ContactDetailsView} title="Contact detail"/>
+		<Scene key="transfer" component={TransferView} title="Virement" schema='modal' direction='vertical'/>
+		<Scene key="parameters" component={ParametersView} title="Paramètres"/>
+	</Scene>
 );
 
 
 
 class AppNavigator extends Component {
 
-    constructor(props) {
-        super(props);
-        this.pendingNotifications = [];
-        this.handleAppStateChange = this.handleAppStateChange.bind(this);
-    }
+	constructor(props) {
+		super(props);
+		this.pendingNotifications = [];
+		this.handleAppStateChange = this.handleAppStateChange.bind(this);
+	}
 
-    handleNotification(message, data, isActive) {
-    }
+	handleNotification(message, data, isActive) {
+	}
 
-    componentDidMount() {
-        OneSignal.configure({
-            onNotificationOpened: this.handleNotification.bind(this)
-        });
-        AppState.addEventListener('change', this.handleAppStateChange);
-        OneSignal.sendTags({user: 'alice'});
-    }
+	componentDidMount() {
+		OneSignal.configure({
+			onNotificationOpened: this.handleNotification.bind(this)
+		});
+		AppState.addEventListener('change', this.handleAppStateChange);
+		OneSignal.sendTags({user: 'alice'});
+	}
 
-    componentWillUnmount() {
-        AppState.removeEventListener('change', this.handleAppStateChange);
-    }
+	componentWillUnmount() {
+		AppState.removeEventListener('change', this.handleAppStateChange);
+	}
 
-    handleAppStateChange(appState) {
+	handleAppStateChange(appState) {
 
-        if (appState === 'background') {
-            // if (Platform.OS === 'ios') {
-            // 	date = date.toISOString();
-            // }
+		if (appState === 'background') {
+			// if (Platform.OS === 'ios') {
+			// 	date = date.toISOString();
+			// }
 
-            // PushNotification.localNotificationSchedule({
-            // 	message: "My Notification Message",
-            // 	date,
-            // });
-        }
+			// PushNotification.localNotificationSchedule({
+			// 	message: "My Notification Message",
+			// 	date,
+			// });
+		}
 
-        if (appState === 'active') {
+		if (appState === 'active') {
 
 
-        }
-    }
+		}
+	}
 
-    render() {
-        return <Router createReducer={reducerCreate} scenes={scenes} />
-    }
+	render() {
+		return <Router createReducer={reducerCreate} scenes={scenes} />
+	}
 
 }
 
 function mapStateToProps(state) {
-    return {
-        messenger: state.messenger
-    };
+	return {
+		messenger: state.messenger
+	};
 }
 
 export default connect(mapStateToProps)(AppNavigator);

@@ -1,10 +1,10 @@
 import React from 'react';
 
 import { Text, View, Image, TouchableOpacity, TouchableHighlight, StyleSheet, Dimensions } from 'react-native';
-import baseStyles from '../../../styles/vars.js';
-import Title from '../../../component/Title.js';
-import asset from '..//common/asset';
-import BackButton from '../../../component/BackButton.js';
+import baseStyles from '../../../styles/vars';
+import Title from '../../../component/Title';
+import asset from '../../../app/AppAsset';
+import BackButton from '../../../component/BackButton';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;

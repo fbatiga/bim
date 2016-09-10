@@ -1,11 +1,11 @@
 import React from 'react';
 import { Text, View, ScrollView, ListView,  Image, TouchableOpacity, TouchableHighlight, StyleSheet, Dimensions } from 'react-native';
 import RecipientItem from './RecipientItem';
-import Title from '../../../component/Title.js';
+import Title from '../../../component/Title';
 import Contacts from 'react-native-contacts';
-import asset from '..//common/asset';
+import asset from '../../../app/AppAsset';
 import baseStyles from '../../../styles/vars';
-import BackButton from '../../../component/BackButton.js';
+import BackButton from '../../../component/BackButton';
 
 const {width, height} = Dimensions.get('window');
 const styles = StyleSheet.create({

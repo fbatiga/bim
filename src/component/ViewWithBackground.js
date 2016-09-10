@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react';
 import {Image,  Text, TouchableOpacity, StyleSheet, ScrollView, Dimensions} from 'react-native';
-import asset from '../view/common/asset';
+import asset from '../view/../app/AppAsset';
 
 
 const ViewStyle = StyleSheet.create({

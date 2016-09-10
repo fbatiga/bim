@@ -8,7 +8,7 @@ import {firebaseDb} from  '../../app/AppFirebase';
 
 import AccountStyle from './AccountStyle';
 import baseStyles from '../../styles/vars';
-import asset from '../common/asset';
+import asset from '../../app/AppAsset';
 
 
 import {connect} from 'react-redux';

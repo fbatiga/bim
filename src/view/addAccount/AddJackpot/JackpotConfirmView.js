@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { Text, View,  TouchableOpacity, StyleSheet, Image } from 'react-native';
 import baseStyles from '../../../styles/vars';
-import asset from '..//common/asset';
-import BackButton from '../../../component/BackButton.js';
-import Title from '../../../component/Title.js';
+import asset from '../../../app/AppAsset';
+import BackButton from '../../../component/BackButton';
+import Title from '../../../component/Title';
 
 const styles = StyleSheet.create({
 	container: {
