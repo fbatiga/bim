@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View, TextInput,  TouchableOpacity, TouchableHighlight, StyleSheet, Dimensions, Image } from 'react-native';
 import baseStyles from '../../../styles/vars';
-import asset from '../../../asset';
+import asset from '..//common/asset';
 import BackButton from '../../../component/BackButton.js';
 import Title from '../../../component/Title.js';
 

@@ -3,7 +3,7 @@ import { Text, View, ScrollView, ListView,  Image, TouchableOpacity, TouchableHi
 import RecipientItem from './RecipientItem';
 import Title from '../../../component/Title.js';
 import Contacts from 'react-native-contacts';
-import asset from '../../../asset';
+import asset from '..//common/asset';
 import baseStyles from '../../../styles/vars';
 import BackButton from '../../../component/BackButton.js';
 

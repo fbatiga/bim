@@ -1,6 +1,6 @@
 import React , { Component } from 'react';
 import { Text, Image, View, StyleSheet } from 'react-native';
-import asset from '../../../asset';
+import asset from '..//common/asset';
 
 const styles = StyleSheet.create({
 	triangle: {

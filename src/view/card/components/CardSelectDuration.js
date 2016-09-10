@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Text, View, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
 import Title from '../../../component/Title.js';
 import baseStyles from '../../../styles/vars';
-import asset from '../../../asset';
+import asset from '..//common/asset';
 import BackButton from '../../../component/BackButton.js';
 
 const { width, height } = Dimensions.get('window');

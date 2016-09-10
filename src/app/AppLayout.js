@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { View, Text, StatusBar,  StyleSheet, TouchableOpacity , Image, Animated} from 'react-native';
 import Swiper from 'react-native-swiper';
 import MenuView from '../view/menu/MenuView';
-import asset from '../asset';
+import asset from '../view/common/asset';
 import {connect} from 'react-redux';
 import {loadSession} from '../view/login/LoginAction';
 import {setVisibility} from '../view/messenger/MessengerAction';

@@ -4,7 +4,7 @@ import ContactItem from './ContactItem';
 import LetterItem from './LetterItem';
 import Title from '../../../component/Title.js';
 import Contacts from 'react-native-contacts';
-import asset from '../../../asset';
+import asset from '..//common/asset';
 import baseStyles from '../../../styles/vars'
 
 const {width, height} = Dimensions.get('window');

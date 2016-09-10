@@ -18,8 +18,10 @@ const style = StyleSheet.create({
 
 export default class Title extends Component {
 	render(){
+
+		let title =  this.props.children || 'B!M';
 		return (
-			<Animated.Text {...this.props} style={[style.title, this.props.style]}>{this.props.children || 'B!M'}</Animated.Text>
+			<Animated.Text {...this.props} style={[style.title, this.props.style]}>{title.toUpperCase()}</Animated.Text>
 		);
 	}
 }

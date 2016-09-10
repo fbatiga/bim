@@ -5,46 +5,46 @@ import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { init } from './AddAccountAction';
 import AddAccountStyle from './AddAccountStyle';
-import asset from '../../asset';
+import asset from '../common/asset';
 import baseStyles from '../../styles/vars.js';
 import BackButton from '../../component/BackButton.js';
 import Title from '../../component/Title.js';
 
 class addAccount extends Component {
-  componentDidMount() {
-    this.props.dispatch(init());
-  }
+	componentDidMount() {
+		this.props.dispatch(init());
+	}
 
-  render() {
-    return (
-      <View style={AddAccountStyle.container}>
-  		<BackButton image={asset.back_green} back={Actions.pop} />
-		<Title>Comptes</Title>
-        <View style={AddAccountStyle.top}>
-          <View>
-            <Text style={AddAccountStyle.textTitle}>Type de</Text>
-            <Text style={AddAccountStyle.textTitle}>compte :</Text>
-          </View>
-        </View>
-        <View style={AddAccountStyle.bottom}>
-          <View style={AddAccountStyle.lines}>
-            <Text style={AddAccountStyle.text}>Ajouter un compte éxistant</Text>
-          </View>
-          <TouchableOpacity onPress={()=> {
-              Actions.addJackpot();
-          }}>
-            <View style={AddAccountStyle.lines}>
-              <Text style={AddAccountStyle.text}>Créer une cagnotte</Text>
-            </View>
-          </TouchableOpacity>
-          <View style={AddAccountStyle.lines}>
-            <Text style={AddAccountStyle.text}>Ouvrir un compte épargne </Text>
-            <Text style={AddAccountStyle.textLight}>(Bientôt disponible)</Text>
-          </View>
-        </View>
-      </View>
-    );
-  }
+	render() {
+		return (
+			<View style={AddAccountStyle.container}>
+			<BackButton image={asset.back_green} back={Actions.pop} />
+		<Title>COMPTES</Title>
+				<View style={AddAccountStyle.top}>
+					<View>
+						<Text style={AddAccountStyle.textTitle}>Type de</Text>
+						<Text style={AddAccountStyle.textTitle}>compte :</Text>
+					</View>
+				</View>
+				<View style={AddAccountStyle.bottom}>
+					<View style={AddAccountStyle.lines}>
+						<Text style={AddAccountStyle.text}>Ajouter un compte éxistant</Text>
+					</View>
+					<TouchableOpacity onPress={()=> {
+							Actions.addJackpot();
+					}}>
+						<View style={AddAccountStyle.lines}>
+							<Text style={AddAccountStyle.text}>Créer une cagnotte</Text>
+						</View>
+					</TouchableOpacity>
+					<View style={AddAccountStyle.lines}>
+						<Text style={AddAccountStyle.text}>Ouvrir un compte épargne </Text>
+						<Text style={AddAccountStyle.textLight}>(Bientôt disponible)</Text>
+					</View>
+				</View>
+			</View>
+		);
+	}
 }
 
 export default connect()(addAccount);

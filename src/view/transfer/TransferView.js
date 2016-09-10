@@ -14,7 +14,7 @@ import RecipientSelectionView from './components/RecipientSelectionView.js';
 import TransferSuccessView from './components/TransferSuccessView.js';
 
 import baseStyles from '../../styles/vars.js';
-import asset from '../../asset';
+import asset from '../common/asset';
 import TransferStyle from './TransferStyle';
 
 class TransferView extends Component {

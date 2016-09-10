@@ -5,7 +5,7 @@ import baseStyles from '../../../styles/vars.js';
 import Title from '../../../component/Title.js';
 import CenteredTitle from '../../../component/CenteredTitle.js';
 import BackButton from '../../../component/BackButton.js';
-import asset from '../../../asset';
+import asset from '..//common/asset';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;

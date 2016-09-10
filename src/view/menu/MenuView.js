@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
-import asset  from '../../asset';
+import asset  from '../common/asset';
 import { Actions } from 'react-native-router-flux';
 
 
