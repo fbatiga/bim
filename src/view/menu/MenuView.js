@@ -6,28 +6,6 @@ import asset  from '../../app/AppAsset';
 import { Actions } from 'react-native-router-flux';
 
 
-const style = StyleSheet.create({
-    container: {
-    	flex : 1,
-    	flexDirection : 'column',
-        backgroundColor : '#120037',
-        justifyContent: 'flex-start',
-        alignItems: 'center',
-        paddingTop : 70
-    },
-    title : {
-		fontFamily : 'Montserrat-Bold',
-		letterSpacing: 10,
-		margin : 30,
-		color : '#B8A4E6',
-		fontSize: 25
-	},
-	setting : {
-		marginTop : 50
-	}
-});
-
-
 export default class MenuView extends Component {
 
 
@@ -54,3 +32,25 @@ export default class MenuView extends Component {
 		);
 	}
 }
+
+
+const style = StyleSheet.create({
+    container: {
+    	flex : 1,
+    	flexDirection : 'column',
+        backgroundColor : '#120037',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        paddingTop : 70
+    },
+    title : {
+		fontFamily : 'Montserrat-Bold',
+		letterSpacing: 10,
+		margin : 30,
+		color : '#B8A4E6',
+		fontSize: 25
+	},
+	setting : {
+		marginTop : 50
+	}
+});

@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { View, Text, StatusBar, Dimensions,  StyleSheet, TouchableOpacity , Image, Animated, ScrollView, PanResponder} from 'react-native';
 import Swiper from 'react-native-swiper';
 import MenuView from '../view/menu/MenuView';
-import {swipeTo} from '../view/menu/MenuAction';
+import {swipeTo, goTo} from '../view/menu/MenuAction';
 import asset from '../view/../app/AppAsset';
 import {connect} from 'react-redux';
 import {loadSession} from '../view/login/LoginAction';
@@ -12,40 +12,6 @@ import { Actions } from 'react-native-router-flux';
 
 
 const {width, height} = Dimensions.get('window');
-
-const styles = StyleSheet.create({
-	viewContainer: {
-		flex: 1,
-		flexDirection: "column",
-		justifyContent: "flex-start",
-		alignItems: "stretch"
-	},
-	container: {
-		backgroundColor: 'transparent',
-	},
-	slide: {
-		backgroundColor: 'transparent',
-	},
-	swipe: {
-		backgroundColor: 'transparent',
-		position: 'relative',
-		flexDirection: 'row',
-		justifyContent: 'center',
-		alignItems: 'center',
-		backgroundColor:'transparent',
-	},
-	button :{
-		position: 'absolute',
-		top: 30,
-		right: -10
-	},
-	bot :{
-		borderRadius:30,
-		width:60,
-		height:60
-	},
-})
-
 
 
 class AppLayout extends Component {
@@ -93,8 +59,6 @@ class AppLayout extends Component {
 
 	onLayout(ref, event){
 
-		if(this.refs.swiper != undefined && this.scroll == null ){
-		}
 		switch(ref){
 			case 0 : ref = 'menu'; break;
 			case 1 : ref = 'main'; break;
@@ -116,25 +80,22 @@ class AppLayout extends Component {
 			Actions.messenger();
 		}
 
-		if(this.props.menu.ref == 'main'){
+		if(this.props.menu.location == 'main'){
 			if(this.props.messenger.visibility == true){
 				this.props.dispatch(swipeTo('menu'));
 			}
 		}
 
-		if(this.props.menu.ref  == 'menu'){
+		if(this.props.menu.location  == 'menu'){
 			this.props.dispatch(swipeTo('main'));
 		}
 	}
 
 	componentWillReceiveProps(nextProps){
 
-
-
-		if( nextProps.menu.ref != this.props.menu.ref && nextProps.messenger.session != null ){
-			this.swipeTo(nextProps.menu.ref);
+		if( nextProps.menu.goTo != this.props.menu.goTo && nextProps.messenger.session != null ){
+			this.swipeTo(nextProps.menu.goTo);
 		}
-
 
 	}
 
@@ -147,17 +108,18 @@ class AppLayout extends Component {
 				animated
 			});
 
-
-
 		}
+	}
+
+	onScrollEnd(){
+		this.props.dispatch(goTo(this.props.menu.goTo));
 	}
 
 	componentDidUpdate(prevProps, prevState) {
 
 		if( this.props.messenger.visibility == null){
 
-			if( this.props.menu.ref == 'menu' ){
-
+			if( this.props.menu.location == 'menu' ){
 
 				Animated.timing(
 					this.state.bounceValue,
@@ -168,8 +130,7 @@ class AppLayout extends Component {
 						tension: 100
 					}).start();
 
-			}else if( this.props.menu.ref == 'main'){
-
+			}else if( this.props.menu.location == 'main'){
 
 				Animated.timing(
 					this.state.bounceValue,
@@ -227,7 +188,7 @@ class AppLayout extends Component {
 
 		let image = asset.bot;
 
-		if(this.props.messenger.visibility == true  && this.props.menu.ref == 'main') {
+		if(this.props.messenger.visibility == true  && this.props.menu.location == 'main') {
 			image = asset.close;
 		}
 
@@ -256,6 +217,8 @@ class AppLayout extends Component {
 			horizontal={true}
 			scrollEnabled={false}
 			bounces={false}
+			onMomentumScrollEnd={this.onScrollEnd.bind(this)}
+
 			{...this._panResponder.panHandlers}
 			>
 			{pages}
@@ -269,6 +232,42 @@ class AppLayout extends Component {
 
 	}
 }
+
+
+
+const styles = StyleSheet.create({
+	viewContainer: {
+		flex: 1,
+		flexDirection: "column",
+		justifyContent: "flex-start",
+		alignItems: "stretch"
+	},
+	container: {
+		backgroundColor: 'transparent',
+	},
+	slide: {
+		backgroundColor: 'transparent',
+	},
+	swipe: {
+		backgroundColor: 'transparent',
+		position: 'relative',
+		flexDirection: 'row',
+		justifyContent: 'center',
+		alignItems: 'center',
+		backgroundColor:'transparent',
+	},
+	button :{
+		position: 'absolute',
+		top: 30,
+		right: -10
+	},
+	bot :{
+		borderRadius:30,
+		width:60,
+		height:60
+	},
+})
+
 
 
 function mapStateToProps(state) {

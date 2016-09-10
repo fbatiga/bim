@@ -1,19 +1,23 @@
 "use strict";
 
 import { handleActions } from 'redux-actions';
-import { MENU_SWIPE } from './MenuAction';
+import { MENU_SWIPE, MENU_LOCATION } from './MenuAction';
 
 const initialState = {
-	ref : 'main'
+	goTo : 'main',
+	location : 'main'
 };
 
 
 const MenuReducer = handleActions({
 
     [MENU_SWIPE]: (state, action) => {
-        return {...state, ref : action.ref };
+        return {...state, goTo : action.goTo };
     },
 
+    [MENU_LOCATION]: (state, action) => {
+        return {...state, location : action.location };
+    },
 }, initialState);
 
 export default MenuReducer;
