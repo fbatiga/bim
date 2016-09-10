@@ -14,6 +14,7 @@ class CardView extends Component {
 	constructor(props){
 		super(props);
 		this.state = {
+			count :  4,
 			cards : [
 			{
 				src: asset.carte1,
@@ -81,9 +82,7 @@ class CardView extends Component {
 					outputRange: ['0deg', '360deg'],
 				})}]
 			}]} >
-			<TouchableWithoutFeedback onPress={Actions.cardDetails}>
 			<Image source={card.src} style= {CardStyle.cardImage} />
-			</TouchableWithoutFeedback>
 			</Animated.View>);
 
 		})
@@ -206,6 +205,7 @@ class CardView extends Component {
 
 	move(){
 
+		if(this.state.count  = this.state.cards.length){
 			let cardToMove = this.state.cards.pop();
 
 			let parallels = [];
@@ -220,21 +220,29 @@ class CardView extends Component {
 			parallels = parallels.concat(this.removeCard(cardToMove.style));
 
 			Animated.parallel(parallels).start(()=>{ this.onCardRemoved(newCards,cardToMove); });
+		}
 	}
 
 	componentWillMount() {
 		this._panResponder = PanResponder.create({
-			onPanResponderTerminationRequest: () => true,
-			onStartShouldSetPanResponderCapture: () => true,
-			onStartShouldSetPanResponder: () => true,
-			onMoveShouldSetPanResponder: () => true,
-			onPanResponderGrant : this.move.bind(this)
+			onStartShouldSetPanResponder: (evt, gestureState) => true,
+			onStartShouldSetPanResponderCapture: (evt, gestureState) => true,
+			onMoveShouldSetPanResponder: (evt, gestureState) => true,
+			onMoveShouldSetPanResponderCapture: (evt, gestureState) => true,
+			onPanResponderTerminationRequest: (e, gestureState) => false,
+			onPanResponderRelease:this.handlePanResponderRelease.bind(this)
+
 		});
 	}
 
-
 	handlePanResponderRelease(evt, gestureState) {
-		this.move();
+		let distance =  Math.abs(gestureState.x0 - gestureState.moveX);
+
+		if(distance > 10 && gestureState.moveX != 0){
+			this.move();
+		}else{
+			Actions.cardDetails();
+		}
 	}
 
 	onCardRemoved(newCards, cardToMove){
