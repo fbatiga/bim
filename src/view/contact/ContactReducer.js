@@ -5,7 +5,8 @@ import { CONTACT_LOAD } from './ContactAction';
 import { Actions } from 'react-native-router-flux';
 
 const initialState = {
-	contacts : []
+	list : [],
+	loading : true
 };
 
 
@@ -24,7 +25,7 @@ const ContactReducer = handleActions({
 			}
 		});
 
-		return { ...state, contacts  };
+		return { ...state, list: contacts, loading : false };
 	},
 
 }, initialState);

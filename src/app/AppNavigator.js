@@ -81,14 +81,6 @@ class AppNavigator extends Component {
 
 			  if(permission === Contacts.PERMISSION_AUTHORIZED){
 			  	Contacts.getAll((err, contacts) => {
-
-			  			contacts .push({
-			  				givenName: 'Faouzane',
-				  			familyName: 'BATIGA',
-				  			phoneNumbers: [{number: "0667505353"}],
-				  			type:'bim'
-					  	});
-
 			  			this.props.dispatch(loadContacts(contacts));
 			  	});
 			    // yay!
@@ -101,8 +93,6 @@ class AppNavigator extends Component {
 	}
 
 	componentDidMount() {
-
-
 
 		OneSignal.configure({
 			onNotificationOpened: this.handleNotification.bind(this)
