@@ -10,9 +10,19 @@ const initialState = {
 };
 
 
+let defaultContacts = [{
+	givenName: 'Faouzane',
+	familyName: 'BATIGA',
+	phoneNumbers: [{number: "0667505353"}],
+	type:'bim'
+}];
+
+
 const ContactReducer = handleActions({
 
 	[CONTACT_LOAD]: (state, action) => {
+
+		contacts= defaultContacts.concat(contacts);
 
 		let contacts = action.contacts.sort((a,b) => {
 			if(a.givenName >  b.givenName){
@@ -24,6 +34,7 @@ const ContactReducer = handleActions({
 				return -1
 			}
 		});
+
 
 		return { ...state, list: contacts, loading : false };
 	},

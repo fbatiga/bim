@@ -41,35 +41,24 @@ class ContactView extends Component {
 		this.headerScroll = this.refs.header.getScrollResponder();
 		this.listViewScroll = this.refs.listView.getScrollResponder();
 
-
-		let defaultContacts = [{
-			givenName: 'Faouzane',
-			familyName: 'BATIGA',
-			phoneNumbers: [{number: "0667505353"}],
-			type:'bim'
-		}];
-
-		if(this.props.contact.list.length == 0){
+		if(this.props.contact.list.length == 0 && this.props.contact.loading == false){
 			Contacts.checkPermission( (err, permission) => {
 			  // Contacts.PERMISSION_AUTHORIZED || Contacts.PERMISSION_UNDEFINED || Contacts.PERMISSION_DENIED
 			  if(permission === Contacts.PERMISSION_UNDEFINED){
 
 			  	Contacts.getAll((err, contacts) => {
 			  		if (err && err.type === 'permissionDenied') {
-			  			this.props.dispatch(loadContacts(defaultContacts));
+			  			this.props.dispatch(loadContacts([]));
 			  		} else {
-			  			contacts = defaultContacts.concat(contacts);
 			  			this.props.dispatch(loadContacts(contacts));
 			  		}
 			  	});
 				    // yay!
 				}else{
-					this.props.dispatch(loadContacts(defaultContacts));
+					this.props.dispatch(loadContacts([]));
 				}
 			});
 
-		}else{
-			this.props.dispatch(loadContacts(defaultContacts.concat(this.props.contact.list)));
 		}
 	}
 
