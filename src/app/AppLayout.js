@@ -38,23 +38,112 @@ class AppLayout extends Component {
 
 	componentWillMount() {
 		this._panResponder = PanResponder.create({
-			onStartShouldSetPanResponder: (evt, gestureState) => true,
-			onStartShouldSetPanResponderCapture: (evt, gestureState) => true,
-			onMoveShouldSetPanResponder: (evt, gestureState) => true,
-			onMoveShouldSetPanResponderCapture: (evt, gestureState) => true,
-			onPanResponderTerminationRequest: (evt, gestureState) => true,
+
+      onStartShouldSetPanResponderCapture: (evt, gestureState) =>{
+				console.log('App layout onStartShouldSetPanResponderCapture', gestureState);
+				return true;
+			},
+      onMoveShouldSetPanResponderCapture: (evt, gestureState) =>{
+				console.log('App layout onMoveShouldSetPanResponderCapture', gestureState);
+				return true;
+			},
+			onStartShouldSetPanResponder: (evt, gestureState) =>{
+				console.log('App layout onStartShouldSetPanResponder', gestureState);
+				return true;
+			},
+			onMoveShouldSetPanResponder:  (evt, gestureState) =>{
+				console.log('App layout onMoveShouldSetPanResponder', gestureState);
+				return true;
+			},
+			onPanResponderTerminationRequest: (evt, gestureState) =>{
+				console.log('App layout onStartShouldSetPanResponder', gestureState);
+				return true;
+			},
 			onPanResponderRelease:this.handlePanResponderRelease.bind(this)
 		});
 	}
 
 	handlePanResponderRelease(evt, gestureState) {
-		let distance = gestureState.moveX- gestureState.x0;
-		let limit = width/3;
-		if(distance > limit){
-			this.props.dispatch(swipeTo('menu'));
-		}else if(distance < -limit){
-			this.props.dispatch(swipeTo('main'));
+
+		let horizontal = gestureState.x0 - gestureState.moveX;
+		let vertical = gestureState.y0 - gestureState.moveY;
+		let type = 'click';
+		let direction = 'horizontal';
+		let distance = Math.abs(horizontal);
+
+		if(	(Math.abs(horizontal) >= Math.abs(vertical) )){
+			let limit = width/3;
+			if(distance > 10){
+				type = 'small';
+				if(distance > limit){
+					type = 'large';
+				}
+			}
+		}else{
+			direction = 'vertical';
+			distance = Math.abs(vertical);
+
+			let limit = height/4;
+			if(distance > 10){
+				type = 'small';
+				if(distance > limit){
+					type = 'large';
+				}
+			}
 		}
+
+
+		console.log('SWIPE :', type, { direction, distance, horizontal, vertical });
+
+		if(type == 'click'){
+			if(this.props.menu.gesture.onPress != undefined){
+				this.props.menu.gesture.onPress();
+			}
+		}else{
+			switch(direction){
+				case 'horizontal':{
+					switch(type){
+						case 'small':{
+							if(this.props.menu.gesture.onHorizontalSwipe != undefined){
+								this.props.menu.gesture.onHorizontalSwipe(horizontal);
+							}
+						}break;
+
+						case 'large':{
+							if(this.props.menu.gesture.onHorizontalLargeSwipe != undefined){
+								this.props.menu.gesture.onHorizontalLargeSwipe(horizontal);
+							}
+
+							if(horizontal < 0){
+								this.props.dispatch(swipeTo('menu'));
+							}else {
+								this.props.dispatch(swipeTo('main'));
+							}
+
+						}break;
+					}
+				}break;
+
+				case 'vertical':{
+					switch(type){
+						case 'small':{
+							if(this.props.menu.gesture.onVerticalSwipe != undefined){
+								this.props.menu.gesture.onVerticalSwipe(vertical);
+							}
+						}break;
+
+						case 'large':{
+							if(this.props.menu.gesture.onVerticalLargeSwipe != undefined){
+								this.props.menu.gesture.onVerticalLargeSwipe(vertical);
+							}
+						}break;
+					}
+
+				}break;
+			}
+		}
+
+		return true;
 	}
 
 	onLayout(ref, event){
@@ -206,28 +295,24 @@ class AppLayout extends Component {
 		});
 
 		return (
-			<View>
-			<StatusBar hidden={true} />
 			<View style={[styles.container, {
 				width: width,
 				height: height
 			}]}>
+			<StatusBar hidden={true} />
 			<ScrollView
-			ref='swiper'
-			horizontal={true}
-			scrollEnabled={false}
-			bounces={false}
-			onMomentumScrollEnd={this.onScrollEnd.bind(this)}
-
-			{...this._panResponder.panHandlers}
-			>
+				ref='swiper'
+				horizontal={true}
+				scrollEnabled={false}
+				bounces={false}
+				onMomentumScrollEnd={this.onScrollEnd.bind(this)}
+				{...this._panResponder.panHandlers}>
 			{pages}
 			</ScrollView>
 			{this.props.messenger.session != null  && (
 				<TouchableOpacity style={styles.button}  onPress={this.home.bind(this)}>
 				<Animated.Image source={image} style={[styles.bot, imageAnimation ]} />
 				</TouchableOpacity>)}
-			</View>
 			</View>);
 
 	}
@@ -237,13 +322,11 @@ class AppLayout extends Component {
 
 const styles = StyleSheet.create({
 	viewContainer: {
-		flex: 1,
-		flexDirection: "column",
-		justifyContent: "flex-start",
-		alignItems: "stretch"
+		flex: 1
 	},
 	container: {
 		backgroundColor: 'transparent',
+		position: 'relative',
 	},
 	slide: {
 		backgroundColor: 'transparent',

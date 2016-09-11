@@ -7,6 +7,7 @@ import ViewWithBackground from '../../component/ViewWithBackground';
 import Swiper from 'react-native-swiper';
 import BackButton from '../../component/BackButton';
 import AppAsset from '../../app/AppAsset';
+import {swipeTo, configureSwipe} from '../menu/MenuAction';
 
 import {connect} from 'react-redux';
 import {init} from './ProfileAction';
@@ -15,90 +16,96 @@ import {init} from './ProfileAction';
 class ProfileView extends Component {
 
 
-	componentWillMount() {
-		this._panResponder = PanResponder.create({
-			onStartShouldSetPanResponder: (evt, gestureState) => true,
-			onStartShouldSetPanResponderCapture: (evt, gestureState) => true,
-			onMoveShouldSetPanResponder: (evt, gestureState) => true,
-			onMoveShouldSetPanResponderCapture: (evt, gestureState) => true,
-			onPanResponderTerminationRequest: (evt, gestureState) => true,
-			onPanResponderRelease:this.handlePanResponderRelease.bind(this)
-		});
-	}
-
-	componentDidMount() {
-		this.scroll = this.refs.swiper.getScrollResponder();
-		this.position = 0;
-	}
-
-
-	handlePanResponderRelease(evt, gestureState) {
-		let distance = gestureState.moveY- gestureState.y0;
+	onHorizontalSwipe(distance) {
+		console.log('onHorizontalSwipe', distance);
 		if(distance >0){
-			if(this.position ==  this.pointPosition ){
-				this.scrollTo(0);
-			}else if(this.position ==  this.trophyPosition ){
-				this.scrollTo(this.pointPosition);
-			}
-		}else{
 			if(this.position ==  0){
 				this.scrollTo(this.pointPosition);
 			}else if(this.position ==  this.pointPosition ){
 				this.scrollTo(this.trophyPosition);
 			}
+		}else{
+			if(this.position ==  this.pointPosition ){
+				this.scrollTo(0);
+			}else if(this.position ==  this.trophyPosition ){
+				this.scrollTo(this.pointPosition);
+			}
 		}
+		return true;
+	}
+
+	componentDidMount() {
+		this.scroll = this.refs.profileSwiper.getScrollResponder();
+		this.position = 0;
 	}
 
 	scrollTo(y){
 		this.scroll.scrollTo({
 			y: y,
-			x: 0
+			x: 0,
+			animated : true
 		});
 		this.position = y;
 	}
 
 	onPointLayout(event){
 		this.pointPosition = event.nativeEvent.layout.y;
+		console.log('onPointLayout',this.pointPosition);
 	}
 
 	onTrophyLayout(event){
 		this.trophyPosition = event.nativeEvent.layout.y;
+		console.log('onTrophyLayout',this.trophyPosition);
+	}
+
+	goToMenu(){
+		this.props.dispatch(swipeTo('menu'));
+	}
+
+	configureScroll(){
+		this.props.dispatch(
+			configureSwipe({
+				onVerticalSwipe : this.onHorizontalSwipe.bind(this),
+				onVerticalLargeSwipe : this.onHorizontalSwipe.bind(this)
+			})
+		);
 	}
 
 	render() {
 		return (
-			<View style={style.container}>
+			<View style={style.container} onLayout={this.configureScroll.bind(this)}>
 			<ScrollView
-				ref='swiper'
-				horizontal={false}
-				{...this._panResponder.panHandlers}
-				scrollEnabled={false}
-				bounces={false}
-				>
+			ref='profileSwiper'
+			horizontal={false}
+			scrollEnabled={false}
+			>
 
-				<BackButton image={AppAsset.back} back={this.props.back} />
+			<View style={style.row}>
 
-				<View style={style.row}>
-				<Image source={asset.alice}/>
-				</View>
-				<View style={style.content}>
-				<Text style={style.name}>Alice</Text>
-				<Text style={style.name}>Holzman</Text>
-				<View style={style.line}>
-				<Text style={style.address}>13 rue de Berne, 75008 PARIS</Text>
-				</View>
-				<View style={style.row}>
-				<View style={style.action}>
-				<Image source={asset.modify} />
-				<Text style={style.param}> MODIFIER MES PARAMÈTRES</Text>
-				</View>
-				</View>
+			<BackButton image={AppAsset.back} back={this.goToMenu.bind(this)} />
 
-				</View>
-				<Image onLayout={this.onPointLayout.bind(this)} source={asset.point}/>
-				<Image onLayout={this.onTrophyLayout.bind(this)} source={asset.trophy}/>
-				</ScrollView>
-				</View>)
+			<Image source={asset.alice}/>
+			</View>
+			<View style={style.content}>
+			<Text style={style.name}>Alice</Text>
+			<Text style={style.name}>Holzman</Text>
+			<View style={style.line}>
+			<Text style={style.address}>13 rue de Berne, 75008 PARIS</Text>
+			</View>
+			<View style={style.row}>
+			<View style={style.action}>
+			<Image source={asset.modify} />
+			<Text style={style.param}> MODIFIER MES PARAMÈTRES</Text>
+			</View>
+			</View>
+
+			</View>
+			<Image onLayout={this.onPointLayout.bind(this)} source={asset.point}/>
+			<Image onLayout={this.onTrophyLayout.bind(this)} source={asset.trophy}/>
+
+			</ScrollView>
+
+			</View>)
 	}
 
 }
@@ -108,7 +115,7 @@ const style = StyleSheet.create({
 	container: {
 		flex: 1,
 		justifyContent: 'flex-start',
-		flexDirection: 'column',
+		flexDirection: 'column'
 	},
 	content :{
 		padding:30
@@ -134,6 +141,7 @@ const style = StyleSheet.create({
 		borderColor: '#ECECED',
 	},
 	row : {
+		flex: 1,
 		flexDirection: 'row',
 		alignItems : 'center',
 		justifyContent : 'center',	},

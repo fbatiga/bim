@@ -4,6 +4,7 @@ import { Navigator, Text,  AppState, Platform , View } from 'react-native';
 import { Actions, Scene, StatusBar, Router , Reducer} from 'react-native-router-flux';
 import {connect} from 'react-redux';
 import {notify} from '../view/messenger/MessengerAction';
+import {loadContacts} from '../view/contact/ContactAction';
 
 import LoginView from '../view/login/LoginView';
 import ProfileView from '../view/profile/ProfileView';
@@ -25,6 +26,7 @@ import AddCardView from '../view/card/components/AddCardView';
 import OneSignal from 'react-native-onesignal'; // Import package from node modules
 import {firebaseDb} from  './AppFirebase';
 import { UserSlack } from './AppSlack';
+import Contacts from 'react-native-contacts';
 
 //const firebaseRef = firebaseDb.ref('alice/device');
 
@@ -40,24 +42,24 @@ const reducerCreate = params => {
 
 const scenes = Actions.create(
 	<Scene key="root" hideNavBar={true}>
-		<Scene key="login" component={LoginView} initial={true} title="Chargement de l'application"/>
-		<Scene key="profile" component={ProfileView} title="Profil" type='replace'/>
-		<Scene key="messenger" component={MessengerView} title="Messagerie"/>
-		<Scene key="overview" component={OverviewView} title="Consultation des comptes" type='replace'/>
-		<Scene key="addAccount" component={AddAccountView} title="addAccount" schema='modal' direction='vertical'/>
-		<Scene key="addJackpot" component={AddJackpotView} title="addJackpot"/>
-		<Scene key="account" component={AccountView} title="account" type='replace'/>
-		<Scene key="jackpot" component={JackpotView} title="jackpot"/>
-		<Scene key="card" component={CardView} title="Cartes" type='replace'/>
-		<Scene key="addCard" component={AddCardView} title="Ajouter une carte" schema='modal' direction='vertical'/>
-		<Scene key="cardDetails" component={CardDetailsView} title="Mes cartes"/>
-		<Scene key="contact" component={ContactView} title="Contacts" type='replace'/>
-		<Scene key="journal" component={JournalView} title="Journal" type='replace'/>
-		<Scene key="contactdetails" component={ContactDetailsView} title="Contact detail"/>
-		<Scene key="transfer" component={TransferView} title="Virement" schema='modal' direction='vertical'/>
-		<Scene key="parameters" component={ParametersView} title="Paramètres"/>
+	<Scene key="login" component={LoginView} initial={true} title="Chargement de l'application"/>
+	<Scene key="profile" component={ProfileView}  title="Profil" type='replace'/>
+	<Scene key="messenger" component={MessengerView} title="Messagerie"/>
+	<Scene key="overview" component={OverviewView} title="Consultation des comptes" type='replace'/>
+	<Scene key="addAccount" component={AddAccountView} title="addAccount" schema='modal' direction='vertical'/>
+	<Scene key="addJackpot" component={AddJackpotView} title="addJackpot"/>
+	<Scene key="account" component={AccountView} title="account" type='replace'/>
+	<Scene key="jackpot" component={JackpotView} title="jackpot"/>
+	<Scene key="card" component={CardView} title="Cartes" type='replace'/>
+	<Scene key="addCard" component={AddCardView} title="Ajouter une carte" schema='modal' direction='vertical'/>
+	<Scene key="cardDetails" component={CardDetailsView} title="Mes cartes"/>
+	<Scene key="contact" component={ContactView} title="Contacts" type='replace'/>
+	<Scene key="journal" component={JournalView} title="Journal" type='replace'/>
+	<Scene key="contactdetails" component={ContactDetailsView} title="Contact detail"/>
+	<Scene key="transfer" component={TransferView} title="Virement" schema='modal' direction='vertical'/>
+	<Scene key="parameters" component={ParametersView} title="Paramètres"/>
 	</Scene>
-);
+	);
 
 
 
@@ -72,7 +74,36 @@ class AppNavigator extends Component {
 	handleNotification(message, data, isActive) {
 	}
 
+
+	componentWillMount(){
+		Contacts.checkPermission( (err, permission) => {
+			  // Contacts.PERMISSION_AUTHORIZED || Contacts.PERMISSION_UNDEFINED || Contacts.PERMISSION_DENIED
+
+			  if(permission === Contacts.PERMISSION_AUTHORIZED){
+			  	Contacts.getAll((err, contacts) => {
+
+			  			contacts .push({
+			  				givenName: 'Faouzane',
+				  			familyName: 'BATIGA',
+				  			phoneNumbers: [{number: "0667505353"}],
+				  			type:'bim'
+					  	});
+
+			  			this.props.dispatch(loadContacts(contacts));
+			  	});
+			    // yay!
+				}
+
+			if(permission === Contacts.PERMISSION_DENIED){
+			    // x.x
+			}
+		});
+	}
+
 	componentDidMount() {
+
+
+
 		OneSignal.configure({
 			onNotificationOpened: this.handleNotification.bind(this)
 		});

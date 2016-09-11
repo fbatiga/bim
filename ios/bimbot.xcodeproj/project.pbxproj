@@ -803,7 +803,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = laposte.alpha.bim;
 				PRODUCT_NAME = bimbot;
-				PROVISIONING_PROFILE = "55478263-2519-4f26-97ed-4c2b4503cb7e";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -843,7 +843,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = laposte.alpha.bim;
 				PRODUCT_NAME = bimbot;
-				PROVISIONING_PROFILE = "55478263-2519-4f26-97ed-4c2b4503cb7e";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
@@ -934,7 +934,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = laposte.alpha.bim;
 				PRODUCT_NAME = bimbot;
-				PROVISIONING_PROFILE = "55478263-2519-4f26-97ed-4c2b4503cb7e";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Staging;

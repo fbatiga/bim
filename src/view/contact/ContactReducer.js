@@ -1,27 +1,31 @@
 "use strict";
 
 import { handleActions } from 'redux-actions';
-import { CONTACT_REQUEST, CONTACT_SUCCESS, CONTACT_FAILURE } from './ContactAction';
+import { CONTACT_LOAD } from './ContactAction';
 import { Actions } from 'react-native-router-flux';
 
 const initialState = {
+	contacts : []
 };
 
 
 const ContactReducer = handleActions({
 
-	[CONTACT_REQUEST]: (state, action) => {
-		return Object.assign({}, state, {loading: true});
-	},
+	[CONTACT_LOAD]: (state, action) => {
 
-	[CONTACT_SUCCESS]: (state, action) => {
-		return { ...state, loading: false, start: action.result};
-	},
+		let contacts = action.contacts.sort((a,b) => {
+			if(a.givenName >  b.givenName){
+				return 1;
+			} else if (a.givenName ===  b.givenName){
+				return 0;
+			}
+			else {
+				return -1
+			}
+		});
 
-	[CONTACT_FAILURE]: (state, action) => {
-		console.error(action.error.stack);
-		return { ...state, loading: false, start: false, loginError: action.error };
-	}
+		return { ...state, contacts  };
+	},
 
 }, initialState);
 

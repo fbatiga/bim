@@ -7,6 +7,7 @@ import asset from '../../app/AppAsset';
 import Title from '../../component/Title';
 import { moveStarted, moveEnded  } from './CardAction'
 import baseStyles from '../../styles/vars';
+import {swipeTo, configureSwipe} from '../menu/MenuAction';
 
 
 class CardView extends Component {
@@ -19,6 +20,7 @@ class CardView extends Component {
 			{
 				src: asset.carte1,
 				style : {
+					zIndex : 0,
 					position: 'absolute',
 					top: new Animated.Value(0),
 					left: new Animated.Value(14),
@@ -32,7 +34,7 @@ class CardView extends Component {
 			{
 				src: asset.carte2,
 				style : {
-
+					zIndex : 1,
 					position: 'absolute',
 					top: new Animated.Value(30),
 					left: new Animated.Value(12),
@@ -46,6 +48,7 @@ class CardView extends Component {
 			{
 				src: asset.carte3,
 				style : {
+					zIndex : 2,
 					position: 'absolute',
 					top: new Animated.Value(60),
 					left: new Animated.Value(10),
@@ -59,6 +62,7 @@ class CardView extends Component {
 			{
 				src: asset.carte4,
 				style : {
+					zIndex : 3,
 					position: 'absolute',
 					top: new Animated.Value(90),
 					left: new Animated.Value(8),
@@ -72,20 +76,6 @@ class CardView extends Component {
 		};
 
 		this.newCards = [];
-
-		this.elements = this.state.cards.map((card, index)=>{
-
-			return (<Animated.View key={index} style={[card.style, {
-				transform : [{ scale : card.style.transform[0].scale},
-				{ rotate : card.style.transform[1].rotate.interpolate({
-					inputRange: [0, 360],
-					outputRange: ['0deg', '360deg'],
-				})}]
-			}]} >
-			<Image source={card.src} style= {CardStyle.cardImage} />
-			</Animated.View>);
-
-		})
 
 	}
 
@@ -131,6 +121,7 @@ class CardView extends Component {
 			});
 
 
+
 		return [top,left,scale];
 
 	}
@@ -150,6 +141,8 @@ class CardView extends Component {
 				friction,
 				tension
 			});
+
+		card.zIndex++;
 
 		let rotation = Animated.timing(
 			card.transform[1].rotate,
@@ -214,6 +207,7 @@ class CardView extends Component {
 
 			newCards.map((card, index)=>{
 				let animation = this.moveCardTo(card.style, index);
+
 				parallels = parallels.concat(animation);
 			});
 
@@ -223,68 +217,72 @@ class CardView extends Component {
 		}
 	}
 
-	componentWillMount() {
-		this._panResponder = PanResponder.create({
-			onStartShouldSetPanResponder: (evt, gestureState) => true,
-			onStartShouldSetPanResponderCapture: (evt, gestureState) => true,
-			onMoveShouldSetPanResponder: (evt, gestureState) => true,
-			onMoveShouldSetPanResponderCapture: (evt, gestureState) => true,
-			onPanResponderTerminationRequest: (e, gestureState) => false,
-			onPanResponderRelease:this.handlePanResponderRelease.bind(this)
 
-		});
+	onPress(distance) {
+		Actions.cardDetails();
 	}
 
-	handlePanResponderRelease(evt, gestureState) {
-		let distance =  Math.abs(gestureState.x0 - gestureState.moveX);
-
-		if(distance > 10 && gestureState.moveX != 0){
-			this.move();
-		}else{
-			Actions.cardDetails();
-		}
+	onSwipe(distance) {
+		this.move();
 	}
 
 	onCardRemoved(newCards, cardToMove){
 
-		newCards = [cardToMove].concat(newCards);
-
-		let card = this.elements.pop();
-
-		this.elements = [card].concat(this.elements.slice(0));
 
 		let sequence = this.addCard(cardToMove.style);
 
+		this.state.cards = [cardToMove].concat(newCards);
+
+
 		Animated.sequence(sequence).start();
 
-		this.setState({
-			cards : newCards
-		});
+
 	}
 
-	render(){
-
-		return (
-			<View style={CardStyle.container}>
-			<Title>Cartes</Title>
-
-			<View style={CardStyle.top}>
-			<ScrollView
-			scrollEnabled={false}
-			contentContainerStyle={{top : 120 , alignItems: 'center'}} >
-			<View  style={{ width: 300, height: 300 }}
-			{...this._panResponder.panHandlers} >
-			{this.elements}</View>
-			</ScrollView>
-			</View>
-			<TouchableOpacity style={CardStyle.bottomRighticon} onPress={() => { Actions.addCard(); }}>
-			<Image source={asset.add}  style={{
-				width: 70,
-				height: 70
-			}} />
-			</TouchableOpacity>
-			</View>
+	configureScroll(){
+		this.props.dispatch(
+			configureSwipe({
+				onVerticalSwipe : this.onSwipe.bind(this),
+				onVerticalLargeSwipe : this.onSwipe.bind(this),
+				onHorizontalSwipe : this.onSwipe.bind(this)
+			})
 			);
+	}
+
+	render() {
+		return (
+			<View style={CardStyle.container} onLayout={this.configureScroll.bind(this)}>
+			<Title>Cartes</Title>
+			<View style={CardStyle.top}>
+			<View style={{top : 120 , alignItems: 'center'}} >
+			<View style={{ width: 300, height: 300 }}>
+			{this.state.cards.map((card, index)=>{
+				return (<TouchableWithoutFeedback onPress={Actions.cardDetails}>
+					<Animated.View key={index} style={[card.style, {
+						zIndex : card.style.top,
+						transform : [{ scale : card.style.transform[0].scale},
+						{ rotate : card.style.transform[1].rotate.interpolate({
+							inputRange: [0, 360],
+							outputRange: ['0deg', '360deg'],
+						})}]
+					}]} >
+
+					<Image source={card.src} style= {CardStyle.cardImage} />
+					</Animated.View>
+					</TouchableWithoutFeedback>);
+			})
+		}
+		</View>
+		</View>
+		</View>
+		<TouchableOpacity style={CardStyle.bottomRighticon} onPress={() => { Actions.addCard(); }}>
+		<Image source={asset.add}  style={{
+			width: 70,
+			height: 70
+		}} />
+		</TouchableOpacity>
+		</View>
+		);
 	}
 }
 
