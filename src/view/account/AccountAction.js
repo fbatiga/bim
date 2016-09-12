@@ -1,21 +1,11 @@
 "use strict";
 
-export const ACCOUNT_INIT = 'account.init';
-export const ACCOUNT_REQUEST = 'account.request';
-export const ACCOUNT_SUCCESS = 'account.success';
-export const ACCOUNT_FAILURE = 'account.failure';
 export const ACCOUNT_FILTER_ALL = 'account.filter.all';
 export const ACCOUNT_FILTER_CREDIT = 'account.filter.credit';
 export const ACCOUNT_FILTER_DEBIT = 'account.filter.debit';
 export const ACCOUNT_FILTER_CATEGORY = 'account.filter.category';
 export const ACCOUNT_FILTER_MONTH = 'account.filter.month';
-
-
-export function init(action) {
-  return {
-  	    type: ACCOUNT_INIT
-  };
-}
+export const ACCOUNT_ADD_TRANSACTION = 'account.add.transaction';
 
 export function filterByCredit(action) {
     return {
@@ -41,4 +31,13 @@ export function clearFilter(action) {
   	    type: ACCOUNT_FILTER_ALL
   };
 }
+
+
+export function addTransaction(transaction) {
+  return {
+  	    type: ACCOUNT_ADD_TRANSACTION,
+  	    transaction
+  };
+}
+
 

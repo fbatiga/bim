@@ -11,24 +11,22 @@ import ProfileView from '../view/profile/ProfileView';
 import JournalView from '../view/journal/JournalView';
 import MessengerView from '../view/messenger/MessengerView';
 import AddAccountView from '../view/addAccount/AddAccountView';
-import AddJackpotView from '../view/addAccount/AddJackpot/AddJackpotView';
+import AddJackpotView from '../view/addJackpot/AddJackpotView';
 import OverviewView from '../view/overview/OverviewView';
 import AccountView from '../view/account/AccountView';
 import JackpotView from '../view/jackpot/JackpotView';
 import CardView from '../view/card/CardView';
-import CardDetailsView from '../view/card-details/CardDetailsView';
+import CardDetailsView from '../view/cardDetails/CardDetailsView';
 import ContactView from '../view/contact/ContactView';
-import ContactDetailsView from '../view/contact-details/ContactDetailsView';
+import ContactDetailsView from '../view/contactDetails/ContactDetailsView';
 import TransferView from '../view/transfer/TransferView';
 import ParametersView from '../view/parameters/ParametersView';
-import AddCardView from '../view/card/components/AddCardView';
+import AddCardView from '../view/addCard/AddCardView';
 
 import OneSignal from 'react-native-onesignal'; // Import package from node modules
-import {firebaseDb} from  './AppFirebase';
 import { UserSlack } from './AppSlack';
 import Contacts from 'react-native-contacts';
 
-//const firebaseRef = firebaseDb.ref('alice/device');
 
 const reducerCreate = params => {
 	const defaultReducer = Reducer(params);

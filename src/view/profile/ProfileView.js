@@ -3,14 +3,11 @@
 import React, { Component } from 'react';
 import { View, Text, Image,  StyleSheet, ScrollView, PanResponder} from 'react-native';
 import { Actions } from 'react-native-router-flux';
-import ViewWithBackground from '../../component/ViewWithBackground';
-import Swiper from 'react-native-swiper';
-import BackButton from '../../component/BackButton';
+import BackButton from '../common/item/button/BackButton';
 import AppAsset from '../../app/AppAsset';
 import {swipeTo, configureSwipe} from '../menu/MenuAction';
 
 import {connect} from 'react-redux';
-import {init} from './ProfileAction';
 
 
 class ProfileView extends Component {
@@ -144,7 +141,8 @@ const style = StyleSheet.create({
 		flex: 1,
 		flexDirection: 'row',
 		alignItems : 'center',
-		justifyContent : 'center',	},
+		justifyContent : 'center'
+	},
 		action : {
 			flexDirection: 'row',
 			alignItems : 'flex-start',

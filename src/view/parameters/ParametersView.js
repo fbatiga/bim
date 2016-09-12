@@ -3,36 +3,20 @@
 import React, { Component } from 'react';
 import { View, Text, Image, TouchableOpacity} from 'react-native';
 import { Actions } from 'react-native-router-flux';
-import BaseStyle from '../base/BaseStyle';
-import asset from '../../app/AppAsset';
+import AppAsset from '../../app/AppAsset';
 import ParametersStyle from './ParametersStyle';
 
-import {connect} from 'react-redux';
-import {init} from './ParametersAction';
 
-class ParametersView extends Component {
-
-	componentDidMount() {
-		this.props.dispatch(init());
-	}
-
-	componentWillReceiveProps(nextProps) {
-
-	}
+export default class ParametersView extends Component {
 
 	render() {
 		return (
-        <Image style={ParametersStyle.container} source={asset.screens.parameters} onPress={()=>{ Actions.contact()}}>
-
+        <Image style={ParametersStyle.container} source={asset.screen} onPress={()=>{ Actions.contact()}}>
         </Image>
 		);
 	}
 }
 
-function mapStateToProps(state) {
-	return {
-		base : state.base
-	};
-}
-
-export default connect(mapStateToProps)(ParametersView);
+const asset ={
+	screen: require('./asset/screen.png'),
+};

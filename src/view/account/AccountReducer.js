@@ -1,7 +1,7 @@
 "use strict";
 
 import { handleActions } from 'redux-actions';
-import { ACCOUNT_REQUEST, ACCOUNT_SUCCESS, ACCOUNT_FAILURE, ACCOUNT_FILTER_DEBIT, ACCOUNT_FILTER_CREDIT , ACCOUNT_FILTER_ALL } from './AccountAction';
+import { ACCOUNT_FILTER_DEBIT, ACCOUNT_FILTER_CREDIT , ACCOUNT_FILTER_ALL, ACCOUNT_ADD_TRANSACTION } from './AccountAction';
 import { Actions } from 'react-native-router-flux';
 import moment from 'moment';
 import momentfr from 'moment/locale/fr';
@@ -146,9 +146,10 @@ initialState.originalTransactions = initialState.transactions;
 
 const AccountReducer = handleActions({
 
-    [ACCOUNT_REQUEST]: (state, action) => {
-        return Object.assign({}, state, {loading: true});
+	 [ACCOUNT_ADD_TRANSACTION]: (state, action) => {
+        return {...state,  transactions: [action.transaction].concat(state.transactions) };
     },
+
     [ACCOUNT_FILTER_CREDIT]: (state, action) => {
         var out = state.originalTransactions.filter((elm) => {
             return elm.type === 'credit';

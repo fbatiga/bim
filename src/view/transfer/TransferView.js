@@ -1,21 +1,20 @@
 'use strict';
 
 import React, { Component } from 'react';
-import { Dimensions, View, Text, Image, TextInput, TouchableOpacity } from 'react-native';
+import { Dimensions, View, Text, Image, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import {firebaseDb} from  '../../app/AppFirebase';
 import {connect} from 'react-redux';
 import {init} from './TransferAction';
 import { Actions } from 'react-native-router-flux';
 
-import AmountSelectionView from './components/AmountSelectionView';
-import TransferConfirmView from './components/TransferConfirmView';
-import TransferTitleInputView from './components/TransferTitleInputView';
-import RecipientSelectionView from './components/RecipientSelectionView';
-import TransferSuccessView from './components/TransferSuccessView';
+import AmountSelectionView from './step/AmountSelectionView';
+import TransferConfirmView from './step/TransferConfirmView';
+import TransferTitleInputView from './step/TransferTitleInputView';
+import RecipientSelectionView from './step/RecipientSelectionView';
+import TransferSuccessView from './step/TransferSuccessView';
 
-import baseStyles from '../../styles/vars';
-import asset from '../../app/AppAsset';
-import TransferStyle from './TransferStyle';
+import AppGuideline from '../../app/AppGuideline';
+import AppAsset from '../../app/AppAsset';
 
 class TransferView extends Component {
 
@@ -151,6 +150,11 @@ class TransferView extends Component {
 	}
 
 }
+
+
+const style = StyleSheet.create({
+
+});
 
 function mapStateToProps(state) {
 	return {

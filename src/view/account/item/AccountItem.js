@@ -1,9 +1,9 @@
 import React from 'react';
 import { Text, View, TouchableHighlight, StyleSheet } from 'react-native';
-import baseStyles from '../../../styles/vars';
+import AppGuideline from '../../../app/AppGuideline';
 import moment from 'moment';
 
-const styles = StyleSheet.create({
+const style = StyleSheet.create({
 	date: {
 		color: '#BDC4C8',
 		fontSize: 24,
@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
 	lineHeight : 14
 	},
 	amount: {
-		color: baseStyles.colors.deepBlue,
+		color: AppGuideline.colors.deepBlue,
 		fontFamily : 'Montserrat-Light',
 		fontSize: 14,
 	lineHeight : 14
@@ -58,22 +58,22 @@ export default class AccountItem extends React.Component {
 			<TouchableHighlight>
 				<View style={{ flexDirection: 'row' }}>
 					<View style={{ paddingTop: 25 }}>
-						<Text style={styles.date}>{moment(this.props.rowData.timestamp).format('D')}</Text>
+						<Text style={style.date}>{moment(this.props.rowData.timestamp).format('D')}</Text>
 					</View>
-					<View style={styles.button}>
-						<View style={styles.leftPart}>
-							<Text style={styles.label}>
+					<View style={style.button}>
+						<View style={style.leftPart}>
+							<Text style={style.label}>
 								{this.props.rowData.label}
 							</Text>
-							<Text style={styles.category}>
+							<Text style={style.category}>
 								{this.props.rowData.category.label}
 							</Text>
 						</View>
-						<View style={styles.rightPart}>
-							<Text style={styles.amount}>
+						<View style={style.rightPart}>
+							<Text style={style.amount}>
 							{(this.props.rowData.type === 'debit' ? '-' :'')  +   this.props.rowData.amount}
 							</Text>
-							<Text style={styles.amount}> €</Text>
+							<Text style={style.amount}> €</Text>
 						</View>
 					</View>
 				</View>

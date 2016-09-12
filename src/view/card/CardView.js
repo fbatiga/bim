@@ -4,9 +4,9 @@ import { View, Image, TouchableOpacity, TouchableWithoutFeedback , PanResponder,
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import asset from '../../app/AppAsset';
-import Title from '../../component/Title';
+import Title from '../common/item/title/Title';
 import { moveStarted, moveEnded  } from './CardAction'
-import baseStyles from '../../styles/vars';
+import AppGuideline from '../../app/AppGuideline';
 import {swipeTo, configureSwipe} from '../menu/MenuAction';
 
 
@@ -292,7 +292,7 @@ const CardStyle = StyleSheet.create({
 		flex: 1,
 		flexDirection : 'column',
 		alignItems: 'stretch',
-		backgroundColor: baseStyles.colors.deepBlue
+		backgroundColor: AppGuideline.colors.deepBlue
 	},
 	bottomRighticon: {
 		position: 'absolute',

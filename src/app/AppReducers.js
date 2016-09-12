@@ -6,7 +6,7 @@ import AccountReducer from '../view/account/AccountReducer';
 import CardReducer from '../view/card/CardReducer';
 import JournalReducer from '../view/journal/JournalReducer';
 import ContactReducer from '../view/contact/ContactReducer';
-import ContactDetailsReducer from '../view/contact-details/ContactDetailsReducer';
+import ContactDetailsReducer from '../view/contactDetails/ContactDetailsReducer';
 import TransferReducer from '../view/transfer/TransferReducer';
 import MenuReducer from '../view/menu/MenuReducer';
 

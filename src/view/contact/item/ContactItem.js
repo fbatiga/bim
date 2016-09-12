@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text, View, Image, TouchableOpacity, TouchableHighlight, StyleSheet } from 'react-native';
-import baseStyles from '../../../styles/vars';
+import AppGuideline from '../../../app/AppGuideline';
 import asset from '../../../app/AppAsset';
 
 
@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
 		fontWeight: '500'
 	},
 	amount: {
-		color: baseStyles.colors.deepBlue,
+		color: AppGuideline.colors.deepBlue,
 		textAlign: 'right',
 		fontSize: 18
 	}

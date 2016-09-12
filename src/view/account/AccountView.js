@@ -1,21 +1,23 @@
 'use strict';
 
 import React, { Component } from 'react';
-import { View, Text, Modal, ListView, Image, ScrollView, SegmentedControlIOS, TouchableOpacity, TouchableHighlight, Dimensions, Animated } from 'react-native';
+import { View, Text, Modal, ListView, Image, ScrollView, SegmentedControlIOS, TouchableOpacity, TouchableHighlight,StyleSheet,  Dimensions, Animated } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import moment from 'moment';
 import {firebaseDb} from  '../../app/AppFirebase';
 
-import AccountStyle from './AccountStyle';
-import baseStyles from '../../styles/vars';
-import asset from '../../app/AppAsset';
+import AppGuideline from '../../app/AppGuideline';
+import AppAsset from '../../app/AppAsset';
 
 
 import {connect} from 'react-redux';
-import {init, filterByCredit, filterByDebit, clearFilter} from './AccountAction';
-import AccountItem from './item/AccountItem';
+import {addTransaction} from './AccountAction';
 import AccountTab from './item/AccountTab';
-import Title from '../../component/Title';
+import Title from '../common/item/title/Title';
+import BackButton from '../common/item/button/BackButton';
+
+import AccountTransfertModal from './modal/AccountTransfertModal';
+import AccountTransfertList from './list/AccountTransfertList';
 
 const {width, height} = Dimensions.get('window');
 const themePreview = 50;
@@ -27,14 +29,6 @@ class AccountView extends Component {
 	constructor(props) {
 		super(props);
 
-		const ds = new ListView.DataSource({
-			rowHasChanged: (r1, r2) => (r1 !== r2)
-		});
-
-
-		this.props.account.transactions = [];
-
-
 		var categories = {};
 		this.props.account.categories.map((value, key) => {
 			categories[value.categoryId] = value;
@@ -45,12 +39,10 @@ class AccountView extends Component {
 		this.transactionsRef = rootRef.child('alice/transactions');
 
 		this.state = {
-			filterIndex: 0,
 			currentTab: 'all',
 			previousMonth: 'Mai',
 			currentMonth: 'Juin',
 			balance: this.props.account.balance,
-			dataSource: ds,
 			modalVisible: false,
 			fadeAnim: new Animated.Value(0),
 			bounceValue: new Animated.Value(0),
@@ -63,8 +55,7 @@ class AccountView extends Component {
 			this.state.fadeAnim,
 			{
 				toValue: 1
-			}
-			).start();
+			}).start();
 
 		Animated.timing(
 			this.state.bounceValue,
@@ -73,8 +64,7 @@ class AccountView extends Component {
 				toValue: 1,
 				friction: 10,
 				tension: 40
-			}
-			).start();
+			}).start();
 
 		Animated.timing(
 			this.state.slideIn,
@@ -83,26 +73,17 @@ class AccountView extends Component {
 				toValue: 0,
 				friction: 10,
 				tension: 40
-			}
-			).start();
+			}).start();
 
-		this.props.dispatch(init());
-
-		var that = this;
 		this.transactionsRef.once("value").then(function (snapshot) {
 
-			that.props.account.transactions = [];
-			snapshot.forEach((elm) => {
-
-				elm = elm.val();
-				elm.category = that.categories[elm.category];
-
-                // console.log(elm.category);
-                that.props.account.transactions.unshift(elm);
+			snapshot.forEach((row) => {
+				row = row.val();
+				row.category = this.categories[row.category];
+                this.props.dispatch(addTransaction(row));
             });
 
-			that.setState({dataSource: that.state.dataSource.cloneWithRows(that.props.account.transactions)});
-		}, function (err) {
+		}.bind(this), function (err) {
 			console.log(err);
 		});
 		this.listenToTransactionChanges(this.transactionsRef);
@@ -117,215 +98,148 @@ class AccountView extends Component {
             // inserting at the beginning of the array
 
             that.props.account.transactions.unshift(snapshot);
-            this.setState({dataSource: this.state.dataSource.cloneWithRows(this.props.account.transactions)});
+           // this.setState({dataSource: this.state.dataSource.cloneWithRows(this.props.account.transactions)});
         });
 	}
 
-	setModalVisible(visible) {
-		this.setState({modalVisible: visible});
+	showModal() {
+		this.setState({modalVisible: true});
 	}
+
+	hideModal() {
+		this.setState({modalVisible: false});
+	}
+
+
+	setCategory(category) {
+		this.setState({category: category});
+	}
+
 
 
 	render() {
 		return (
 			<View style={{ flex: 1 }}>
-			<TouchableOpacity style={AccountStyle.transferButton} onPress={()=> { this.setModalVisible(!this.state.modalVisible); }}>
-			<Image source={asset.transfer}  style={AccountStyle.transferButtonImage} />
+			<TouchableOpacity style={style.transferButton} onPress={this.showModal.bind(this)}>
+			<Image source={AppAsset.transfer}  style={style.transferButtonImage} />
 			</TouchableOpacity>
 			<ScrollView>
-			<Modal
-			animationType={"slide"}
-			transparent={true}
-			visible={this.state.modalVisible}
-			>
+			{this.state.modalVisible && <AccountTransfertModal close={this.hideModal.bind(this)}/>}
 
-			<View style={{flex: 1, flexDirection: 'row', alignItems: 'flex-end'}}>
-			<View style={{height: 200, flex: 1}}>
-			<TouchableOpacity style={AccountStyle.closeModalButton} onPress={()=> {
-				this.setModalVisible(false);
-			}}>
-			<Image source={asset.close}  style={{resizeMode: 'contain', width: 70}} />
-			</TouchableOpacity>
-			<TouchableOpacity style={AccountStyle.modalList}
-			onPress={() => {
-				Actions.transfer({mode: 'transfer'});
-				this.setModalVisible(false);
-			}}>
-			<View style={AccountStyle.modalContent}>
-			<Text>Faire un transfert</Text>
-			</View>
-			</TouchableOpacity>
+			<View style={style.top}>
 
-			<TouchableOpacity style={AccountStyle.modalList}
-			onPress={() => {
-				Actions.transfer({mode: 'bim'});
-				this.setModalVisible(false);
-			}}>
-			<View style={AccountStyle.modalContent}>
-			<Text>Faire un Bim</Text>
-			</View>
-			</TouchableOpacity>
-			</View>
-			</View>
-			</Modal>
+			<BackButton image={AppAsset.back_dark} back={Actions.overview} />
+			<Title style={{color :AppGuideline.colors.deepBlue, marginBottom: 20}} >B!M</Title>
 
-			<View style={AccountStyle.top}>
-
-			<TouchableOpacity style={{
-				position:'absolute',
-				top: 25,
-				left: 4,
-			}} onPress={Actions.overview} >
-			<Image source={asset.back_dark}  style={{}} />
-			</TouchableOpacity>
-
-			<Title style={{color :baseStyles.colors.deepBlue, marginBottom: 20}} >B!M</Title>
-
-			<Animated.View style={[AccountStyle.graph, { transform: [ {scale: this.state.bounceValue} ] }]}>
-			<Image source={asset.graphCircled}  style={AccountStyle.graphCircle}>
-			<Text style={AccountStyle.graphLabel} >SOLDE ACTUEL</Text>
-			<Text style={AccountStyle.graphBalance} >{this.state.balance} €</Text>
-			</Image>
+			<Animated.View style={[style.graph, { transform: [ {scale: this.state.bounceValue} ] }]}>
+				<Image source={AppAsset.graphCircled}  style={style.graphCircle}>
+					<Text style={style.graphLabel} >SOLDE ACTUEL</Text>
+					<Text style={style.graphBalance} >{this.state.balance} €</Text>
+				</Image>
 			</Animated.View>
 
-			<View style={AccountStyle.tabs}>
+			<View style={style.tabs}>
 			<ScrollView
-			style={AccountStyle.tabsContainer}
-			contentContainerStyle={AccountStyle.tabsContent}
+			style={style.tabsContainer}
+			contentContainerStyle={style.tabsContent}
 			horizontal={true}
 			automaticallyAdjustInsets={false}
 			decelerationRate={0}
 			snapToInterval={themeWidth + themeMargin*2}
 			snapToAlignment="center">
 			{this.props.account.categories.map((value, key) => {
-				return (<AccountTab rowData={value} callback={this.filterByCategory.bind(this)} key={key} />);
+				return (<AccountTab rowData={value} callback={this.setCategory.bind(this)} key={key} />);
 			})}
 			</ScrollView>
 			</View>
 			</View>
 
-			<Animated.View style={[AccountStyle.bottom, { marginTop: this.state.slideIn }]}>
-			<View style={AccountStyle.dateContainer}>
-			<View style={AccountStyle.dateLeft}>
-			<Text style={AccountStyle.previousMonth} >{this.state.previousMonth}</Text>
-			</View>
-			<View style={AccountStyle.dateCenter}>
-			<Text style={[baseStyles.titles.h1, AccountStyle.bottomTitle]} >{this.state.currentMonth}</Text>
-			</View>
-			<View style={AccountStyle.dateRight} />
-			</View>
-
-			<View style={AccountStyle.switchContainer}>
-			<SegmentedControlIOS style={AccountStyle.switch} tintColor={baseStyles.colors.lightviolet} enabled={true} values={['Tout', 'Sorties', 'Entrées']} selectedIndex={this.state.filterIndex}
-			onChange={(event) => {
-				switch (event.nativeEvent.selectedSegmentIndex) {
-					case 0:
-					this.filterByAll();
-					break;
-					case 1:
-					this.filterByDebit();
-					break;
-					case 2:
-					this.filterByCredit();
-					break;
-				}
-			}}
-			/>
-			</View>
-			<ListView
-			style={AccountStyle.listView}
-			ref="listView"
-			dataSource={this.state.dataSource}
-			renderRow={this.renderRow.bind(this)}
-			enableEmptySections={true}
-			/>
+			<Animated.View style={[style.bottom, { marginTop: this.state.slideIn }]}>
+			<AccountTransfertList
+				previousMonth={this.state.previousMonth}
+				currentMonth={this.state.currentMonth}
+				category={this.state.category}
+				transactions={this.props.account.transactions}
+				/>
 			</Animated.View>
 			</ScrollView>
 			</View>
 			);
 	}
-
-	renderRow(rowData) {
-		return (
-			<AccountItem
-			rowData={rowData}
-			/>
-			);
-	}
-
-	renderTabRow(rowData) {
-		return (
-			<View>
-			<AccountTab
-			rowData={rowData}
-			/>
-			</View>
-			);
-	}
-
-	filterByAll() {
-		this.state.dataSource = this.state.dataSource.cloneWithRows(this.getTransactions());
-		return;
-	}
-
-	filterByDebit() {
-		this.setState({
-			'dataSource': this.state.dataSource.cloneWithRows(this.getTransactions().filter((elm) => {
-				return elm.type === 'debit';
-			}))
-		});
-
-	}
-
-	filterByCredit() {
-		this.setState({
-			'dataSource': this.state.dataSource.cloneWithRows(this.getTransactions().filter((elm) => {
-				return elm.type === 'credit';
-			}))
-		});
-	}
-
-	filterByCategory(cat) {
-		console.log('INDEX', this.state.filterIndex);
-		this.setState({
-			filterIndex: 0,
-			currentTab: cat || 'all',
-			'dataSource': this.state.dataSource.cloneWithRows(this.getTransactions(cat))
-		});
-	}
-
-	getTransactions(cat) {
-		var source = this.props.account.transactions;
-
-		if (cat) {
-			this.state.currentTab = cat;
-		}
-		if (this.state.currentTab == 'all') {
-			this.state.balance = this.props.account.balance;
-			return source;
-		}
-		else {
-			console.log('PREVIOUSMONTH', this.props.account.previousMonthBalance);
-			var newBalance = this.props.account.previousMonthBalance;
-			var out = source.filter((elm) => {
-				if (elm.category.categoryId === this.state.currentTab) {
-					newBalance += parseFloat(elm.amount);
-					console.log(elm.label, elm.amount, this.state.balance + elm.amount);
-					console.log('BALANCE AFTER OPERATION', this.state.balance);
-
-					return true;
-				}
-				else {
-					return false;
-				}
-				return;
-			});
-
-			this.setState({'balance': newBalance});
-			return out;
-		}
-	}
 }
+
+const style = StyleSheet.create({
+    container: {
+    	flex: 1
+    },
+    top: {
+        height: (height - 225),
+        backgroundColor: AppGuideline.colors.alternative,
+        overflow: 'visible',
+        zIndex: 10
+    },
+    tabs: {
+        flex: 1
+    },
+    graph: {
+        alignItems: 'center'
+    },
+    graphCircle: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: null,
+        height: 220,
+        resizeMode: 'stretch',
+    },
+    graphLabel: {
+
+        fontSize: 10,
+        letterSpacing : 1.5,
+    	fontFamily: 'Montserrat',
+        color: '#120037',
+        fontWeight: '300',
+        marginBottom: 5,
+        width: 180,
+        marginLeft: 20,
+        marginRight: 20,
+        overflow: 'hidden',
+        textAlign: "center"
+    },
+
+    graphBalance: {
+        fontSize: 36,
+        color: '#120037',
+        fontWeight: 'bold'
+    },
+    dotIcon: {
+        alignItems: 'center',
+        marginTop: 10
+    },
+
+    transferButton: {
+      position: 'absolute',
+      top: (height - 215),
+      right: -10,
+      borderRadius: 100,
+      padding: 0,
+      zIndex: 100
+    },
+
+    transferButtonImage: {},
+
+    bottom: {
+        backgroundColor: '#fff'
+    },
+
+    tabsContainer: {
+      flex: 1
+    },
+    tabsContent: {
+      paddingHorizontal: themePreview,
+      alignItems: 'center',
+      flex: 1
+    }
+});
 
 function mapStateToProps(state) {
 	return {

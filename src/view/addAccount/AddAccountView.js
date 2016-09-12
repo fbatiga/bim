@@ -1,14 +1,13 @@
 'use strict'
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity , Dimensions, StyleSheet} from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { init } from './AddAccountAction';
-import AddAccountStyle from './AddAccountStyle';
-import asset from '../../app/AppAsset';
-import baseStyles from '../../styles/vars';
-import BackButton from '../../component/BackButton';
-import Title from '../../component/Title';
+import AppAsset from '../../app/AppAsset';
+import AppGuideline from '../../app/AppGuideline';
+import BackButton from '../common/item/button/BackButton';
+import Title from '../common/item/title/Title';
 
 class addAccount extends Component {
 	componentDidMount() {
@@ -17,34 +16,79 @@ class addAccount extends Component {
 
 	render() {
 		return (
-			<View style={AddAccountStyle.container}>
-			<BackButton image={asset.back_green} back={Actions.pop} />
+			<View style={style.container}>
+			<BackButton image={AppAsset.back_green} back={Actions.pop} />
 		<Title>COMPTES</Title>
-				<View style={AddAccountStyle.top}>
+				<View style={style.top}>
 					<View>
-						<Text style={AddAccountStyle.textTitle}>Type de</Text>
-						<Text style={AddAccountStyle.textTitle}>compte :</Text>
+						<Text style={style.textTitle}>Type de</Text>
+						<Text style={style.textTitle}>compte :</Text>
 					</View>
 				</View>
-				<View style={AddAccountStyle.bottom}>
-					<View style={AddAccountStyle.lines}>
-						<Text style={AddAccountStyle.text}>Ajouter un compte éxistant</Text>
+				<View style={style.bottom}>
+					<View style={style.lines}>
+						<Text style={style.text}>Ajouter un compte éxistant</Text>
 					</View>
 					<TouchableOpacity onPress={()=> {
 							Actions.addJackpot();
 					}}>
-						<View style={AddAccountStyle.lines}>
-							<Text style={AddAccountStyle.text}>Créer une cagnotte</Text>
+						<View style={style.lines}>
+							<Text style={style.text}>Créer une cagnotte</Text>
 						</View>
 					</TouchableOpacity>
-					<View style={AddAccountStyle.lines}>
-						<Text style={AddAccountStyle.text}>Ouvrir un compte épargne </Text>
-						<Text style={AddAccountStyle.textLight}>(Bientôt disponible)</Text>
+					<View style={style.lines}>
+						<Text style={style.text}>Ouvrir un compte épargne </Text>
+						<Text style={style.textLight}>(Bientôt disponible)</Text>
 					</View>
 				</View>
 			</View>
 		);
 	}
 }
+
+
+const { width, height } = Dimensions.get('window');
+
+const style = StyleSheet.create({
+	container: {
+		flex: 1,
+		backgroundColor: AppGuideline.colors.deepBlue
+	},
+	top: {
+		flex: 1,
+		backgroundColor: AppGuideline.colors.deepBlue,
+		justifyContent: 'center',
+	},
+	bottom: {
+		backgroundColor: AppGuideline.colors.white
+	},
+	textTitle: {
+		fontFamily : 'Montserrat-UltraLight',
+		fontSize: 36,
+		lineHeight : 36,
+		marginTop: 24,
+		marginLeft: width / 8,
+		color: AppGuideline.colors.alternative
+	},
+	lines: {
+		borderBottomWidth: 1,
+		borderBottomColor: AppGuideline.colors.lightGrey,
+		flexDirection: 'row',
+		height: 100,
+		paddingHorizontal: 25,
+		alignItems: 'center',
+		// flexWrap: 'wrap'
+	},
+	text: {
+		color: AppGuideline.colors.deepBlue,
+		fontFamily : 'Montserrat-UltraLight',
+		fontSize: 14,
+		lineHeight : 14,
+	},
+	textLight: {
+		color: AppGuideline.colors.alternative
+	}
+});
+
 
 export default connect()(addAccount);

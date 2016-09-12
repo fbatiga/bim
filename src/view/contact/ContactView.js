@@ -7,7 +7,7 @@ import AppGuideline from '../../app/AppGuideline';
 import asset from '../../app/AppAsset';
 import Contacts from 'react-native-contacts';
 
-import Title from '../../component/Title';
+import Title from '../common/item/title/Title';
 import ContactItem from './item/ContactItem';
 import LetterItem from './item/LetterItem';
 
@@ -35,6 +35,8 @@ class ContactView extends Component {
 			this.letters[i] = this.letters[letters[i-1]] ;
 		}
 	}
+
+
 
 
 	componentDidMount(){
@@ -129,7 +131,6 @@ class ContactView extends Component {
 			<View style={{ position: 'absolute',  backgroundColor: '#998BB8', left: width / 2 - 35/2, top: 22.5, width:35, height: 35 , borderRadius: 20}}></View>
 			<ScrollView horizontal={true}
 			scrollEventThrottle={200}
-
 			onScroll={this.onScroll.bind(this)}
 			ref='header'
 			>
@@ -196,6 +197,7 @@ const style = StyleSheet.create({
 		flex: 1,
 	}
 });
+
 
 
 function mapStateToProps(state) {

@@ -8,52 +8,8 @@ import MessengerMain from './layout/MessengerMain';
 import MessengerBottom from './layout/MessengerBottom';
 import {firebaseDb} from  '../../app/AppFirebase';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
-import asset from '../../app/AppAsset';
+import AppAsset from '../../app/AppAsset';
 
-const style = StyleSheet.create({
-	bottom : {
-		flex : 4,
-		backgroundColor : '#79F0CC',
-		flexDirection:'column',
-	},
-	main: {
-		flex : 6,
-		backgroundColor : '#FFFFFF',
-		padding : 15
-	},
-	container: {
-		flex: 1,
-		flexDirection : 'column',
-		backgroundColor: '#FFFFFF',
-	},
-	send : {
-		color:'#B8A4E6',
-		fontFamily : 'Montserrat-SemiBold',
-		letterSpacing: 3,
-		margin:5 ,
-		lineHeight: 30,
-	},
-	input : {
-		borderRadius: 10,
-		margin:10,
-		flex: 1,
-		padding:4,
-		borderWidth : 1,
-		borderColor : '#DDE6EC',
-		backgroundColor:'white',
-		height:35
-	},
-	close : {
-		padding:5,
-		width :40
-	},
-	text : {
-		flexDirection:'row',
-		backgroundColor: '#F0F3F5',
-		alignItems: 'center',
-		justifyContent: 'center'
-	}
-});
 
 
 class MessengerView extends Component {
@@ -234,7 +190,7 @@ class MessengerView extends Component {
 							input: false
 						});
 					}}>
-					<Image source={asset.messenger.close} />
+					<Image source={asset.close} />
 					</TouchableOpacity>
 					</View>
 
@@ -257,6 +213,56 @@ class MessengerView extends Component {
 	}
 }
 
+
+
+const style = StyleSheet.create({
+	bottom : {
+		flex : 4,
+		backgroundColor : '#79F0CC',
+		flexDirection:'column',
+	},
+	main: {
+		flex : 6,
+		backgroundColor : '#FFFFFF',
+		padding : 15
+	},
+	container: {
+		flex: 1,
+		flexDirection : 'column',
+		backgroundColor: '#FFFFFF',
+	},
+	send : {
+		color:'#B8A4E6',
+		fontFamily : 'Montserrat-SemiBold',
+		letterSpacing: 3,
+		margin:5 ,
+		lineHeight: 30,
+	},
+	input : {
+		borderRadius: 10,
+		margin:10,
+		flex: 1,
+		padding:4,
+		borderWidth : 1,
+		borderColor : '#DDE6EC',
+		backgroundColor:'white',
+		height:35
+	},
+	close : {
+		padding:5,
+		width :40
+	},
+	text : {
+		flexDirection:'row',
+		backgroundColor: '#F0F3F5',
+		alignItems: 'center',
+		justifyContent: 'center'
+	}
+});
+
+const asset = {
+	close:  require('./asset/close.png'),
+};
 
 function mapStateToProps(state) {
 	return {

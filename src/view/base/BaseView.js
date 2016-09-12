@@ -1,9 +1,8 @@
 'use strict';
 
 import React, { Component } from 'react';
-import { View, Text, Image} from 'react-native';
+import { View, Text, Image, StyleSheet} from 'react-native';
 import { Actions } from 'react-native-router-flux';
-import BaseStyle from './BaseStyle';
 
 import {connect} from 'react-redux';
 import {init} from './BaseAction';
@@ -20,11 +19,19 @@ class BaseView extends Component {
 
 	render(){
 		return (
-			<View style={BaseStyle.container}>
+			<View style={style.container}>
 			</View>
 		);
 	}
 }
+
+const style = StyleSheet.create({
+	container: {
+		flex: 1,
+		justifyContent: 'center',
+		alignItems: 'center'
+	}
+});
 
 function mapStateToProps(state) {
 	return {

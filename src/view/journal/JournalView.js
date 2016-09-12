@@ -3,60 +3,24 @@
 import React, { Component } from 'react';
 import { View, Text, Image, Dimensions, ScrollView, StyleSheet} from 'react-native';
 import { Actions } from 'react-native-router-flux';
-import asset from '../../app/AppAsset';
-import ViewWithBackground from '../../component/ViewWithBackground';
-
-import {connect} from 'react-redux';
-import {init} from './JournalAction';
+import AppAsset from '../../app/AppAsset';
+import BackgroundImageLayout from '../common/layout/BackgroundImageLayout';
 
 
-const {width, height} = Dimensions.get('window');
+export default class JournalView extends Component {
 
-
-class JournalView extends Component {
-
-	constructor(props) {
-		super(props);
-	}
-
-
-	componentDidMount() {
-		this.props.dispatch(init());
-	}
-
-	componentWillReceiveProps(nextProps) {
-
-	}
 
 	render() {
-		return (<ViewWithBackground backgroundImage={asset.screens.journal} pixelRatio={2} ></ViewWithBackground>)
+		return (<BackgroundImageLayout backgroundImage={asset.screen} pixelRatio={2} ></BackgroundImageLayout>)
 	}
 
-	/*  render() {
-	 this.imageStyle = {width: width};
-	 this.resizeFunc = this.resize.bind(this);
-	 if (this.state.imageHeight > 0) {
-	 this.imageStyle.height = this.state.imageHeight / 2;
-	 this.resizeFunc = null;
-	 }
-	 return (
-	 <ScrollView containContainerStyle={[ContactDetailsStyle]}>
-	 <Image  onLayout={this.resizeFunc} source={asset.screens.profile}  resizeMode='contain'
-	 style={this.imageStyle}>
-	 </Image>
-	 </ScrollView>
-	 );
-	 }*/
 
 	resize(event) {
 		this.setState({imageHeight: event.nativeEvent.layout.height});
 	}
 }
 
-function mapStateToProps(state) {
-	return {
-		journal: state.journal
-	};
-}
+const asset ={
+	screen: require('./asset/screen.png'),
+};
 
-export default connect(mapStateToProps)(JournalView);
