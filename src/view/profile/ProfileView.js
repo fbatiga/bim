@@ -25,34 +25,18 @@ class ProfileView extends Component {
 		};
 	}
 
-	onHorizontalSwipe(distance) {
-		if(distance >0){
-			if(this.position ==  0){
-				this.scrollTo(this.pointPosition);
-			}else if(this.position ==  this.pointPosition ){
-				this.scrollTo(this.trophyPosition);
-			}
-		}else{
-			if(this.position ==  this.pointPosition ){
-				this.scrollTo(0);
-			}else if(this.position ==  this.trophyPosition ){
-				this.scrollTo(this.pointPosition);
-			}
-		}
-		return true;
-	}
 
-	componentWillReceiveProps(nextProps) {
+	// componentWillReceiveProps(nextProps) {
 
-		this.animeView();
-	}
+	// 	this.animeView();
+	// }
 
 	componentDidMount() {
 
 
 		this.scroll = this.refs.profileSwiper.getScrollResponder();
 		this.position = 0;
-
+		this.animeView();
 
 	}
 
@@ -81,66 +65,33 @@ class ProfileView extends Component {
 		this.props.dispatch(swipeTo('menu'));
 	}
 
-
-
-
-
-	onHorizontalLargeSwipe(distance){
-
-			if(distance > 0){
-
-				this.animeView();
-		}else{
-			let back=	Animated.timing(
-				this.state.fadeAnim,
-				{
-					toValue: 0
-				});
-
-			let pic =	Animated.timing(
-				this.state.animPictureValue,
-				{
-					toValue: -200
-				});
-
-			let form =	Animated.timing(
-				this.state.animContentValue,
-				{
-					toValue: height
-				});
-
-			Animated.parallel([form, pic, back]).start();
-		}
-
-	}
-
 	animeView(){
 
 
-			let backAfter=	Animated.timing(
-				this.state.fadeAnim,
-				{
-					toValue: 1,
-					duration : 300
-				});
+		let backAfter=	Animated.timing(
+			this.state.fadeAnim,
+			{
+				toValue: 1,
+				duration : 300
+			});
 
-			let picAfter =	Animated.spring(
-				this.state.animPictureValue,
-				{
-					toValue: -20,
-					duration: 100,
-					friction: 7
-				});
+		let picAfter =	Animated.spring(
+			this.state.animPictureValue,
+			{
+				toValue: -20,
+				duration: 100,
+				friction: 7
+			});
 
-			let formAfter=	Animated.spring(
-				this.state.animContentValue,
-				{
-					toValue: 0,
-					duration: 100,
-					friction: 8
-				});
+		let formAfter=	Animated.spring(
+			this.state.animContentValue,
+			{
+				toValue: 0,
+				duration: 100,
+				friction: 8
+			});
 
-			Animated.sequence([ formAfter, picAfter, backAfter]).start();
+		Animated.sequence([ formAfter, picAfter, backAfter]).start();
 
 
 	}
@@ -149,12 +100,10 @@ class ProfileView extends Component {
 		this.props.dispatch(
 			configureSwipe({
 				onVerticalSwipe : this.onHorizontalSwipe.bind(this),
-				onVerticalLargeSwipe : this.onHorizontalSwipe.bind(this),
-				onHorizontalLargeSwipe : this.onHorizontalLargeSwipe.bind(this)
+				onVerticalLargeSwipe : this.onHorizontalSwipe.bind(this)
 			})
 			);
 
-			this.animeView();
 	}
 
 	render() {
@@ -259,8 +208,7 @@ const asset = {
 
 function mapStateToProps(state) {
 	return {
-		profile: state.profile,
-		menu: state.menu
+		profile: state.profile
 	};
 }
 
