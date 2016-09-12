@@ -1,20 +1,31 @@
 'use strict';
 
 import React, { Component } from 'react';
-import { View, Text, Image,  StyleSheet, ScrollView, PanResponder} from 'react-native';
+import { View, Text, Image,  StyleSheet, ScrollView, PanResponder, Dimensions, Animated} from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import BackButton from '../common/item/button/BackButton';
 import AppAsset from '../../app/AppAsset';
 import {swipeTo, configureSwipe} from '../menu/MenuAction';
 
 import {connect} from 'react-redux';
+const height = Dimensions.get('window').height;
 
 
 class ProfileView extends Component {
 
 
+
+	constructor(props) {
+		super(props);
+
+		this.state = {
+			fadeAnim: new Animated.Value(0),
+			animPictureValue: new Animated.Value(-200),
+			animContentValue: new Animated.Value(height)
+		};
+	}
+
 	onHorizontalSwipe(distance) {
-		console.log('onHorizontalSwipe', distance);
 		if(distance >0){
 			if(this.position ==  0){
 				this.scrollTo(this.pointPosition);
@@ -31,9 +42,18 @@ class ProfileView extends Component {
 		return true;
 	}
 
+	componentWillReceiveProps(nextProps) {
+
+		this.animeView();
+	}
+
 	componentDidMount() {
+
+
 		this.scroll = this.refs.profileSwiper.getScrollResponder();
 		this.position = 0;
+
+
 	}
 
 	scrollTo(y){
@@ -43,29 +63,98 @@ class ProfileView extends Component {
 			animated : true
 		});
 		this.position = y;
+
 	}
 
 	onPointLayout(event){
-		this.pointPosition = event.nativeEvent.layout.y;
+		this.pointPosition = event.nativeEvent.layout.y + 150;
 		console.log('onPointLayout',this.pointPosition);
 	}
 
 	onTrophyLayout(event){
-		this.trophyPosition = event.nativeEvent.layout.y;
+		this.trophyPosition = event.nativeEvent.layout.y + 150;
 		console.log('onTrophyLayout',this.trophyPosition);
 	}
 
 	goToMenu(){
+
 		this.props.dispatch(swipeTo('menu'));
+	}
+
+
+
+
+
+	onHorizontalLargeSwipe(distance){
+
+			if(distance > 0){
+
+				this.animeView();
+		}else{
+			let back=	Animated.timing(
+				this.state.fadeAnim,
+				{
+					toValue: 0
+				});
+
+			let pic =	Animated.timing(
+				this.state.animPictureValue,
+				{
+					toValue: -200
+				});
+
+			let form =	Animated.timing(
+				this.state.animContentValue,
+				{
+					toValue: height
+				});
+
+			Animated.parallel([form, pic, back]).start();
+		}
+
+	}
+
+	animeView(){
+
+
+			let backAfter=	Animated.timing(
+				this.state.fadeAnim,
+				{
+					toValue: 1,
+					duration : 300
+				});
+
+			let picAfter =	Animated.spring(
+				this.state.animPictureValue,
+				{
+					toValue: -20,
+					duration: 100,
+					friction: 7
+				});
+
+			let formAfter=	Animated.spring(
+				this.state.animContentValue,
+				{
+					toValue: 0,
+					duration: 100,
+					friction: 8
+				});
+
+			Animated.sequence([ formAfter, picAfter, backAfter]).start();
+
+
 	}
 
 	configureScroll(){
 		this.props.dispatch(
 			configureSwipe({
 				onVerticalSwipe : this.onHorizontalSwipe.bind(this),
-				onVerticalLargeSwipe : this.onHorizontalSwipe.bind(this)
+				onVerticalLargeSwipe : this.onHorizontalSwipe.bind(this),
+				onHorizontalLargeSwipe : this.onHorizontalLargeSwipe.bind(this)
 			})
-		);
+			);
+
+			this.animeView();
 	}
 
 	render() {
@@ -79,11 +168,12 @@ class ProfileView extends Component {
 
 			<View style={style.row}>
 
-			<BackButton image={AppAsset.back} back={this.goToMenu.bind(this)} />
+			<BackButton image={AppAsset.back} back={this.goToMenu.bind(this)} style={{opacity : this.state.fadeAnim}} />
 
-			<Image source={asset.alice}/>
+			<Animated.Image source={asset.alice} style={{top : this.state.animPictureValue}}/>
 			</View>
-			<View style={style.content}>
+			<Animated.View style={{top : this.state.animContentValue}} >
+			<View style={style.content} >
 			<Text style={style.name}>Alice</Text>
 			<Text style={style.name}>Holzman</Text>
 			<View style={style.line}>
@@ -95,10 +185,11 @@ class ProfileView extends Component {
 			<Text style={style.param}> MODIFIER MES PARAMÈTRES</Text>
 			</View>
 			</View>
-
 			</View>
 			<Image onLayout={this.onPointLayout.bind(this)} source={asset.point}/>
 			<Image onLayout={this.onTrophyLayout.bind(this)} source={asset.trophy}/>
+
+			</Animated.View>
 
 			</ScrollView>
 
@@ -143,21 +234,21 @@ const style = StyleSheet.create({
 		alignItems : 'center',
 		justifyContent : 'center'
 	},
-		action : {
-			flexDirection: 'row',
-			alignItems : 'flex-start',
-			marginTop:20,
-			marginBottom:20,
+	action : {
+		flexDirection: 'row',
+		alignItems : 'flex-start',
+		marginTop:20,
+		marginBottom:20,
 
-		},
-		param : {
-			flex : 1,
-			lineHeight : 20,
-			fontFamily : 'Montserrat-UltraLight',
-			fontSize: 10,
-			color : '#120037',
-		}
-	});
+	},
+	param : {
+		flex : 1,
+		lineHeight : 20,
+		fontFamily : 'Montserrat-UltraLight',
+		fontSize: 10,
+		color : '#120037',
+	}
+});
 
 const asset = {
 	alice: require('./asset/alice.png'),
@@ -168,7 +259,8 @@ const asset = {
 
 function mapStateToProps(state) {
 	return {
-		profile: state.profile
+		profile: state.profile,
+		menu: state.menu
 	};
 }
 
