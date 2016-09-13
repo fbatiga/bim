@@ -67,19 +67,20 @@ class ProfileView extends Component {
 
 	animeView(){
 
-
 		let backAfter=	Animated.timing(
 			this.state.fadeAnim,
 			{
 				toValue: 1,
+				delay : 300,
 				duration : 300
 			});
 
 		let picAfter =	Animated.spring(
 			this.state.animPictureValue,
 			{
-				toValue: -20,
-				duration: 100,
+				toValue: -30,
+				delay : 200,
+				duration: 300,
 				friction: 7
 			});
 
@@ -87,12 +88,11 @@ class ProfileView extends Component {
 			this.state.animContentValue,
 			{
 				toValue: 0,
-				duration: 100,
+				duration: 400,
 				friction: 8
 			});
 
-		Animated.sequence([ formAfter, picAfter, backAfter]).start();
-
+		Animated.parallel([ formAfter, picAfter, backAfter]).start();
 
 	}
 
@@ -102,7 +102,7 @@ class ProfileView extends Component {
 				onVerticalSwipe : this.onHorizontalSwipe.bind(this),
 				onVerticalLargeSwipe : this.onHorizontalSwipe.bind(this)
 			})
-			);
+		);
 
 	}
 
@@ -135,7 +135,7 @@ class ProfileView extends Component {
 
 			<View style={style.row}>
 
-			<BackButton image={AppAsset.back} back={this.goToMenu.bind(this)} style={{opacity : this.state.fadeAnim}} />
+			<BackButton image={AppAsset.back} back={this.goToMenu.bind(this)} style={{ margin: 15, opacity : this.state.fadeAnim}} />
 
 			<Animated.Image source={asset.alice} style={{top : this.state.animPictureValue}}/>
 			</View>
