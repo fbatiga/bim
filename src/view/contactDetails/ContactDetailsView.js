@@ -32,7 +32,7 @@ class ContactDetailsView extends Component {
 						<Image source={asset.info} />
 					</ScrollView>
 				</View>
-				<BackButton image={asset.back} onPress={Actions.pop} />
+				<BackButton image={asset.back} back={Actions.pop}  style={{margin : 15}}/>
 			</View>);
 	}
 
