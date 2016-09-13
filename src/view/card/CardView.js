@@ -14,6 +14,7 @@ class CardView extends Component {
 
 	constructor(props){
 		super(props);
+		this.isMoving=false;
 		this.state = {
 			count :  4,
 			cards : [
@@ -129,6 +130,8 @@ class CardView extends Component {
 
 	removeCard(card){
 
+
+
 		let friction = 8;
 		let tension = 100;
 		let duration = 300;
@@ -223,7 +226,11 @@ class CardView extends Component {
 	}
 
 	onSwipe(distance) {
-		this.move();
+
+		if(this.isMoving == false){
+			this.isMoving = true;
+			this.move();
+		}
 	}
 
 	onCardRemoved(newCards, cardToMove){
@@ -234,7 +241,9 @@ class CardView extends Component {
 		this.state.cards = [cardToMove].concat(newCards);
 
 
-		Animated.sequence(sequence).start();
+		Animated.sequence(sequence).start(()=>{
+			this.isMoving = false;
+		});
 
 
 	}
