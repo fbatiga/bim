@@ -10,7 +10,7 @@ const style = StyleSheet.create({
 		fontSize : 36,
 		lineHeight : 36,
 		letterSpacing: 1.5,
-		left : -1,
+		left : -3,
 		marginTop : 45,
 	    color: stylesVars.colors.alternative
 	}

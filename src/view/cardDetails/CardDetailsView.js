@@ -2,9 +2,10 @@
 import React, { Component } from 'react';
 import { ScrollView, View, Image, TouchableOpacity, Text , StyleSheet} from 'react-native';
 import { Actions } from 'react-native-router-flux';
-import asset from '../../app/AppAsset';
+import AppAsset from '../../app/AppAsset';
 import AppGuideline from '../../app/AppGuideline';
 
+import BackButton from '../common/item/button/BackButton';
 
 
 class CardDetailsView extends Component {
@@ -15,9 +16,6 @@ class CardDetailsView extends Component {
 			<View style={CardStyle.cardLayout}>
 			<View style={CardStyle.cardLayoutHeader}>
 			<View style={CardStyle.cardLayoutLeft}>
-			<TouchableOpacity onPess={Actions.pop}>
-			<Image source={asset.arrowBackRed} style={CardStyle.pictoBack}/>
-			</TouchableOpacity>
 			</View>
 			<View style={CardStyle.cardLayoutCenter}>
 			<Image source={asset.bimWhite} style={CardStyle.pictoBim}/>
@@ -88,12 +86,28 @@ class CardDetailsView extends Component {
 			</View>
 			</View>
 			</View>
+
+			<BackButton image={asset.back} back={Actions.pop} style ={ {margin : 15}}	 />
 			</ScrollView>
+
 			</View>
 			);
 	}
 }
 
+
+const asset = {
+	back : require('./asset/back_red.png'),
+	bimWhite: require('./asset/bim_trait_blanc.png'),
+	pastequePicto: require('./asset/pasteque.png'),
+	switchOn: require('./asset/on.png'),
+	switchOff: require('./asset/off.png'),
+	arrowRight: require('./asset/fleche_droit.png'),
+	arrowBackRed: require('./asset/fleche_retour_rouge.png'),
+	lockClosed: require('./asset/verrou_fermer.png'),
+	lockOpen: require('./asset/verrou_ouvert.png'),
+
+}
 
 
 const CardStyle = StyleSheet.create({

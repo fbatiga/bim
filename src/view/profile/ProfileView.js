@@ -106,6 +106,24 @@ class ProfileView extends Component {
 
 	}
 
+
+	onHorizontalSwipe(distance) {
+		if(distance >0){
+			if(this.position ==  0){
+				this.scrollTo(this.pointPosition);
+			}else if(this.position ==  this.pointPosition ){
+				this.scrollTo(this.trophyPosition);
+			}
+		}else{
+			if(this.position ==  this.pointPosition ){
+				this.scrollTo(0);
+			}else if(this.position ==  this.trophyPosition ){
+				this.scrollTo(this.pointPosition);
+			}
+		}
+		return true;
+	}
+
 	render() {
 		return (
 			<View style={style.container} onLayout={this.configureScroll.bind(this)}>

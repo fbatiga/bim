@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import { View, Text, Image, Dimensions, ScrollView, TouchableOpacity, StyleSheet} from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import AppAsset from '../../app/AppAsset';
+import BackButton from '../common/item/button/BackButton';
 
 import {connect} from 'react-redux';
 import {init} from './ContactDetailsAction';
@@ -15,11 +16,6 @@ const {width, height} = Dimensions.get('window');
 const style = StyleSheet.create({
 	container: {
 		flex: 1
-	},
-	back: {
-		position:'absolute',
-		top: 20,
-		left: -1,
 	}
 });
 
@@ -36,9 +32,7 @@ class ContactDetailsView extends Component {
 						<Image source={asset.info} />
 					</ScrollView>
 				</View>
-					<TouchableOpacity style={style.back} onPress={Actions.pop} >
-						<Image source={asset.back}  style={{}} />
-				</TouchableOpacity>
+				<BackButton image={asset.back} onPress={Actions.pop} />
 			</View>);
 	}
 

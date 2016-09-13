@@ -4,9 +4,10 @@ import asset from '../../../../app/AppAsset';
 
 const style = StyleSheet.create({
 	button :{
+		padding: 10,
 		position:'absolute',
-		top: 25,
-		left: 4,
+		top: 15,
+		left: -11,
 	}
 });
 

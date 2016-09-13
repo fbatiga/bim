@@ -11,7 +11,6 @@ import KeyboardSpacer from 'react-native-keyboard-spacer';
 import AppAsset from '../../app/AppAsset';
 
 
-
 class MessengerView extends Component {
 
 	constructor(props){
@@ -102,7 +101,14 @@ class MessengerView extends Component {
 
 
 	// }
+	//
 
+
+	 clearText() {
+		this.setState({
+			input : false
+		})
+	 }
 
 	componentDidUpdate(){
 
@@ -176,21 +182,16 @@ class MessengerView extends Component {
 					<TextInput
 					autoCapitalize='sentences'
 					autoCorrect={false}
-					ref="textInput"
-					value={this.state.text}
+					ref={(component) => {this._textInput = component}}
 					autoFocus={true}
 					returnKeyType='send'
 					placeholder='Entrez votre message...'
-					onChangeText={this.onChangeText.bind(this)}
 					onSubmitEditing={(event)=>{this.onSend(event.nativeEvent.text);}}
 					style={style.input}
+					onBlur ={this.clearText.bind(this)}
 					/>
-					<TouchableOpacity style={style.close} onPress={()=>{
-						this.setState({
-							input: false
-						});
-					}}>
-					<Image source={asset.close} />
+					<TouchableOpacity  ref="next" style={style.close} onPress={this.clearText.bind(this)}>
+					<Image  source={asset.close} />
 					</TouchableOpacity>
 					</View>
 
