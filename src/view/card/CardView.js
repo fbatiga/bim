@@ -1,6 +1,6 @@
 'use strict';
 import React, { Component } from 'react';
-import { View, Image, TouchableOpacity, TouchableWithoutFeedback , PanResponder, Text, StyleSheet, Animated, ScrollView } from 'react-native';
+import { View, Image, TouchableOpacity, TouchableWithoutFeedback , PanResponder, Text, StyleSheet, Easing, Animated, ScrollView } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import asset from '../../app/AppAsset';
@@ -24,7 +24,7 @@ class CardView extends Component {
 					zIndex : 0,
 					position: 'absolute',
 					top: new Animated.Value(0),
-					left: new Animated.Value(14),
+					left: new Animated.Value(300),
 					transform : [{
 						scale : new Animated.Value(0.7)
 					},{
@@ -38,7 +38,7 @@ class CardView extends Component {
 					zIndex : 1,
 					position: 'absolute',
 					top: new Animated.Value(30),
-					left: new Animated.Value(12),
+					left: new Animated.Value(300),
 					transform : [{
 						scale : new Animated.Value(0.8)
 					},{
@@ -52,7 +52,7 @@ class CardView extends Component {
 					zIndex : 2,
 					position: 'absolute',
 					top: new Animated.Value(60),
-					left: new Animated.Value(10),
+					left: new Animated.Value(300),
 					transform : [{
 						scale : new Animated.Value(0.9)
 					},{
@@ -66,7 +66,7 @@ class CardView extends Component {
 					zIndex : 3,
 					position: 'absolute',
 					top: new Animated.Value(90),
-					left: new Animated.Value(8),
+					left: new Animated.Value(300),
 					transform : [{
 						scale : new Animated.Value(1)
 					},{
@@ -112,6 +112,7 @@ class CardView extends Component {
 
 		let scaleTo = 1 - ( pos * 0.1 );
 
+
 		let scale = Animated.timing(
 			card.transform[0].scale,
 			{
@@ -128,6 +129,58 @@ class CardView extends Component {
 	}
 
 
+	componentDidMount(){
+
+		let animation = [];
+
+		let left = 8 + this.state.cards.length * 2;
+
+		this.state.cards.reverse().map((card, index)=>{
+
+			let leftTo = left - ( index * 2 );
+
+			animation.push(
+				Animated.timing(
+				card.style.left,
+				{
+					toValue: leftTo,
+					duration : 200,
+					delay : index * 100
+				})
+			);
+
+		});
+
+		Animated.parallel(animation).start();
+	}
+
+
+	componentWillUnmount(){
+
+		let animation = [];
+
+		let left = 8 + this.state.cards.length * 2;
+
+		this.state.cards.map((card, index)=>{
+
+
+			animation.push(
+				Animated.timing(
+				card.style.left,
+				{
+					toValue: 300,
+					duration : 300,
+					delay : index * 200
+				})
+			);
+
+		});
+
+		Animated.parallel(animation).start();
+
+	}
+
+
 	removeCard(card){
 
 
@@ -135,6 +188,7 @@ class CardView extends Component {
 		let friction = 8;
 		let tension = 100;
 		let duration = 300;
+
 
 		let left = Animated.timing(
 			card.left,
