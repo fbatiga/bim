@@ -12,7 +12,6 @@ import {init} from './ContactDetailsAction';
 
 const {width, height} = Dimensions.get('window');
 
-
 const style = StyleSheet.create({
 	container: {
 		flex: 1
@@ -32,7 +31,7 @@ class ContactDetailsView extends Component {
 						<Image source={asset.info} />
 					</ScrollView>
 				</View>
-				<BackButton image={asset.back} back={Actions.pop}  style={{margin : 15}}/>
+				<BackButton image={asset.back} back={Actions.pop}/>
 			</View>);
 	}
 

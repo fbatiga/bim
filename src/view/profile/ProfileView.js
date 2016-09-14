@@ -1,7 +1,7 @@
 'use strict';
 
 import React, { Component } from 'react';
-import { View, Text, Image,  StyleSheet, ScrollView, PanResponder, Dimensions, Animated} from 'react-native';
+import { View, Text, Image,  StyleSheet, ScrollView, PanResponder, Dimensions, Animated, Easing} from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import BackButton from '../common/item/button/BackButton';
 import AppAsset from '../../app/AppAsset';
@@ -33,7 +33,6 @@ class ProfileView extends Component {
 
 	componentDidMount() {
 
-
 		this.scroll = this.refs.profileSwiper.getScrollResponder();
 		this.position = 0;
 		this.animeView();
@@ -47,7 +46,6 @@ class ProfileView extends Component {
 			animated : true
 		});
 		this.position = y;
-
 	}
 
 	onPointLayout(event){
@@ -61,7 +59,6 @@ class ProfileView extends Component {
 	}
 
 	goToMenu(){
-
 		this.props.dispatch(swipeTo('menu'));
 	}
 
@@ -71,25 +68,25 @@ class ProfileView extends Component {
 			this.state.fadeAnim,
 			{
 				toValue: 1,
-				delay : 300,
+				delay : 200,
 				duration : 300
 			});
 
-		let picAfter =	Animated.spring(
+		let picAfter =	Animated.timing(
 			this.state.animPictureValue,
 			{
 				toValue: -30,
-				delay : 200,
+				delay : 300,
 				duration: 300,
-				friction: 7
+				easing : Easing.ease
 			});
 
-		let formAfter=	Animated.spring(
+		let formAfter=	Animated.timing(
 			this.state.animContentValue,
 			{
 				toValue: 0,
-				duration: 400,
-				friction: 8
+				duration: 300,
+				easing : Easing.ease
 			});
 
 		Animated.parallel([ formAfter, picAfter, backAfter]).start();
@@ -135,7 +132,7 @@ class ProfileView extends Component {
 
 			<View style={style.row}>
 
-			<BackButton image={AppAsset.back} back={this.goToMenu.bind(this)} style={{ margin: 15, opacity : this.state.fadeAnim}} />
+			<BackButton image={AppAsset.back} back={this.goToMenu.bind(this)} style={{ opacity : this.state.fadeAnim}} />
 
 			<Animated.Image source={asset.alice} style={{top : this.state.animPictureValue}}/>
 			</View>

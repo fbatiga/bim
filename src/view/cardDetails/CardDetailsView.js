@@ -87,7 +87,7 @@ class CardDetailsView extends Component {
 			</View>
 			</View>
 
-			<BackButton image={asset.back} back={Actions.pop} style ={ {margin : 15}}	 />
+			<BackButton image={asset.back} back={Actions.pop}/>
 			</ScrollView>
 
 			</View>
