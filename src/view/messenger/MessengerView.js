@@ -112,10 +112,7 @@ class MessengerView extends Component {
 
 	componentDidUpdate(){
 
-		//console.log('componentDidUpdate',this.props.messenger)
-
 		if(this.props.messenger.bot == true  && this.props.messenger.messages.length == 0){
-
 
 		}
 
@@ -124,16 +121,17 @@ class MessengerView extends Component {
 
 	onSend(text) {
 
-		if (this.state.input== false  && text == '...') {
+		if (this.state.input == false  && text == '...') {
 			this.setState({
 				input: true
 			});
 		}else if(this.state.input == true){
 
-			this.props.dispatch(addMessage(this.state.text));
+			this.props.dispatch(addMessage(text));
 			this.setState({text : ''});
 
 		}else {
+
 			this.props.dispatch(loadButtons([]));
 			this.props.dispatch(addMessage(text));
 
@@ -143,6 +141,7 @@ class MessengerView extends Component {
 					session : this.props.messenger.session
 				}));
 			}
+
 		}
 
 	}
