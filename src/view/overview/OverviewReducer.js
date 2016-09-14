@@ -22,33 +22,38 @@ const initialState = {
     balance: 2300,
     accounts: [
         {
-            id: 'bnp',
-            label: 'BNP',
-            balance: -1129,
+            id: 'TOUT',
+            label: 'TOUT',
+            balance: 2300,
             type: "external"
         },
         {
-            id: 'bim',
+            id: 'Bim',
             label: 'BIM',
             balance: 1129,
             type: "internal"
+        },{
+            id: 'bnp',
+            label: 'BNP',
+            balance: -1429,
+            type: "external"
         },
         {
             id: 'barclays',
             label: "Barclay's",
-            balance: -1129,
+            balance: -209,
             type: "external"
         },
         {
             id: 'boursormama',
             label: "Boursormama's",
-            balance: -1129,
+            balance: -529,
             type: "external"
         },
         {
             id: 'bdb',
             label: "Banco de brasil",
-            balance: -1129,
+            balance: -729,
             type: "external"
         },
         {
