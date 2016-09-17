@@ -23,13 +23,13 @@ class OverviewView extends Component {
 		};
 	}
 
-		render() {
-			return (
-				<View
-				horizontal={false} style={[style.container, {flex: 1}]}>
-				<View style={[style.top, {flex: 1}]}>
+	render() {
+		return (
+			<View
+			horizontal={false} style={[style.container, {flex: 1}]}>
+			<View style={[style.top, {flex: 1}]}>
 
-				<Title style={{opacity: this.state.fadeAnim, marginBottom: 70}}>COMPTES</Title>
+			<Title style={{opacity: this.state.fadeAnim, marginBottom: 70}}>COMPTES</Title>
 
 			<Animated.View style={[style.circle, {transform: [{scale: this.state.bounceValue}]}]}>
 			<ScrollableTabView
@@ -73,87 +73,85 @@ class OverviewView extends Component {
 
 			</View>
 			);
-		}
+	}
 
-		randomizeColor(index) {
-			switch ( index % 3 ) {
-				case 0: return AppGuideline.colors.white; break;
-				case 1: return AppGuideline.colors.pink; break;
-				case 2: return AppGuideline.colors.lightblue; break;
-				case 3: return AppGuideline.colors.lightGrey; break;
-				default: return AppGuideline.colors.lightblue
-			}
-		}
-
-		selectColor(type, key) {
-			if (type === 'internal') {
-				return AppGuideline.colors.alternative;
-			} else {
-				return this.randomizeColor(key);
-			}
-		}
-
-		transition(type) {
-			Animated.timing(
-				this.state.fadeAnim,
-				{
-					toValue: 0,
-					duration: 50
-				}).start();
-
-			Animated.timing(
-				this.state.bounceValue, {
-					duration: 300,
-					toValue: 8,
-					friction: 5,
-					tension: 40
-				}).start();
-
-			setTimeout(() => {
-				if (type === 'jackpot') {
-					Actions.jackpot();
-				} else {
-					Actions.account();
-				}}, 300);
+	randomizeColor(index) {
+		switch ( index % 3 ) {
+			case 0: return AppGuideline.colors.white; break;
+			case 1: return AppGuideline.colors.pink; break;
+			case 2: return AppGuideline.colors.lightblue; break;
+			case 3: return AppGuideline.colors.lightGrey; break;
+			default: return AppGuideline.colors.lightblue
 		}
 	}
 
+	selectColor(type, key) {
+		if (type === 'internal') {
+			return AppGuideline.colors.alternative;
+		} else {
+			return this.randomizeColor(key);
+		}
+	}
 
-	const style = StyleSheet.create({
-		circle: {
-			backgroundColor: 'transparent',
-		},
-		container: {
-			backgroundColor:  AppGuideline.colors.deepBlue,
-		},
-		top: {
-			alignItems: 'stretch',
-			backgroundColor: AppGuideline.colors.deepBlue,
-			top: 0,
-			left: 0,
-		},
-		tabs: {
-			overflow: 'hidden',
-			height: 150,
-			borderWidth: 0
-		},
-		tabBar: {
-			fontSize: 15,
-			fontFamily: 'Montserrat',
-			marginTop : 50,
-			borderWidth: 0,
-			paddingLeft : 160
-		},
-		graph: {
-			alignItems: 'center'
-		},
-		graphCircle: {
-			justifyContent: 'center',
-			alignItems: 'center',
-			width: 200,
-			height: 200,
-			padding: 10,
-			marginBottom: 10,
+	transition(type) {
+		Animated.timing(
+			this.state.fadeAnim,
+			{
+				toValue: 0,
+				duration: 50
+			}).start();
+
+		Animated.timing(
+			this.state.bounceValue, {
+				duration: 300,
+				toValue: 8,
+				friction: 5,
+				tension: 40
+			}).start();
+
+		setTimeout(() => {
+			if (type === 'jackpot') {
+				Actions.jackpot();
+			} else {
+				Actions.account();
+			}}, 300);
+	}
+}
+
+
+const style = StyleSheet.create({
+	circle: {
+		backgroundColor: 'transparent',
+	},
+	container: {
+		backgroundColor:  AppGuideline.colors.deepBlue,
+	},
+	top: {
+		alignItems: 'stretch',
+		backgroundColor: AppGuideline.colors.deepBlue,
+		top: 0,
+		left: 0,
+	},
+	tabs: {
+		overflow: 'hidden',
+		height: 150,
+		borderWidth: 0
+	},
+	tabBar: {
+		marginTop : 50,
+		borderWidth: 0,
+		paddingLeft : 160
+	},
+	graph: {
+		alignItems: 'center'
+	},
+	graphCircle: {
+		justifyContent: 'center',
+		alignItems: 'center',
+		width: 200,
+		height: 200,
+		padding: 10,
+		marginBottom: 10,
 		// backgroundColor:  AppGuideline.colors.alternative,
 		borderRadius: 145
 	},
@@ -181,10 +179,10 @@ class OverviewView extends Component {
 });
 
 
-	function mapStateToProps(state) {
-		return {
-			overview: state.overview
-		};
-	}
+function mapStateToProps(state) {
+	return {
+		overview: state.overview
+	};
+}
 
-	export default connect(mapStateToProps)(OverviewView);
+export default connect(mapStateToProps)(OverviewView);

@@ -80,8 +80,8 @@ class MenuView extends Component {
 			<View style={[style.container, this.props.style]} >
 			{this.state.menu.map((item,index)=>{
 				return (
-					<Animated.View  style={{left: item.left}}>
-					<TouchableOpacity  key={index}  onPress={()=>{ this.props.gotTo(item)}}>
+					<Animated.View  key={index}  style={{left: item.left}}>
+					<TouchableOpacity   onPress={()=>{ this.props.gotTo(item)}}>
 					<Text style={style.title} >{item.text}</Text>
 					</TouchableOpacity>
 					</Animated.View>

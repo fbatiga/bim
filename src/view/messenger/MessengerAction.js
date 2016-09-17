@@ -6,11 +6,12 @@ export const MESSENGER_FAILURE = 'messenger.failure';
 export const MESSENGER_BUTTONS = 'messenger.buttons';
 export const MESSENGER_MESSAGE = 'messenger.message';
 export const MESSENGER_BOT_MESSAGE = 'messenger.bot_message';
-export const MESSENGER_SESSION = 'messenger.session';
 export const MESSENGER_SLACK_MESSAGE = 'messenger.slack';
 export const MESSENGER_BOT_RESTART = 'messenger.bot_restart';
 export const MESSENGER_NOTIFICATION = 'messenger.notification';
 export const MESSENGER_VISIBILITY = 'messenger.visibility';
+export const MESSENGER_PROFILE = 'messenger.profile';
+
 
 export function getReply(params) {
   return {
@@ -19,6 +20,14 @@ export function getReply(params) {
     params : params
   };
 }
+
+export function loadSession(message) {
+	return getReply({
+    	session : 'bim_'+Math.random(),
+    	msg : message
+    });
+}
+
 
 export function setVisibility(params) {
   return {
@@ -47,17 +56,18 @@ export function notify(params) {
   };
 }
 
-export function registerSession(params) {
-  return {
-    type: MESSENGER_SESSION,
-    params : params
-  };
-}
-
 export function addBotMessage(params) {
   return {
     type: MESSENGER_BOT_MESSAGE,
     params : params
+  };
+}
+
+
+export function updateProfile(profile) {
+  return {
+    type: MESSENGER_PROFILE,
+    profile
   };
 }
 

@@ -35,9 +35,6 @@ class AccountView extends Component {
 		});
 		this.categories = categories;
 
-		const rootRef = firebaseDb.ref();
-		this.transactionsRef = rootRef.child('alice/transactions');
-
 		this.state = {
 			currentTab: 'all',
 			previousMonth: 'Mai',
@@ -48,6 +45,11 @@ class AccountView extends Component {
 			bounceValue: new Animated.Value(0),
 			slideIn: new Animated.Value(100)
 		};
+	}
+
+	componentWillMount(){
+		const rootRef = firebaseDb.ref();
+		this.transactionsRef = rootRef.child(this.props.login.username+'/transactions');
 	}
 
 	componentDidMount() {
@@ -80,8 +82,8 @@ class AccountView extends Component {
 			snapshot.forEach((row) => {
 				row = row.val();
 				row.category = this.categories[row.category];
-                this.props.dispatch(addTransaction(row));
-            });
+				this.props.dispatch(addTransaction(row));
+			});
 
 		}.bind(this), function (err) {
 			console.log(err);
@@ -99,7 +101,7 @@ class AccountView extends Component {
 
             that.props.account.transactions.unshift(snapshot);
            // this.setState({dataSource: this.state.dataSource.cloneWithRows(this.props.account.transactions)});
-        });
+       });
 	}
 
 	showModal() {
@@ -132,10 +134,10 @@ class AccountView extends Component {
 			<Title style={{color :AppGuideline.colors.deepBlue, marginBottom: 20}} >B!M</Title>
 
 			<Animated.View style={[style.graph, { transform: [ {scale: this.state.bounceValue} ] }]}>
-				<Image source={AppAsset.graphCircled}  style={style.graphCircle}>
-					<Text style={style.graphLabel} >SOLDE ACTUEL</Text>
-					<Text style={style.graphBalance} >{this.state.balance} €</Text>
-				</Image>
+			<Image source={AppAsset.graphCircled}  style={style.graphCircle}>
+			<Text style={style.graphLabel} >SOLDE ACTUEL</Text>
+			<Text style={style.graphBalance} >{this.state.balance} €</Text>
+			</Image>
 			</Animated.View>
 
 			<View style={style.tabs}>
@@ -156,11 +158,11 @@ class AccountView extends Component {
 
 			<Animated.View style={[style.bottom, { marginTop: this.state.slideIn }]}>
 			<AccountTransfertList
-				previousMonth={this.state.previousMonth}
-				currentMonth={this.state.currentMonth}
-				category={this.state.category}
-				transactions={this.props.account.transactions}
-				/>
+			previousMonth={this.state.previousMonth}
+			currentMonth={this.state.currentMonth}
+			category={this.state.category}
+			transactions={this.props.account.transactions}
+			/>
 			</Animated.View>
 			</ScrollView>
 			</View>
@@ -169,81 +171,82 @@ class AccountView extends Component {
 }
 
 const style = StyleSheet.create({
-    container: {
-    	flex: 1
-    },
-    top: {
-        height: (height - 225),
-        backgroundColor: AppGuideline.colors.alternative,
-        overflow: 'visible',
-        zIndex: 10
-    },
-    tabs: {
-        flex: 1
-    },
-    graph: {
-        alignItems: 'center'
-    },
-    graphCircle: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        width: null,
-        height: 220,
-        resizeMode: 'stretch',
-    },
-    graphLabel: {
+	container: {
+		flex: 1
+	},
+	top: {
+		height: (height - 225),
+		backgroundColor: AppGuideline.colors.alternative,
+		overflow: 'visible',
+		zIndex: 10
+	},
+	tabs: {
+		flex: 1
+	},
+	graph: {
+		alignItems: 'center'
+	},
+	graphCircle: {
+		justifyContent: 'center',
+		alignItems: 'center',
+		width: null,
+		height: 220,
+		resizeMode: 'stretch',
+	},
+	graphLabel: {
 
-        fontSize: 10,
-        letterSpacing : 1.5,
-    	fontFamily: 'Montserrat',
-        color: '#120037',
-        fontWeight: '300',
-        marginBottom: 5,
-        width: 180,
-        marginLeft: 20,
-        marginRight: 20,
-        overflow: 'hidden',
-        textAlign: "center"
-    },
+		fontSize: 10,
+		letterSpacing : 1.5,
+		fontFamily: 'Montserrat',
+		color: '#120037',
+		fontWeight: '300',
+		marginBottom: 5,
+		width: 180,
+		marginLeft: 20,
+		marginRight: 20,
+		overflow: 'hidden',
+		textAlign: "center"
+	},
 
-    graphBalance: {
-        fontSize: 36,
-        color: '#120037',
-        fontWeight: 'bold'
-    },
-    dotIcon: {
-        alignItems: 'center',
-        marginTop: 10
-    },
+	graphBalance: {
+		fontSize: 36,
+		color: '#120037',
+		fontWeight: 'bold'
+	},
+	dotIcon: {
+		alignItems: 'center',
+		marginTop: 10
+	},
 
-    transferButton: {
-      position: 'absolute',
-      top: (height - 215),
-      right: -10,
-      borderRadius: 100,
-      padding: 0,
-      zIndex: 100
-    },
+	transferButton: {
+		position: 'absolute',
+		top: (height - 215),
+		right: -10,
+		borderRadius: 100,
+		padding: 0,
+		zIndex: 100
+	},
 
-    transferButtonImage: {},
+	transferButtonImage: {},
 
-    bottom: {
-        backgroundColor: '#fff'
-    },
+	bottom: {
+		backgroundColor: '#fff'
+	},
 
-    tabsContainer: {
-      flex: 1
-    },
-    tabsContent: {
-      paddingHorizontal: themePreview,
-      alignItems: 'center',
-      flex: 1
-    }
+	tabsContainer: {
+		flex: 1
+	},
+	tabsContent: {
+		paddingHorizontal: themePreview,
+		alignItems: 'center',
+		flex: 1
+	}
 });
 
 function mapStateToProps(state) {
 	return {
-		account: state.account
+		account: state.account,
+		login: state.login
 	};
 }
 

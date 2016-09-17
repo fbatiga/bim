@@ -27,12 +27,10 @@ class AppLayout extends Component {
 	}
 
 	componentDidMount(){
-		this.props.dispatch(loadSession());
 		this.scroll = this.refs.swiper.getScrollResponder();
 		this.scroll.scrollTo({
 			y: 0,
-			x: width,
-			false
+			x: width
 		});
 	}
 
@@ -165,7 +163,7 @@ class AppLayout extends Component {
 
 	home(){
 
-		if(this.props.messenger.visibility == false){
+		if(this.props.messenger.visibility == false && this.props.messenger.session != null){
 			Actions.messenger();
 		}
 

@@ -3,7 +3,7 @@
 import { handleActions } from 'redux-actions';
 
 import {
-	MESSENGER_NOTIFICATION, MESSENGER_VISIBILITY, MESSENGER_BOT_RESTART, MESSENGER_SLACK_MESSAGE, MESSENGER_HELLO, MESSENGER_REQUEST, MESSENGER_SUCCESS, MESSENGER_FAILURE, MESSENGER_BUTTONS, MESSENGER_MESSAGE, MESSENGER_BOT_MESSAGE, MESSENGER_SESSION
+	MESSENGER_PROFILE, MESSENGER_NOTIFICATION, MESSENGER_VISIBILITY, MESSENGER_BOT_RESTART, MESSENGER_SLACK_MESSAGE, MESSENGER_HELLO, MESSENGER_REQUEST, MESSENGER_SUCCESS, MESSENGER_FAILURE, MESSENGER_BUTTONS, MESSENGER_MESSAGE, MESSENGER_BOT_MESSAGE, MESSENGER_SESSION
 } from './MessengerAction';
 
 import { UserSlack, BimSlack } from '../../app/AppSlack';
@@ -14,7 +14,8 @@ const initialState = {
 	buttons : [],
 	notification : false,
 	visibility : null,
-	bot: true
+	bot: true,
+	profile : null
 };
 
 function createMessage(text, image, buttons, isBot, index){
@@ -59,7 +60,6 @@ function addMessages(state, result, isBot){
 		let buttons = [];
 
 		message = message.trim();
-		console.log(message);
 
 		let indexImage = message.indexOf('[img]');
 		if(indexImage >= 0){
@@ -68,6 +68,16 @@ function addMessages(state, result, isBot){
 
 			console.log(image);
 		}
+
+		var re = /\(([a-zA-Z]+)\)/;
+		var match = re.exec(message);
+
+		if(match != null){
+			if(state.profile[match[1]] !== undefined){
+				message = message.replace('('+match[1]+')',state.profile[match[1]]);
+			}
+		}
+
 		let choiceIndex  = message.indexOf('[')
 		if( choiceIndex != -1 ){
 			buttons = loadButtons(message.substr(choiceIndex));
@@ -114,13 +124,14 @@ function addMessage(messages, result, image, buttons, isBot, index){
 const MessengerReducer = handleActions({
 
 
+    [MESSENGER_PROFILE]: (state, action) => {
+        return {...state, profile : action.profile };
+    },
+
+
 	[MESSENGER_BUTTONS]: (state, action) => {
 		console.log('MESSENGER_BUTTONS', action.params);
 		return { ...state, buttons: action.params};
-	},
-
-	[MESSENGER_SESSION]: (state, action) => {
-		return { ...state, session: action.params};
 	},
 
 	[MESSENGER_BOT_RESTART]: (state, action) => {
@@ -147,12 +158,23 @@ const MessengerReducer = handleActions({
 		return addMessages(state, action.params, true);
 	},
 
+
 	[MESSENGER_REQUEST]: (state, action) => {
-		return Object.assign({}, state, {loading: true});
+
+		if(state.session == null && action.params.session !== undefined){
+			state.session = action.params.session;
+			console.log('newState.session', state.session);
+		}
+
+
+		return {...state, loading: true};
 	},
 
 	[MESSENGER_SUCCESS]: (state, action) => {
-		return addMessages(state, action.result.botResponse, true);
+
+		let newState = addMessages(state, action.result.botResponse, true);
+
+		return newState;
 	},
 
 	[MESSENGER_FAILURE]: (state, action) => {

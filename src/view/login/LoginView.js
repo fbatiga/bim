@@ -1,55 +1,79 @@
 'use strict';
 
 import React, { Component } from 'react';
-import { View, Text, Image, Dimensions , TouchableOpacity, StyleSheet} from 'react-native';
+import { View, Text, Image, Dimensions , TouchableOpacity, StyleSheet, AsyncStorage} from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import {connect} from 'react-redux';
-import {loadSession} from './LoginAction';
+import {login, signup} from './LoginAction';
 import AppAsset from '../../app/AppAsset';
-import {loadChoices, registerSession, addMessage, addBotMessage} from '../messenger/MessengerAction';
-
+import {loadSession, loadChoices, registerSession, addMessage, addBotMessage} from '../messenger/MessengerAction';
 
 const LoginStyle = StyleSheet.create({
-    container: {
-        flex: 1,
-    	backgroundColor : '#79F0CC',
-    },
-    bottom : {
+	container: {
+		flex: 1,
+		backgroundColor : '#79F0CC',
+	},
+	bottom : {
 		flex: 3,
-	    flexDirection: "column",
-	    justifyContent: "flex-start",
-        alignItems: 'center',
+		flexDirection: "column",
+		justifyContent: "flex-start",
+		alignItems: 'center',
 	},
 	top: {
 		flex: 4,
-	    flexDirection: "column",
-	    justifyContent: "flex-end",
-	    alignItems: "center"
+		flexDirection: "column",
+		justifyContent: "flex-end",
+		alignItems: "center"
 	}
 });
-
 
 const {width, height} = Dimensions.get('window');
 
 class LoginView extends Component {
 
 	login(){
-		this.props.dispatch(registerSession(this.props.login.session));
+
+		if(this.props.login.username == false){
+			this.props.dispatch(loadSession('welcome'));
+		}else{
+			this.props.dispatch(loadSession('hello'));
+		}
+
 		Actions.messenger();
+	}
+
+	componentWillMount(){
+
+		//AsyncStorage.clear();
+
+		var value =  AsyncStorage.getItem('@AsyncStorage:username', (err, result) =>{
+
+			if(err){
+				console.log(err);
+			}
+
+			if (result !== null){
+				this.props.dispatch(login(result));
+			}else{
+				this.props.dispatch(signup());
+			}
+
+		});
+
 	}
 
 	render(){
 
 		return (
-				<TouchableOpacity style={[LoginStyle.container, { alignItems:'center', justifyContent: 'flex-start', flexDirection:'column' }]} onPress={this.login.bind(this)} >
-					<View style={{flex: 4}} >
-						<Image source={asset.logo}  style={{ width:width-80, top: 40}} resizeMode='contain'></Image>
-					</View>
-					<View style={{flex: 1}} >
-						<Image source={asset.fingerPrint}  style={{ width:41.95 }} resizeMode='contain'></Image>
-					</View>
-				</TouchableOpacity>
-		);
+			<TouchableOpacity style={[LoginStyle.container, { alignItems:'center', justifyContent: 'flex-start', flexDirection:'column' }]} onPress={this.login.bind(this)} >
+			<View style={{flex: 4}} >
+			<Image source={asset.logo}  style={{ width:width-80, top: 40}} resizeMode='contain'></Image>
+			</View>
+			<View style={{flex: 1}} >
+			<Image source={asset.fingerPrint}  style={{ width:41.95 }} resizeMode='contain'></Image>
+			</View>
+			</TouchableOpacity>
+			);
 	}
 }
 

@@ -73,7 +73,7 @@ export default ({getState, dispatch}) => next => action => {
     }
 
     const [REQUEST, SUCCESS, FAILURE] = types;
-    next({...rest, type: REQUEST});
+    next({...rest, params, type: REQUEST});
     return fetch(url, options)
     .then(checkStatus)
     .then(parseJSON)
@@ -82,14 +82,14 @@ export default ({getState, dispatch}) => next => action => {
     	if (result.error !==  undefined) {
     		throw new Error(result.error);
     	}else{
-    		next({...rest, result, type: SUCCESS});
+    		next({...rest, params, result, type: SUCCESS});
     	}
     })
     .catch((error)=> {
     	const response = error.response;
 
     	if(response===undefined){
-    		next({...rest, error, type: FAILURE});
+    		next({...rest, params, error, type: FAILURE});
     	}else{
     		parseJSON(response)
     		.then(function(json){

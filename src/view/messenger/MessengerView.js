@@ -2,14 +2,16 @@
 
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
-import { Text, View, ListView,  StyleSheet , Image, ScrollView, TextInput, TouchableOpacity } from 'react-native';
-import {getReply, addMessage, addSlackMessage,loadButtons,restartBot , notify, setVisibility} from './MessengerAction';
+import { Text, View, ListView,  StyleSheet , Image, ScrollView, TextInput, TouchableOpacity, AsyncStorage } from 'react-native';
+import {getReply,updateProfile, addMessage, addSlackMessage,loadButtons,restartBot , notify, setVisibility} from './MessengerAction';
+import {register} from '../login/LoginAction';
 import MessengerMain from './layout/MessengerMain';
 import MessengerBottom from './layout/MessengerBottom';
 import {firebaseDb} from  '../../app/AppFirebase';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import AppAsset from '../../app/AppAsset';
 
+const rootRef = firebaseDb.ref();
 
 class MessengerView extends Component {
 
@@ -17,13 +19,28 @@ class MessengerView extends Component {
 		super(props);
 
 		this.buttons = [];
-		const rootRef = firebaseDb.ref();
-		this.firebaseMessagesRef = rootRef.child('alice/slack');
-		this.firebaseNotificationRef = rootRef.child('alice/notification');
 		this.state = {
 			input : false,
 			text : ''
 		};
+
+		this.form = [];
+
+		this.firebaseMessagesRef = null;
+		this.firebaseNotificationRef = null;
+		this.firebaseProfileRef = null;
+
+		this.inputToSave = null;
+
+
+		if(this.props.login.username != false){
+			this.firebaseProfileRef = rootRef.child(this.props.login.username+'/profile');
+
+			this.firebaseProfileRef.on('value', function(snapshot) {
+				this.props.dispatch(updateProfile(snapshot.val()));
+			}.bind(this));
+		}
+
 	}
 
 	componentDidMount(){
@@ -31,24 +48,15 @@ class MessengerView extends Component {
 		//this.props.dispatch(setVisibility(true));
 		//console.log('componentDidMount',  this.props.messenger);
 
-		if(this.props.messenger.messages.length == 0){
+		if(this.props.messenger.messages.length == 0 ){
 
-			this.props.dispatch(getReply({
-				msg : 'hello',
-				session : this.props.messenger.session
-			}));
+			if(this.props.messenger.loading == false){
+				this.props.dispatch(getReply({
+					msg : 'hello',
+					session : this.props.messenger.session
+				}));
+			}
 
-			this.firebaseNotificationRef.on('value', function(snapshot) {
-
-				let notification = snapshot.val();
-					//console.log('firebaseNotificationRef', notification , this.props.messenger.notification);
-					if(notification !== null  && this.props.messenger.notification === false){
-						this.props.dispatch(notify(notification));
-					}
-
-					this.firebaseNotificationRef.set(null);
-
-				}.bind(this));
 		}else{
 			this.props.messenger.messages.map((message)=>{
 				message.loaded = true;
@@ -58,6 +66,7 @@ class MessengerView extends Component {
 	}
 
 	componentWillReceiveProps(nextProps){
+
 		//console.log('componentWillReceiveProps', this.props.messenger, nextProps.messenger);
 
 		if(this.props.messenger.notification != nextProps.messenger.notification  && nextProps.messenger.notification != false){
@@ -77,16 +86,55 @@ class MessengerView extends Component {
 			}.bind(this));
 		}
 
+
+		if(this.props.login.username != nextProps.login.username && nextProps.login.username  != false){
+
+			this.firebaseMessagesRef = rootRef.child(nextProps.login.username+'/slack');
+			this.firebaseNotificationRef = rootRef.child(nextProps.login.username+'/notification');
+
+			if(this.firebaseProfileRef == null){
+
+				this.firebaseProfileRef = rootRef.child(nextProps.login.username+'/profile');
+
+				if(this.form['prenom'] !== undefined && this.props.messenger.profile){
+					let result =this.firebaseProfileRef.child('prenom').set(this.form['prenom']);
+					this.form = [];
+				}
+
+				this.firebaseProfileRef.on('value', function(snapshot) {
+					this.props.dispatch(updateProfile(snapshot.val()));
+				}.bind(this));
+
+			}
+
+
+			this.firebaseNotificationRef.on('value', function(snapshot) {
+
+				let notification = snapshot.val();
+					//console.log('firebaseNotificationRef', notification , this.props.messenger.notification);
+					if(notification !== null  && this.props.messenger.notification === false){
+						this.props.dispatch(notify(notification));
+					}
+
+					this.firebaseNotificationRef.set(null);
+
+				}.bind(this));
+
+		}
+
 		if(this.props.messenger.notification != nextProps.messenger.notification  && nextProps.messenger.notification == false){
 			this.props.dispatch(restartBot());
 		}
 
 		//console.log('firebaseMessagesRef',this.props.messenger.bot, nextProps.messenger.bot );
 		if(this.props.messenger.bot !== nextProps.messenger.bot  && nextProps.messenger.bot == true){
-			this.firebaseMessagesRef.off();
+
+			if(this.firebaseMessagesRef != null){
+				this.firebaseMessagesRef.off();
+			}
 
 			this.props.dispatch(getReply({
-				msg : 'hello',
+				msg : this.props.messenger.initMessage,
 				session : this.props.messenger.session
 			}));
 
@@ -104,18 +152,18 @@ class MessengerView extends Component {
 	//
 
 
-	 clearText() {
-		this.setState({
-			input : false
-		})
-	 }
+	clearText() {
+		if(this.props.login.username != false ){
+			this.setState({
+				input : false
+			})
+		}
+	}
 
 	componentDidUpdate(){
-
 		if(this.props.messenger.bot == true  && this.props.messenger.messages.length == 0){
 
 		}
-
 	}
 
 
@@ -125,92 +173,135 @@ class MessengerView extends Component {
 			this.setState({
 				input: true
 			});
-		}else if(this.state.input == true){
-
-			this.props.dispatch(addMessage(text));
-			this.setState({text : ''});
-
 		}else {
 
-			this.props.dispatch(loadButtons([]));
 			this.props.dispatch(addMessage(text));
 
-			if(this.props.messenger.bot == true){
-				this.props.dispatch(getReply({
-					msg : text,
-					session : this.props.messenger.session
-				}));
+			if(this.state.input == true){
+
+				if(this.inputToSave !== null){
+
+					if(this.inputToSave == 'prenom'){
+						this.props.dispatch(register(text));
+
+						this.form[this.inputToSave] = text;
+					}
+
+					if(this.firebaseProfileRef !== null){
+
+						this.firebaseProfileRef.child(this.inputToSave).set(text);
+					}
+
+					text = this.inputToSave;
+
+				//	this.firebaseProfileRef = rootRef.child(nextProps.login.username+'/profile');
+
 			}
 
+			this.setState({text : ''});
+
+		}
+
+
+		if(this.props.messenger.bot == true){
+
+			this.props.dispatch(loadButtons([]));
+
+			this.props.dispatch(getReply({
+				msg : text,
+				session : this.props.messenger.session
+			}));
 		}
 
 	}
 
-	onChangeText(text){
-		this.setState({text});
-	}
+}
 
-	setButtons(buttons) {
-		this.props.dispatch(loadButtons(buttons));
-	}
+onChangeText(text){
+	this.setState({text});
+}
 
+setButtons(buttons) {
 
-	onLayout(){
+	this.inputToSave = null;
 
-		if(this.props.messenger.visibility != null){
-			this.props.dispatch(setVisibility(true));
+	buttons.map((button, index)=>{
+
+		if(button[0] == ':' ){
+
+			this.inputToSave = button.substr(1);
+
+			delete buttons[index];
+
+			if(this.inputToSave == 'prenom'){
+				return this.setState({
+					input: true
+				});
+			}
 		}
+
+	});
+
+
+	this.props.dispatch(loadButtons(buttons));
+
+}
+
+
+onLayout(){
+	if(this.props.messenger.visibility !== null){
+		this.props.dispatch(setVisibility(true));
 	}
+}
 
-	render(){
+render(){
 
-		return (
+	return (
 
-			<View style={style.container} onLayout={this.onLayout.bind(this)}>
-			<View style={ { height: 5} } />
-			<MessengerMain
-			style={style.main}
-			setButtons={this.setButtons.bind(this)}
-			messages={this.props.messenger.messages}  />
+		<View style={style.container} onLayout={this.onLayout.bind(this)}>
+		<View style={ { height: 5} } />
+		<MessengerMain
+		style={style.main}
+		setButtons={this.setButtons.bind(this)}
+		messages={this.props.messenger.messages}  />
 
+		{this.state.input &&
+			(
+				<View>
+				<View  style={style.text}>
+				<TextInput
+				autoCapitalize='sentences'
+				autoCorrect={false}
+				ref={(component) => {this._textInput = component}}
+				autoFocus={true}
+				returnKeyType='send'
+				placeholder='Entrez votre message...'
+				onSubmitEditing={(event)=>{this.onSend(event.nativeEvent.text);}}
+				style={style.input}
+				onBlur ={this.clearText.bind(this)}
+				/>
+				<TouchableOpacity  ref="next" style={style.close} onPress={this.clearText.bind(this)}>
+				<Image  source={asset.close} />
+				</TouchableOpacity>
+				</View>
 
-			{this.state.input &&
-				(
-					<View>
-					<View  style={style.text}>
-					<TextInput
-					autoCapitalize='sentences'
-					autoCorrect={false}
-					ref={(component) => {this._textInput = component}}
-					autoFocus={true}
-					returnKeyType='send'
-					placeholder='Entrez votre message...'
-					onSubmitEditing={(event)=>{this.onSend(event.nativeEvent.text);}}
-					style={style.input}
-					onBlur ={this.clearText.bind(this)}
-					/>
-					<TouchableOpacity  ref="next" style={style.close} onPress={this.clearText.bind(this)}>
-					<Image  source={asset.close} />
-					</TouchableOpacity>
-					</View>
-
-					<KeyboardSpacer/>
-					</View>
+				<KeyboardSpacer/>
+				</View>
+				)}
+			{!this.state.input &&
+				(<MessengerBottom
+					style={style.bottom}
+					onLayout={this.onBottomLayout}
+					buttons={this.props.messenger.buttons}
+					onPress={this.onSend.bind(this)} />
 					)}
-				{!this.state.input &&
-					(<MessengerBottom
-						style={style.bottom}
-						onLayout={this.onBottomLayout}
-						buttons={this.props.messenger.buttons}
-						onPress={this.onSend.bind(this)} />
-						)}
 
-					</View>
+				</View>
 
 
 
-					);
-	}
+				);
+}
 }
 
 
@@ -266,7 +357,8 @@ const asset = {
 
 function mapStateToProps(state) {
 	return {
-		messenger : state.messenger
+		messenger : state.messenger,
+		login : state.login
 	};
 }
 

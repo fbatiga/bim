@@ -1,30 +1,37 @@
 "use strict";
 
+import {AsyncStorage} from 'react-native';
 import { handleActions } from 'redux-actions';
 import {
-    LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE
+  LOGIN_CONNECT, LOGIN_SIGNUP, LOGIN_REGISTER
 } from './LoginAction';
 import {Actions} from 'react-native-router-flux';
 
 const initialState = {
-   session: false,
-   loading : false
+   loading : false,
+   username : false,
+   profile : {
+
+   }
 };
 
 const LoginReducer = handleActions({
 
-    [LOGIN_REQUEST]: (state, action) => {
-        return Object.assign({}, state, {loading: true});
+
+    [LOGIN_CONNECT]: (state, action) => {
+
+        return {...state, username : action.username };
     },
 
-    [LOGIN_SUCCESS]: (state, action) => {
-        return { ...state, loading: false, session: action.result.session};
+	[LOGIN_REGISTER]: (state, action) => {
+		let username = action.username.toLowerCase();
+		AsyncStorage.setItem('@AsyncStorage:username', username);
+        return {...state, username };
     },
 
-    [LOGIN_FAILURE]: (state, action) => {
-    	console.error(action.error.stack);
-        return { ...state, loading: false, session: false, loginError: action.error };
-    }
+    [LOGIN_SIGNUP]: (state, action) => {
+        return {...state, username : false};
+    },
 
 }, initialState);
 

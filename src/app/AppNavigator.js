@@ -1,8 +1,9 @@
 'use strict'
 import React, { Component } from 'react';
-import { Navigator, Text,  AppState, Platform , View } from 'react-native';
+import { Navigator, Text,  AppState, Platform , View, AsyncStorage} from 'react-native';
 import { Actions, Scene, StatusBar, Router , Reducer} from 'react-native-router-flux';
 import {connect} from 'react-redux';
+
 import {notify} from '../view/messenger/MessengerAction';
 import {loadContacts} from '../view/contact/ContactAction';
 
@@ -69,28 +70,20 @@ class AppNavigator extends Component {
 		this.handleAppStateChange = this.handleAppStateChange.bind(this);
 	}
 
-	handleNotification(message, data, isActive) {
-	}
+	handleNotification(message, data, isActive){
 
 
-	componentWillMount(){
-		Contacts.checkPermission( (err, permission) => {
-			  // Contacts.PERMISSION_AUTHORIZED || Contacts.PERMISSION_UNDEFINED || Contacts.PERMISSION_DENIED
-
-			  if(permission === Contacts.PERMISSION_AUTHORIZED){
-			  	Contacts.getAll((err, contacts) => {
-			  			this.props.dispatch(loadContacts(contacts));
-			  	});
-			    // yay!
-				}
-
-			if(permission === Contacts.PERMISSION_DENIED){
-			    // x.x
-			}
-		});
 	}
 
 	componentDidMount() {
+		Contacts.checkPermission( (err, permission) => {
+			//preloading  contact list
+			if(permission === Contacts.PERMISSION_AUTHORIZED){
+				Contacts.getAll((err, contacts) => {
+					this.props.dispatch(loadContacts(contacts));
+				});
+			}
+		});
 
 		OneSignal.configure({
 			onNotificationOpened: this.handleNotification.bind(this)

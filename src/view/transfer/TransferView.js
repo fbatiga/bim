@@ -38,14 +38,6 @@ class TransferView extends Component {
 		};
 	}
 
-	componentDidMount() {
-		this.props.dispatch(init());
-	}
-
-	componentWillReceiveProps(nextProps) {
-
-	}
-
 	back(){
 		if(this.state.step == 0){
 			Actions.pop();
@@ -109,7 +101,7 @@ class TransferView extends Component {
 			name.push(recipient.givenName);
 		}
 
-		this.setState({transferRecipient: name.join(''), step: this.state.step});
+		this.setState({transferRecipient: name.join(' '), step: this.state.step});
 	}
 
 	confirmTitle(title) {
@@ -121,7 +113,7 @@ class TransferView extends Component {
 	confirmTransfer() {
 		this.state.step = this.state.step + 1;
 		this.setState({step: this.state.step});
-		var key = this.state.transferRecipient.replace(" ","_").toLowerCase();
+		var key = this.state.transferRecipient.split(' ')[0].toLowerCase();
 
 		this.transactionsRef.push({
 			label: this.state.transferLabel + ' (' + this.state.transferRecipient + ')',
@@ -158,7 +150,8 @@ const style = StyleSheet.create({
 
 function mapStateToProps(state) {
 	return {
-		transfer: state.transfer
+		transfer: state.transfer,
+		login: state.login
 	};
 }
 
