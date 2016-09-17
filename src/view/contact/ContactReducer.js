@@ -1,12 +1,12 @@
 "use strict";
 
 import { handleActions } from 'redux-actions';
-import { CONTACT_LOAD } from './ContactAction';
+import { CONTACT_LOADING, CONTACT_SET } from './ContactAction';
 import { Actions } from 'react-native-router-flux';
 
 const initialState = {
 	list : [],
-	loading : true
+	loading : false
 };
 
 
@@ -20,7 +20,11 @@ let defaultContacts = [{
 
 const ContactReducer = handleActions({
 
-	[CONTACT_LOAD]: (state, action) => {
+	[CONTACT_LOADING]: (state, action) => {
+		return { ...state,  loading : true };
+	},
+
+	[CONTACT_SET]: (state, action) => {
 
 		contacts= defaultContacts.concat(contacts);
 
@@ -37,7 +41,7 @@ const ContactReducer = handleActions({
 
 
 		return { ...state, list: contacts, loading : false };
-	},
+	}
 
 }, initialState);
 

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Text, View, TextInput,  TouchableOpacity, TouchableHighlight, StyleSheet, Dimensions, Image } from 'react-native';
 import AppGuideline from '../../../app/AppGuideline';
 import asset from '../../../app/AppAsset';
-import BackButton from '../../common/item/button/BackButton';
+import BackButton from '../../common/button/BackButton';
 import Title from '../../common/title/Title';
 
 const { width, height } = Dimensions.get('window');

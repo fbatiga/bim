@@ -2,7 +2,8 @@ import React from 'react';
 import { Text, View, TextInput,  TouchableOpacity, TouchableHighlight, StyleSheet, Dimensions, Image } from 'react-native';
 import AppGuideline from '../../../app/AppGuideline';
 import asset from '../../../app/AppAsset';
-import BackButton from '../../common/item/button/BackButton';
+import BackButton from '../button/BackButton';
+import Title from '../title/Title';
 
 const width = Dimensions.get('window').width;
 const styles = StyleSheet.create({
@@ -33,7 +34,7 @@ const styles = StyleSheet.create({
 });
 
 export default
-class TransferConfirmView extends React.Component {
+class ConfirmationStep extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {transferLabel: this.props.transferLabel};
@@ -93,7 +94,7 @@ class TransferConfirmView extends React.Component {
 		return (
 			<View style={styles.container}>
 			<BackButton image={asset.back_green} back={this.props.back} />
-			<Text style={AppGuideline.titles.h1}>{this.props.title || 'B!M'}</Text>
+			<Title>{this.props.title}</Title>
 			<View style={styles.top}>
 			<View style={{alignItems: 'center'}}>
 			<Text style={{
@@ -132,6 +133,6 @@ class TransferConfirmView extends React.Component {
 	}
 }
 
-TransferConfirmView.propTypes = {
+ConfirmationStep.propTypes = {
 	title: React.PropTypes.string
 };

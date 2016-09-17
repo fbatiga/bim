@@ -5,7 +5,7 @@ import { Actions } from 'react-native-router-flux';
 import AppAsset from '../../app/AppAsset';
 import AppGuideline from '../../app/AppGuideline';
 
-import BackButton from '../common/item/button/BackButton';
+import BackButton from '../common/button/BackButton';
 
 
 class CardDetailsView extends Component {

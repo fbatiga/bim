@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Image, TouchableOpacity, StyleSheet } from 'react-native';
-import asset from '../../../../app/AppAsset';
+import asset from '../../../app/AppAsset';
 
 const style = StyleSheet.create({
 	button :{

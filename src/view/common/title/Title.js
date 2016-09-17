@@ -2,7 +2,7 @@
 
 import React, { Component} from 'react';
 import { View, Text, StyleSheet, Animated} from 'react-native';
-import stylesVars from '../../../../app/AppGuideline';
+import AppGuideline from '../../../app/AppGuideline';
 
 const style = StyleSheet.create({
 	title : {
@@ -12,7 +12,7 @@ const style = StyleSheet.create({
 		letterSpacing: 1.5,
 		left : -3,
 		marginTop : 45,
-	    color: stylesVars.colors.alternative
+	    color: AppGuideline.colors.alternative
 	}
 });
 

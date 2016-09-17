@@ -3,7 +3,7 @@ import { Text, View, TextInput, StyleSheet, Dimensions, TouchableOpacity } from 
 import Title from '../../common/title/Title';
 import AppGuideline from '../../../app/AppGuideline';
 import AppAsset from '../../../app/AppAsset';
-import BackButton from '../../common/item/button/BackButton';
+import BackButton from '../../common/button/BackButton';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;

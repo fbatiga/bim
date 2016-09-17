@@ -1,35 +1,21 @@
 import React from 'react';
 import { Text, View, TextInput, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
-import Title from '../../common/title/Title';
+import Title from '../title/Title';
 import AppGuideline from '../../../app/AppGuideline';
 import AppAsset from '../../../app/AppAsset';
-import BackButton from '../../common/item/button/BackButton';
+import BackButton from '../button/BackButton';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
-const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		backgroundColor: AppGuideline.colors.deepBlue
-	},
-	top: {
-		justifyContent: 'center',
-		alignItems: 'center',
-		backgroundColor: AppGuideline.colors.deepBlue,
-		height: height / 2
-	}
-});
 
 export default
-class TransferTitleInputView extends React.Component {
+class TitleSelectionStep extends React.Component {
 
 	constructor(props) {
 		super(props);
 		this.state = {title : this.props.title};
 	}
-	componentDidMount() {
-		this.refs.titleInput.focus();
-	}
+
 	render() {
 		return (
 			<View style={styles.container}>
@@ -49,7 +35,7 @@ class TransferTitleInputView extends React.Component {
 			<TextInput
 			autoCapitalize='sentences'
 			autoCorrect={false}
-			autoFocus
+			autoFocus={true}
 			returnKeyType='next'
 			ref="titleInput"
 			style={{
@@ -74,6 +60,20 @@ class TransferTitleInputView extends React.Component {
 
 }
 
-TransferTitleInputView.propTypes = {
+const styles = StyleSheet.create({
+	container: {
+		flex: 1,
+		backgroundColor: AppGuideline.colors.deepBlue
+	},
+	top: {
+		justifyContent: 'center',
+		alignItems: 'center',
+		backgroundColor: AppGuideline.colors.deepBlue,
+		height: height / 2
+	}
+});
+
+
+TitleSelectionStep.propTypes = {
 	title: React.PropTypes.string
 };

@@ -3,7 +3,7 @@ import { Text, View, TextInput, StyleSheet, Dimensions } from 'react-native';
 import Title from '../../common/title/Title';
 import SubTitle from '../../common/title/SubTitle';
 import AppGuideline from '../../../app/AppGuideline';
-import BackButton from '../../common/item/button/BackButton';
+import BackButton from '../../common/button/BackButton';
 import asset from '../../../app/AppAsset';
 
 const height = Dimensions.get('window').height;

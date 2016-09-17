@@ -7,11 +7,11 @@ import {connect} from 'react-redux';
 import {init} from './TransferAction';
 import { Actions } from 'react-native-router-flux';
 
-import AmountSelectionView from './step/AmountSelectionView';
-import TransferConfirmView from './step/TransferConfirmView';
-import TransferTitleInputView from './step/TransferTitleInputView';
-import RecipientSelectionView from './step/RecipientSelectionView';
-import TransferSuccessView from './step/TransferSuccessView';
+import AmountSelectionStep from '../common/step/AmountSelectionStep';
+import ConfirmationStep from '../common/step/ConfirmationStep';
+import TitleSelectionStep from '../common/step/TitleSelectionStep';
+import RecipientSelectionStep from '../common/step/RecipientSelectionStep';
+import SuccessStep from '../common/step/SuccessStep';
 
 import AppGuideline from '../../app/AppGuideline';
 import AppAsset from '../../app/AppAsset';
@@ -53,28 +53,28 @@ class TransferView extends Component {
 		switch (this.state.step) {
 			case 0:
 			default:
-			return (<AmountSelectionView title={this.state.title}    back={this.back.bind(this)}  subtitle={'Somme à verser'} amount={this.state.amount} confirm={this.confirmAmount.bind(this)}/>);
-			break;
+				return (<AmountSelectionStep title={this.state.title}    back={this.back.bind(this)}  subtitle={'Somme à verser'} amount={this.state.amount} confirm={this.confirmAmount.bind(this)}/>);
+				break;
 			case 1:
-			return (<RecipientSelectionView title={this.state.title} back={this.back.bind(this)}  subtitle={'Destinataire'} contacts={this.state.contacts} confirm={this.confirmRecipient.bind(this)} />);
-			break;
+				return (<RecipientSelectionStep title={this.state.title} back={this.back.bind(this)}  subtitle={'Destinataire'} contacts={this.state.contacts} confirm={this.confirmRecipient.bind(this)} />);
+				break;
 			case 2:
-			return (<TransferTitleInputView title={this.state.title} back={this.back.bind(this)}  subtitle={this.state.transferInputSubtitle}  confirm={this.confirmTitle.bind(this)} />);
-			break;
+				return (<TitleSelectionStep title={this.state.title} back={this.back.bind(this)}  subtitle={this.state.transferInputSubtitle}  confirm={this.confirmTitle.bind(this)} />);
+				break;
 			case 3:
-			return (<TransferConfirmView
-				title={this.state.title}
-				subTitle={this.state.transferConfirmSubtitle}
-				amount={this.state.amount}
-				back={this.back.bind(this)}
-				transferLabel={this.state.transferLabel}
-				transferRecipient={this.state.transferRecipient}
-				confirm={this.confirmTransfer.bind(this)} />);
-			break;
+				return (<ConfirmationStep
+					title={this.state.title}
+					subTitle={this.state.transferConfirmSubtitle}
+					amount={this.state.amount}
+					back={this.back.bind(this)}
+					transferLabel={this.state.transferLabel}
+					transferRecipient={this.state.transferRecipient}
+					confirm={this.confirmTransfer.bind(this)} />);
+				break;
 			case 4:
-			setTimeout(function(){Actions.account()},1500);
-			return (<TransferSuccessView subTitle='B!M envoyé !' />);
-			break;
+				setTimeout(function(){Actions.account()},1500);
+				return (<SuccessStep subTitle='B!M envoyé !' />);
+				break;
 		}
 	}
 
@@ -130,14 +130,14 @@ class TransferView extends Component {
 		this.recipentTransactionsRef = this.firebaseRootRef.child(key + '/transactions');
 
 		this.recipentTransactionsRef.push(
-		{
-			label: this.state.transferLabel,
-			amount: parseFloat(this.state.amount),
-			type: "credit",
-			category: 'retraits',
-			timestamp: Date.now(),
-			originator: 'alice'
-		}
+			{
+				label: this.state.transferLabel,
+				amount: parseFloat(this.state.amount),
+				type: "credit",
+				category: 'retraits',
+				timestamp: Date.now(),
+				originator: 'alice'
+			}
 		);
 	}
 

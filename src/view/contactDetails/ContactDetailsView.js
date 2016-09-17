@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import { View, Text, Image, Dimensions, ScrollView, TouchableOpacity, StyleSheet} from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import AppAsset from '../../app/AppAsset';
-import BackButton from '../common/item/button/BackButton';
+import BackButton from '../common/button/BackButton';
 
 import {connect} from 'react-redux';
 import {init} from './ContactDetailsAction';

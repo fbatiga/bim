@@ -53,6 +53,18 @@ export default
 class RecipientItem extends React.Component {
 
 	render() {
+
+		let name = [];
+		if(this.props.rowData.givenName != undefined){
+			name.push(this.props.rowData.givenName);
+		}
+
+		if(this.props.rowData.familyName != undefined){
+			name.push(this.props.rowData.familyName);
+		}
+
+		name = name.join(' ');
+
 		return (
 			<TouchableHighlight onPress={() => {this.props.confirm(this.props.rowData)} }>
 			<View style={styles.item}>
@@ -61,7 +73,7 @@ class RecipientItem extends React.Component {
 			</View>
 			<View style={styles.rightPart}>
 			<Text style={styles.label}>
-			{this.props.rowData.givenName !== undefined && this.props.rowData.givenName} {this.props.rowData.familyName !== undefined && this.props.rowData.familyName}
+			{name}
 			</Text>
 			{this.props.rowData.phoneNumbers !== undefined && this.props.rowData.phoneNumbers[0] !== undefined &&
 				(  <Text style={styles.category}>

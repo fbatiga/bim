@@ -4,7 +4,7 @@ import { Text, View, Image, TouchableOpacity, TouchableHighlight, StyleSheet, Di
 import AppGuideline from '../../../app/AppGuideline';
 import Title from '../../common/title/Title';
 import CenteredTitle from '../../common/title/CenteredTitle';
-import BackButton from '../../common/item/button/BackButton';
+import BackButton from '../../common/button/BackButton';
 import asset from '../../../app/AppAsset';
 
 const width = Dimensions.get('window').width;

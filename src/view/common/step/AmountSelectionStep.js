@@ -2,44 +2,16 @@ import React from 'react';
 
 import { Text, View, Image, TouchableOpacity, TouchableHighlight, StyleSheet, Dimensions } from 'react-native';
 import AppGuideline from '../../../app/AppGuideline';
-import Title from '../../common/title/Title';
-import CenteredTitle from '../../common/title/CenteredTitle';
-import BackButton from '../../common/item/button/BackButton';
+import Title from '../title/Title';
+import CenteredTitle from '../title/CenteredTitle';
+import BackButton from '../button/BackButton';
 import asset from '../../../app/AppAsset';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
-const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		backgroundColor: AppGuideline.colors.deepBlue
-	},
-	top: {
-		flex: 1,
-		justifyContent: 'center',
-		alignItems: 'center',
-		backgroundColor: AppGuideline.colors.deepBlue
-	},
-	bottom: {
-		backgroundColor: "white",
-		flexWrap: 'wrap',
-		alignItems: 'flex-start',
-		flexDirection: 'row',
-	},
-	keyboardButton: {
-		padding: 20,
-		width: width * 0.33,
-		textAlign: 'center',
-		fontSize: 22
-	},
-	keyboardImage: {
-		padding: 20,
-		width: width * 0.33
-	}
-});
 
 export default
-class AmountSelectionView extends React.Component {
+class AmountSelectionStep extends React.Component {
 
 	constructor(props) {
 		super(props);
@@ -156,6 +128,36 @@ class AmountSelectionView extends React.Component {
 
 }
 
-AmountSelectionView.propTypes = {
+const styles = StyleSheet.create({
+	container: {
+		flex: 1,
+		backgroundColor: AppGuideline.colors.deepBlue
+	},
+	top: {
+		flex: 1,
+		justifyContent: 'center',
+		alignItems: 'center',
+		backgroundColor: AppGuideline.colors.deepBlue
+	},
+	bottom: {
+		backgroundColor: "white",
+		flexWrap: 'wrap',
+		alignItems: 'flex-start',
+		flexDirection: 'row',
+	},
+	keyboardButton: {
+		padding: 20,
+		width: width * 0.33,
+		textAlign: 'center',
+		fontSize: 22
+	},
+	keyboardImage: {
+		padding: 20,
+		width: width * 0.33
+	}
+});
+
+
+AmountSelectionStep.propTypes = {
 	title: React.PropTypes.string
 };

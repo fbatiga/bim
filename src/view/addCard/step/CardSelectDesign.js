@@ -4,7 +4,7 @@ import { Text, View, ScrollView, StyleSheet, Dimensions, Image, TouchableOpacity
 import Title from '../../common/title/Title';
 import AppGuideline from '../../../app/AppGuideline';
 import asset from '../../../app/AppAsset';
-import BackButton from '../../common/item/button/BackButton';
+import BackButton from '../../common/button/BackButton';
 
 const { width, height } = Dimensions.get('window');
 const boxMargin = 10;

@@ -1,8 +1,10 @@
 'use strict';
 
 import React, { Component} from 'react';
-import { View, Text, StyleSheet, Animated} from 'react-native';
-import stylesVars from '../../../../app/AppGuideline';
+import { View, Text, StyleSheet, Animated, Dimensions} from 'react-native';
+import AppGuideline from '../../../app/AppGuideline';
+
+const width = Dimensions.get('window').width;
 
 const style = StyleSheet.create({
 	subtitle : {
@@ -11,7 +13,7 @@ const style = StyleSheet.create({
 		lineHeight : 36,
 		marginBottom: 20,
 		textAlign : 'center',
-	    color: stylesVars.colors.alternative
+	    color: AppGuideline.colors.alternative
 	}
 });
 

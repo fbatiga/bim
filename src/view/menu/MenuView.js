@@ -15,7 +15,7 @@ class MenuView extends Component {
 		this.state = {
 
 			menu : [
-			{text : 'PAYER', action :  Actions.transfer, left: new Animated.Value(-width) },
+			{text : 'PAYER', action :  Actions.pay, left: new Animated.Value(-width) },
 			{text : 'COMPTES', action : Actions.overview, left: new Animated.Value(-width) },
 			{text : 'CONTACTS', action : Actions.contact, left: new Animated.Value(-width)  },
 			{text : 'CARTES', action : Actions.card, left: new Animated.Value(-width)  },
@@ -34,14 +34,14 @@ class MenuView extends Component {
 
 				animation.push(
 					Animated.timing(
-					link.left,
-					{
-						toValue: 0,
-						duration : 400,
-						easing : Easing.ease,
-						delay : index * 50
-					})
-				);
+						link.left,
+						{
+							toValue: 0,
+							duration : 400,
+							easing : Easing.ease,
+							delay : index * 50
+						})
+					);
 
 			});
 
@@ -58,12 +58,12 @@ class MenuView extends Component {
 
 				animation.push(
 					Animated.timing(
-					link.left,
-					{
-						toValue: -width,
-						duration : 200
-					})
-				);
+						link.left,
+						{
+							toValue: -width,
+							duration : 200
+						})
+					);
 
 			});
 

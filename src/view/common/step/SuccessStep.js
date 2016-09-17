@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Text, View, TextInput,  TouchableOpacity, TouchableHighlight, StyleSheet, Dimensions, Image } from 'react-native';
 import AppGuideline from '../../../app/AppGuideline';
 import asset from '../../../app/AppAsset';
-import Title from '../../common/title/Title';
+import Title from '../title/Title';
 
 const width = Dimensions.get('window').width;
 const styles = StyleSheet.create({
@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
 	},
 });
 
-export default class TransferSuccessView extends Component {
+export default class SuccessStep extends Component {
 
 	constructor(props) {
 		super(props);
@@ -51,6 +51,6 @@ export default class TransferSuccessView extends Component {
 	}
 }
 
-TransferSuccessView.propTypes = {
+SuccessStep.propTypes = {
 	title: React.PropTypes.string
 };

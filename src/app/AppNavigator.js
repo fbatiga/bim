@@ -5,7 +5,6 @@ import { Actions, Scene, StatusBar, Router , Reducer} from 'react-native-router-
 import {connect} from 'react-redux';
 
 import {notify} from '../view/messenger/MessengerAction';
-import {loadContacts} from '../view/contact/ContactAction';
 
 import LoginView from '../view/login/LoginView';
 import ProfileView from '../view/profile/ProfileView';
@@ -23,10 +22,12 @@ import ContactDetailsView from '../view/contactDetails/ContactDetailsView';
 import TransferView from '../view/transfer/TransferView';
 import ParametersView from '../view/parameters/ParametersView';
 import AddCardView from '../view/addCard/AddCardView';
+import PayView from '../view/pay/PayView';
 
 import OneSignal from 'react-native-onesignal'; // Import package from node modules
 import { UserSlack } from './AppSlack';
 import Contacts from 'react-native-contacts';
+import {loadContacts, setContacts} from '../view/contact/ContactAction';
 
 
 const reducerCreate = params => {
@@ -57,6 +58,7 @@ const scenes = Actions.create(
 	<Scene key="contactdetails" component={ContactDetailsView} title="Contact detail"/>
 	<Scene key="transfer" component={TransferView} title="Virement" schema='modal' direction='vertical'/>
 	<Scene key="parameters" component={ParametersView} title="Paramètres"/>
+	<Scene key="pay" component={PayView} title="Payer"/>
 	</Scene>
 	);
 
@@ -75,12 +77,44 @@ class AppNavigator extends Component {
 
 	}
 
+	componentWillReceiveProps(nextProps){
+
+		if(this.props.contact.list.length == 0 && this.props.contact.loading == false && nextProps.contact.loading == true){
+
+			Contacts.checkPermission( (err, permission) => {
+				console.log('Contacts.checkPermission',permission);
+
+			  // Contacts.PERMISSION_AUTHORIZED || Contacts.PERMISSION_UNDEFINED || Contacts.PERMISSION_DENIED
+			  if(permission == Contacts.PERMISSION_UNDEFINED ){
+				  	Contacts.requestPermission( (err, permission) => {
+				  		console.log('Contacts.requestPermission',permission);
+
+				  		if (permission === Contacts.PERMISSION_AUTHORIZED) {
+				  			Contacts.getAll((err, contacts) => {
+				  				console.log('Contacts.getAll');
+				  				this.props.dispatch(setContacts(contacts));
+				  			});
+				  		} else {
+				  			this.props.dispatch(setContacts([]));
+				  		}
+				  	});
+				}else {
+					this.props.dispatch(setContacts([]));
+				}
+			});
+
+		}
+
+	}
+
 	componentDidMount() {
 		Contacts.checkPermission( (err, permission) => {
+			console.log('Contacts.checkPermission',permission);
+
 			//preloading  contact list
 			if(permission === Contacts.PERMISSION_AUTHORIZED){
 				Contacts.getAll((err, contacts) => {
-					this.props.dispatch(loadContacts(contacts));
+					this.props.dispatch(setContacts(contacts));
 				});
 			}
 		});
@@ -123,7 +157,8 @@ class AppNavigator extends Component {
 
 function mapStateToProps(state) {
 	return {
-		messenger: state.messenger
+		messenger: state.messenger,
+		contact : state.contact
 	};
 }
 

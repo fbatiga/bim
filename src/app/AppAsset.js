@@ -19,6 +19,7 @@ export default {
     jackpot: require('../asset/jackpot.png'),
     batiment: require('../asset/design_batiment.png'),
     bim: require('../asset/design_bim.png'),
+    qrcode : require('../asset/QRCode.png'),
     burger: require('../asset/design_burger.png'),
     pasteque: require('../asset/design_pasteque.png'),
     virementSpeed: require('../asset/virement_speed.gif'),

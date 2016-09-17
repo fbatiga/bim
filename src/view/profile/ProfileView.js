@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 import { View, Text, Image,  StyleSheet, ScrollView, PanResponder, Dimensions, Animated, Easing} from 'react-native';
 import { Actions } from 'react-native-router-flux';
-import BackButton from '../common/item/button/BackButton';
+import BackButton from '../common/button/BackButton';
 import AppAsset from '../../app/AppAsset';
 import {swipeTo, configureSwipe} from '../menu/MenuAction';
 

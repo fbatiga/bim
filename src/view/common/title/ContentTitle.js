@@ -1,17 +1,19 @@
 'use strict';
 
 import React, { Component} from 'react';
-import { View, Text, StyleSheet, Animated} from 'react-native';
+import { View, Text, StyleSheet, Animated, Dimensions} from 'react-native';
 import AppGuideline from '../../../app/AppGuideline';
+
+const width = Dimensions.get('window').width;
 
 const style = StyleSheet.create({
 	subtitle : {
 	    fontFamily : 'Montserrat-UltraLight',
 	    fontSize: 36,
 		lineHeight : 36,
-		marginTop: 10,
-	    marginLeft: 50,
-	    marginTop: 50,
+		marginBottom: 20,
+		marginLeft : 20,
+		textAlign : 'left',
 	    color: AppGuideline.colors.alternative
 	}
 });
@@ -19,7 +21,9 @@ const style = StyleSheet.create({
 export default class SubTitle extends Component {
 	render(){
 		return (
-			<Animated.Text {...this.props} style={[style.subtitle, this.props.style]}>{this.props.children}</Animated.Text>
+			<View style={{alignItems: 'flex-start'}}>
+				<Text {...this.props} style={[style.subtitle, this.props.style]}>{this.props.children}</Text>
+			</View>
 		);
 	}
 }
