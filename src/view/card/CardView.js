@@ -4,7 +4,7 @@ import { View, Image, TouchableOpacity, TouchableWithoutFeedback , PanResponder,
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import asset from '../../app/AppAsset';
-import Title from '../common/item/title/Title';
+import Title from '../common/title/Title';
 import { moveStarted, moveEnded  } from './CardAction'
 import AppGuideline from '../../app/AppGuideline';
 import {swipeTo, configureSwipe} from '../menu/MenuAction';

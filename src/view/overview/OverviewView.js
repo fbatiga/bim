@@ -6,7 +6,7 @@ import { Actions } from 'react-native-router-flux';
 import  ScrollableTabView, { ScrollableTabBar }  from 'react-native-scrollable-tab-view';
 import asset from '../../app/AppAsset';
 import AppGuideline from '../../app/AppGuideline';
-import Title from '../common/item/title/Title';
+import Title from '../common/title/Title';
 
 import {connect} from 'react-redux';
 

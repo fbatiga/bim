@@ -3,7 +3,7 @@ import { Text, View,  TouchableOpacity, StyleSheet, Image } from 'react-native';
 import AppGuideline from '../../../app/AppGuideline';
 import asset from '../../../app/AppAsset';
 import BackButton from '../../common/item/button/BackButton';
-import Title from '../../common/item/title/Title';
+import Title from '../../common/title/Title';
 
 const styles = StyleSheet.create({
 	container: {

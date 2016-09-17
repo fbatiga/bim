@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Text, View, Image, TouchableOpacity, TouchableHighlight, StyleSheet, Dimensions } from 'react-native';
 import AppGuideline from '../../../app/AppGuideline';
-import Title from '../../common/item/title/Title';
+import Title from '../../common/title/Title';
 import asset from '../../../app/AppAsset';
 import BackButton from '../../common/item/button/BackButton';
 

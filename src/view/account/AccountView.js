@@ -13,8 +13,8 @@ import AppAsset from '../../app/AppAsset';
 import {connect} from 'react-redux';
 import {addTransaction} from './AccountAction';
 import AccountTab from './item/AccountTab';
-import Title from '../common/item/title/Title';
-import BackButton from '../common/item/button/BackButton';
+import Title from '../common/title/Title';
+import BackButton from '../common/button/BackButton';
 
 import AccountTransfertModal from './modal/AccountTransfertModal';
 import AccountTransfertList from './list/AccountTransfertList';

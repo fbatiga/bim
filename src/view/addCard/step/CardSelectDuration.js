@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Text, View, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
-import Title from '../../common/item/title/Title';
+import Title from '../../common/title/Title';
 import AppGuideline from '../../../app/AppGuideline';
 import asset from '../../../app/AppAsset';
 import BackButton from '../../common/item/button/BackButton';

@@ -3,7 +3,7 @@ import { Text, View, TextInput,  TouchableOpacity, TouchableHighlight, StyleShee
 import AppGuideline from '../../../app/AppGuideline';
 import asset from '../../../app/AppAsset';
 import BackButton from '../../common/item/button/BackButton';
-import Title from '../../common/item/title/Title';
+import Title from '../../common/title/Title';
 
 const { width, height } = Dimensions.get('window');
 const styles = StyleSheet.create({

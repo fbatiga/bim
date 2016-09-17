@@ -6,8 +6,8 @@ import { connect } from 'react-redux';
 import { init } from './AddAccountAction';
 import AppAsset from '../../app/AppAsset';
 import AppGuideline from '../../app/AppGuideline';
-import BackButton from '../common/item/button/BackButton';
-import Title from '../common/item/title/Title';
+import BackButton from '../common/button/BackButton';
+import Title from '../common/title/Title';
 
 class addAccount extends Component {
 	componentDidMount() {

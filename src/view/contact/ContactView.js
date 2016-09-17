@@ -7,7 +7,7 @@ import AppGuideline from '../../app/AppGuideline';
 import asset from '../../app/AppAsset';
 import Contacts from 'react-native-contacts';
 
-import Title from '../common/item/title/Title';
+import Title from '../common/title/Title';
 import ContactItem from './item/ContactItem';
 import LetterItem from './item/LetterItem';
 
