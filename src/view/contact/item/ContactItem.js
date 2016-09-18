@@ -61,25 +61,39 @@ export default class ContactItem extends React.Component {
 	}
 
 	render() {
+
+
+		let name = [];
+
+		if(this.props.rowData.givenName != undefined){
+			name.push(this.props.rowData.givenName);
+		}
+
+		if(this.props.rowData.familyName != undefined){
+			name.push(this.props.rowData.familyName);
+		}
+
+		this.props.rowData.name = name.join(' ');
+
 		return (
 			<TouchableHighlight  onLayout={this.save.bind(this)} onPress={() => {
 				this.props.onPress(this.props.rowData)
 			} }  >
-				<View style={styles.item} >
-					<View style={styles.leftPart}>
-						<Image source={asset.users['1']} style={styles.image}/>
-					</View>
-					<View style={styles.rightPart}>
-						<Text style={styles.label}>
-						{this.props.rowData.name}
-						</Text>
-						<Text style={styles.category}>
-						 {this.props.rowData.phoneNumbers !== undefined && this.props.rowData.phoneNumbers[0] !== undefined && this.props.rowData.phoneNumbers[0].number}
-						</Text>
-					</View>
-				</View>
+			<View style={styles.item} >
+			<View style={styles.leftPart}>
+			<Image source={asset.users['1']} style={styles.image}/>
+			</View>
+			<View style={styles.rightPart}>
+			<Text style={styles.label}>
+			{this.props.rowData.name}
+			</Text>
+			<Text style={styles.category}>
+			{this.props.rowData.phoneNumbers !== undefined && this.props.rowData.phoneNumbers[0] !== undefined && this.props.rowData.phoneNumbers[0].number}
+			</Text>
+			</View>
+			</View>
 			</TouchableHighlight>
-		);
+			);
 	}
 }
 

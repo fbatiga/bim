@@ -5,11 +5,11 @@ import { Actions } from 'react-native-router-flux';
 import JackpotSelectTitle from './step/JackpotSelectTitle';
 import JackpotSelectDesign from './step/JackpotSelectDesign';
 import JackpotSelectAccount from './step/JackpotSelectAccount';
-import JackpotSelectAmmount from '../transfer/step/AmountSelectionView';
+import JackpotSelectAmmount from '../common/step/AmountSelectionStep';
 import JackpotSelectDuration from './step/JackpotSelectDuration';
 import JackpotSelectFriends from './step/JackpotSelectFriends';
 import JackpotConfirmView from './step/JackpotConfirmView';
-import JackpotSuccessView from '../transfer/step/TransferSuccessView';
+import JackpotSuccessView from '../common/step/SuccessStep';
 import JackpotPointsView from './step/JackpotPointsView';
 
 class AddJackpot extends Component {

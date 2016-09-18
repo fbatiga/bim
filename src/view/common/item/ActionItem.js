@@ -46,6 +46,8 @@ const style = StyleSheet.create({
         paddingLeft: 20
     },
     image: {
+    	borderRadius: 25,
+    	backgroundColor: '#fff',
     	height: 50,
     	width: 50,
     	resizeMode: 'stretch'

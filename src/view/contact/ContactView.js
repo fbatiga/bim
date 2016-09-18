@@ -101,6 +101,22 @@ class ContactView extends Component {
 	}
 
 
+	renderRow(contact){
+
+		if(contact.type !== undefined && contact.type =='action' ){
+			return;
+		}
+
+		return (<ContactItem
+					onPress={this.openContact.bind(this)}
+					rowData={contact}
+					save={this.save.bind(this)}
+					rowData={contact}
+					/>);
+
+	}
+
+
 	render() {
 		return (
 			<View style={style.container}>
@@ -122,42 +138,15 @@ class ContactView extends Component {
 
 			</View>
 			<View  style={{flex:1}}>
-			<ScrollView
-			horizontal={false}
-			scrollEventThrottle={200}
+
+			{this.props.contact.list.length== 0  && this.props.contact.loading == true && <Text>Chargement...</Text>}
+
+			<ListView
 			ref='listView'
+			dataSource={this.props.contact.dataSource}
+			renderRow={this.renderRow.bind(this)}
+			/>
 
-			>
-			{this.props.contact.list.length > 0 && this.props.contact.list.map((contact, index) =>{
-
-				let name = [];
-
-				if(contact.givenName != undefined){
-					name.push(contact.givenName);
-				}
-
-				if(contact.familyName != undefined){
-					name.push(contact.familyName);
-				}
-
-				contact.name = name.join(' ');
-
-				return (
-					<ContactItem
-					onPress={this.openContact.bind(this)}
-					rowData={contact}
-					key={index}
-					save={this.save.bind(this)}
-					rowData={contact}
-					/>
-					);
-
-			})}
-
-			{this.props.contact.list.length == 0 && this.props.loading == true && <Text>Chargement...</Text>}
-
-			{this.props.contact.list.length == 0 && this.props.loading == false && <Text>Aucun Contact</Text>}
-			</ScrollView>
 			</View>
 
 

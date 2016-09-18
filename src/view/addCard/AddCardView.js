@@ -5,11 +5,11 @@ import { Actions } from 'react-native-router-flux';
 
 import CardSelectAccount from './step/CardSelectAccount';
 import CardSelectDuration from './step/CardSelectDuration';
-import CardSelectAmmount from '../transfer/step/AmountSelectionView';
-import CardSelectRecipient from '../transfer/step/RecipientSelectionView';
+import CardSelectAmmount from '../common/step/AmountSelectionStep';
+import CardSelectRecipient from '../common/step/RecipientSelectionStep';
 import CardSelectDesign from './step/CardSelectDesign';
 import CardSelectCode from './step/CardSelectCode';
-import CardConfirmView from '../transfer/step/TransferConfirmView';
+import CardConfirmView from '../common/step/ConfirmationStep';
 import CardSuccessView from './step/CardSuccessView';
 import CardPointsView from '../addJackpot/step/JackpotPointsView';
 
@@ -52,7 +52,7 @@ class AddJackpot extends Component {
         return (<CardSelectAmmount title='Cartes' subtitle={'Somme à verser :'} back={this.back.bind(this)} amount={this.state.amount} confirm={this.selectAmount.bind(this)}/>);
         break;
       case 3:
-        return (<CardSelectRecipient title='Cartes' subTitle={'Porteur de la carte :'} back={this.back.bind(this)} confirm={this.selectRecipient.bind(this)}/>);
+        return (<CardSelectRecipient title='Cartes' subtitle={'Porteur de la carte :'} back={this.back.bind(this)} confirm={this.selectRecipient.bind(this)}/>);
         break;
       case 4:
         return (<CardSelectDesign title='Cartes' subtitle='Design de la carte :' back={this.back.bind(this)} confirm={this.selectDesign.bind(this)} />);

@@ -83,21 +83,18 @@ class CardView extends Component {
 
 	moveCardTo(card, index){
 
-		let friction = 8;
-		let tension = 100;
+
 		let duration = 300;
-		let pos = this.state.cards.length - 1 - index ;
+		let pos = this.state.cards.length - index - 1;
 
-
-		let topTo = 90 - pos * 30;
+		let topTo =  90 - pos * 30;
 
 		let top = Animated.timing(card.top,{
 			toValue: topTo,
 			duration,
-			friction,
-			tension
 		});
 
+		console.log('topTo',topTo, card.zIndex);
 
 		let leftTo = 8 + ( pos * 2);
 
@@ -106,8 +103,6 @@ class CardView extends Component {
 			{
 				toValue: leftTo,
 				duration,
-				friction,
-				tension
 			});
 
 		let scaleTo = 1 - ( pos * 0.1 );
@@ -118,8 +113,6 @@ class CardView extends Component {
 			{
 				toValue: scaleTo,
 				duration,
-				friction,
-				tension
 			});
 
 
@@ -141,13 +134,13 @@ class CardView extends Component {
 
 			animation.push(
 				Animated.timing(
-				card.style.left,
-				{
-					toValue: leftTo,
-					duration : 200,
-					delay : index * 100
-				})
-			);
+					card.style.left,
+					{
+						toValue: leftTo,
+						duration : 200,
+						delay : index * 100
+					})
+				);
 
 		});
 
@@ -166,13 +159,13 @@ class CardView extends Component {
 
 			animation.push(
 				Animated.timing(
-				card.style.left,
-				{
-					toValue: 300,
-					duration : 300,
-					delay : index * 200
-				})
-			);
+					card.style.left,
+					{
+						toValue: 300,
+						duration : 300,
+						delay : index * 200
+					})
+				);
 
 		});
 
@@ -183,10 +176,6 @@ class CardView extends Component {
 
 	removeCard(card){
 
-
-
-		let friction = 8;
-		let tension = 100;
 		let duration = 300;
 
 
@@ -194,20 +183,15 @@ class CardView extends Component {
 			card.left,
 			{
 				toValue: 500,
-				duration,
-				friction,
-				tension
+				duration
 			});
 
-		card.zIndex++;
 
 		let rotation = Animated.timing(
 			card.transform[1].rotate,
 			{
 				toValue: 45,
-				duration,
-				friction,
-				tension
+				duration
 			});
 
 		return [left,rotation];
@@ -216,8 +200,6 @@ class CardView extends Component {
 
 	addCard(card){
 
-		let friction = 8;
-		let tension = 100;
 		let duration = 300;
 
 		let pos = this.state.cards.length ;
@@ -236,8 +218,6 @@ class CardView extends Component {
 			{
 				toValue: leftTo,
 				duration,
-				friction,
-				tension
 			});
 
 
@@ -246,8 +226,6 @@ class CardView extends Component {
 			{
 				toValue: 0,
 				duration,
-				friction,
-				tension
 			});
 
 		return [Animated.parallel([scale,top]), Animated.parallel([left,rotation])  ];
@@ -319,9 +297,9 @@ class CardView extends Component {
 			<View style={CardStyle.top}>
 			<View style={{top : 120 , alignItems: 'center'}} >
 			<View style={{ width: 300, height: 300 }}>
-			{this.state.cards.map((card, index)=>{
-				return (<TouchableWithoutFeedback onPress={Actions.cardDetails}>
-					<Animated.View key={index} style={[card.style, {
+			{this.state.cards.reverse().map((card, index)=>{
+				return (<TouchableWithoutFeedback key={index}  onPress={Actions.cardDetails}>
+					<Animated.View style={[card.style, {
 						zIndex : card.style.top,
 						transform : [{ scale : card.style.transform[0].scale},
 						{ rotate : card.style.transform[1].rotate.interpolate({

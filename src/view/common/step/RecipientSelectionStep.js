@@ -38,6 +38,24 @@ export default class RecipientSelectionStep extends React.Component {
 		this.props.dispatch(loadContacts());
 	}
 
+
+	renderRow(contact){
+
+		if(contact.type !== undefined && contact.type =='action' && this.props.qrCode !== undefined ){
+			return (<ActionItem
+						confirm={this.props.qrCode}
+						image={AppAsset.qrcode}
+						text={contact.text} />
+					);
+		}
+
+		return <RecipientItem
+						confirm={this.props.confirm}
+						rowData={contact}
+					/>
+	}
+
+
 	render() {
 		return (
 			<View style={styles.container}>
@@ -49,31 +67,14 @@ export default class RecipientSelectionStep extends React.Component {
 			</View>
 
 			<View style={styles.bottom}>
-			<ScrollView
-			horizontal={false}
-			scrollEventThrottle={200}
+
+			{this.props.contact.list.length== 0  && this.props.contact.loading == true && <Text>Chargement...</Text>}
+
+			<ListView
 			ref='listView'
-
-			>
-			{this.props.qrCode !== undefined  && (<ActionItem
-						confirm={this.props.qrCode}
-						image={AppAsset.qrcode}
-						text={'Payer avec un QR Code'} />)}
-
-			{this.props.contact.list.length > 0 && this.props.contact.list.map((contact, index) =>{
-
-				return (
-					<RecipientItem
-						confirm={this.props.confirm}
-						rowData={contact}
-						key={index} />
-					);
-
-			})}
-
-			{this.props.contact.list.length == 0 && this.props.loading == true && <Text>Chargement...</Text>}
-
-			</ScrollView>
+			dataSource={this.props.contact.dataSource}
+			renderRow={this.renderRow.bind(this)}
+			/>
 
 			</View>
 			</View>

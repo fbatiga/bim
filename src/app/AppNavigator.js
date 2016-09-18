@@ -58,7 +58,7 @@ const scenes = Actions.create(
 	<Scene key="contactdetails" component={ContactDetailsView} title="Contact detail"/>
 	<Scene key="transfer" component={TransferView} title="Virement" schema='modal' direction='vertical'/>
 	<Scene key="parameters" component={ParametersView} title="Paramètres"/>
-	<Scene key="pay" component={PayView} title="Payer"/>
+	<Scene key="pay" component={PayView} title="Payer" schema='modal' direction='vertical'/>
 	</Scene>
 	);
 
@@ -73,8 +73,7 @@ class AppNavigator extends Component {
 	}
 
 	handleNotification(message, data, isActive){
-
-
+		Actions.messenger();
 	}
 
 	componentWillReceiveProps(nextProps){

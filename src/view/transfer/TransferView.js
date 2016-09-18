@@ -21,19 +21,10 @@ class TransferView extends Component {
 	constructor(props) {
 		super(props);
 
-		this.firebaseRootRef = firebaseDb.ref();
-		this.transactionsRef = this.firebaseRootRef.child('alice/transactions');
-
-		console.log('APP PROPS', props);
 		this.state = {
 			amount: null,
-			transferLabel: this.props.mode === 'transfer' ? 'Nommer ce transfert' : 'Nommer ce B!M',
+			transferLabel : '',
 			transferRecipient: '',
-
-			title: this.props.mode === 'transfer' ? 'TRANSFERT' : 'B!M',
-			transferInputSubtitle: this.props.mode === 'transfer' ? 'Nommer ce transfert' : 'Nommer ce B!M',
-			transferConfirmSubtitle: this.props.mode === 'transfer' ? 'Confirmer le transfert' : 'Confirmer le B!M',
-			transferSuccessSubtitle: this.props.mode === 'transfer' ? 'Transfert effectué' : 'B!M envoyé',
 			step: 0
 		};
 	}
@@ -48,50 +39,81 @@ class TransferView extends Component {
 		}
 	}
 
-	render() {
-		console.log('STEP', this.state.step);
-		switch (this.state.step) {
-			case 0:
-			default:
-				return (<AmountSelectionStep title={this.state.title}    back={this.back.bind(this)}  subtitle={'Somme à verser'} amount={this.state.amount} confirm={this.confirmAmount.bind(this)}/>);
-				break;
-			case 1:
-				return (<RecipientSelectionStep title={this.state.title} back={this.back.bind(this)}  subtitle={'Destinataire'} contacts={this.state.contacts} confirm={this.confirmRecipient.bind(this)} />);
-				break;
-			case 2:
-				return (<TitleSelectionStep title={this.state.title} back={this.back.bind(this)}  subtitle={this.state.transferInputSubtitle}  confirm={this.confirmTitle.bind(this)} />);
-				break;
-			case 3:
-				return (<ConfirmationStep
-					title={this.state.title}
-					subTitle={this.state.transferConfirmSubtitle}
-					amount={this.state.amount}
-					back={this.back.bind(this)}
-					transferLabel={this.state.transferLabel}
-					transferRecipient={this.state.transferRecipient}
-					confirm={this.confirmTransfer.bind(this)} />);
-				break;
-			case 4:
-				setTimeout(function(){Actions.account()},1500);
-				return (<SuccessStep subTitle='B!M envoyé !' />);
-				break;
+	componentDidUpdate(){
+		if(this.state.step == this.steps.length-1){
+			setTimeout(function(){Actions.account()},1500);
 		}
 	}
 
+	render() {
+
+
+		let subtitle = {
+			transferConfirmSubtitle:  'Confirmer le B!M',
+			transferLabel:  'Nommer ce B!M',
+			transferSuccessSubtitle:  'B!M envoyé',
+		}
+
+
+		if(this.props.mode === 'transfer' ){
+			subtitle = {
+				transferConfirmSubtitle:  'Confirmer le transfert',
+				transferLabelSubtitle:  'Nommer ce transfert',
+				transferSuccessSubtitle:  'Transfert effectué',
+			};
+		}
+
+		console.log('STEP', this.state.step);
+
+		let Title= (this.props.mode === 'transfer') ? 'TRANSFERT' : 'B!M';
+
+		this.steps = [
+		<AmountSelectionStep
+		title={Title}
+		back={this.back.bind(this)}
+		subtitle={'Somme à verser'}
+		amount={this.state.amount}
+		confirm={this.confirmAmount.bind(this)}
+		/>,
+		<RecipientSelectionStep
+		title={Title}
+		back={this.back.bind(this)}
+		subtitle={'Destinataire :'}
+		contact={this.props.contact}
+		confirm={this.confirmRecipient.bind(this)} />,
+		<TitleSelectionStep
+		title={Title}
+		back={this.back.bind(this)}
+		subtitle={subtitle.transferLabelSubtitle}
+		confirm={this.confirmTitle.bind(this)} />,
+		<ConfirmationStep
+		title={Title}
+		subTitle={subtitle.transferConfirmSubtitle}
+		amount={this.state.amount}
+		back={this.back.bind(this)}
+		transferLabel={this.state.transferLabel}
+		transferRecipient={this.state.transferRecipient}
+		confirm={this.confirmTransfer.bind(this)} />,
+		<SuccessStep subTitle={subtitle.transferSuccessSubtitle} />
+		];
+
+		return this.steps[this.state.step];
+
+	}
+
+
 	confirmAmount(amount) {
-		this.state.step = this.state.step + 1;
 		amount = parseFloat(amount);
 		if (!amount) {
 			alert('Merci de saisir un montant');
 		}
 		else {
-			this.setState({amount: amount, step: this.state.step});
+			this.setState({amount: amount, step: this.state.step + 1});
 		}
 	}
 
 	confirmRecipient(recipient) {
 		console.log(recipient);
-		this.state.step = this.state.step + 1;
 		let name = [];
 		if(recipient.familyName != undefined){
 			name.push(recipient.familyName);
@@ -101,21 +123,22 @@ class TransferView extends Component {
 			name.push(recipient.givenName);
 		}
 
-		this.setState({transferRecipient: name.join(' '), step: this.state.step});
+		this.setState({transferRecipient: name.join(' '), step: this.state.step+ 1});
 	}
 
 	confirmTitle(title) {
 		console.log(title);
-		this.state.step = this.state.step + 1;
-		this.setState({transferLabel: title, step: this.state.step});
+		this.setState({transferLabel: title, step: this.state.step+ 1});
 	}
 
 	confirmTransfer() {
-		this.state.step = this.state.step + 1;
-		this.setState({step: this.state.step});
+		this.setState({step: this.state.step+ 1});
 		var key = this.state.transferRecipient.split(' ')[0].toLowerCase();
 
-		this.transactionsRef.push({
+		let firebaseRootRef = firebaseDb.ref();
+		let transactionsRef = firebaseRootRef.child(this.props.login.username+'/transactions');
+
+		transactionsRef.push({
 			label: this.state.transferLabel + ' (' + this.state.transferRecipient + ')',
 			amount: parseFloat(this.state.amount),
 			type: "debit",
@@ -126,31 +149,27 @@ class TransferView extends Component {
 
 		});
 
+		let recipentTransactionsRef = firebaseRootRef.child(key + '/transactions');
 
-		this.recipentTransactionsRef = this.firebaseRootRef.child(key + '/transactions');
-
-		this.recipentTransactionsRef.push(
-			{
-				label: this.state.transferLabel,
-				amount: parseFloat(this.state.amount),
-				type: "credit",
-				category: 'retraits',
-				timestamp: Date.now(),
-				originator: 'alice'
-			}
+		recipentTransactionsRef.push(
+		{
+			label: this.state.transferLabel,
+			amount: parseFloat(this.state.amount),
+			type: "credit",
+			category: 'retraits',
+			timestamp: Date.now(),
+			originator: 'alice'
+		}
 		);
 	}
 
 }
 
 
-const style = StyleSheet.create({
-
-});
-
 function mapStateToProps(state) {
 	return {
 		transfer: state.transfer,
+		contact: state.contact,
 		login: state.login
 	};
 }

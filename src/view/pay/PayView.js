@@ -27,7 +27,7 @@ class PayView extends Component {
 			amount: null,
 			qrCode : false,
 			transferLabel : '',
-			transferSuccessSubtitle: '' ,
+			transferRecipient: '',
 			step: 0
 		};
 
@@ -51,9 +51,8 @@ class PayView extends Component {
 	}
 
 	render() {
-		console.log('STEP', this.state.step);
 
-		let Title= 'Payer';
+		let Title = 'PAYER';
 
 		this.steps = [
 			<AmountSelectionStep
@@ -142,8 +141,7 @@ class PayView extends Component {
 	}
 
 	confirmPay() {
-		this.state.step = this.state.step + 1;
-		this.setState({step: this.state.step});
+		this.setState({step: this.state.step + 1});
 		var key = this.state.transferRecipient.split(' ')[0].toLowerCase();
 
 		let firebaseRootRef = firebaseDb.ref();

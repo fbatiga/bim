@@ -1,16 +1,27 @@
 "use strict";
 
+import {ListView} from 'react-native';
 import { handleActions } from 'redux-actions';
 import { CONTACT_LOADING, CONTACT_SET } from './ContactAction';
 import { Actions } from 'react-native-router-flux';
 
+
+const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+
+
 const initialState = {
 	list : [],
+	dataSource : ds,
 	loading : false
 };
 
 
-let defaultContacts = [{
+let defaultContacts = [
+{
+	type : 'action',
+	text : 'Payer avec un QR Code'
+},
+{
 	givenName: 'Faouzane',
 	familyName: 'BATIGA',
 	phoneNumbers: [{number: "0667505353"}],
@@ -40,7 +51,8 @@ const ContactReducer = handleActions({
 		});
 
 
-		return { ...state, list: contacts, loading : false };
+
+		return { ...state, list: contacts, dataSource: ds.cloneWithRows(contacts), loading : false };
 	}
 
 }, initialState);
