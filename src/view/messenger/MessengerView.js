@@ -45,9 +45,6 @@ class MessengerView extends Component {
 
 	componentDidMount(){
 
-		//this.props.dispatch(setVisibility(true));
-		//console.log('componentDidMount',  this.props.messenger);
-
 		if(this.props.messenger.messages.length == 0 ){
 
 			if(this.props.messenger.loading == false){
@@ -249,16 +246,14 @@ setButtons(buttons) {
 
 
 onLayout(){
-	if(this.props.messenger.visibility !== null){
-		this.props.dispatch(setVisibility(true));
-	}
+
 }
 
 render(){
 
 	return (
 
-		<View style={style.container} onLayout={this.onLayout.bind(this)}>
+		<View style={[style.container, this.props.style]} onLayout={this.onLayout.bind(this)}>
 		<View style={ { height: 5} } />
 		<MessengerMain
 		style={style.main}

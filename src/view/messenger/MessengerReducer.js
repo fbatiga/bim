@@ -161,13 +161,13 @@ const MessengerReducer = handleActions({
 
 	[MESSENGER_REQUEST]: (state, action) => {
 
+		let newState = {...state, loading: true};
+
 		if(state.session == null && action.params.session !== undefined){
-			state.session = action.params.session;
-			console.log('newState.session', state.session);
+			newState.session = action.params.session;
 		}
 
-
-		return {...state, loading: true};
+		return newState;
 	},
 
 	[MESSENGER_SUCCESS]: (state, action) => {

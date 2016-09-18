@@ -3,6 +3,7 @@ import { Text, View, TouchableOpacity, Image, StyleSheet, Modal } from 'react-na
 import AppGuideline from '../../../app/AppGuideline';
 import moment from 'moment';
 import AppAsset from '../../../app/AppAsset';
+import { Actions } from 'react-native-router-flux';
 
 
 export default class AccounTransfertModal extends Component {
