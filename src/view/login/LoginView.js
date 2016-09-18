@@ -38,7 +38,7 @@ class LoginView extends Component {
 			this.props.dispatch(loadSession('hello'));
 		}
 
-		//Actions.messenger();
+		Actions.messenger();
 	}
 
 	componentWillMount(){
