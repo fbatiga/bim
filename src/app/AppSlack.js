@@ -98,7 +98,6 @@ class SlackUser {
 		var data =  { ...this.user, ...payload };
 		const body = `payload=${encodeURI(JSON.stringify(data))}`;
 
-		return;
 		return fetch(AppConfig.slack.webhookURL, {
 			method: 'POST',
 			headers: {
