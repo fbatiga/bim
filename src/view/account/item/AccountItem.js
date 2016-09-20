@@ -58,7 +58,7 @@ export default class AccountItem extends React.Component {
 			<TouchableHighlight>
 				<View style={{ flexDirection: 'row' }}>
 					<View style={{ paddingTop: 25 }}>
-						<Text style={style.date}>{moment(this.props.rowData.timestamp).format('D')}</Text>
+						{this.props.rowData.timestamp != undefined && (<Text style={style.date}>{moment(this.props.rowData.timestamp).format('D')}</Text>)}
 					</View>
 					<View style={style.button}>
 						<View style={style.leftPart}>

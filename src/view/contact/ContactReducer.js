@@ -16,12 +16,12 @@ const initialState = {
 };
 
 
-let defaultContacts = [
-{
+let actions = [{
 	type : 'action',
 	text : 'Payer avec un QR Code'
-},
-{
+}];
+
+let defaultContacts = [{
 	givenName: 'Faouzane',
 	familyName: 'BATIGA',
 	phoneNumbers: [{number: "0667505353"}],
@@ -51,6 +51,7 @@ const ContactReducer = handleActions({
 		});
 
 
+		contacts= actions.concat(contacts);
 
 		return { ...state, list: contacts, dataSource: ds.cloneWithRows(contacts), loading : false };
 	}

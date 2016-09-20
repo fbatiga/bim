@@ -10,9 +10,6 @@ import BackButton from '../common/button/BackButton';
 import Title from '../common/title/Title';
 
 class addAccount extends Component {
-	componentDidMount() {
-		this.props.dispatch(init());
-	}
 
 	render() {
 		return (

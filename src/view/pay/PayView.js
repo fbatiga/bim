@@ -13,6 +13,7 @@ import TitleSelectionStep from '../common/step/TitleSelectionStep';
 import QrCodeStep from '../common/step/QrCodeStep';
 import RecipientSelectionStep from '../common/step/RecipientSelectionStep';
 import SuccessStep from '../common/step/SuccessStep';
+import PointsStep from '../common/step/PointsStep';
 
 
 import AppGuideline from '../../app/AppGuideline';
@@ -45,6 +46,16 @@ class PayView extends Component {
 	}
 
 	componentDidUpdate(){
+		if(this.state.step == this.steps.length-2){
+
+			setTimeout(function(){
+
+				this.setState({
+					step: this.state.step + 1
+				});
+
+			}.bind(this),2000);
+		}
 		if(this.state.step == this.steps.length-1){
 			setTimeout(function(){Actions.account()},1500);
 		}
@@ -101,7 +112,8 @@ class PayView extends Component {
 
 		}
 
-		this.steps.push(<SuccessStep subTitle='B!M envoyé !' />);
+		this.steps.push(<SuccessStep title={Title} subtitle='B!M envoyé !' />,
+						<PointsStep title={Title} />);
 
 		return this.steps[this.state.step];
 	}

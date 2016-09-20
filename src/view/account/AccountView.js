@@ -11,7 +11,7 @@ import AppAsset from '../../app/AppAsset';
 
 
 import {connect} from 'react-redux';
-import {addTransaction} from './AccountAction';
+import {addTransaction, setTransactions} from './AccountAction';
 import AccountTab from './item/AccountTab';
 import Title from '../common/title/Title';
 import BackButton from '../common/button/BackButton';
@@ -53,53 +53,60 @@ class AccountView extends Component {
 	}
 
 	componentDidMount() {
-		Animated.timing(
+
+
+		let animations = [];
+		animations.push(
+			Animated.timing(
 			this.state.fadeAnim,
 			{
 				toValue: 1
-			}).start();
-
-		Animated.timing(
+			}),
+			Animated.timing(
 			this.state.bounceValue,
 			{
 				delay: 200,
 				toValue: 1,
 				friction: 10,
 				tension: 40
-			}).start();
-
-		Animated.timing(
+			}),
+			Animated.timing(
 			this.state.slideIn,
 			{
 				delay: 200,
 				toValue: 0,
 				friction: 10,
 				tension: 40
-			}).start();
+			})
+		);
+
+		Animated.parallel(animations).start();
 
 		this.transactionsRef.once("value").then(function (snapshot) {
 
+			let transactions = [];
 			snapshot.forEach((row) => {
 				row = row.val();
 				row.category = this.categories[row.category];
-				this.props.dispatch(addTransaction(row));
+				transactions.push(row);
 			});
+
+			this.props.dispatch(setTransactions(transactions));
+			this.listenToTransactionChanges(this.transactionsRef);
 
 		}.bind(this), function (err) {
 			console.log(err);
 		});
-		this.listenToTransactionChanges(this.transactionsRef);
 	}
 
 	listenToTransactionChanges(source) {
-		var that = this;
 		source.orderByChild('timestamp').on('child_added', (snapshot)=> {
 			snapshot = snapshot.val();
             // console.log(snapshot);
-            snapshot.category = that.categories[snapshot.category];
+            snapshot.category = this.categories[snapshot.category];
             // inserting at the beginning of the array
 
-            that.props.account.transactions.unshift(snapshot);
+            this.props.dispatch(addTransaction(snapshot));
            // this.setState({dataSource: this.state.dataSource.cloneWithRows(this.props.account.transactions)});
        });
 	}
@@ -125,7 +132,10 @@ class AccountView extends Component {
 			<TouchableOpacity style={style.transferButton} onPress={this.showModal.bind(this)}>
 			<Image source={AppAsset.transfer}  style={style.transferButtonImage} />
 			</TouchableOpacity>
-			<ScrollView>
+			<ScrollView
+			bounces={false}
+			>
+
 			{this.state.modalVisible && <AccountTransfertModal close={this.hideModal.bind(this)}/>}
 
 			<View style={style.top}>
@@ -147,6 +157,7 @@ class AccountView extends Component {
 			horizontal={true}
 			automaticallyAdjustInsets={false}
 			decelerationRate={0}
+			bounces ={false}
 			snapToInterval={themeWidth + themeMargin*2}
 			snapToAlignment="center">
 			{this.props.account.categories.map((value, key) => {
@@ -161,7 +172,7 @@ class AccountView extends Component {
 			previousMonth={this.state.previousMonth}
 			currentMonth={this.state.currentMonth}
 			category={this.state.category}
-			transactions={this.props.account.transactions}
+			account={this.props.account}
 			/>
 			</Animated.View>
 			</ScrollView>

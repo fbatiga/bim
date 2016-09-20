@@ -104,7 +104,7 @@ class ContactView extends Component {
 	renderRow(contact){
 
 		if(contact.type !== undefined && contact.type =='action' ){
-			return;
+			return null;
 		}
 
 		return (<ContactItem
@@ -118,6 +118,7 @@ class ContactView extends Component {
 
 
 	render() {
+
 		return (
 			<View style={style.container}>
 			<Title style={{color: AppGuideline.colors.deepblue, height: 80}} >CONTACTS</Title>

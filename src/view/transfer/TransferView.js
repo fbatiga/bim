@@ -94,7 +94,7 @@ class TransferView extends Component {
 		transferLabel={this.state.transferLabel}
 		transferRecipient={this.state.transferRecipient}
 		confirm={this.confirmTransfer.bind(this)} />,
-		<SuccessStep subTitle={subtitle.transferSuccessSubtitle} />
+		<SuccessStep subtitle={subtitle.transferSuccessSubtitle} />
 		];
 
 		return this.steps[this.state.step];

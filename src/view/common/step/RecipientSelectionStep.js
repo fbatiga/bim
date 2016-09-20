@@ -41,18 +41,26 @@ export default class RecipientSelectionStep extends React.Component {
 
 	renderRow(contact){
 
-		if(contact.type !== undefined && contact.type =='action' && this.props.qrCode !== undefined ){
-			return (<ActionItem
+		if(contact.type !== undefined && contact.type =='action' ){
+			if(this.props.qrCode !== undefined ){
+				return (
+					<ActionItem
 						confirm={this.props.qrCode}
 						image={AppAsset.qrcode}
 						text={contact.text} />
 					);
+			}
 		}
 
-		return <RecipientItem
+		if(contact.givenName !== undefined ){
+			return <RecipientItem
 						confirm={this.props.confirm}
 						rowData={contact}
-					/>
+						/>
+		}
+
+
+		return null;
 	}
 
 

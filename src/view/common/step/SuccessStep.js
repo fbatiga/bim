@@ -33,7 +33,7 @@ export default class SuccessStep extends Component {
 	render() {
 		return (
 			<View style={styles.container}>
-			<Title>{this.props.title|| 'B!M'}</Title>
+			<Title>{this.props.title || 'B!M'}</Title>
 
 			<View style={styles.top}>
 			<Image source={asset.success} style={styles.image}/>
@@ -43,7 +43,7 @@ export default class SuccessStep extends Component {
 				fontFamily : 'Montserrat-Bold',
 				marginTop: 24
 			}}>
-			{this.props.subTitle || 'Transfert effectué !' }
+			{this.props.subtitle || 'Transfert effectué !' }
 			</Text>
 			</View>
 			</View>

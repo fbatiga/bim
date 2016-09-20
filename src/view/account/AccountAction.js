@@ -6,6 +6,8 @@ export const ACCOUNT_FILTER_DEBIT = 'account.filter.debit';
 export const ACCOUNT_FILTER_CATEGORY = 'account.filter.category';
 export const ACCOUNT_FILTER_MONTH = 'account.filter.month';
 export const ACCOUNT_ADD_TRANSACTION = 'account.add.transaction';
+export const ACCOUNT_SET_TRANSACTIONS = 'account.set.transactions';
+
 
 export function filterByCredit(action) {
     return {
@@ -40,4 +42,11 @@ export function addTransaction(transaction) {
   };
 }
 
+
+export function setTransactions(transactions) {
+  return {
+  	    type: ACCOUNT_ADD_TRANSACTION,
+  	    transactions
+  };
+}
 

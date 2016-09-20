@@ -1,5 +1,5 @@
 import React, {Component}from 'react';
-import { Text, View, TouchableOpacity, Image, StyleSheet, ScrollView , SegmentedControlIOS} from 'react-native';
+import { Text, View, ListView, TouchableOpacity, Image, StyleSheet, ScrollView , SegmentedControlIOS} from 'react-native';
 import AppGuideline from '../../../app/AppGuideline';
 import moment from 'moment';
 import AppAsset from '../../../app/AppAsset';
@@ -11,20 +11,25 @@ export default class AccounTransfertList extends Component {
 
 	constructor(props) {
 		super(props);
+		const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
 		this.state = {
-			filterIndex: 0
+			filterIndex: 0,
+			currentTab:  'all',
+			dataSource: ds.cloneWithRows(this.props.account.transactions)
 		};
 	}
 
 	filterByAll() {
-		this.state.dataSource = this.state.dataSource.cloneWithRows(this.getTransactions());
-		return;
+
+		this.setState({
+			dataSource:  this.state.dataSource.cloneWithRows(this.getTransactions())
+		});
 	}
 
 	filterByDebit() {
 		this.setState({
-			'dataSource': this.state.dataSource.cloneWithRows(this.getTransactions().filter((elm) => {
+			dataSource: this.state.dataSource.cloneWithRows(this.getTransactions().filter((elm) => {
 				return elm.type === 'debit';
 			}))
 		});
@@ -33,7 +38,7 @@ export default class AccounTransfertList extends Component {
 
 	filterByCredit() {
 		this.setState({
-			'dataSource': this.state.dataSource.cloneWithRows(this.getTransactions().filter((elm) => {
+			dataSource: this.state.dataSource.cloneWithRows(this.getTransactions().filter((elm) => {
 				return elm.type === 'credit';
 			}))
 		});
@@ -44,7 +49,7 @@ export default class AccounTransfertList extends Component {
 		this.setState({
 			filterIndex: 0,
 			currentTab: cat || 'all',
-			'dataSource': this.state.dataSource.cloneWithRows(this.getTransactions(cat))
+			dataSource: this.state.dataSource.cloneWithRows(this.getTransactions(cat))
 		});
 	}
 
@@ -89,6 +94,14 @@ export default class AccounTransfertList extends Component {
 		}
 	}
 
+	renderRow(row){
+
+		if(row !== undefined && row.timestamp !== undefined){
+			return (<AccountItem rowData={row} />);
+		}
+
+		return null;
+	}
 
 	render() {
 		return (
@@ -113,14 +126,16 @@ export default class AccounTransfertList extends Component {
 			onChange={this.onChange.bind(this)}
 			/>
 			</View>
-			<ScrollView
 
-			style={style.listView}
-			horizontal={false}>
-			{this.props.transactions.map((value, key) => {
-				return (<AccountItem rowData={value} key={key} />);
-			})}
-			</ScrollView>
+			<View
+			style={style.listView} >
+			<ListView
+			ref='listView'
+			enableEmptySections={true}
+			dataSource={this.state.dataSource}
+			renderRow={this.renderRow.bind(this)}
+			/>
+			</View>
 
 			</View>
 			);
@@ -178,6 +193,5 @@ const style = StyleSheet.create({
 
 	listView: {
 		flex: 10,
-		borderColor: "red"
 	},
 });

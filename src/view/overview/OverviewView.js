@@ -19,7 +19,8 @@ class OverviewView extends Component {
 			currentTab: 'all',
 			currentMonth: 'JUIN',
 			bounceValue: new Animated.Value(1),
-			fadeAnim: new Animated.Value(1)
+			fadeAnim: new Animated.Value(1),
+			showAccount : false
 		};
 	}
 
@@ -94,27 +95,33 @@ class OverviewView extends Component {
 	}
 
 	transition(type) {
-		Animated.timing(
+
+		let animations = [];
+
+
+		animations.push(
+			Animated.timing(
 			this.state.fadeAnim,
 			{
 				toValue: 0,
 				duration: 50
-			}).start();
-
-		Animated.timing(
+			}),
+			Animated.timing(
 			this.state.bounceValue, {
 				duration: 300,
-				toValue: 8,
-				friction: 5,
-				tension: 40
-			}).start();
+				toValue: 15,
+			})
+		);
 
-		setTimeout(() => {
+
+		Animated.sequence(animations).start(()=>{
 			if (type === 'jackpot') {
 				Actions.jackpot();
 			} else {
 				Actions.account();
-			}}, 300);
+			}
+		})
+
 	}
 }
 
