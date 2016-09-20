@@ -6,7 +6,8 @@ import {Actions} from 'react-native-router-flux';
 import {connect} from 'react-redux';
 import {login, signup} from './LoginAction';
 import AppAsset from '../../app/AppAsset';
-import {loadSession, loadChoices, registerSession, addMessage, addBotMessage} from '../messenger/MessengerAction';
+import {loadSession, updateProfile, loadChoices, registerSession, addMessage, addBotMessage} from '../messenger/MessengerAction';
+import {firebaseDb} from  '../../app/AppFirebase';
 
 const LoginStyle = StyleSheet.create({
 	container: {
@@ -28,6 +29,7 @@ const LoginStyle = StyleSheet.create({
 });
 
 const {width, height} = Dimensions.get('window');
+const rootRef = firebaseDb.ref();
 
 class LoginView extends Component {
 
@@ -35,10 +37,13 @@ class LoginView extends Component {
 		if(this.props.login.username == false){
 			this.props.dispatch(loadSession('welcome'));
 		}else{
-			this.props.dispatch(loadSession('hello'));
-		}
+			this.firebaseProfileRef = rootRef.child(this.props.login.username+'/profile');
 
-		Actions.messenger();
+			this.firebaseProfileRef.on('value', function(snapshot) {
+				this.props.dispatch(updateProfile(snapshot.val()));
+				this.props.dispatch(loadSession('hello'));
+			}.bind(this));
+		}
 	}
 
 	componentWillMount(){

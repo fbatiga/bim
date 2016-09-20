@@ -210,6 +210,8 @@ class AppLayout extends Component {
 
 			if(this.initLogin == false){
 				this.initLogin = true;
+				Actions.overview();
+				this.props.dispatch(swipeTo('menu'));
 			}
 
 			this.setState({
@@ -263,6 +265,12 @@ class AppLayout extends Component {
 
 		if( nextProps.menu.goTo != this.props.menu.goTo && nextProps.messenger.session != null ){
 			this.swipeTo(nextProps.menu.goTo);
+		}
+
+		if(this.props.messenger.session== null &&  nextProps.messenger.session !== null){
+
+			this.props.dispatch(setVisibility(true));
+
 		}
 
 	}

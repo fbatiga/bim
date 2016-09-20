@@ -73,7 +73,7 @@ function addMessages(state, result, isBot){
 		var match = re.exec(message);
 
 		if(match != null){
-			if(state.profile[match[1]] !== undefined){
+			if(state.profile != null && state.profile[match[1]] !== undefined){
 				message = message.replace('('+match[1]+')',state.profile[match[1]]);
 			}
 		}

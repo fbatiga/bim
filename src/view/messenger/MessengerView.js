@@ -33,13 +33,7 @@ class MessengerView extends Component {
 		this.inputToSave = null;
 
 
-		if(this.props.login.username != false){
-			this.firebaseProfileRef = rootRef.child(this.props.login.username+'/profile');
 
-			this.firebaseProfileRef.on('value', function(snapshot) {
-				this.props.dispatch(updateProfile(snapshot.val()));
-			}.bind(this));
-		}
 
 	}
 
@@ -47,18 +41,17 @@ class MessengerView extends Component {
 
 		if(this.props.messenger.messages.length == 0 ){
 
-			if(this.props.messenger.loading == false){
-				this.props.dispatch(getReply({
-					msg : 'hello',
-					session : this.props.messenger.session
-				}));
-			}
+
+
+
 
 		}else{
 			this.props.messenger.messages.map((message)=>{
 				message.loaded = true;
 			})
 		}
+
+
 
 	}
 
@@ -129,12 +122,6 @@ class MessengerView extends Component {
 			if(this.firebaseMessagesRef != null){
 				this.firebaseMessagesRef.off();
 			}
-
-			this.props.dispatch(getReply({
-				msg : this.props.messenger.initMessage,
-				session : this.props.messenger.session
-			}));
-
 		}
 	}
 
