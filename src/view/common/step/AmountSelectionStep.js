@@ -21,7 +21,7 @@ class AmountSelectionStep extends React.Component {
 	render() {
 		return (
 			<View style={styles.container}>
-			<BackButton image={asset.back_green} back={this.props.back} />
+			{ this.props.back && <BackButton image={asset.back_green} back={this.props.back} />}
 			<Title>{this.props.title}</Title>
 			<View style={styles.top}>
 			<CenteredTitle>{this.props.subtitle || 'B!MMER LA SOMME DE' }</CenteredTitle>

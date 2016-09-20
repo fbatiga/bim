@@ -23,6 +23,7 @@ class ProfileView extends Component {
 
 		this.state = {
 			fadeAnim: new Animated.Value(0),
+			pointHeight : 0,
 			animPictureValue: new Animated.Value(-200),
 			animContentValue: new Animated.Value(height)
 		};
@@ -53,6 +54,11 @@ class ProfileView extends Component {
 
 	onPointLayout(event){
 		this.pointPosition = event.nativeEvent.layout.y ;
+
+		this.setState({
+			pointHeight: event.nativeEvent.layout.height
+		})
+
 		console.log('onPointLayout',this.pointPosition);
 	}
 
@@ -78,7 +84,7 @@ class ProfileView extends Component {
 		let picAfter =	Animated.timing(
 			this.state.animPictureValue,
 			{
-				toValue: -100,
+				toValue: 0,
 				delay : 300,
 				duration: 300,
 				easing : Easing.ease
@@ -87,7 +93,7 @@ class ProfileView extends Component {
 		let formAfter=	Animated.timing(
 			this.state.animContentValue,
 			{
-				toValue: -100,
+				toValue: 30,
 				duration: 300,
 				easing : Easing.ease
 			});
@@ -143,7 +149,7 @@ class ProfileView extends Component {
 			horizontal={false}
 			scrollEnabled={false}
 			>
-			<View style={{height: height}} >
+			<View style={{height: height - this.state.pointHeight}} >
 				<View style={style.row}>
 					<BackButton image={AppAsset.back} back={this.goToMenu.bind(this)} style={{ opacity : this.state.fadeAnim}} />
 					<Animated.Image source={asset.alice} style={{top : this.state.animPictureValue}}/>

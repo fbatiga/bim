@@ -68,7 +68,6 @@ class PayView extends Component {
 		this.steps = [
 			<AmountSelectionStep
 				title={Title}
-				back={this.back.bind(this)}
 				subtitle={'Somme à verser'}
 				amount={this.state.amount}
 				confirm={this.confirmAmount.bind(this)}
