@@ -35,14 +35,14 @@ class MessengerBottom extends Component {
 						friction: 7,
 						tension: 40
 					}
-				).start(),
+				),
 				Animated.timing(
 					this.state.rotation,
 					{
 						toValue: 2,
 						duration: 200
 					}
-				).start(),
+				),
 			]);
 
 			this.setState({
@@ -58,14 +58,14 @@ class MessengerBottom extends Component {
 						friction: 7,
 						tension: 40
 					}
-				).start(),
+				),
 				Animated.timing(
 					this.state.rotation,
 					{
 						toValue: 0,
 						duration: 200
 					}
-				).start(),
+				)
   		]),
 
 			this.setState({
@@ -78,7 +78,7 @@ class MessengerBottom extends Component {
 
 	render(){
 		return (
-			<View style={[styles.container, this.props.style, {backgroundColor: this.state.backgroundColor}]} >
+			<Animated.View style={[styles.container, this.props.style, {backgroundColor: this.state.backgroundColor}]} >
 
 			{ this.props.menu.location == 'main'  && this.props.menu.goTo == 'main'&& <Animated.Image source={asset.bigStar} style={{ position:'absolute', bottom: 10, left: this.state.leftTransition, transform: [{rotate: this.state.rotation.interpolate({ inputRange: [0, 0.75], outputRange: [ '-100deg', '-63deg' ]})} ] }} />}
 
@@ -119,7 +119,7 @@ class MessengerBottom extends Component {
 			}
 				</View>
 
-			</View>
+			</Animated.View>
 			);
 	}
 }
@@ -132,7 +132,6 @@ const styles = StyleSheet.create({
 		backgroundColor : '#FFFFFF'
 	},
 	container :{
-		flex: 1,
 		flexDirection:'column',
 	},
 	bottom :{

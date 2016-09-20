@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
-import { Text, View, ListView,  StyleSheet , Image, ScrollView, TextInput, TouchableOpacity, AsyncStorage } from 'react-native';
+import { Text, View, ListView,  StyleSheet , Image, ScrollView, TextInput, TouchableOpacity, AsyncStorage, Animated } from 'react-native';
 import {getReply,updateProfile, addMessage, addSlackMessage,loadButtons,restartBot , notify, setVisibility} from './MessengerAction';
 import {register} from '../login/LoginAction';
 import MessengerMain from './layout/MessengerMain';
@@ -21,7 +21,8 @@ class MessengerView extends Component {
 		this.buttons = [];
 		this.state = {
 			input : false,
-			text : ''
+			text : '',
+			animBottomHeight : new Animated.Value(0)
 		};
 
 		this.form = [];
@@ -32,26 +33,24 @@ class MessengerView extends Component {
 
 		this.inputToSave = null;
 
-
-
-
 	}
 
 	componentDidMount(){
 
-		if(this.props.messenger.messages.length == 0 ){
+		if(this.props.messenger.messages.length > 0 ){
 
-
-
-
-
-		}else{
 			this.props.messenger.messages.map((message)=>{
 				message.loaded = true;
 			})
 		}
 
-
+		Animated.timing(
+			this.state.animBottomHeight,
+			{
+				toValue: 270,
+				duration: 300
+			}
+		).start();
 
 	}
 
@@ -272,7 +271,7 @@ render(){
 				)}
 			{!this.state.input &&
 				(<MessengerBottom
-					style={style.bottom}
+					style={[style.bottom, {height : this.state.animBottomHeight }]}
 					onLayout={this.onBottomLayout}
 					buttons={this.props.messenger.buttons}
 					onPress={this.onSend.bind(this)} />
@@ -290,12 +289,11 @@ render(){
 
 const style = StyleSheet.create({
 	bottom : {
-		flex : 4,
 		backgroundColor : '#79F0CC',
 		flexDirection:'column',
 	},
 	main: {
-		flex : 6,
+		flex : 2,
 		backgroundColor : '#FFFFFF',
 		padding : 15
 	},
