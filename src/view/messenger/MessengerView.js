@@ -66,13 +66,7 @@ class MessengerView extends Component {
 
 				if(message.user !== undefined && message.user != 'slackbot' && message.text !== 'fin'){
 
-					if(message.text.ToLowerCase() == 'déconnexion'){
-						AsyncStorage.clear();
-						this.props.dispatch(addSlackMessage('Déconnecté'));
-
-					}else{
-						this.props.dispatch(addSlackMessage(message.text));
-					}
+					this.props.dispatch(addSlackMessage(message.text));
 
 				}else{
 					this.props.dispatch(restartBot());

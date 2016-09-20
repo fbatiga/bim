@@ -1,11 +1,14 @@
 'use strict';
 
 import React, { Component } from 'react';
-import { View, Text, Image,  StyleSheet, ScrollView, PanResponder, Dimensions, Animated, Easing} from 'react-native';
+import { View, Text, Image,  StyleSheet, ScrollView, PanResponder, Dimensions, Animated, Easing, AsyncStorage, TouchableOpacity,BackAndroid} from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import BackButton from '../common/button/BackButton';
 import AppAsset from '../../app/AppAsset';
 import {swipeTo, configureSwipe} from '../menu/MenuAction';
+import {login, signup} from '../login/LoginAction';
+import {setVisibility, logout, loadSession} from '../messenger/MessengerAction';
+
 
 import {connect} from 'react-redux';
 const height = Dimensions.get('window').height;
@@ -49,12 +52,12 @@ class ProfileView extends Component {
 	}
 
 	onPointLayout(event){
-		this.pointPosition = event.nativeEvent.layout.y + 150;
+		this.pointPosition = event.nativeEvent.layout.y ;
 		console.log('onPointLayout',this.pointPosition);
 	}
 
 	onTrophyLayout(event){
-		this.trophyPosition = event.nativeEvent.layout.y + 150;
+		this.trophyPosition = event.nativeEvent.layout.y ;
 		console.log('onTrophyLayout',this.trophyPosition);
 	}
 
@@ -75,7 +78,7 @@ class ProfileView extends Component {
 		let picAfter =	Animated.timing(
 			this.state.animPictureValue,
 			{
-				toValue: -30,
+				toValue: -100,
 				delay : 300,
 				duration: 300,
 				easing : Easing.ease
@@ -84,7 +87,7 @@ class ProfileView extends Component {
 		let formAfter=	Animated.timing(
 			this.state.animContentValue,
 			{
-				toValue: 0,
+				toValue: -100,
 				duration: 300,
 				easing : Easing.ease
 			});
@@ -99,7 +102,18 @@ class ProfileView extends Component {
 				onVerticalSwipe : this.onHorizontalSwipe.bind(this),
 				onVerticalLargeSwipe : this.onHorizontalSwipe.bind(this)
 			})
-		);
+			);
+
+	}
+
+
+	logout(){
+		AsyncStorage.clear();
+		alert('Vous avez été déconnecté');
+		this.props.dispatch(setVisibility(true));
+		this.props.dispatch(logout());
+		this.props.dispatch(loadSession('welcome'));
+
 
 	}
 
@@ -129,34 +143,38 @@ class ProfileView extends Component {
 			horizontal={false}
 			scrollEnabled={false}
 			>
-
-			<View style={style.row}>
-
-			<BackButton image={AppAsset.back} back={this.goToMenu.bind(this)} style={{ opacity : this.state.fadeAnim}} />
-
-			<Animated.Image source={asset.alice} style={{top : this.state.animPictureValue}}/>
+			<View style={{height: height}} >
+				<View style={style.row}>
+					<BackButton image={AppAsset.back} back={this.goToMenu.bind(this)} style={{ opacity : this.state.fadeAnim}} />
+					<Animated.Image source={asset.alice} style={{top : this.state.animPictureValue}}/>
+				</View>
+				<Animated.View style={{top : this.state.animContentValue}} >
+					<View style={style.content} >
+						<Text style={style.name}>Alice</Text>
+						<Text style={style.name}>Holzman</Text>
+						<View style={style.line}>
+							<Text style={style.address}>13 rue de Berne, 75008 PARIS</Text>
+						</View>
+						<View style={style.row}>
+							<View style={style.action}>
+								<Image source={asset.modify} />
+								<Text style={style.param}> MODIFIER MES PARAMÈTRES</Text>
+							</View>
+						</View>
+						<View style={style.row}>
+							<TouchableOpacity onPress={this.logout.bind(this)} >
+								<View style={style.action}>
+									<Text style={style.param}> DECONNEXION </Text>
+								</View>
+							</TouchableOpacity>
+						</View>
+					</View>
+				</Animated.View>
 			</View>
-			<Animated.View style={{top : this.state.animContentValue}} >
-			<View style={style.content} >
-			<Text style={style.name}>Alice</Text>
-			<Text style={style.name}>Holzman</Text>
-			<View style={style.line}>
-			<Text style={style.address}>13 rue de Berne, 75008 PARIS</Text>
-			</View>
-			<View style={style.row}>
-			<View style={style.action}>
-			<Image source={asset.modify} />
-			<Text style={style.param}> MODIFIER MES PARAMÈTRES</Text>
-			</View>
-			</View>
-			</View>
-			<Image onLayout={this.onPointLayout.bind(this)} source={asset.point}/>
-			<Image onLayout={this.onTrophyLayout.bind(this)} source={asset.trophy}/>
-
-			</Animated.View>
+				<Image onLayout={this.onPointLayout.bind(this)} source={asset.point}/>
+				<Image onLayout={this.onTrophyLayout.bind(this)} source={asset.trophy}/>
 
 			</ScrollView>
-
 			</View>)
 	}
 
@@ -170,7 +188,10 @@ const style = StyleSheet.create({
 		flexDirection: 'column'
 	},
 	content :{
-		padding:30
+		padding:30,
+		justifyContent: 'flex-start',
+		flexDirection: 'column'
+
 	},
 	name : {
 		fontFamily : 'Montserrat-Bold',

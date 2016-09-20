@@ -23,7 +23,7 @@ const initialState = {
     accounts: [
         {
             id: 'TOUT',
-            label: 'TOUT',
+            label: 'Mes Comptes',
             balance: 2300,
             type: "external"
         },
@@ -33,27 +33,15 @@ const initialState = {
             balance: 1129,
             type: "internal"
         },{
-            id: 'bnp',
-            label: 'BNP',
+            id: 'laposte',
+            label: 'La Banque Postale',
             balance: -1429,
             type: "external"
         },
         {
-            id: 'barclays',
-            label: "Barclay's",
-            balance: -209,
-            type: "external"
-        },
-        {
             id: 'boursormama',
-            label: "Boursormama's",
+            label: "Boursorama",
             balance: -529,
-            type: "external"
-        },
-        {
-            id: 'bdb',
-            label: "Banco de brasil",
-            balance: -729,
             type: "external"
         },
         {

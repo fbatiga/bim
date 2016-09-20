@@ -11,6 +11,7 @@ export const MESSENGER_BOT_RESTART = 'messenger.bot_restart';
 export const MESSENGER_NOTIFICATION = 'messenger.notification';
 export const MESSENGER_VISIBILITY = 'messenger.visibility';
 export const MESSENGER_PROFILE = 'messenger.profile';
+export const MESSENGER_LOGOUT = 'messenger.logout';
 
 
 export function getReply(params) {
@@ -28,6 +29,11 @@ export function loadSession(message) {
     });
 }
 
+export function logout(params) {
+  return {
+    type: MESSENGER_LOGOUT
+  };
+}
 
 export function setVisibility(params) {
   return {

@@ -267,12 +267,6 @@ class AppLayout extends Component {
 			this.swipeTo(nextProps.menu.goTo);
 		}
 
-		if(this.props.messenger.session== null &&  nextProps.messenger.session !== null){
-
-			this.props.dispatch(setVisibility(true));
-
-		}
-
 	}
 
 	swipeTo(ref, animated = true){

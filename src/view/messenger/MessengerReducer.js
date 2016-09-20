@@ -3,7 +3,7 @@
 import { handleActions } from 'redux-actions';
 
 import {
-	MESSENGER_PROFILE, MESSENGER_NOTIFICATION, MESSENGER_VISIBILITY, MESSENGER_BOT_RESTART, MESSENGER_SLACK_MESSAGE, MESSENGER_HELLO, MESSENGER_REQUEST, MESSENGER_SUCCESS, MESSENGER_FAILURE, MESSENGER_BUTTONS, MESSENGER_MESSAGE, MESSENGER_BOT_MESSAGE, MESSENGER_SESSION
+	MESSENGER_LOGOUT, MESSENGER_PROFILE, MESSENGER_NOTIFICATION, MESSENGER_VISIBILITY, MESSENGER_BOT_RESTART, MESSENGER_SLACK_MESSAGE, MESSENGER_HELLO, MESSENGER_REQUEST, MESSENGER_SUCCESS, MESSENGER_FAILURE, MESSENGER_BUTTONS, MESSENGER_MESSAGE, MESSENGER_BOT_MESSAGE, MESSENGER_SESSION
 } from './MessengerAction';
 
 import { UserSlack, BimSlack } from '../../app/AppSlack';
@@ -12,6 +12,7 @@ const initialState = {
 	session : null,
 	messages: [],
 	buttons : [],
+	loading : false,
 	notification : false,
 	visibility : null,
 	bot: true,
@@ -146,6 +147,10 @@ const MessengerReducer = handleActions({
 		return { ...state, visibility : action.params};
 	},
 
+	[MESSENGER_LOGOUT]: (state, action) => {
+		return { ...state, messages : [],  buttons:[]};
+	},
+
 	[MESSENGER_MESSAGE]: (state, action) => {
 		return  addMessages(state, action.params, false);
 	},
@@ -173,6 +178,8 @@ const MessengerReducer = handleActions({
 	[MESSENGER_SUCCESS]: (state, action) => {
 
 		let newState = addMessages(state, action.result.botResponse, true);
+
+		newState.loading = false;
 
 		return newState;
 	},
