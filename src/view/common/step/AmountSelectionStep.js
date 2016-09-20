@@ -135,6 +135,7 @@ const styles = StyleSheet.create({
 	},
 	top: {
 		flex: 1,
+		paddingTop: 50,
 		justifyContent: 'center',
 		alignItems: 'center',
 		backgroundColor: AppGuideline.colors.deepBlue

@@ -60,27 +60,24 @@ class AccountView extends Component {
 			Animated.timing(
 			this.state.fadeAnim,
 			{
+				duration: 50,
 				toValue: 1
 			}),
 			Animated.timing(
 			this.state.bounceValue,
 			{
-				delay: 200,
-				toValue: 1,
-				friction: 10,
-				tension: 40
+				duration: 200,
+				toValue: 1
 			}),
 			Animated.timing(
 			this.state.slideIn,
 			{
-				delay: 200,
-				toValue: 0,
-				friction: 10,
-				tension: 40
+				duration: 200,
+				toValue: 0
 			})
 		);
 
-		Animated.parallel(animations).start();
+		Animated.sequence(animations).start();
 
 		this.transactionsRef.once("value").then(function (snapshot) {
 
