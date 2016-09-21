@@ -2,21 +2,26 @@
 
 import { handleActions } from 'redux-actions';
 
+import { AsyncStorage } from 'react-native';
 import {
-	MESSENGER_LOGOUT, MESSENGER_PROFILE, MESSENGER_NOTIFICATION, MESSENGER_VISIBILITY, MESSENGER_BOT_RESTART, MESSENGER_SLACK_MESSAGE, MESSENGER_HELLO, MESSENGER_REQUEST, MESSENGER_SUCCESS, MESSENGER_FAILURE, MESSENGER_BUTTONS, MESSENGER_MESSAGE, MESSENGER_BOT_MESSAGE, MESSENGER_SESSION
+	MESSENGER_REGISTER, MESSENGER_INIT, MESSENGER_PROFILE, MESSENGER_NOTIFICATION, MESSENGER_VISIBILITY, MESSENGER_BOT_RESTART, MESSENGER_SLACK_MESSAGE, MESSENGER_HELLO, MESSENGER_REQUEST, MESSENGER_SUCCESS, MESSENGER_FAILURE, MESSENGER_BUTTONS, MESSENGER_MESSAGE, MESSENGER_BOT_MESSAGE, MESSENGER_SESSION
 } from './MessengerAction';
 
 import { UserSlack, BimSlack } from '../../app/AppSlack';
+import {firebaseDb} from  '../../app/AppFirebase';
+const rootRef = firebaseDb.ref();
+
 
 const initialState = {
 	session : null,
 	messages: [],
 	buttons : [],
+	username : null,
 	loading : false,
 	notification : false,
 	visibility : null,
 	bot: true,
-	profile : null
+	profile : {}
 };
 
 function createMessage(text, image, buttons, isBot, index){
@@ -79,6 +84,14 @@ function addMessages(state, result, isBot){
 			}
 		}
 
+		var match = re.exec(message);
+
+		if(match != null){
+			if(state.profile != null && state.profile[match[1]] !== undefined){
+				message = message.replace('('+match[1]+')',state.profile[match[1]]);
+			}
+		}
+
 		let choiceIndex  = message.indexOf('[')
 		if( choiceIndex != -1 ){
 			buttons = loadButtons(message.substr(choiceIndex));
@@ -126,7 +139,20 @@ const MessengerReducer = handleActions({
 
 
     [MESSENGER_PROFILE]: (state, action) => {
-        return {...state, profile : action.profile };
+
+    	let profile =  Object.assign({}, state.profile, action.profile);
+
+    	console.log('profile =>', profile);
+
+        return {...state, profile };
+    },
+
+	[MESSENGER_REGISTER]: (state, action) => {
+		let username = action.username.toLowerCase();
+		AsyncStorage.setItem('@AsyncStorage:username', username);
+		rootRef.child(username+'/profile/prenom').set(action.username);
+
+        return {...state, username, profile : { prenom : action.username } };
     },
 
 
@@ -147,7 +173,7 @@ const MessengerReducer = handleActions({
 		return { ...state, visibility : action.params};
 	},
 
-	[MESSENGER_LOGOUT]: (state, action) => {
+	[MESSENGER_INIT]: (state, action) => {
 		return { ...state, messages : [],  buttons:[]};
 	},
 

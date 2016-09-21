@@ -11,7 +11,8 @@ export const MESSENGER_BOT_RESTART = 'messenger.bot_restart';
 export const MESSENGER_NOTIFICATION = 'messenger.notification';
 export const MESSENGER_VISIBILITY = 'messenger.visibility';
 export const MESSENGER_PROFILE = 'messenger.profile';
-export const MESSENGER_LOGOUT = 'messenger.logout';
+export const MESSENGER_INIT = 'messenger.init';
+export const MESSENGER_REGISTER = 'messenger.register';
 
 
 export function getReply(params) {
@@ -29,9 +30,9 @@ export function loadSession(message) {
     });
 }
 
-export function logout(params) {
+export function initMessenger(params) {
   return {
-    type: MESSENGER_LOGOUT
+    type: MESSENGER_INIT
   };
 }
 
@@ -89,5 +90,13 @@ export function addMessage(params) {
   return {
     type: MESSENGER_MESSAGE,
     params : params
+  };
+}
+
+
+export function register(username) {
+  return {
+    type: MESSENGER_REGISTER,
+    username
   };
 }

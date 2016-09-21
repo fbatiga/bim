@@ -6,8 +6,8 @@ import { Actions } from 'react-native-router-flux';
 import BackButton from '../common/button/BackButton';
 import AppAsset from '../../app/AppAsset';
 import {swipeTo, configureSwipe} from '../menu/MenuAction';
-import {login, signup} from '../login/LoginAction';
-import {setVisibility, logout, loadSession} from '../messenger/MessengerAction';
+import {login, logout, signup} from '../login/LoginAction';
+import {setVisibility, loadSession} from '../messenger/MessengerAction';
 
 
 import {connect} from 'react-redux';
@@ -111,17 +111,12 @@ class ProfileView extends Component {
 		);
 	}
 
-
 	logout(){
 		AsyncStorage.clear();
 		alert('Vous avez été déconnecté');
-		this.props.dispatch(setVisibility(true));
 		this.props.dispatch(logout());
-		this.props.dispatch(loadSession('welcome'));
-
-
+		this.props.dispatch(setVisibility(true));
 	}
-
 
 	onVerticalSwipe(distance) {
 		if(distance >0){

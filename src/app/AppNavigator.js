@@ -4,7 +4,6 @@ import { Navigator, Text,  AppState, Platform , View, AsyncStorage} from 'react-
 import { Actions, Scene, StatusBar, Router , Reducer} from 'react-native-router-flux';
 import {connect} from 'react-redux';
 
-import {notify} from '../view/messenger/MessengerAction';
 
 import LoginView from '../view/login/LoginView';
 import ProfileView from '../view/profile/ProfileView';
@@ -28,7 +27,13 @@ import OneSignal from 'react-native-onesignal'; // Import package from node modu
 import { UserSlack } from './AppSlack';
 import Contacts from 'react-native-contacts';
 import {loadContacts, setContacts} from '../view/contact/ContactAction';
+import {notify, updateProfile, loadSession, setVisibility, addSlackMessage, restartBot} from '../view/messenger/MessengerAction';
+import {login} from '../view/login/LoginAction';
 
+import {firebaseDb} from  './AppFirebase';
+
+
+const rootRef = firebaseDb.ref();
 
 const reducerCreate = params => {
 	const defaultReducer = Reducer(params);
@@ -70,13 +75,74 @@ class AppNavigator extends Component {
 		super(props);
 		this.pendingNotifications = [];
 		this.handleAppStateChange = this.handleAppStateChange.bind(this);
+		this.firebaseProfileRef = null;
+		this.firebaseMessagesRef = null;
+		this.firebaseNotificationRef = null;
+
+//		AsyncStorage.clear();
+
 	}
 
 	handleNotification(message, data, isActive){
-		Actions.messenger();
+		this.props.dispatch(setVisibility(true));
 	}
 
+
+	loadProfile(username){
+		console.log('loadProfile');
+		this.firebaseMessagesRef = rootRef.child(username+'/slack');
+		this.firebaseNotificationRef = rootRef.child(username+'/notification');
+
+		this.firebaseProfileRef = rootRef.child(username+'/profile');
+
+		this.firebaseProfileRef.on('value', function(snapshot) {
+			let profile = snapshot.val();
+			console.log('profile',profile);
+			if(profile !== null){
+
+				this.props.dispatch(updateProfile(profile));
+			}
+		}.bind(this));
+
+		this.firebaseNotificationRef.on('value', function(snapshot) {
+
+			let notification = snapshot.val();
+			//console.log('firebaseNotificationRef', notification , this.props.messenger.notification);
+			if(notification !== null  && this.props.messenger.notification === false){
+				this.props.dispatch(notify(notification));
+			}
+
+			this.firebaseNotificationRef.set(null);
+
+		}.bind(this));
+
+	}
+
+
 	componentWillReceiveProps(nextProps){
+
+		console.log('componentWillReceiveProps', this.props.messenger, nextProps.messenger);
+		console.log('componentWillReceiveProps', this.props.login, nextProps.login);
+
+		if(nextProps.login.username != this.props.login.username && nextProps.login.username !== false){
+			if(nextProps.login.username == null){
+				this.props.dispatch(loadSession('welcome'));
+			}else{
+				this.loadProfile(nextProps.login.username);
+			}
+		}
+
+		if(nextProps.messenger.profile && nextProps.messenger.profile.prenom !== undefined && this.props.messenger.profile.prenom == undefined ){
+
+			if( this.props.messenger.session == null){
+
+				this.props.dispatch(loadSession('hello'));
+
+			}else{
+				this.props.dispatch(login(nextProps.messenger.username));
+			}
+
+		}
 
 		if(this.props.contact.list.length == 0 && this.props.contact.loading == false && nextProps.contact.loading == true){
 
@@ -85,23 +151,55 @@ class AppNavigator extends Component {
 
 			  // Contacts.PERMISSION_AUTHORIZED || Contacts.PERMISSION_UNDEFINED || Contacts.PERMISSION_DENIED
 			  if(permission == Contacts.PERMISSION_UNDEFINED ){
-				  	Contacts.requestPermission( (err, permission) => {
-				  		console.log('Contacts.requestPermission',permission);
+			  	Contacts.requestPermission( (err, permission) => {
+			  		console.log('Contacts.requestPermission',permission);
 
-				  		if (permission === Contacts.PERMISSION_AUTHORIZED) {
-				  			Contacts.getAll((err, contacts) => {
-				  				console.log('Contacts.getAll');
-				  				this.props.dispatch(setContacts(contacts));
-				  			});
-				  		} else {
-				  			this.props.dispatch(setContacts([]));
-				  		}
-				  	});
-				}else {
-					this.props.dispatch(setContacts([]));
-				}
+			  		if (permission === Contacts.PERMISSION_AUTHORIZED) {
+			  			Contacts.getAll((err, contacts) => {
+			  				console.log('Contacts.getAll');
+			  				this.props.dispatch(setContacts(contacts));
+			  			});
+			  		} else {
+			  			this.props.dispatch(setContacts([]));
+			  		}
+			  	});
+			  }else {
+			  	this.props.dispatch(setContacts([]));
+			  }
 			});
 
+		}
+
+
+		if(this.props.messenger.notification != nextProps.messenger.notification  && nextProps.messenger.notification != false){
+
+			this.firebaseMessagesRef.on("child_added", function(snapshot) {
+				let message = snapshot.val();
+				//console.log('child_added ', message);
+
+				if(message.user !== undefined && message.user != 'slackbot' && message.text !== 'fin'){
+
+					this.props.dispatch(addSlackMessage(message.text));
+
+				}else{
+					this.props.dispatch(restartBot());
+				}
+
+				this.firebaseMessagesRef.child(snapshot.key).remove();
+
+			}.bind(this));
+		}
+
+		if(this.props.messenger.notification != nextProps.messenger.notification  && nextProps.messenger.notification == false){
+			this.props.dispatch(restartBot());
+		}
+
+		//console.log('firebaseMessagesRef',this.props.messenger.bot, nextProps.messenger.bot );
+		if(this.props.messenger.bot !== nextProps.messenger.bot  && nextProps.messenger.bot == true){
+
+			if(this.firebaseMessagesRef != null){
+				this.firebaseMessagesRef.off();
+			}
 		}
 
 	}
@@ -157,7 +255,8 @@ class AppNavigator extends Component {
 function mapStateToProps(state) {
 	return {
 		messenger: state.messenger,
-		contact : state.contact
+		contact : state.contact,
+		login : state.login
 	};
 }
 

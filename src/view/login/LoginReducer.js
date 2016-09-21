@@ -3,16 +3,13 @@
 import {AsyncStorage} from 'react-native';
 import { handleActions } from 'redux-actions';
 import {
-  LOGIN_CONNECT, LOGIN_SIGNUP, LOGIN_REGISTER
+  LOGIN_CONNECT, LOGIN_SIGNUP
 } from './LoginAction';
 import {Actions} from 'react-native-router-flux';
 
 const initialState = {
    loading : false,
-   username : false,
-   profile : {
-
-   }
+   username : false
 };
 
 const LoginReducer = handleActions({
@@ -23,14 +20,8 @@ const LoginReducer = handleActions({
         return {...state, username : action.username };
     },
 
-	[LOGIN_REGISTER]: (state, action) => {
-		let username = action.username.toLowerCase();
-		AsyncStorage.setItem('@AsyncStorage:username', username);
-        return {...state, username };
-    },
-
     [LOGIN_SIGNUP]: (state, action) => {
-        return {...state, username : false};
+        return {...state, username : null};
     },
 
 }, initialState);

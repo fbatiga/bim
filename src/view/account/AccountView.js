@@ -190,7 +190,6 @@ class AccountView extends Component {
 	onScrollTransactionEnd(nativeEvent){
 		this.scrollTransactionPosition = nativeEvent.contentOffset.y;
 		this.scrollTransactionHeight = nativeEvent.contentSize.height;
-
 	}
 
 	render() {

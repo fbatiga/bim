@@ -269,6 +269,13 @@ class AppLayout extends Component {
 			this.swipeTo(nextProps.menu.goTo);
 		}
 
+		if(this.props.login.username != nextProps.login.username && nextProps.login.username !== false ){
+
+			this.props.dispatch(setVisibility(true));
+
+		}
+
+
 	}
 
 	swipeTo(ref, animated = true){
@@ -364,6 +371,7 @@ const style = StyleSheet.create({
 	},
 	slide: {
 		backgroundColor: 'transparent',
+		overflow: 'hidden'
 	},
 	swipe: {
 		backgroundColor: 'transparent',
