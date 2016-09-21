@@ -52,6 +52,12 @@ export default class RecipientSelectionStep extends React.Component {
 			}
 		}
 
+		if(this.props.bimOnly !==  undefined && this.props.bimOnly == true){
+			if(contact.type  == undefined || contact.type != "bim"){
+				return null;
+			}
+		}
+
 		if(contact.givenName !== undefined ){
 			return <RecipientItem
 						confirm={this.props.confirm}
@@ -89,10 +95,6 @@ export default class RecipientSelectionStep extends React.Component {
 			);
 	}
 }
-
-RecipientSelectionStep.propTypes = {
-	title: React.PropTypes.string
-};
 
 function mapStateToProps(state) {
 	return {

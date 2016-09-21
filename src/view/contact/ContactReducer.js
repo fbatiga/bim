@@ -37,9 +37,9 @@ const ContactReducer = handleActions({
 
 	[CONTACT_SET]: (state, action) => {
 
-		contacts= defaultContacts.concat(contacts);
+		contacts= defaultContacts.concat(action.contacts);
 
-		let contacts = action.contacts.sort((a,b) => {
+		let contacts = contacts.sort((a,b) => {
 			if(a.givenName >  b.givenName){
 				return 1;
 			} else if (a.givenName ===  b.givenName){

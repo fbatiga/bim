@@ -81,6 +81,7 @@ class PayView extends Component {
 				title={Title}
 				back={this.back.bind(this)}
 				subtitle={'Destinataire :'}
+				bimOnly={true}
 				qrCode={this.qrCode.bind(this)}
 				contact={this.props.contact}
 				confirm={this.confirmRecipient.bind(this)} />
