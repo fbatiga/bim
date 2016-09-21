@@ -8,6 +8,7 @@ import {firebaseDb} from  '../../app/AppFirebase';
 
 import AppGuideline from '../../app/AppGuideline';
 import AppAsset from '../../app/AppAsset';
+import {swipeTo, configureSwipe} from '../menu/MenuAction';
 
 
 import {connect} from 'react-redux';
@@ -34,6 +35,9 @@ class AccountView extends Component {
 			categories[value.categoryId] = value;
 		});
 		this.categories = categories;
+		this.position = 0;
+		this.scrollTransactionPosition= 0;
+		this.scrollTransactionHeight = height;
 
 		this.state = {
 			currentTab: 'all',
@@ -58,24 +62,24 @@ class AccountView extends Component {
 		let animations = [];
 		animations.push(
 			Animated.timing(
-			this.state.fadeAnim,
-			{
-				duration: 50,
-				toValue: 1
-			}),
+				this.state.fadeAnim,
+				{
+					duration: 50,
+					toValue: 1
+				}),
 			Animated.timing(
-			this.state.bounceValue,
-			{
-				duration: 200,
-				toValue: 1
-			}),
+				this.state.bounceValue,
+				{
+					duration: 200,
+					toValue: 1
+				}),
 			Animated.timing(
-			this.state.slideIn,
-			{
-				duration: 200,
-				toValue: 0
-			})
-		);
+				this.state.slideIn,
+				{
+					duration: 200,
+					toValue: 0
+				})
+			);
 
 		Animated.sequence(animations).start();
 
@@ -94,6 +98,8 @@ class AccountView extends Component {
 		}.bind(this), function (err) {
 			console.log(err);
 		});
+
+		this.mainView = this.refs.mainView.getScrollResponder();
 	}
 
 	listenToTransactionChanges(source) {
@@ -121,16 +127,80 @@ class AccountView extends Component {
 		this.setState({category: category});
 	}
 
+	configureScroll(){
+		this.props.dispatch(
+			configureSwipe({
+				onVerticalSwipe : this.onVerticalSwipe.bind(this),
+				onVerticalLargeSwipe : this.onVerticalSwipe.bind(this)
+			})
+			);
+	}
 
+	registerScroll(scroll){
+
+		this.transferScroll = scroll;
+
+	}
+
+	onVerticalSwipe(distance, position) {
+
+		if(this.position == 0 && position.y > 500){
+
+			this.scrollTo(500);
+
+		}else if(position.y < 100 && distance < 0){
+			this.scrollTo(0);
+
+		}else{
+
+			if(distance< 100){
+				distance = distance *2;
+			}
+
+			let pos = this.scrollTransactionPosition + distance;
+
+
+			if(pos<0){
+				pos = 0;
+			}
+
+			if( pos > this.scrollTransactionHeight - 500){
+
+				pos = this.scrollTransactionHeight -  500;
+
+			}
+
+			this.transferScroll.scrollTo({
+				y: pos,
+				animated : true
+			});
+		}
+	}
+
+
+	scrollTo(y){
+		this.mainView.scrollTo({
+			y: y,
+			x: 0,
+			animated : true
+		});
+		this.position = y;
+	}
+
+	onScrollTransactionEnd(nativeEvent){
+		this.scrollTransactionPosition = nativeEvent.contentOffset.y;
+		this.scrollTransactionHeight = nativeEvent.contentSize.height;
+
+	}
 
 	render() {
 		return (
-			<View style={{ flex: 1 }}>
-			<TouchableOpacity style={style.transferButton} onPress={this.showModal.bind(this)}>
-			<Image source={AppAsset.transfer}  style={style.transferButtonImage} />
-			</TouchableOpacity>
+			<View style={{ flex: 1 }} onLayout={this.configureScroll.bind(this)} >
+
 			<ScrollView
 			bounces={false}
+			scrollEnabled={false}
+			ref='mainView'
 			>
 
 			{this.state.modalVisible && <AccountTransfertModal close={this.hideModal.bind(this)}/>}
@@ -166,6 +236,8 @@ class AccountView extends Component {
 
 			<Animated.View style={[style.bottom, { marginTop: this.state.slideIn }]}>
 			<AccountTransfertList
+			registerScroll={this.registerScroll.bind(this)}
+			onScrollEnd={this.onScrollTransactionEnd.bind(this)}
 			previousMonth={this.state.previousMonth}
 			currentMonth={this.state.currentMonth}
 			category={this.state.category}
@@ -183,7 +255,7 @@ const style = StyleSheet.create({
 		flex: 1
 	},
 	top: {
-		height: (height - 225),
+		height: 485,
 		backgroundColor: AppGuideline.colors.alternative,
 		overflow: 'visible',
 		zIndex: 10
@@ -238,6 +310,7 @@ const style = StyleSheet.create({
 	transferButtonImage: {},
 
 	bottom: {
+		flex: 1,
 		backgroundColor: '#fff'
 	},
 

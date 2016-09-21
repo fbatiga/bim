@@ -21,9 +21,30 @@ let actions = [{
 	text : 'Payer avec un QR Code'
 }];
 
+
 let defaultContacts = [{
-	givenName: 'Faouzane',
-	familyName: 'BATIGA',
+	givenName: 'Alice',
+	familyName: 'Holzman',
+	phoneNumbers: [{number: "0667505353"}],
+	type:'bim'
+},{
+	givenName: 'Jérôme',
+	familyName: 'Toucheboeuf',
+	phoneNumbers: [{number: "0667505353"}],
+	type:'bim'
+},{
+	givenName: 'Philippe',
+	familyName: 'Mihelic',
+	phoneNumbers: [{number: "0667505353"}],
+	type:'bim'
+},{
+	givenName: 'Héloïse',
+	familyName: 'Weber',
+	phoneNumbers: [{number: "0667505353"}],
+	type:'bim'
+},{
+	givenName: 'Nathalie',
+	familyName: 'Collin',
 	phoneNumbers: [{number: "0667505353"}],
 	type:'bim'
 }];

@@ -78,6 +78,7 @@ class TransferView extends Component {
 		<RecipientSelectionStep
 		title={Title}
 		back={this.back.bind(this)}
+		bimOnly={true}
 		subtitle={'Destinataire :'}
 		contact={this.props.contact}
 		confirm={this.confirmRecipient.bind(this)} />,

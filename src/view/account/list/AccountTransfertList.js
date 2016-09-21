@@ -20,6 +20,17 @@ export default class AccounTransfertList extends Component {
 		};
 	}
 
+
+	componentDidMount() {
+
+		let  listView = this.refs.listView.getScrollResponder();
+
+		if(this.props.registerScroll != undefined){
+			this.props.registerScroll(listView);
+		}
+
+	}
+
 	filterByAll() {
 
 		this.setState({
@@ -58,88 +69,96 @@ export default class AccounTransfertList extends Component {
 		//	case 0: this.filterByAll(); break;
 		//	case 1: this.filterByDebit(); break;
 		//	case 2: this.filterByCredit(); break;
-		}
+	}
+}
+
+
+getTransactions(cat) {
+	var source = this.props.account.transactions;
+
+	if (cat) {
+		this.state.currentTab = cat;
+	}
+	if (this.state.currentTab == 'all') {
+		this.state.balance = this.props.account.balance;
+		return source;
+	}
+	else {
+		console.log('PREVIOUSMONTH', this.props.account.previousMonthBalance);
+		var newBalance = this.props.account.previousMonthBalance;
+		var out = source.filter((elm) => {
+			if (elm.category.categoryId === this.state.currentTab) {
+				newBalance += parseFloat(elm.amount);
+				console.log(elm.label, elm.amount, this.state.balance + elm.amount);
+				console.log('BALANCE AFTER OPERATION', this.state.balance);
+
+				return true;
+			}
+			else {
+				return false;
+			}
+			return;
+		});
+
+		this.setState({'balance': newBalance});
+		return out;
+	}
+}
+
+renderRow(row){
+
+	if(row !== undefined && row.timestamp !== undefined){
+		return (<AccountItem rowData={row} />);
 	}
 
+	return null;
+}
 
-	getTransactions(cat) {
-		var source = this.props.account.transactions;
+onScrollEnd(event){
+	if(this.props.onScrollEnd != undefined){
 
-		if (cat) {
-			this.state.currentTab = cat;
-		}
-		if (this.state.currentTab == 'all') {
-			this.state.balance = this.props.account.balance;
-			return source;
-		}
-		else {
-			console.log('PREVIOUSMONTH', this.props.account.previousMonthBalance);
-			var newBalance = this.props.account.previousMonthBalance;
-			var out = source.filter((elm) => {
-				if (elm.category.categoryId === this.state.currentTab) {
-					newBalance += parseFloat(elm.amount);
-					console.log(elm.label, elm.amount, this.state.balance + elm.amount);
-					console.log('BALANCE AFTER OPERATION', this.state.balance);
-
-					return true;
-				}
-				else {
-					return false;
-				}
-				return;
-			});
-
-			this.setState({'balance': newBalance});
-			return out;
-		}
+		this.props.onScrollEnd(event.nativeEvent);
 	}
+}
 
-	renderRow(row){
+render() {
+	return (
+		<View style={this.props.style}>
+		<View style={style.dateContainer}>
+		<View style={style.dateLeft}>
+		<Text style={style.previousMonth} >{this.props.previousMonth}</Text>
+		</View>
+		<View style={style.dateCenter}>
+		<Text style={[AppGuideline.titles.h1, style.bottomTitle]} >{this.props.currentMonth}</Text>
+		</View>
+		<View style={style.dateRight} />
+		</View>
 
-		if(row !== undefined && row.timestamp !== undefined){
-			return (<AccountItem rowData={row} />);
-		}
+		<View style={style.switchContainer}>
+		<SegmentedControlIOS
+		style={style.switch}
+		tintColor={AppGuideline.colors.lightviolet}
+		enabled={true}
+		values={['Tout', 'Sorties', 'Entrées']}
+		selectedIndex={this.state.filterIndex}
+		onChange={this.onChange.bind(this)}
+		/>
+		</View>
 
-		return null;
-	}
+		<View
+		style={style.listView} >
+		<ListView
+		ref='listView'
+		enableEmptySections={true}
+		onMomentumScrollEnd={this.onScrollEnd.bind(this)}
+		dataSource={this.state.dataSource}
+		renderRow={this.renderRow.bind(this)}
+		/>
+		</View>
 
-	render() {
-		return (
-			<View>
-			<View style={style.dateContainer}>
-			<View style={style.dateLeft}>
-			<Text style={style.previousMonth} >{this.props.previousMonth}</Text>
-			</View>
-			<View style={style.dateCenter}>
-			<Text style={[AppGuideline.titles.h1, style.bottomTitle]} >{this.props.currentMonth}</Text>
-			</View>
-			<View style={style.dateRight} />
-			</View>
-
-			<View style={style.switchContainer}>
-			<SegmentedControlIOS
-			style={style.switch}
-			tintColor={AppGuideline.colors.lightviolet}
-			enabled={true}
-			values={['Tout', 'Sorties', 'Entrées']}
-			selectedIndex={this.state.filterIndex}
-			onChange={this.onChange.bind(this)}
-			/>
-			</View>
-
-			<View
-			style={style.listView} >
-			<ListView
-			ref='listView'
-			enableEmptySections={true}
-			dataSource={this.state.dataSource}
-			renderRow={this.renderRow.bind(this)}
-			/>
-			</View>
-
-			</View>
-			);
-	}
+		</View>
+		);
+}
 }
 
 

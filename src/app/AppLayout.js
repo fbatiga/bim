@@ -79,6 +79,8 @@ class AppLayout extends Component {
 
 		}else{
 
+			let position = { x: gestureState.x0, y: gestureState.y0 };
+
 			let horizontal = gestureState.x0 - gestureState.moveX;
 			let vertical = gestureState.y0 - gestureState.moveY;
 			let type = 'click';
@@ -111,13 +113,13 @@ class AppLayout extends Component {
 					switch(type){
 						case 'small':{
 							if(this.props.menu.gesture.onHorizontalSwipe != undefined){
-								this.props.menu.gesture.onHorizontalSwipe(horizontal);
+								this.props.menu.gesture.onHorizontalSwipe(horizontal , position);
 							}
 						}break;
 
 						case 'large':{
 							if(this.props.menu.gesture.onHorizontalLargeSwipe != undefined){
-								this.props.menu.gesture.onHorizontalLargeSwipe(horizontal);
+								this.props.menu.gesture.onHorizontalLargeSwipe(horizontal, position);
 							}
 
 							if(horizontal < 0){
@@ -135,13 +137,13 @@ class AppLayout extends Component {
 					switch(type){
 						case 'small':{
 							if(this.props.menu.gesture.onVerticalSwipe != undefined){
-								this.props.menu.gesture.onVerticalSwipe(vertical);
+								this.props.menu.gesture.onVerticalSwipe(vertical, position);
 							}
 						}break;
 
 						case 'large':{
 							if(this.props.menu.gesture.onVerticalLargeSwipe != undefined){
-								this.props.menu.gesture.onVerticalLargeSwipe(vertical);
+								this.props.menu.gesture.onVerticalLargeSwipe(vertical, position);
 							}
 						}break;
 					}
@@ -281,11 +283,6 @@ class AppLayout extends Component {
 		}
 	}
 
-	onScrollEnd(){
-		console.log('onScrollEnd',this.props.menu.goTo);
-		this.props.dispatch(goTo(this.props.menu.goTo));
-	}
-
 	componentDidUpdate(prevProps, prevState) {
 
 		if( prevProps.messenger.visibility !== this.props.messenger.visibility ){
@@ -326,7 +323,6 @@ class AppLayout extends Component {
 			horizontal={true}
 			scrollEnabled={false}
 			bounces={false}
-			onMomentumScrollEnd={this.onScrollEnd.bind(this)}
 			{...this._panResponder.panHandlers}
 			>
 			{pages}

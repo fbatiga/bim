@@ -105,11 +105,10 @@ class ProfileView extends Component {
 	configureScroll(){
 		this.props.dispatch(
 			configureSwipe({
-				onVerticalSwipe : this.onHorizontalSwipe.bind(this),
-				onVerticalLargeSwipe : this.onHorizontalSwipe.bind(this)
+				onVerticalSwipe : this.onVerticalSwipe.bind(this),
+				onVerticalLargeSwipe : this.onVerticalSwipe.bind(this)
 			})
-			);
-
+		);
 	}
 
 
@@ -124,7 +123,7 @@ class ProfileView extends Component {
 	}
 
 
-	onHorizontalSwipe(distance) {
+	onVerticalSwipe(distance) {
 		if(distance >0){
 			if(this.position ==  0){
 				this.scrollTo(this.pointPosition);
