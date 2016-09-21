@@ -6,8 +6,9 @@ import {connect} from 'react-redux';
 
 const styles = StyleSheet.create({
 	rowContainer: {
+		flex: 2,
 		flexDirection: 'row',
-		marginBottom: 10,
+		marginBottom: 20,
 	},
 	name: {
 		color: '#aaaaaa',
@@ -105,12 +106,20 @@ class Message extends Component {
 
 		let loading = (this.state.visibility == 'show' )? false : true;
 
+
+
+		if( position == 'left'){
+			style =	{ justifyContent: 'flex-start'};
+		}else{
+			 style = {  justifyContent: 'flex-end' };
+		}
+
 		return(
-			<View style={[styles.rowContainer, {justifyContent: position === 'left' ? 'flex-start' : position === 'right' ? 'flex-end' : 'center'}]}>
-				{ this.state.visibility != 'new' && position === 'left' && <Bubble {...rowData}  loading={loading} />}
-				{ position  !== 'left'  && <Bubble {...rowData}  loading={false} />}
+			<View style={[styles.rowContainer,style]}>
+				{ this.state.visibility != 'new' && position === 'left' && <Bubble {...rowData} loading={loading} />}
+				{ position  !== 'left'  && <Bubble {...rowData} loading={false} />}
 			</View>
-		);
+			);
 
 	}
 }

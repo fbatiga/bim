@@ -5,8 +5,6 @@ import asset from '../../../app/AppAsset';
 
 const styles = StyleSheet.create({
 	bubble: {
-		marginBottom: 15,
-		marginLeft: 10,
 		alignItems: 'flex-end',
 		flexDirection : 'row',
 		maxWidth : 220
@@ -35,14 +33,6 @@ const styles = StyleSheet.create({
 		maxWidth : 220,
 		fontFamily : 'Roboto-Light'
 	},
-	bubbleLeft: {
-		marginRight: 70,
-		alignSelf: 'flex-start',
-	},
-	bubbleRight: {
-		marginLeft: 70,
-		alignSelf: 'flex-end',
-	},
 });
 
 export default class Bubble extends React.Component {
@@ -57,12 +47,12 @@ export default class Bubble extends React.Component {
 
 	componentDidMount() {
 		Animated.timing(
-      this.state.fadeIn,
-      {
-        toValue: 1,
-        duration: 50
-      }
-    ).start();
+			this.state.fadeIn,
+			{
+				toValue: 1,
+				duration: 50
+			}
+			).start();
 
 		Animated.spring(
 			this.state.slideIn,
@@ -72,7 +62,7 @@ export default class Bubble extends React.Component {
 				friction: 6,
 				tension: 40
 			}
-		).start();
+			).start();
 	}
 
 	content(){
@@ -101,15 +91,15 @@ export default class Bubble extends React.Component {
 
 		let isLeft = this.props.position === 'left' ;
 
-		let bubbleStyle = (isLeft ? styles.bubbleLeft :  styles.bubbleRight );
-
 		return (
-			<Animated.View style={[styles.bubble, bubbleStyle, { position: 'relative', top: this.state.slideIn, opacity: this.state.fadeIn } ]}>
-
-				{isLeft && <UserLeft loading={this.props.loading} />}
+			<Animated.View style={{ top: this.state.slideIn, opacity: this.state.fadeIn, flexDirection:'row' }}>
+			{isLeft && <UserLeft loading={this.props.loading} />}
+			<View style={[styles.bubble]}>
 				{this.content()}
-				{!isLeft && !this.props.loading && <UserRight />}
+			</View>
+			{!isLeft && !this.props.loading && <UserRight />}
 			</Animated.View>
+
 			);
 	}
 }
