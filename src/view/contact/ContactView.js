@@ -1,10 +1,10 @@
 'use strict';
 
 import React, { Component } from 'react';
-import { Text, View, ScrollView, ListView, PanResponder, Image, TouchableOpacity, TouchableHighlight, StyleSheet, Dimensions } from 'react-native';
+import { Text, View, ScrollView, ListView, PanResponder, Image, TouchableOpacity, TouchableHighlight, Animated, StyleSheet, Dimensions } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import AppGuideline from '../../app/AppGuideline';
-import asset from '../../app/AppAsset';
+import AppAsset from '../../app/AppAsset';
 
 import Title from '../common/title/Title';
 import ContactItem from './item/ContactItem';
@@ -30,6 +30,12 @@ class ContactView extends Component {
 
 		this.scrollPos = null;
 
+		this.state = {
+
+			animButton : new Animated.Value(0.00001)
+
+		};
+
 		for(var i in letters){
 			this.letters[i] = this.letters[letters[i-1]] ;
 		}
@@ -37,10 +43,19 @@ class ContactView extends Component {
 
 
 	componentDidMount(){
+
 		this.headerScroll = this.refs.header.getScrollResponder();
 		this.listViewScroll = this.refs.listView.getScrollResponder();
 
 		this.props.dispatch(loadContacts());
+
+		Animated.timing(
+			this.state.animButton,
+			{
+				delay : 300,
+				duration : 300,
+				toValue : 1
+			}).start();
 	}
 
 
@@ -150,6 +165,14 @@ class ContactView extends Component {
 
 			</View>
 
+			<TouchableOpacity style={style.transferButton} >
+			</TouchableOpacity>
+			<View style={style.addIcon}>
+				<TouchableOpacity >
+					<Animated.Image source={AppAsset.add} style={{ transform: [ {scale :this.state.animButton }] }} />
+				</TouchableOpacity>
+			</View>
+
 
 
 			</View>
@@ -164,6 +187,11 @@ const style = StyleSheet.create({
 	container: {
 		backgroundColor: "white",
 		flex: 1,
+	},
+	addIcon: {
+		position : 'absolute',
+		bottom: 50,
+		right : -10
 	}
 });
 

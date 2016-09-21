@@ -6,7 +6,7 @@ const style = StyleSheet.create({
 	button :{
 		padding: 25,
 		position:'absolute',
-		top: 5,
+		top: -5,
 		left: -27,
 	}
 });
