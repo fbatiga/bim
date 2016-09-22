@@ -1,0 +1,9 @@
+{
+	"adress" : "3 avenue des Ternes, 75017 PARIS",
+	"image" : "/jerome.png",
+	"imageUrl" : "http://test.png",
+	"prenom" : "Jérôme",
+	"nom" : "Toucheboeuf",
+	"username" : "jerome",
+	"webHookURL" : "https://hooks.slack.com/services/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"
+}

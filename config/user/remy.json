@@ -1,0 +1,9 @@
+{
+	"adress" : "118 rue de Javel, 75015 PARIS",
+	"image" : "/remy.png",
+	"imageUrl" : "http://remy.png",
+	"prenom" : "Rémy",
+	"nom" : "Weber",
+	"username" : "remy",
+	"webHookURL" : "https://hooks.slack.com/services/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"
+}

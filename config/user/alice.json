@@ -1,0 +1,9 @@
+{
+	"adress" : "13 rue de Berne, 75008 PARIS",
+	"image" : "/alice.png",
+	"imageUrl" : "http://test.png",
+	"prenom" : "Alice",
+	"nom" : "Holzman",
+	"username" : "alice",
+	"webHookURL" : "https://hooks.slack.com/services/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"
+}

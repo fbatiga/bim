@@ -189,6 +189,7 @@ const MessengerReducer = handleActions({
 	},
 
 	[MESSENGER_BOT_MESSAGE]: (state, action) => {
+
 		return  addMessages(state, action.result.botResponse, true);
 	},
 
@@ -209,6 +210,10 @@ const MessengerReducer = handleActions({
 	},
 
 	[MESSENGER_SUCCESS]: (state, action) => {
+
+		if(state.bot == false){
+			return state;
+		}
 
 		let newState = addMessages(state, action.result.botResponse, true);
 

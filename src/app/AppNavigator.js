@@ -81,7 +81,7 @@ class AppNavigator extends Component {
 		this.firebaseProfileRef = null;
 		this.firebaseMessagesRef = null;
 		this.firebaseNotificationRef = null;
-
+		this.appState = null;
 	}
 
 
@@ -108,7 +108,16 @@ class AppNavigator extends Component {
 
 
 	handleNotification(message, data, isActive){
-		this.props.dispatch(setVisibility(true));
+		console.log('handleNotification',message, data, isActive);
+		if(!isActive){
+
+			if(this.props.login.username == false){
+				this.props.dispatch(login(message.user));
+			}
+
+
+			this.props.dispatch(setVisibility(true));
+		}
 	}
 
 
@@ -121,6 +130,9 @@ class AppNavigator extends Component {
 	}
 
 	handleAppStateChange(appState) {
+
+		this.appState = appState;
+		console.log('handleAppStateChange',appState);
 
 		if (appState === 'background') {
 			// if (Platform.OS === 'ios') {
@@ -162,12 +174,6 @@ class AppNavigator extends Component {
 
 		}
 
-
-
-
-
-
-
 		this.firebaseProfileRef.on('value', function(snapshot) {
 			let profile = snapshot.val();
 			console.log('profile',profile);
@@ -208,9 +214,7 @@ class AppNavigator extends Component {
 		if(nextProps.messenger.profile && nextProps.messenger.profile.prenom !== undefined && this.props.messenger.profile.prenom == undefined ){
 
 			if( this.props.messenger.session == null){
-
 				this.props.dispatch(loadSession('hello'));
-
 			}else{
 				this.props.dispatch(login(nextProps.messenger.username));
 			}
