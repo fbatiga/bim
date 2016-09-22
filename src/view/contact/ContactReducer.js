@@ -60,7 +60,7 @@ const ContactReducer = handleActions({
 
 		contacts= defaultContacts.concat(action.contacts);
 
-		let contacts = contacts.sort((a,b) => {
+		contacts = contacts.sort((a,b) => {
 			if(a.givenName >  b.givenName){
 				return 1;
 			} else if (a.givenName ===  b.givenName){
