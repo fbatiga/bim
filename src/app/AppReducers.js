@@ -10,6 +10,7 @@ import ContactDetailsReducer from '../view/contactDetails/ContactDetailsReducer'
 import TransferReducer from '../view/transfer/TransferReducer';
 import MenuReducer from '../view/menu/MenuReducer';
 
+
 export default {
     login : LoginReducer,
     profile : ProfileReducer,

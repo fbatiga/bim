@@ -1,9 +1,9 @@
 {
+	"prenom" : "Philippe",
+	"nom" : "Mihelic",
 	"adress" : "21 rue de Cléry, 75002 PARIS",
 	"image" : "/philippe.png",
 	"imageUrl" : "http://test.png",
-	"prenom" : "Philippe",
-	"nom" : "Mihelic",
 	"username" : "philippe",
 	"webHookURL" : "https://hooks.slack.com/services/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"
 }

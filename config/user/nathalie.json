@@ -1,9 +1,9 @@
 {
+	"prenom" : "Nathalie",
+	"nom" : "Collin",
 	"adress" : "2 rue Mercoeur, 75011 PARIS",
 	"image" : "/nathalie.png",
 	"imageUrl" : "http://test.png",
-	"prenom" : "Nathalie",
-	"nom" : "Collin",
 	"username" : "nathalie",
 	"webHookURL" : "https://hooks.slack.com/services/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"
 }

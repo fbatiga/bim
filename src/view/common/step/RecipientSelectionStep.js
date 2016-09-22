@@ -41,6 +41,7 @@ export default class RecipientSelectionStep extends React.Component {
 
 	renderRow(contact){
 
+		console.log(contact);
 		if(contact.type !== undefined && contact.type =='action' ){
 			if(this.props.qrCode !== undefined ){
 				return (
@@ -49,12 +50,6 @@ export default class RecipientSelectionStep extends React.Component {
 						image={AppAsset.qrcode}
 						text={contact.text} />
 					);
-			}
-		}
-
-		if(this.props.bimOnly !==  undefined && this.props.bimOnly == true){
-			if(contact.type  == undefined || contact.type != "bim"){
-				return null;
 			}
 		}
 
@@ -71,6 +66,14 @@ export default class RecipientSelectionStep extends React.Component {
 
 
 	render() {
+
+
+		let dataSource = this.props.contact.dataSource;
+
+		if(this.props.bimOnly !==  undefined && this.props.bimOnly == true){
+			dataSource = this.props.contact.bim.dataSource;
+		}
+
 		return (
 			<View style={styles.container}>
 			<BackButton image={AppAsset.back_green} back={this.props.back} />
@@ -84,9 +87,10 @@ export default class RecipientSelectionStep extends React.Component {
 
 			{this.props.contact.list.length== 0  && this.props.contact.loading == true && <Text>Chargement...</Text>}
 
+
 			<ListView
 			ref='listView'
-			dataSource={this.props.contact.dataSource}
+			dataSource={dataSource}
 			renderRow={this.renderRow.bind(this)}
 			/>
 

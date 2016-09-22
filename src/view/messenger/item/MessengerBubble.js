@@ -1,6 +1,7 @@
 import React from 'react';
 import { Text, Image, View, StyleSheet, Animated } from 'react-native';
-import { UserLeft, UserRight } from './MessengerUser';
+import UserLeft from './MessengerUserLeft';
+import UserRight from './MessengerUserRight';
 import asset from '../../../app/AppAsset';
 
 const styles = StyleSheet.create({

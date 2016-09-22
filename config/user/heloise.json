@@ -1,9 +1,9 @@
 {
+	"prenom" : "Héloïse",
+	"nom" : "Beldico",
 	"adress" : "15 rue du Terrage, 75010 PARIS",
 	"image" : "/heloise.png",
 	"imageUrl" : "http://test.png",
-	"prenom" : "Héloïse",
-	"nom" : "Beldico",
 	"username" : "heloise",
 	"webHookURL" : "https://hooks.slack.com/services/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"
 }

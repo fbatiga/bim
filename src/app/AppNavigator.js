@@ -63,7 +63,7 @@ const scenes = Actions.create(
 	<Scene key="cardDetails" component={CardDetailsView} title="Mes cartes"/>
 	<Scene key="contact" component={ContactView} title="Contacts" type='replace'/>
 	<Scene key="journal" component={JournalView} title="Journal" type='replace'/>
-	<Scene key="contactdetails" component={ContactDetailsView} title="Contact detail"/>
+	<Scene key="contactDetails" component={ContactDetailsView} title="Contact detail"/>
 	<Scene key="transfer" component={TransferView} title="Virement" schema='modal' direction='vertical'/>
 	<Scene key="parameters" component={ParametersView} title="Paramètres"/>
 	<Scene key="pay" component={PayView} title="Payer" schema='modal' direction='vertical'/>

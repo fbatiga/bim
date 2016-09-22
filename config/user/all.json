@@ -354,7 +354,7 @@
   },
   "heloise" : {
     "profile" : {
-      "adress" : "15 rue du Terrage, 75010 PARIS",
+      "adresse" : "15 rue du Terrage, 75010 PARIS",
       "image" : "/heloise.png",
       "imageUrl" : "http://test.png",
       "prenom" : "Héloïse",
@@ -511,7 +511,7 @@
   },
   "jerome" : {
     "profile" : {
-      "adress" : "3 avenue des Ternes, 75017 PARIS",
+      "adresse" : "3 avenue des Ternes, 75017 PARIS",
       "image" : "/jerome.png",
       "imageUrl" : "http://test.png",
       "prenom" : "Jérôme",
@@ -668,7 +668,7 @@
   },
   "remy" : {
     "profile" : {
-      "adress" : "118 rue de Javel, 75015 PARIS",
+      "adresse" : "118 rue de Javel, 75015 PARIS",
       "image" : "/remy.png",
       "imageUrl" : "http://remy.png",
       "prenom" : "Rémy",
@@ -825,7 +825,7 @@
   },
   "nathalie" : {
     "profile" : {
-      "adress" : "2 rue Mercoeur, 75011 PARIS",
+      "adresse" : "2 rue Mercoeur, 75011 PARIS",
       "image" : "/nathalie.png",
       "imageUrl" : "http://test.png",
       "prenom" : "Nathalie",
@@ -982,7 +982,7 @@
   },
   "philippe" : {
     "profile" : {
-      "adress" : "21 rue de Cléry, 75002 PARIS",
+      "adresse" : "21 rue de Cléry, 75002 PARIS",
       "image" : "/philippe.png",
       "imageUrl" : "http://test.png",
       "prenom" : "Philippe",
@@ -1144,8 +1144,8 @@
       }
     },
     "profile" : {
-      "adress" : "42 avenue Vladimir Ilitch Lénine, 92000 NANTERRE",
-      "image" : "./asset/alice.png",
+      "adresse" : "42 avenue Vladimir Ilitch Lénine, 92000 NANTERRE",
+      "image" : "/alice.png",
       "imageUrl" : "http://test.png",
       "prenom" : "Steed",
       "username" : "steed",

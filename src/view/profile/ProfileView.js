@@ -84,7 +84,7 @@ class ProfileView extends Component {
 		let picAfter =	Animated.timing(
 			this.state.animPictureValue,
 			{
-				toValue: 0,
+				toValue: -5,
 				delay : 300,
 				duration: 300,
 				easing : Easing.ease
@@ -93,7 +93,8 @@ class ProfileView extends Component {
 		let formAfter=	Animated.timing(
 			this.state.animContentValue,
 			{
-				toValue: 30,
+				toValue: 10,
+				delay : 300,
 				duration: 300,
 				easing : Easing.ease
 			});
@@ -136,6 +137,13 @@ class ProfileView extends Component {
 	}
 
 	render() {
+
+		let image = images['alice'];
+
+		if(this.props.messenger.profile.username !== undefined && images[this.props.messenger.profile.username] !== undefined){
+			image = images[this.props.messenger.profile.username];
+		}
+
 		return (
 			<View style={style.container} onLayout={this.configureScroll.bind(this)}>
 			<ScrollView
@@ -146,14 +154,14 @@ class ProfileView extends Component {
 			<View style={{height: height - this.state.pointHeight}} >
 				<View style={style.row}>
 					<BackButton image={AppAsset.back} back={this.goToMenu.bind(this)} style={{ opacity : this.state.fadeAnim}} />
-					<Animated.Image source={asset.alice} style={{top : this.state.animPictureValue}}/>
+					<Animated.Image source={image} style={{top : this.state.animPictureValue}}/>
 				</View>
 				<Animated.View style={{top : this.state.animContentValue}} >
 					<View style={style.content} >
-						<Text style={style.name}>Alice</Text>
-						<Text style={style.name}>Holzman</Text>
+						<Text style={style.name}>{this.props.messenger.profile.prenom}</Text>
+						<Text style={style.name}>{this.props.messenger.profile.nom}</Text>
 						<View style={style.line}>
-							<Text style={style.address}>13 rue de Berne, 75008 PARIS</Text>
+							<Text style={style.address}>{this.props.messenger.profile.adresse}</Text>
 						</View>
 						<View style={style.row}>
 							<View style={style.action}>
@@ -205,12 +213,12 @@ const style = StyleSheet.create({
 		fontFamily : 'Montserrat-Light',
 		fontSize: 14,
 		color : '#120037',
-		marginTop:25,
-		marginBottom:25,
+		marginTop:20,
+		marginBottom:10,
 	},
 	line: {
-		flex : 1,
 		borderBottomWidth: 1,
+		paddingBottom: 10,
 		borderColor: '#ECECED',
 	},
 	row : {
@@ -220,11 +228,12 @@ const style = StyleSheet.create({
 		justifyContent : 'center'
 	},
 	action : {
+		paddingTop: 10,
 		flexDirection: 'row',
 		alignItems : 'flex-start',
-		marginTop:20,
-		marginBottom:20,
-
+		marginTop:10,
+		marginBottom:10,
+		height: 20,
 	},
 	param : {
 		flex : 1,
@@ -240,11 +249,20 @@ const asset = {
 	trophy : require('./asset/trophy.png'),
 	point : require('./asset/point.png'),
 	modify : require('./asset/modify.png'),
-}
+};
+
+const images = {
+	"alice" : require('./asset/alice.png'),
+	"philippe" : require('./asset/philippe.png'),
+	"remy" : require('./asset/remy.png'),
+	"jerome" : require('./asset/jerome.png'),
+	"heloise" : require('./asset/heloise.png'),
+	"nathalie" : require('./asset/nathalie.png')
+};
 
 function mapStateToProps(state) {
 	return {
-		profile: state.profile
+		messenger: state.messenger
 	};
 }
 

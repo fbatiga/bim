@@ -60,6 +60,18 @@ export default class ContactItem extends React.Component {
 		this.props.delete(this);
 	}
 
+	randomizeImage(index) {
+		let val = parseInt(index* 5);
+		switch ( val % 5 ) {
+			case 0: return images['jerome']; break;
+			case 1: return images['philippe']; break;
+			case 2: return images['remy']; break;
+			case 3: return images['heloise']; break;
+			case 4: return images['nathalie']; break;
+			default: return images['alice'];
+		}
+	}
+
 	render() {
 
 
@@ -75,13 +87,21 @@ export default class ContactItem extends React.Component {
 
 		this.props.rowData.name = name.join(' ');
 
+
+		let image = this.randomizeImage(Math.random(0,5));
+
+		if(this.props.rowData.username !== undefined && images[this.props.rowData.username] !== undefined){
+			image = images[this.props.rowData.username];
+		}
+
+
 		return (
 			<TouchableHighlight  onLayout={this.save.bind(this)} onPress={() => {
 				this.props.onPress(this.props.rowData)
 			} }  >
 			<View style={styles.item} >
 			<View style={styles.leftPart}>
-			<Image source={asset.users['1']} style={styles.image}/>
+			<Image source={image} style={styles.image}/>
 			</View>
 			<View style={styles.rightPart}>
 			<Text style={styles.label}>
@@ -96,6 +116,19 @@ export default class ContactItem extends React.Component {
 			);
 	}
 }
+
+
+const images = {
+	"alice" : require('../../profile/asset/alice.png'),
+	"philippe" : require('../../profile/asset/philippe.png'),
+	"remy" : require('../../profile/asset/remy.png'),
+	"jerome" : require('../../profile/asset/jerome.png'),
+	"heloise" : require('../../profile/asset/heloise.png'),
+	"nathalie" : require('../../profile/asset/nathalie.png')
+};
+
+
+
 
 ContactItem.propTypes = {
 	text: React.PropTypes.string

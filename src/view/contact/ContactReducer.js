@@ -8,12 +8,9 @@ import { Actions } from 'react-native-router-flux';
 
 const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
+const dsBim = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
-const initialState = {
-	list : [],
-	dataSource : ds,
-	loading : false
-};
+
 
 
 let actions = [{
@@ -25,29 +22,70 @@ let actions = [{
 let defaultContacts = [{
 	givenName: 'Alice',
 	familyName: 'Holzman',
+	"adresse" : "13 rue de Berne, 75008 PARIS",
+	"image" : "/alice.png",
+	"imageUrl" : "http://test.png",
+	"username" : "alice",
 	phoneNumbers: [{number: "0667505355"}],
 	type:'bim'
 },{
 	givenName: 'Jérôme',
 	familyName: 'Toucheboeuf',
+	"adresse" : "3 avenue des Ternes, 75017 PARIS",
+	"image" : "/jerome.png",
+	"imageUrl" : "http://test.png",
+	"username" : "jerome",
 	phoneNumbers: [{number: "0667505356"}],
 	type:'bim'
 },{
 	givenName: 'Philippe',
 	familyName: 'Mihelic',
+	"adresse" : "21 rue de Cléry, 75002 PARIS",
+	"image" : "/philippe.png",
+	"imageUrl" : "http://test.png",
+	"username" : "philippe",
 	phoneNumbers: [{number: "0667505355"}],
 	type:'bim'
 },{
 	givenName: 'Héloïse',
-	familyName: 'Weber',
+	familyName: 'Beldico',
+	"adresse" : "15 rue du Terrage, 75010 PARIS",
+	"image" : "/heloise.png",
+	"imageUrl" : "http://test.png",
+	"username" : "heloise",
 	phoneNumbers: [{number: "0667505354"}],
 	type:'bim'
 },{
 	givenName: 'Nathalie',
 	familyName: 'Collin',
+	"adresse" : "2 rue Mercoeur, 75011 PARIS",
+	"image" : "/nathalie.png",
+	"imageUrl" : "http://test.png",
+	"username" : "nathalie",
+	phoneNumbers: [{number: "0667505353"}],
+	type:'bim'
+},{
+	"givenName" : "Rémy",
+	"familyName" : "Weber",
+	"adresse" : "118 rue de Javel, 75015 PARIS",
+	"image" : "/remy.png",
+	"imageUrl" : "http://remy.png",
+	"username" : "remy",
 	phoneNumbers: [{number: "0667505353"}],
 	type:'bim'
 }];
+
+
+const initialState = {
+	list : [],
+	dataSource : ds,
+	bim : {
+		dataSource: dsBim.cloneWithRows(actions.concat(defaultContacts)),
+		list : actions.concat(defaultContacts)
+	},
+	loading : false
+};
+
 
 
 const ContactReducer = handleActions({

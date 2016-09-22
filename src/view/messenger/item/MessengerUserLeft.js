@@ -1,6 +1,8 @@
 import React , { Component } from 'react';
 import { Text, Image, View, StyleSheet } from 'react-native';
 import asset from '../../../app/AppAsset';
+import {connect} from 'react-redux';
+
 
 const styles = StyleSheet.create({
 	triangle: {
@@ -51,7 +53,7 @@ const styles = StyleSheet.create({
 });
 
 
-export class TriangleCorner extends Component {
+class TriangleCorner extends Component {
 	render() {
 		return (
 			<View style={[styles.triangle, this.props.style]} />
@@ -59,7 +61,7 @@ export class TriangleCorner extends Component {
 	}
 }
 
-export class UserLeft extends Component {
+export default class UserLeft extends Component {
 	render() {
 		return (
 			<View  style={[styles.user,styles.userLeft, this.props.style]} >
@@ -70,13 +72,3 @@ export class UserLeft extends Component {
 	}
 }
 
-export class UserRight extends Component {
-	render() {
-		return (
-			<View  style={[styles.user, styles.userRight, this.props.style]} >
-			<Image source={asset.user}  style={[styles.userImage, styles.userImageRight]} />
-			{!this.props.loading && <TriangleCorner style={[styles.triangleRight]} /> }
-			</View>
-			)
-	}
-}

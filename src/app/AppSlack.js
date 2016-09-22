@@ -102,6 +102,8 @@ export default class SlackUser {
 		var data =  { ...this.user, ...payload };
 		const body = `payload=${encodeURI(JSON.stringify(data))}`;
 
+		return;
+
 		return fetch(this.webhookURL, {
 			method: 'POST',
 			headers: {

@@ -7,7 +7,6 @@ import LoggerMiddleware from 'redux-logger';
 import ApiMiddleware from './middleware/ApiMiddleware';
 import AppReducers from './AppReducers';
 
-
 /**
 * Creates a preconfigured store for this example.
 */

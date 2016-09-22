@@ -44,7 +44,7 @@ class ContactView extends Component {
 
 	componentDidMount(){
 
-		this.headerScroll = this.refs.header.getScrollResponder();
+		//this.headerScroll = this.refs.header.getScrollResponder();
 		this.listViewScroll = this.refs.listView.getScrollResponder();
 
 		this.props.dispatch(loadContacts());
@@ -112,7 +112,7 @@ class ContactView extends Component {
 
 
 	openContact(contact) {
-		Actions.contactdetails(contact)
+		Actions.contactDetails({contact});
 	}
 
 
@@ -123,11 +123,11 @@ class ContactView extends Component {
 		}
 
 		return (<ContactItem
-					onPress={this.openContact.bind(this)}
-					rowData={contact}
-					save={this.save.bind(this)}
-					rowData={contact}
-					/>);
+			onPress={this.openContact.bind(this)}
+			rowData={contact}
+			save={this.save.bind(this)}
+			rowData={contact}
+			/>);
 
 	}
 
@@ -137,29 +137,30 @@ class ContactView extends Component {
 		return (
 			<View style={style.container}>
 			<Title style={{color: AppGuideline.colors.deepblue, height: 80}} >CONTACTS</Title>
+			{ false && (
+				<View style={{ height: 80, paddingTop:20, backgroundColor: AppGuideline.colors.lightviolet }}>
+				<View style={{ position: 'absolute',  backgroundColor: '#998BB8', left: width / 2 - 35/2, top: 22.5, width:35, height: 35 , borderRadius: 20}}></View>
+				<ScrollView horizontal={true}
+				scrollEventThrottle={200}
+				onScroll={this.onScroll.bind(this)}
+				ref='header'
+				>
+				<View style={{ width: width / 2 - 35/2, backgroundColor: 'transparent'}} />
+				{letters.map((letter, index)=> {
+					return ( <LetterItem key={index} onPress={()=>{ this.onLetterPress(index) }} save={this.saveLetter.bind(this)}>{letter}</LetterItem>)
+				})}
+				<View style={{ width : width / 2 - 35/2, backgroundColor: 'transparent'}} />
+				</ScrollView>
 
-			<View style={{ height: 80, paddingTop:20, backgroundColor: AppGuideline.colors.lightviolet }}>
-			<View style={{ position: 'absolute',  backgroundColor: '#998BB8', left: width / 2 - 35/2, top: 22.5, width:35, height: 35 , borderRadius: 20}}></View>
-			<ScrollView horizontal={true}
-			scrollEventThrottle={200}
-			onScroll={this.onScroll.bind(this)}
-			ref='header'
-			>
-			<View style={{ width: width / 2 - 35/2, backgroundColor: 'transparent'}} />
-			{letters.map((letter, index)=> {
-				return ( <LetterItem key={index} onPress={()=>{ this.onLetterPress(index) }} save={this.saveLetter.bind(this)}>{letter}</LetterItem>)
-			})}
-			<View style={{ width : width / 2 - 35/2, backgroundColor: 'transparent'}} />
-			</ScrollView>
-
-			</View>
+				</View>
+				)}
 			<View  style={{flex:1}}>
 
 			{this.props.contact.list.length== 0  && this.props.contact.loading == true && <Text>Chargement...</Text>}
 
 			<ListView
 			ref='listView'
-			dataSource={this.props.contact.dataSource}
+			dataSource={this.props.contact.bim.dataSource}
 			renderRow={this.renderRow.bind(this)}
 			/>
 
@@ -168,9 +169,9 @@ class ContactView extends Component {
 			<TouchableOpacity style={style.transferButton} >
 			</TouchableOpacity>
 			<View style={style.addIcon}>
-				<TouchableOpacity >
-					<Animated.Image source={AppAsset.add} style={{ transform: [ {scale :this.state.animButton }] }} />
-				</TouchableOpacity>
+			<TouchableOpacity >
+			<Animated.Image source={AppAsset.add} style={{ transform: [ {scale :this.state.animButton }] }} />
+			</TouchableOpacity>
 			</View>
 
 

@@ -65,11 +65,19 @@ class RecipientItem extends React.Component {
 
 		name = name.join(' ');
 
+
+		let image = images['alice'];
+
+		if(this.props.rowData.username !== undefined && images[this.props.rowData.username] !== undefined){
+			image = images[this.props.rowData.username];
+		}
+
+
 		return (
 			<TouchableHighlight onPress={() => {this.props.confirm(this.props.rowData)} }>
 			<View style={styles.item}>
 			<View style={styles.leftPart}>
-			<Image source={asset.users['1']} style={styles.image}/>
+			<Image source={image} style={styles.image}/>
 			</View>
 			<View style={styles.rightPart}>
 			<Text style={styles.label}>
@@ -86,6 +94,16 @@ class RecipientItem extends React.Component {
 			);
 	}
 }
+
+
+const images = {
+	"alice" : require('../../profile/asset/alice.png'),
+	"philippe" : require('../../profile/asset/philippe.png'),
+	"remy" : require('../../profile/asset/remy.png'),
+	"jerome" : require('../../profile/asset/jerome.png'),
+	"heloise" : require('../../profile/asset/heloise.png'),
+	"nathalie" : require('../../profile/asset/nathalie.png')
+};
 
 RecipientItem.propTypes = {
 	text: React.PropTypes.string
