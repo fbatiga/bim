@@ -75,22 +75,15 @@ function addMessages(state, result, isBot){
 			console.log(image);
 		}
 
-		var re = /\(([a-zA-Z]+)\)/;
-		var match = re.exec(message);
-
-		if(match != null){
-			if(state.profile != null && state.profile[match[1]] !== undefined){
-				message = message.replace('('+match[1]+')',state.profile[match[1]]);
+		message.split('(').map((sentence)=>{
+			let position = sentence.indexOf(')');
+			if(position > 0){
+				let word = sentence.substr(0,position);
+				if(state.profile != null && state.profile[word] !== undefined){
+					message = message.replace('('+word+')',state.profile[word]);
+				}
 			}
-		}
-
-		var match = re.exec(message);
-
-		if(match != null){
-			if(state.profile != null && state.profile[match[1]] !== undefined){
-				message = message.replace('('+match[1]+')',state.profile[match[1]]);
-			}
-		}
+		})
 
 		let choiceIndex  = message.indexOf('[')
 		if( choiceIndex != -1 ){
