@@ -25,22 +25,22 @@ let actions = [{
 let defaultContacts = [{
 	givenName: 'Alice',
 	familyName: 'Holzman',
-	phoneNumbers: [{number: "0667505353"}],
+	phoneNumbers: [{number: "0667505355"}],
 	type:'bim'
 },{
 	givenName: 'Jérôme',
 	familyName: 'Toucheboeuf',
-	phoneNumbers: [{number: "0667505353"}],
+	phoneNumbers: [{number: "0667505356"}],
 	type:'bim'
 },{
 	givenName: 'Philippe',
 	familyName: 'Mihelic',
-	phoneNumbers: [{number: "0667505353"}],
+	phoneNumbers: [{number: "0667505355"}],
 	type:'bim'
 },{
 	givenName: 'Héloïse',
 	familyName: 'Weber',
-	phoneNumbers: [{number: "0667505353"}],
+	phoneNumbers: [{number: "0667505354"}],
 	type:'bim'
 },{
 	givenName: 'Nathalie',
@@ -58,7 +58,7 @@ const ContactReducer = handleActions({
 
 	[CONTACT_SET]: (state, action) => {
 
-		contacts= defaultContacts.concat(action.contacts);
+		let contacts= defaultContacts.concat(action.contacts);
 
 		contacts = contacts.sort((a,b) => {
 			if(a.givenName >  b.givenName){

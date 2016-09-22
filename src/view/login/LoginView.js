@@ -1,7 +1,7 @@
 'use strict';
 
 import React, { Component } from 'react';
-import { View, Text, Image, Dimensions , TouchableOpacity, StyleSheet, AsyncStorage} from 'react-native';
+import { View, Text, Image, Dimensions , TouchableWithoutFeedback, StyleSheet, AsyncStorage} from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import {connect} from 'react-redux';
 import {login, signup} from './LoginAction';
@@ -52,14 +52,16 @@ class LoginView extends Component {
 	render(){
 
 		return (
-			<TouchableOpacity style={[LoginStyle.container, { alignItems:'center', justifyContent: 'flex-start', flexDirection:'column' }]} onPress={this.login.bind(this)} >
-			<View style={{flex: 4}} >
-			<Image source={asset.logo}  style={{ width:width-80, top: 40}} resizeMode='contain'></Image>
+			<TouchableWithoutFeedback onPress={this.login.bind(this)} >
+			<View style={[LoginStyle.container, { alignItems:'center', justifyContent: 'flex-start', flexDirection:'column' }]} >
+				<View style={{flex: 4}} >
+					<Image source={asset.logo}  style={{ width:width-80, top: 40}} resizeMode='contain'></Image>
+				</View>
+				<View style={{flex: 1}} >
+					<Image source={asset.fingerPrint}  style={{ width:41.95 }} resizeMode='contain'></Image>
+				</View>
 			</View>
-			<View style={{flex: 1}} >
-			<Image source={asset.fingerPrint}  style={{ width:41.95 }} resizeMode='contain'></Image>
-			</View>
-			</TouchableOpacity>
+			</TouchableWithoutFeedback>
 			);
 	}
 }

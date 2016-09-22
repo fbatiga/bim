@@ -106,8 +106,6 @@ class Message extends Component {
 
 		let loading = (this.state.visibility == 'show' )? false : true;
 
-
-
 		if( position == 'left'){
 			style =	{ justifyContent: 'flex-start'};
 		}else{

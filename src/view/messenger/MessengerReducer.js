@@ -7,9 +7,14 @@ import {
 	MESSENGER_REGISTER, MESSENGER_INIT, MESSENGER_PROFILE, MESSENGER_NOTIFICATION, MESSENGER_VISIBILITY, MESSENGER_BOT_RESTART, MESSENGER_SLACK_MESSAGE, MESSENGER_HELLO, MESSENGER_REQUEST, MESSENGER_SUCCESS, MESSENGER_FAILURE, MESSENGER_BUTTONS, MESSENGER_MESSAGE, MESSENGER_BOT_MESSAGE, MESSENGER_SESSION
 } from './MessengerAction';
 
-import { UserSlack, BimSlack } from '../../app/AppSlack';
+import SlackUser from '../../app/AppSlack';
 import {firebaseDb} from  '../../app/AppFirebase';
 const rootRef = firebaseDb.ref();
+
+
+
+export let UserSlack = null;
+export let BimSlack =  null;
 
 
 const initialState = {
@@ -104,14 +109,16 @@ function addMessages(state, result, isBot){
 
 	let newState = { ...state, messages };
 
-	if(isBot == true){
-		if(slackButtons.length >0){
-			BimSlack.question(slackMessage.join('\n'), slackButtons, image);
+	if(UserSlack != null ){
+		if(isBot == true){
+			if(slackButtons.length >0){
+				BimSlack.question(slackMessage.join('\n'), slackButtons, image);
+			}else{
+				BimSlack.text(slackMessage.join('\n'), image);
+			}
 		}else{
-			BimSlack.text(slackMessage.join('\n'), image);
+			UserSlack.text(slackMessage.join('\n'), image);
 		}
-	}else{
-		UserSlack.text(slackMessage.join('\n'), image);
 	}
 
 	return newState;
@@ -137,6 +144,11 @@ const MessengerReducer = handleActions({
 
     	console.log('profile =>', profile);
 
+    	if(UserSlack == null && profile.prenom !== undefined && profile.username !== undefined && profile.webHookURL  !== undefined ){
+    		UserSlack =  new  SlackUser('#bim_'+profile.username, profile.prenom, ':man:', false, profile.webHookURL);
+			BimSlack =  new  SlackUser('#bim_'+profile.username, 'Bim', ':robot_face:', true, profile.webHookURL);
+    	}
+
         return {...state, profile };
     },
 
@@ -144,8 +156,9 @@ const MessengerReducer = handleActions({
 		let username = action.username.toLowerCase();
 		AsyncStorage.setItem('@AsyncStorage:username', username);
 		rootRef.child(username+'/profile/prenom').set(action.username);
+		rootRef.child(username+'/profile/username').set(username);
 
-        return {...state, username, profile : { prenom : action.username } };
+        return {...state, profile : { prenom : action.username, username } };
     },
 
 
@@ -159,11 +172,12 @@ const MessengerReducer = handleActions({
 	},
 
 	[MESSENGER_NOTIFICATION]: (state, action) => {
-		return { ...state, bot: false, notification : action.params};
+		return { ...state, bot: false, notification : state.visibility ? false : true, messages : [],  buttons:[]};
 	},
 
 	[MESSENGER_VISIBILITY]: (state, action) => {
-		return { ...state, visibility : action.params};
+
+		return { ...state, visibility : action.params, notification: action.params ? false : state.notification };
 	},
 
 	[MESSENGER_INIT]: (state, action) => {
@@ -208,5 +222,6 @@ const MessengerReducer = handleActions({
 	}
 
 }, initialState);
+
 
 export default MessengerReducer;

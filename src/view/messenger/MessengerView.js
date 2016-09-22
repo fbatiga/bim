@@ -53,16 +53,6 @@ class MessengerView extends Component {
 
 	}
 
-	// componentWillUpdate(nextProps, nextState){
-
-	// 	if(this.props.messenger.notification != nextProps.messenger.notification  && nextProps.messenger.notification == false){
-	// 		this.props.dispatch(restartBot());
-	// 	}
-
-
-	// }
-	//
-
 
 	clearText() {
 		if(this.props.login.username != false ){

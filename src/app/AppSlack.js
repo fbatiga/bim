@@ -3,15 +3,19 @@ import AppConfig from  './AppConfig';
 
 'use strict';
 
-class SlackUser {
+export default class SlackUser {
 
-	constructor(channel, username, icon_emoji , isBot ){
+	constructor(channel, username, icon_emoji , isBot , url){
+		    		console.log('SlackUser', channel, username, icon_emoji , isBot , url);
+
 		this.user = {
 			channel,
 			username,
 			icon_emoji,
 			isBot
 		};
+
+		this.webhookURL = url;
 	}
 
 	text( text , image) {
@@ -97,8 +101,8 @@ class SlackUser {
 
 		var data =  { ...this.user, ...payload };
 		const body = `payload=${encodeURI(JSON.stringify(data))}`;
-		return;
-		return fetch(AppConfig.slack.webhookURL, {
+
+		return fetch(this.webhookURL, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/x-www-form-urlencoded'
@@ -107,6 +111,3 @@ class SlackUser {
 		});
 	}
 }
-
-export const UserSlack =  new  SlackUser('#alice', 'Alice', ':woman:', false);
-export const BimSlack =  new  SlackUser('#alice', 'Bim', ':robot_face:', true);

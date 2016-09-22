@@ -23,12 +23,13 @@ import ParametersView from '../view/parameters/ParametersView';
 import AddCardView from '../view/addCard/AddCardView';
 import PayView from '../view/pay/PayView';
 
+import {UserSlack} from '../view/messenger/MessengerReducer';
+
 import OneSignal from 'react-native-onesignal'; // Import package from node modules
-import { UserSlack } from './AppSlack';
 import Contacts from 'react-native-contacts';
 import {loadContacts, setContacts} from '../view/contact/ContactAction';
 import {notify, updateProfile, loadSession, setVisibility, addSlackMessage, restartBot} from '../view/messenger/MessengerAction';
-import {login} from '../view/login/LoginAction';
+import {login, device} from '../view/login/LoginAction';
 
 import {firebaseDb} from  './AppFirebase';
 
@@ -39,7 +40,9 @@ const reducerCreate = params => {
 	const defaultReducer = Reducer(params);
 	return (state, action) => {
 		if (action.type == 'REACT_NATIVE_ROUTER_FLUX_FOCUS') {
-			UserSlack.text('` => ' + action.scene.title + ' <=`', false);
+			if(UserSlack != null){
+				UserSlack.text('` => ' + action.scene.title + ' <=`', false);
+			}
 		}
 		return defaultReducer(state, action);
 	}
@@ -79,13 +82,63 @@ class AppNavigator extends Component {
 		this.firebaseMessagesRef = null;
 		this.firebaseNotificationRef = null;
 
-//		AsyncStorage.clear();
-
 	}
+
+
+	componentDidMount() {
+		Contacts.checkPermission( (err, permission) => {
+			console.log('Contacts.checkPermission',permission);
+
+			//preloading  contact list
+			if(permission === Contacts.PERMISSION_AUTHORIZED){
+				Contacts.getAll((err, contacts) => {
+					this.props.dispatch(setContacts(contacts));
+				});
+			}
+		});
+
+		OneSignal.configure({
+			onIdsAvailable:this.registerDevice.bind(this),
+			onNotificationOpened: this.handleNotification.bind(this)
+		});
+
+		AppState.addEventListener('change', this.handleAppStateChange);
+		OneSignal.enableNotificationsWhenActive(true);
+	}
+
 
 	handleNotification(message, data, isActive){
 		this.props.dispatch(setVisibility(true));
 	}
+
+
+	registerDevice(deviceConfig){
+		this.props.dispatch(device(deviceConfig));
+	}
+
+	componentWillUnmount() {
+		AppState.removeEventListener('change', this.handleAppStateChange);
+	}
+
+	handleAppStateChange(appState) {
+
+		if (appState === 'background') {
+			// if (Platform.OS === 'ios') {
+			// 	date = date.toISOString();
+			// }
+
+			// PushNotification.localNotificationSchedule({
+			// 	message: "My Notification Message",
+			// 	date,
+			// });
+		}
+
+		if (appState === 'active') {
+
+
+		}
+	}
+
 
 
 	loadProfile(username){
@@ -94,6 +147,26 @@ class AppNavigator extends Component {
 		this.firebaseNotificationRef = rootRef.child(username+'/notification');
 
 		this.firebaseProfileRef = rootRef.child(username+'/profile');
+
+		if(this.props.login.device !== null && this.props.login.device.userId !== null){
+
+			console.log('this.props.login.device', this.props.login.device);
+
+			let firebaseDeviceRef = rootRef.child(username+'/device/'+this.props.login.device.userId);
+
+			firebaseDeviceRef.once('value', function(snapshot) {
+				if(snapshot.val()  == null ){
+					firebaseDeviceRef.set(this.props.login.device);
+				}
+			}.bind(this));
+
+		}
+
+
+
+
+
+
 
 		this.firebaseProfileRef.on('value', function(snapshot) {
 			let profile = snapshot.val();
@@ -108,7 +181,7 @@ class AppNavigator extends Component {
 
 			let notification = snapshot.val();
 			//console.log('firebaseNotificationRef', notification , this.props.messenger.notification);
-			if(notification !== null  && this.props.messenger.notification === false){
+			if(notification !== null){
 				this.props.dispatch(notify(notification));
 			}
 
@@ -170,81 +243,36 @@ class AppNavigator extends Component {
 
 		}
 
-
-		if(this.props.messenger.notification != nextProps.messenger.notification  && nextProps.messenger.notification != false){
-
-			this.firebaseMessagesRef.on("child_added", function(snapshot) {
-				let message = snapshot.val();
-				//console.log('child_added ', message);
-
-				if(message.user !== undefined && message.user != 'slackbot' && message.text !== 'fin'){
-
-					this.props.dispatch(addSlackMessage(message.text));
-
-				}else{
-					this.props.dispatch(restartBot());
-				}
-
-				this.firebaseMessagesRef.child(snapshot.key).remove();
-
-			}.bind(this));
-		}
-
-		if(this.props.messenger.notification != nextProps.messenger.notification  && nextProps.messenger.notification == false){
-			this.props.dispatch(restartBot());
-		}
-
 		//console.log('firebaseMessagesRef',this.props.messenger.bot, nextProps.messenger.bot );
-		if(this.props.messenger.bot !== nextProps.messenger.bot  && nextProps.messenger.bot == true){
+		if(this.props.messenger.bot !== nextProps.messenger.bot ){
 
-			if(this.firebaseMessagesRef != null){
+
+			if(nextProps.messenger.bot == true){
+
 				this.firebaseMessagesRef.off();
+
+			}else{
+
+				this.firebaseMessagesRef.on("child_added", function(snapshot) {
+					let message = snapshot.val();
+					//console.log('child_added ', message);
+
+					if(message.user !== undefined && message.user != 'slackbot' && message.text !== 'fin'){
+
+						this.props.dispatch(addSlackMessage(message.text));
+
+					}else{
+						this.props.dispatch(restartBot());
+					}
+
+					this.firebaseMessagesRef.child(snapshot.key).remove();
+
+				}.bind(this));
 			}
 		}
 
 	}
 
-	componentDidMount() {
-		Contacts.checkPermission( (err, permission) => {
-			console.log('Contacts.checkPermission',permission);
-
-			//preloading  contact list
-			if(permission === Contacts.PERMISSION_AUTHORIZED){
-				Contacts.getAll((err, contacts) => {
-					this.props.dispatch(setContacts(contacts));
-				});
-			}
-		});
-
-		OneSignal.configure({
-			onNotificationOpened: this.handleNotification.bind(this)
-		});
-		AppState.addEventListener('change', this.handleAppStateChange);
-		OneSignal.sendTags({user: 'alice'});
-	}
-
-	componentWillUnmount() {
-		AppState.removeEventListener('change', this.handleAppStateChange);
-	}
-
-	handleAppStateChange(appState) {
-
-		if (appState === 'background') {
-			// if (Platform.OS === 'ios') {
-			// 	date = date.toISOString();
-			// }
-
-			// PushNotification.localNotificationSchedule({
-			// 	message: "My Notification Message",
-			// 	date,
-			// });
-		}
-
-		if (appState === 'active') {
-
-
-		}
-	}
 
 	render() {
 		return <Router createReducer={reducerCreate} scenes={scenes} />

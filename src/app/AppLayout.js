@@ -212,13 +212,15 @@ class AppLayout extends Component {
 
 			if(this.initLogin == false){
 				this.initLogin = true;
-				Actions.overview();
-				this.props.dispatch(swipeTo('menu'));
 			}
 
 			this.setState({
 				showMessenger:true
 			});
+
+
+			this.props.dispatch(swipeTo('menu'));
+
 
 		});
 
@@ -265,7 +267,7 @@ class AppLayout extends Component {
 
 	componentWillReceiveProps(nextProps){
 
-		if( nextProps.menu.goTo != this.props.menu.goTo && nextProps.messenger.session != null ){
+		if( nextProps.menu.goTo != this.props.menu.goTo){
 			this.swipeTo(nextProps.menu.goTo);
 		}
 
@@ -350,13 +352,26 @@ class AppLayout extends Component {
 				</View>
 				)}
 			{this.props.messenger.session != null  && (
-			<TouchableOpacity style={style.button}  onPress={this.home.bind(this)}>
-				<Animated.Image source={asset.bot} style={[style.bot,  { transform: [ {scale: this.state.botValue}] } ]} />
-				<Animated.Image source={asset.close} style={[style.bot,  { transform: [ {scale: this.state.closeValue}] } ]} />
-			</TouchableOpacity>)}
-		</View>);
+				<TouchableOpacity style={style.button}  onPress={this.home.bind(this)}>
 
-}
+				<Animated.Image source={asset.bot} style={[style.bot,  { transform: [ {scale: this.state.botValue}] } ]} >
+
+				</Animated.Image>
+				<Animated.Image source={asset.close} style={[style.bot,  { transform: [ {scale: this.state.closeValue}] } ]} >
+
+				</Animated.Image>
+
+				{this.props.messenger.notification && !this.props.messenger.visibility && (
+				<View style={style.notificationBubble}>
+					<Text style={style.notificationText}>{this.props.messenger.messages.length}</Text>
+				</View>
+				)}
+				</TouchableOpacity>
+				)}
+
+			</View>);
+
+	}
 }
 
 
@@ -364,6 +379,23 @@ class AppLayout extends Component {
 const style = StyleSheet.create({
 	viewContainer: {
 		flex: 1
+	},
+	notificationBubble : {
+
+					borderRadius : 20,
+					backgroundColor:'#FF2D5D' ,
+					width: 20,
+					height: 20,
+					overflow : 'hidden',
+					left : -40,
+					top : -2,
+	},
+	notificationText : {
+		color: '#FFFFFF',
+		left: 6,
+		position: 'absolute',
+		fontFamily: 'Roboto-Black',
+		fontSize:14
 	},
 	container: {
 		backgroundColor: 'transparent',
