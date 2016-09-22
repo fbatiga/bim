@@ -251,6 +251,8 @@ class AppNavigator extends Component {
 
 				this.firebaseMessagesRef.off();
 
+				this.props.dispatch(loadSession('restart'));
+
 			}else{
 
 				this.firebaseMessagesRef.on("child_added", function(snapshot) {

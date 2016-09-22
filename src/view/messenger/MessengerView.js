@@ -112,6 +112,8 @@ class MessengerView extends Component {
 					msg : text,
 					session : this.props.messenger.session
 				}));
+			}else{
+				this.props.dispatch(loadButtons([]));
 			}
 
 		}
