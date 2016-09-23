@@ -2,9 +2,10 @@
 
 import React, { Component } from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity, Dimensions , Animated, Easing} from 'react-native';
-import asset  from '../../app/AppAsset';
+import AppAsset  from '../../app/AppAsset';
 import { Actions } from 'react-native-router-flux';
 import {connect} from 'react-redux';
+import {setVisibility} from '../messenger/MessengerAction';
 
 const {width} = Dimensions.get('window');
 
@@ -12,15 +13,43 @@ class MenuView extends Component {
 
 	constructor(props){
 		super(props);
-		this.state = {
+		this.menu =[
+			{text : 'PAYER', action :  Actions.pay },
+			{text : 'COMPTES', action : Actions.overview },
+			{text : 'CONTACTS', action : Actions.contact },
+			{text : 'CARTES', action : Actions.card },
+			{text : 'JOURNAL', action : Actions.journal }
+		];
 
-			menu : [
-			{text : 'PAYER', action :  Actions.pay, left: new Animated.Value(-width) },
-			{text : 'COMPTES', action : Actions.overview, left: new Animated.Value(-width) },
-			{text : 'CONTACTS', action : Actions.contact, left: new Animated.Value(-width)  },
-			{text : 'CARTES', action : Actions.card, left: new Animated.Value(-width)  },
-			{text : 'JOURNAL', action : Actions.journal, left: new Animated.Value(-width)  }]
-		}
+		this.state = {
+			items :[{
+			component : (<TouchableOpacity onPress={this.messenger.bind(this)}>
+							<View style={style.button}  >
+								<Image source={AppAsset.bot} style={[style.bot]} />
+								{this.props.messenger.notification && (
+								<View style={style.notificationBubble}>
+								<Text style={style.notificationText}>{this.props.messenger.messages.length}</Text>
+								</View>
+								)}
+							</View>
+						</TouchableOpacity>),
+			left: new Animated.Value(-width)
+		}]
+	};
+
+
+		this.menu.map((item)=>{
+			this.state.items.push({
+				component : (<TouchableOpacity  onPress={()=>{ this.props.gotTo(item)}}>
+								<Text style={style.title} >{item.text}</Text>
+							</TouchableOpacity>),
+				left: new Animated.Value(-width)
+			});
+		});
+	}
+
+	messenger(){
+		this.props.dispatch(setVisibility(true));
 	}
 
 	componentWillReceiveProps(nextProps) {
@@ -30,7 +59,7 @@ class MenuView extends Component {
 
 			let animation = [];
 
-			this.state.menu.map((link, index)=>{
+			this.state.items.map((link, index)=>{
 
 				animation.push(
 					Animated.timing(
@@ -54,7 +83,7 @@ class MenuView extends Component {
 
 			let animation = [];
 
-			this.state.menu.map((link, index)=>{
+			this.state.items.map((link, index)=>{
 
 				animation.push(
 					Animated.timing(
@@ -78,18 +107,15 @@ class MenuView extends Component {
 
 		return (
 			<View style={[style.container, this.props.style]} >
-			{this.state.menu.map((item,index)=>{
+			{this.state.items.map((item,index)=>{
 				return (
 					<Animated.View  key={index}  style={{left: item.left}}>
-					<TouchableOpacity   onPress={()=>{ this.props.gotTo(item)}}>
-					<Text style={style.title} >{item.text}</Text>
-					</TouchableOpacity>
+					{item.component}
 					</Animated.View>
-
-					);
+				);
 			})}
 			<TouchableOpacity onPress={()=>{ this.props.gotTo({action: Actions.profile})}}  >
-			<Image source={asset.setting}  style={style.setting} />
+			<Image source={AppAsset.setting}  style={style.setting} />
 			</TouchableOpacity>
 			</View>
 			);
@@ -106,24 +132,50 @@ const style = StyleSheet.create({
 		backgroundColor : '#120037',
 		justifyContent: 'flex-start',
 		alignItems: 'center',
-		paddingTop : 70
+		paddingTop : 50
 	},
 	title : {
 		fontFamily : 'Montserrat-Bold',
 		letterSpacing: 10,
-		margin : 30,
+		lineHeight: 60,
+		marginTop: 15,
 		color : '#B8A4E6',
 		fontSize: 25
 	},
 	setting : {
-		marginTop : 50
-	}
+		marginTop : 70
+	},
+	button :{
+		height:80
+	},
+	bot :{
+		borderRadius:30,
+		width:65,
+		height:65
+	},
+	notificationBubble : {
+		borderRadius : 20,
+		backgroundColor:'#FF2D5D' ,
+		width: 20,
+		height: 20,
+		overflow : 'hidden',
+		left : -5,
+		top : -65,
+	},
+	notificationText : {
+		color: '#FFFFFF',
+		left: 6,
+		position: 'absolute',
+		fontFamily: 'Roboto-Black',
+		fontSize:14
+	},
 });
 
 
 function mapStateToProps(state) {
 	return {
-		menu : state.menu
+		menu : state.menu,
+		messenger : state.messenger
 	};
 }
 

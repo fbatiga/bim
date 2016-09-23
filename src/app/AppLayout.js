@@ -4,7 +4,7 @@ import { View, Text, StatusBar, Dimensions,  StyleSheet, TouchableOpacity , Imag
 import Swiper from 'react-native-swiper';
 import MenuView from '../view/menu/MenuView';
 import {swipeTo, goTo} from '../view/menu/MenuAction';
-import asset from '../view/../app/AppAsset';
+import AppAsset from '../view/../app/AppAsset';
 import {connect} from 'react-redux';
 import {loadSession} from '../view/login/LoginAction';
 import {setVisibility} from '../view/messenger/MessengerAction';
@@ -21,14 +21,13 @@ class AppLayout extends Component {
 		super(props);
 		this.layout = [];
 		this.state = {
-			closeValue: new Animated.Value(0.0001),
+			menuValue: new Animated.Value(0.0001),
 			botValue: new Animated.Value(0.0001),
 			scale: new Animated.Value(0.0001),
 			showMessenger: false,
 			borderRadius: new Animated.Value(width),
 		};
 
-		this.initLogin = false;
 		this.scroll = null;
 	}
 
@@ -121,14 +120,6 @@ class AppLayout extends Component {
 							if(this.props.menu.gesture.onHorizontalLargeSwipe != undefined){
 								this.props.menu.gesture.onHorizontalLargeSwipe(horizontal, position);
 							}
-
-							if(horizontal < 0){
-								this.props.dispatch(swipeTo('menu'));
-							}else {
-
-								this.props.dispatch(swipeTo('main'));
-							}
-
 						}break;
 					}
 				}break;
@@ -167,17 +158,13 @@ class AppLayout extends Component {
 	}
 
 	gotTo(item){
-		this.props.dispatch(setVisibility(false));
 		this.props.dispatch(swipeTo('main'));
 		item.action();
 	}
 
-	home(){
-		if(this.props.messenger.visibility == false){
-			this.props.dispatch(setVisibility(true));
-		}else{
-			this.props.dispatch(setVisibility(false));
-		}
+	menu(){
+		this.props.dispatch(setVisibility(false));
+		this.props.dispatch(swipeTo('menu'));
 	}
 
 
@@ -186,14 +173,7 @@ class AppLayout extends Component {
 		let animation = [];
 		animation.push(
 			Animated.timing(
-				this.state.botValue,
-				{
-					duration: 300,
-					toValue: 0,
-					easing: Easing.ease
-				}),
-			Animated.timing(
-				this.state.closeValue,
+				this.state.menuValue,
 				{
 					duration: 300,
 					toValue: 1,
@@ -206,22 +186,12 @@ class AppLayout extends Component {
 					toValue: 30,
 					easing: Easing.ease
 				})
-			);
+		);
 
 		Animated.parallel(animation).start(()=>{
-
-			if(this.initLogin == false){
-				this.initLogin = true;
-			}
-
 			this.setState({
 				showMessenger:true
 			});
-
-
-			this.props.dispatch(swipeTo('menu'));
-
-
 		});
 
 	}
@@ -236,14 +206,7 @@ class AppLayout extends Component {
 		let animation = [];
 		animation.push(
 			Animated.timing(
-				this.state.botValue,
-				{
-					duration: 300,
-					toValue: 1,
-					easing: Easing.ease
-				}),
-			Animated.timing(
-				this.state.closeValue,
+				this.state.menuValue,
 				{
 					duration: 300,
 					toValue: 0,
@@ -256,19 +219,40 @@ class AppLayout extends Component {
 					toValue: 0,
 					easing: Easing.ease
 				})
-			);
+		);
 
-
-		Animated.parallel(animation).start(()=>{
-
-		});
+		Animated.parallel(animation).start();
 
 	}
 
 	componentWillReceiveProps(nextProps){
 
 		if( nextProps.menu.goTo != this.props.menu.goTo){
+
 			this.swipeTo(nextProps.menu.goTo);
+
+			if(nextProps.menu.goTo == 'main'){
+
+				Animated.timing( this.state.menuValue,{
+					toValue: 1,
+					duration: 300,
+					delay : 200,
+					easing: Easing.ease
+				}).start();
+
+			}else{
+
+				Animated.timing(
+					this.state.menuValue,
+					{
+						duration: 300,
+						delay : 200,
+						toValue: 0,
+						easing: Easing.ease
+					}).start();
+			}
+
+
 		}
 
 		if(this.props.login.username != nextProps.login.username && nextProps.login.username !== false ){
@@ -351,23 +335,14 @@ class AppLayout extends Component {
 				<MessengerView />
 				</View>
 				)}
-			{this.props.messenger.session != null  && (
-				<TouchableOpacity style={style.button}  onPress={this.home.bind(this)}>
-
-				<Animated.Image source={asset.bot} style={[style.bot,  { transform: [ {scale: this.state.botValue}] } ]} >
-
-				</Animated.Image>
-				<Animated.Image source={asset.close} style={[style.bot,  { transform: [ {scale: this.state.closeValue}] } ]} >
-
-				</Animated.Image>
-
+			<TouchableOpacity style={[style.button]}   onPress={this.menu.bind(this)}>
+				<Animated.Image source={AppAsset.close}  style={[style.bot,  { transform: [ {scale: this.state.menuValue}] } ]} />
 				{this.props.messenger.notification && !this.props.messenger.visibility && (
-				<View style={style.notificationBubble}>
+					<View style={style.notificationBubble}>
 					<Text style={style.notificationText}>{this.props.messenger.messages.length}</Text>
-				</View>
-				)}
-				</TouchableOpacity>
-				)}
+					</View>
+					)}
+			</TouchableOpacity>
 
 			</View>);
 
@@ -382,13 +357,13 @@ const style = StyleSheet.create({
 	},
 	notificationBubble : {
 
-					borderRadius : 20,
-					backgroundColor:'#FF2D5D' ,
-					width: 20,
-					height: 20,
-					overflow : 'hidden',
-					left : -40,
-					top : -2,
+		borderRadius : 20,
+		backgroundColor:'#FF2D5D' ,
+		width: 20,
+		height: 20,
+		overflow : 'hidden',
+		left : -40,
+		top : -2,
 	},
 	notificationText : {
 		color: '#FFFFFF',
