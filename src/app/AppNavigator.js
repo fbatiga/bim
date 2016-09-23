@@ -154,7 +154,6 @@ class AppNavigator extends Component {
 
 
 	loadProfile(username){
-		console.log('loadProfile');
 		this.firebaseMessagesRef = rootRef.child(username+'/slack');
 		this.firebaseNotificationRef = rootRef.child(username+'/notification');
 
@@ -199,10 +198,6 @@ class AppNavigator extends Component {
 
 
 	componentWillReceiveProps(nextProps){
-
-		console.log('componentWillReceiveProps', this.props.messenger, nextProps.messenger);
-		console.log('componentWillReceiveProps', this.props.login, nextProps.login);
-
 		if(nextProps.login.username != this.props.login.username && nextProps.login.username !== false){
 			if(nextProps.login.username == null){
 				this.props.dispatch(loadSession('welcome'));

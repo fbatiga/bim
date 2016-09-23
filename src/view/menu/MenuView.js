@@ -54,8 +54,8 @@ class MenuView extends Component {
 
 	componentWillReceiveProps(nextProps) {
 
-
-		if(	nextProps.menu.location ==  'main'  && nextProps.menu.goTo == 'menu'){
+		console.log('componentWillReceiveProps',nextProps.menu);
+		if(	this.props.menu.goTo ==  'main'  && nextProps.menu.goTo == 'menu'){
 
 			let animation = [];
 
@@ -79,7 +79,7 @@ class MenuView extends Component {
 
 
 
-		if(	nextProps.menu.location ==  'menu'  && nextProps.menu.goTo == 'main'){
+		if(	this.props.menu.goTo ==  'menu'  && nextProps.menu.goTo == 'main'){
 
 			let animation = [];
 
@@ -89,8 +89,7 @@ class MenuView extends Component {
 					Animated.timing(
 						link.left,
 						{
-							toValue: -width,
-							duration : 200
+							toValue: -width
 						})
 					);
 

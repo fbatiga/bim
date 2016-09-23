@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { View, Text, StatusBar, Dimensions,  StyleSheet, TouchableOpacity , Image, Animated, Easing, ScrollView, PanResponder} from 'react-native';
 import Swiper from 'react-native-swiper';
 import MenuView from '../view/menu/MenuView';
-import {swipeTo, goTo} from '../view/menu/MenuAction';
+import {swipeTo} from '../view/menu/MenuAction';
 import AppAsset from '../view/../app/AppAsset';
 import {connect} from 'react-redux';
 import {loadSession} from '../view/login/LoginAction';

@@ -5,7 +5,6 @@ import { MENU_SWIPE, MENU_LOCATION, MENU_CONFIGURE } from './MenuAction';
 
 const initialState = {
 	goTo : 'main',
-	location : 'main',
 	panResponder : null,
 	gesture :{
 		onRelease : ()=> {},
@@ -21,10 +20,6 @@ const MenuReducer = handleActions({
 
 	[MENU_SWIPE]: (state, action) => {
 		return {...state, goTo : action.goTo };
-	},
-
-	[MENU_LOCATION]: (state, action) => {
-		return {...state, location : action.location };
 	},
 
 	[MENU_CONFIGURE]: (state, action) => {
