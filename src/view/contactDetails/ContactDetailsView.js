@@ -150,7 +150,7 @@ class ContactDetailsView extends Component {
 			<View style={style.row}>
 			<View style={style.action}>
 			<Image source={asset.modify} />
-			<Text style={style.param}> MODIFIER MES PARAMÈTRES</Text>
+			<Text style={style.param}>MODIFIER MES PARAMÈTRES</Text>
 			</View>
 			</View>
 			</View>

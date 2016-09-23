@@ -16,8 +16,6 @@ const height = Dimensions.get('window').height;
 
 class ProfileView extends Component {
 
-
-
 	constructor(props) {
 		super(props);
 

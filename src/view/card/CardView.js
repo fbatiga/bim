@@ -1,14 +1,14 @@
 'use strict';
 import React, { Component } from 'react';
-import { View, Image, TouchableOpacity, TouchableWithoutFeedback , PanResponder, Text, StyleSheet, Easing, Animated, ScrollView } from 'react-native';
+import { View, Image, TouchableOpacity, TouchableWithoutFeedback , Dimensions, Text, StyleSheet, Easing, Animated, ScrollView } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
-import asset from '../../app/AppAsset';
 import Title from '../common/title/Title';
 import { moveStarted, moveEnded  } from './CardAction'
 import AppGuideline from '../../app/AppGuideline';
 import {swipeTo, configureSwipe} from '../menu/MenuAction';
 
+const width = Dimensions.get('window').width;
 
 class CardView extends Component {
 
@@ -96,7 +96,7 @@ class CardView extends Component {
 
 		console.log('topTo',topTo, card.zIndex);
 
-		let leftTo = 8 + ( pos * 2);
+		let leftTo = 0 + ( pos * 2);
 
 		let  left = Animated.timing(
 			card.left,
@@ -206,7 +206,7 @@ class CardView extends Component {
 
 
 		let topTo = 90 - pos * 30;
-		let leftTo = 8 + ( pos * 2);
+		let leftTo = 0 + ( pos * 2);
 		let scaleTo = 1 - ( pos * 0.1 );
 
 
@@ -295,8 +295,8 @@ class CardView extends Component {
 			<View style={CardStyle.container} onLayout={this.configureScroll.bind(this)}>
 			<Title>Cartes</Title>
 			<View style={CardStyle.top}>
-			<View style={{top : 120 , alignItems: 'center'}} >
-			<View style={{ width: 300, height: 300 }}>
+			<View style={{top : 120 , alignItems: 'flex-start'}} >
+			<View style={{ width: width, height: 300 }}>
 			{this.state.cards.reverse().map((card, index)=>{
 				return (<TouchableWithoutFeedback key={index}  onPress={Actions.cardDetails}>
 					<Animated.View style={[card.style, {
@@ -345,11 +345,28 @@ const CardStyle = StyleSheet.create({
 		flex: 1
 	},
 	cardImage: {
-		width: 271,
-		height: 171
+		width: 339,
+		height: 211,
+		//shadowColor : '#120037',
+		backgroundColor: "#ffffff",
+   		borderRadius: 10,
+		shadowColor: "#000000",
+		shadowOpacity: 0.8,
+		shadowRadius: 2,
+		shadowOffset: {
+			height: 2,
+			width: 0
+		}
 	}
 });
 
+const asset = {
+	add: require('./asset/add.png'),
+	carte1: require('./asset/carte1.png'),
+	carte2 : require('./asset/carte2.png'),
+	carte3 : require('./asset/carte3.png'),
+	carte4 : require('./asset/carte4.png'),
+};
 
 function mapStateToProps(state) {
 	return {

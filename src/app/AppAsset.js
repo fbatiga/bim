@@ -25,10 +25,6 @@ export default {
     virementSpeed: require('../asset/virement_speed.gif'),
     transfertConfirm1: require('../asset/transfertConfirm1.png'),
     transfertConfirm2: require('../asset/transfertConfirm2.png'),
-    carte1: require('../asset/Carte1.png'),
-    carte2: require('../asset/Carte2.png'),
-    carte3: require('../asset/Carte3.png'),
-    carte4: require('../asset/Carte4.png'),
     back: require('../asset/back.png'),
     back_green: require('../asset/back_green.png'),
     back_dark: require('../asset/back_dark.png'),
@@ -76,8 +72,6 @@ export default {
         red: require('../asset/tabs/red.png')
     },
     screens: {
-        contactsList: require('../asset/screens/contactsList.png'),
-        contact: require('../asset/screens/contact.png'),
         journal: require('../view/journal/asset/screen.png'),
         login: require('../asset/screens/login.png')
     }
