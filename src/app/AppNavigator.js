@@ -216,7 +216,7 @@ class AppNavigator extends Component {
 			if( this.props.messenger.session == null){
 				this.props.dispatch(loadSession('hello'));
 			}else{
-				this.props.dispatch(login(nextProps.messenger.username));
+				this.props.dispatch(login(nextProps.messenger.profile.username));
 			}
 
 		}

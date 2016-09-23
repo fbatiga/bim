@@ -11,8 +11,6 @@ import SlackUser from '../../app/AppSlack';
 import {firebaseDb} from  '../../app/AppFirebase';
 const rootRef = firebaseDb.ref();
 
-
-
 export let UserSlack = null;
 export let BimSlack =  null;
 
@@ -28,6 +26,41 @@ const initialState = {
 	bot: true,
 	profile : {}
 };
+
+
+function formatName(str){
+    var conversions = new Object();
+
+    conversions['a'] = 'à|á|â|ã|å|ǻ|ā|ă|ą|ǎ|ª';
+    conversions['c'] = 'ç|ć|ĉ|ċ|č';
+    conversions['d'] = 'ð|ď|đ';
+    conversions['e'] = 'è|é|ê|ë|ē|ĕ|ė|ę|ě';
+    conversions['g'] = 'ĝ|ğ|ġ|ģ';
+    conversions['h'] = 'ĥ|ħ';
+    conversions['i'] = 'ì|í|î|ï|ĩ|ī|ĭ|ǐ|į|ı';
+    conversions['j'] = 'ĵ';
+    conversions['k'] = 'ķ';
+    conversions['l'] = 'ĺ|ļ|ľ|ŀ|ł';
+    conversions['n'] = 'ñ|ń|ņ|ň|ŉ';
+    conversions['o'] = 'ò|ó|ô|õ|ō|ŏ|ǒ|ő|ơ|ø|ǿ|º';
+    conversions['r'] = 'ŕ|ŗ|ř';
+    conversions['s'] = 'ś|ŝ|ş|š|ſ';
+    conversions['t'] = 'ţ|ť|ŧ';
+    conversions['u'] = 'ù|ú|û|ũ|ū|ŭ|ů|ű|ų|ư|ǔ|ǖ|ǘ|ǚ|ǜ';
+    conversions['y'] = 'ý|ÿ|ŷ';
+    conversions['w'] = 'ŵ';
+    conversions['z'] = 'ź|ż|ž';
+    conversions['f'] = 'ƒ';
+
+    str = str.toLowerCase();
+
+    for(var i in conversions){
+        var re = new RegExp(conversions[i],"g");
+        str = str.replace(re,i);
+    }
+
+    return str;
+}
 
 function createMessage(text, image, buttons, isBot, index){
 	return {
@@ -153,7 +186,7 @@ const MessengerReducer = handleActions({
     },
 
 	[MESSENGER_REGISTER]: (state, action) => {
-		let username = action.username.toLowerCase();
+		let username = formatName(action.username.trim().split(' ')[0]);
 		AsyncStorage.setItem('@AsyncStorage:username', username);
 		rootRef.child(username+'/profile/prenom').set(action.username);
 		rootRef.child(username+'/profile/username').set(username);
