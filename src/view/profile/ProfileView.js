@@ -30,17 +30,17 @@ class ProfileView extends Component {
 	}
 
 
-	// componentWillReceiveProps(nextProps) {
-
-	// 	this.animeView();
-	// }
-
 	componentDidMount() {
 
 		this.scroll = this.refs.profileSwiper.getScrollResponder();
 		this.position = 0;
 		this.animeView();
 
+	}
+
+
+	goToMenu(){
+		this.props.dispatch(swipeTo('menu'));
 	}
 
 	scrollTo(y){
@@ -53,7 +53,9 @@ class ProfileView extends Component {
 	}
 
 	onPointLayout(event){
-		this.pointPosition = event.nativeEvent.layout.y ;
+
+		console.log('asset.point',asset.point);
+		this.pointPosition = event.nativeEvent.layout.y + 300;
 
 		this.setState({
 			pointHeight: event.nativeEvent.layout.height
@@ -63,12 +65,7 @@ class ProfileView extends Component {
 	}
 
 	onTrophyLayout(event){
-		this.trophyPosition = event.nativeEvent.layout.y ;
-		console.log('onTrophyLayout',this.trophyPosition);
-	}
-
-	goToMenu(){
-		this.props.dispatch(swipeTo('menu'));
+		this.trophyPosition = event.nativeEvent.layout.y;
 	}
 
 	animeView(){
@@ -84,7 +81,7 @@ class ProfileView extends Component {
 		let picAfter =	Animated.timing(
 			this.state.animPictureValue,
 			{
-				toValue: -5,
+				toValue: -10,
 				delay : 300,
 				duration: 300,
 				easing : Easing.ease
@@ -93,8 +90,8 @@ class ProfileView extends Component {
 		let formAfter=	Animated.timing(
 			this.state.animContentValue,
 			{
-				toValue: 10,
-				delay : 300,
+				toValue: 20,
+				delay : 200,
 				duration: 300,
 				easing : Easing.ease
 			});
@@ -152,42 +149,43 @@ class ProfileView extends Component {
 			scrollEnabled={false}
 			>
 			<View style={{height: height - this.state.pointHeight}} >
-				<View style={style.row}>
-					<BackButton image={AppAsset.back} back={this.goToMenu.bind(this)} style={{ opacity : this.state.fadeAnim}} />
-					<Animated.Image source={image} style={{top : this.state.animPictureValue}}/>
-				</View>
-				<Animated.View style={{top : this.state.animContentValue}} >
-					<View style={style.content} >
-						<Text style={style.name}>{this.props.messenger.profile.prenom}</Text>
-						<Text style={style.name}>{this.props.messenger.profile.nom}</Text>
-						<View style={style.line}>
-							<Text style={style.address}>{this.props.messenger.profile.adresse}</Text>
-						</View>
-						<View style={style.row}>
-							<View style={style.action}>
-								<Image source={asset.modify} />
-								<Text style={style.param}> MODIFIER MES PARAMÈTRES</Text>
-							</View>
-						</View>
-						<View style={style.row}>
+
+			<View style={style.row}>
+			<BackButton image={AppAsset.back} back={this.goToMenu.bind(this)} style={{ opacity : this.state.fadeAnim}} />
+			<Animated.Image source={image} style={{top : this.state.animPictureValue}}/>
+			</View>
+			</View>
+			<Animated.View style={{top : this.state.animContentValue}} onLayout={this.onPointLayout.bind(this)} >
+			<View style={style.content} >
+			<Text style={style.name}>{this.props.messenger.profile.prenom}</Text>
+			<Text style={style.name}>{this.props.messenger.profile.nom}</Text>
+			<View style={style.line}>
+			<Text style={style.address}>{this.props.messenger.profile.adresse}</Text>
+			</View>
+			<View style={style.row}>
+			<View style={style.action}>
+			<Image source={asset.modify} />
+			<Text style={style.param}> MODIFIER MES PARAMÈTRES</Text>
+			</View>
+			</View>
+			<View style={style.row}>
 							<TouchableOpacity onPress={this.logout.bind(this)} >
 								<View style={style.action}>
 									<Text style={style.param}> DECONNEXION </Text>
 								</View>
 							</TouchableOpacity>
 						</View>
-					</View>
-				</Animated.View>
 			</View>
-				<Image onLayout={this.onPointLayout.bind(this)} source={asset.point}/>
-				<Image onLayout={this.onTrophyLayout.bind(this)} source={asset.trophy}/>
+			<Image source={asset.point}/>
+			</Animated.View>
+
+			<Image onLayout={this.onTrophyLayout.bind(this)} source={asset.trophy}/>
 
 			</ScrollView>
 			</View>)
 	}
 
 }
-
 
 const style = StyleSheet.create({
 	container: {
@@ -197,6 +195,7 @@ const style = StyleSheet.create({
 	},
 	content :{
 		padding:30,
+		height : 300,
 		justifyContent: 'flex-start',
 		flexDirection: 'column'
 
@@ -218,7 +217,7 @@ const style = StyleSheet.create({
 	},
 	line: {
 		borderBottomWidth: 1,
-		paddingBottom: 10,
+		paddingBottom: 20,
 		borderColor: '#ECECED',
 	},
 	row : {
@@ -228,12 +227,10 @@ const style = StyleSheet.create({
 		justifyContent : 'center'
 	},
 	action : {
-		paddingTop: 10,
 		flexDirection: 'row',
 		alignItems : 'flex-start',
 		marginTop:10,
 		marginBottom:10,
-		height: 20,
 	},
 	param : {
 		flex : 1,
@@ -243,6 +240,7 @@ const style = StyleSheet.create({
 		color : '#120037',
 	}
 });
+
 
 const asset = {
 	alice: require('./asset/alice.png'),

@@ -5,8 +5,12 @@ import { View, Text, Image,  StyleSheet, ScrollView, PanResponder, Dimensions, A
 import BackButton from '../common/button/BackButton';
 import AppAsset from '../../app/AppAsset';
 import { Actions } from 'react-native-router-flux';
+import {swipeTo, configureSwipe} from '../menu/MenuAction';
+import {connect} from 'react-redux';
 
-export default class ContactDetailsView extends Component {
+const height = Dimensions.get('window').height;
+
+class ContactDetailsView extends Component {
 
 	constructor(props) {
 		super(props);
@@ -14,12 +18,41 @@ export default class ContactDetailsView extends Component {
 		this.state = {
 			fadeAnim: new Animated.Value(0),
 			animPictureValue: new Animated.Value(-200),
-			animContentValue: new Animated.Value(500)
+			animContentValue: new Animated.Value(height)
 		};
 	}
 
 	componentDidMount() {
+
+		this.scroll = this.refs.profileSwiper.getScrollResponder();
+		this.position = 0;
 		this.animeView();
+
+	}
+
+	scrollTo(y){
+		this.scroll.scrollTo({
+			y: y,
+			x: 0,
+			animated : true
+		});
+		this.position = y;
+	}
+
+	onPointLayout(event){
+
+		console.log('asset.point',asset.point);
+		this.pointPosition = event.nativeEvent.layout.y + 300;
+
+		this.setState({
+			pointHeight: event.nativeEvent.layout.height
+		})
+
+		console.log('onPointLayout',this.pointPosition);
+	}
+
+	onTrophyLayout(event){
+		this.trophyPosition = event.nativeEvent.layout.y;
 	}
 
 	animeView(){
@@ -35,7 +68,7 @@ export default class ContactDetailsView extends Component {
 		let picAfter =	Animated.timing(
 			this.state.animPictureValue,
 			{
-				toValue: -5,
+				toValue: -10,
 				delay : 300,
 				duration: 300,
 				easing : Easing.ease
@@ -44,8 +77,8 @@ export default class ContactDetailsView extends Component {
 		let formAfter=	Animated.timing(
 			this.state.animContentValue,
 			{
-				toValue: 10,
-				delay : 300,
+				toValue: 20,
+				delay : 200,
 				duration: 300,
 				easing : Easing.ease
 			});
@@ -54,6 +87,32 @@ export default class ContactDetailsView extends Component {
 
 	}
 
+	configureScroll(){
+		this.props.dispatch(
+			configureSwipe({
+				onVerticalSwipe : this.onVerticalSwipe.bind(this),
+				onVerticalLargeSwipe : this.onVerticalSwipe.bind(this)
+			})
+			);
+	}
+
+
+	onVerticalSwipe(distance) {
+		if(distance >0){
+			if(this.position ==  0){
+				this.scrollTo(this.pointPosition);
+			}else if(this.position ==  this.pointPosition ){
+				this.scrollTo(this.trophyPosition);
+			}
+		}else{
+			if(this.position ==  this.pointPosition ){
+				this.scrollTo(0);
+			}else if(this.position ==  this.trophyPosition ){
+				this.scrollTo(this.pointPosition);
+			}
+		}
+		return true;
+	}
 
 
 	render() {
@@ -68,26 +127,38 @@ export default class ContactDetailsView extends Component {
 		}
 
 		return (
-			<View style={style.container} >
+			<View style={style.container} onLayout={this.configureScroll.bind(this)}>
 			<ScrollView
 			ref='profileSwiper'
 			horizontal={false}
 			scrollEnabled={false}
 			>
+			<View style={{height: height - this.state.pointHeight}} >
 
 			<View style={style.row}>
 			<BackButton image={AppAsset.back} back={Actions.pop} style={{ opacity : this.state.fadeAnim}} />
 			<Animated.Image source={image} style={{top : this.state.animPictureValue}}/>
 			</View>
-			<Animated.View style={{top : this.state.animContentValue}} >
+			</View>
+			<Animated.View style={{top : this.state.animContentValue}} onLayout={this.onPointLayout.bind(this)} >
 			<View style={style.content} >
 			<Text style={style.name}>{this.props.contact.givenName}</Text>
 			<Text style={style.name}>{this.props.contact.familyName}</Text>
 			<View style={style.line}>
 			<Text style={style.address}>{this.props.contact.adresse}</Text>
 			</View>
+			<View style={style.row}>
+			<View style={style.action}>
+			<Image source={asset.modify} />
+			<Text style={style.param}> MODIFIER MES PARAMÈTRES</Text>
 			</View>
+			</View>
+			</View>
+			<Image source={asset.point}/>
 			</Animated.View>
+
+			<Image onLayout={this.onTrophyLayout.bind(this)} source={asset.trophy}/>
+
 			</ScrollView>
 			</View>)
 	}
@@ -103,6 +174,7 @@ const style = StyleSheet.create({
 	},
 	content :{
 		padding:30,
+		height : 300,
 		justifyContent: 'flex-start',
 		flexDirection: 'column'
 
@@ -124,7 +196,7 @@ const style = StyleSheet.create({
 	},
 	line: {
 		borderBottomWidth: 1,
-		paddingBottom: 10,
+		paddingBottom: 20,
 		borderColor: '#ECECED',
 	},
 	row : {
@@ -134,12 +206,10 @@ const style = StyleSheet.create({
 		justifyContent : 'center'
 	},
 	action : {
-		paddingTop: 10,
 		flexDirection: 'row',
 		alignItems : 'flex-start',
 		marginTop:10,
 		marginBottom:10,
-		height: 20,
 	},
 	param : {
 		flex : 1,
@@ -165,3 +235,12 @@ const images = {
 	"heloise" : require('../profile/asset/heloise.png'),
 	"nathalie" : require('../profile/asset/nathalie.png')
 };
+
+
+function mapStateToProps(state) {
+	return {
+		messenger: state.messenger
+	};
+}
+
+export default connect(mapStateToProps)(ContactDetailsView);
