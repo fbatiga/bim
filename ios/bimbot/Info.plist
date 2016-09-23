@@ -47,6 +47,7 @@
 	<string></string>
 	<key>UIAppFonts</key>
 	<array>
+		<string>Netto-OT-Bold.ttf</string>
 		<string>Roboto-Thin.ttf</string>
 		<string>Roboto-ThinItalic.ttf</string>
 		<string>Roboto-Black.ttf</string>

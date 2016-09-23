@@ -163,8 +163,8 @@ class AppLayout extends Component {
 	}
 
 	menu(){
-		this.props.dispatch(setVisibility(false));
 		this.props.dispatch(swipeTo('menu'));
+		this.props.dispatch(setVisibility(false));
 	}
 
 
@@ -189,6 +189,8 @@ class AppLayout extends Component {
 		);
 
 		Animated.parallel(animation).start(()=>{
+
+
 			this.setState({
 				showMessenger:true
 			});
@@ -231,7 +233,7 @@ class AppLayout extends Component {
 
 			this.swipeTo(nextProps.menu.goTo);
 
-			if(nextProps.menu.goTo == 'main'){
+			if(nextProps.menu.goTo == 'main' || nextProps.messenger.visibility == true){
 
 				Animated.timing( this.state.menuValue,{
 					toValue: 1,
@@ -240,7 +242,7 @@ class AppLayout extends Component {
 					easing: Easing.ease
 				}).start();
 
-			}else{
+			}else {
 
 				Animated.timing(
 					this.state.menuValue,
@@ -258,6 +260,13 @@ class AppLayout extends Component {
 		if(this.props.login.username != nextProps.login.username && nextProps.login.username !== false ){
 
 			this.props.dispatch(setVisibility(true));
+
+			Animated.timing( this.state.menuValue,{
+					toValue: 1,
+					duration: 300,
+					delay : 200,
+					easing: Easing.ease
+				}).start();
 
 		}
 
@@ -280,9 +289,13 @@ class AppLayout extends Component {
 
 		if( prevProps.messenger.visibility !== this.props.messenger.visibility ){
 			if( this.props.messenger.visibility == true ){
+
 				this.showMessenger();
+
 			}else{
+
 				this.hideMessenger();
+
 			}
 		}
 

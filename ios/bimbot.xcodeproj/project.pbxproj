@@ -44,6 +44,7 @@
 		529A7CCC1D5BE6F100A3B935 /* libCodePush.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 529A7CC01D5BE63300A3B935 /* libCodePush.a */; };
 		529A7CCE1D5BE77500A3B935 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 529A7CCD1D5BE77500A3B935 /* libz.tbd */; };
 		52C392241D59DBCA0042EDB8 /* Launch.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 52C392231D59DBCA0042EDB8 /* Launch.xcassets */; };
+		52DF03641D9575830014FEEB /* Netto-OT-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 52DF03561D9575710014FEEB /* Netto-OT-Bold.ttf */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 /* End PBXBuildFile section */
 
@@ -189,6 +190,7 @@
 		529A63931D6714710040D8E6 /* Montserrat-ExtraBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Montserrat-ExtraBold.otf"; path = "../src/asset/font/Montserrat-ExtraBold.otf"; sourceTree = "<group>"; };
 		529A7CCD1D5BE77500A3B935 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		52C392231D59DBCA0042EDB8 /* Launch.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Launch.xcassets; path = bimbot/Launch.xcassets; sourceTree = "<group>"; };
+		52DF03561D9575710014FEEB /* Netto-OT-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Netto-OT-Bold.ttf"; path = "../src/asset/font/Netto-OT-Bold.ttf"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		7D5ABD87BF90402084E97619 /* CodePush.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = CodePush.xcodeproj; path = "../node_modules/react-native-code-push/ios/CodePush.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
@@ -392,6 +394,7 @@
 				5275D4FD1D7067DC00F3C516 /* Montserrat-SemiBold.otf */,
 				5275D4FE1D7067DC00F3C516 /* Montserrat-UltraLight.otf */,
 				52629B8E1D7EC8D200682014 /* Roboto-Black.ttf */,
+				52DF03561D9575710014FEEB /* Netto-OT-Bold.ttf */,
 				52629B8F1D7EC8D300682014 /* Roboto-BlackItalic.ttf */,
 				52629B901D7EC8D300682014 /* Roboto-Bold.ttf */,
 				52629B911D7EC8D300682014 /* Roboto-BoldItalic.ttf */,
@@ -679,6 +682,7 @@
 				52629BAB1D7EC90300682014 /* Roboto-Medium.ttf in Resources */,
 				52629BAA1D7EC90100682014 /* Roboto-LightItalic.ttf in Resources */,
 				52629BA61D7EC8F300682014 /* Roboto-BlackItalic.ttf in Resources */,
+				52DF03641D9575830014FEEB /* Netto-OT-Bold.ttf in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				52C392241D59DBCA0042EDB8 /* Launch.xcassets in Resources */,
 			);

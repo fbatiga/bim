@@ -4,7 +4,7 @@ import { handleActions } from 'redux-actions';
 
 import { AsyncStorage } from 'react-native';
 import {
-	MESSENGER_REGISTER, MESSENGER_INIT, MESSENGER_PROFILE, MESSENGER_NOTIFICATION, MESSENGER_VISIBILITY, MESSENGER_BOT_RESTART, MESSENGER_SLACK_MESSAGE, MESSENGER_HELLO, MESSENGER_REQUEST, MESSENGER_SUCCESS, MESSENGER_FAILURE, MESSENGER_BUTTONS, MESSENGER_MESSAGE, MESSENGER_BOT_MESSAGE, MESSENGER_SESSION
+	MESSENGER_CLOSE, MESSENGER_REGISTER, MESSENGER_INIT, MESSENGER_PROFILE, MESSENGER_NOTIFICATION, MESSENGER_VISIBILITY, MESSENGER_BOT_RESTART, MESSENGER_SLACK_MESSAGE, MESSENGER_HELLO, MESSENGER_REQUEST, MESSENGER_SUCCESS, MESSENGER_FAILURE, MESSENGER_BUTTONS, MESSENGER_MESSAGE, MESSENGER_BOT_MESSAGE, MESSENGER_SESSION
 } from './MessengerAction';
 
 import SlackUser from '../../app/AppSlack';
@@ -19,6 +19,7 @@ const initialState = {
 	session : null,
 	messages: [],
 	buttons : [],
+	closed : false,
 	username : null,
 	loading : false,
 	notification : false,
@@ -200,6 +201,10 @@ const MessengerReducer = handleActions({
 		return { ...state, buttons: action.params};
 	},
 
+	[MESSENGER_CLOSE]: (state, action) => {
+		return { ...state, bot: true, closed: true, notification : false, visibility :false, messages : [],  buttons:[]};
+	},
+
 	[MESSENGER_BOT_RESTART]: (state, action) => {
 		return { ...state, bot: true, notification : false};
 	},
@@ -210,7 +215,7 @@ const MessengerReducer = handleActions({
 
 	[MESSENGER_VISIBILITY]: (state, action) => {
 
-		return { ...state, visibility : action.params, notification: action.params ? false : state.notification };
+		return { ...state, visibility : action.params, closed: false, notification: action.params ? false : state.notification };
 	},
 
 	[MESSENGER_INIT]: (state, action) => {

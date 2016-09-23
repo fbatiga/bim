@@ -13,6 +13,7 @@ export const MESSENGER_VISIBILITY = 'messenger.visibility';
 export const MESSENGER_PROFILE = 'messenger.profile';
 export const MESSENGER_INIT = 'messenger.init';
 export const MESSENGER_REGISTER = 'messenger.register';
+export const MESSENGER_CLOSE = 'messenger.close';
 
 
 export function getReply(params) {
@@ -93,6 +94,13 @@ export function addMessage(params) {
   };
 }
 
+
+
+export function close(params) {
+  return {
+    type: MESSENGER_CLOSE
+  };
+}
 
 export function register(username) {
   return {

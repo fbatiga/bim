@@ -218,31 +218,41 @@ class AppNavigator extends Component {
 
 		if(this.props.contact.list.length == 0 && this.props.contact.loading == false && nextProps.contact.loading == true){
 
-			Contacts.checkPermission( (err, permission) => {
-				console.log('Contacts.checkPermission',permission);
+			// Contacts.checkPermission( (err, permission) => {
+			// 	console.log('Contacts.checkPermission',permission);
 
-			  // Contacts.PERMISSION_AUTHORIZED || Contacts.PERMISSION_UNDEFINED || Contacts.PERMISSION_DENIED
-			  if(permission == Contacts.PERMISSION_UNDEFINED ){
-			  	Contacts.requestPermission( (err, permission) => {
-			  		console.log('Contacts.requestPermission',permission);
+			//   // Contacts.PERMISSION_AUTHORIZED || Contacts.PERMISSION_UNDEFINED || Contacts.PERMISSION_DENIED
+			//   if(permission == Contacts.PERMISSION_UNDEFINED ){
+			//   	Contacts.requestPermission( (err, permission) => {
+			//   		console.log('Contacts.requestPermission',permission);
 
-			  		if (permission === Contacts.PERMISSION_AUTHORIZED) {
-			  			Contacts.getAll((err, contacts) => {
-			  				console.log('Contacts.getAll');
-			  				this.props.dispatch(setContacts(contacts));
-			  			});
-			  		} else {
-			  			this.props.dispatch(setContacts([]));
-			  		}
-			  	});
-			  }else {
-			  	this.props.dispatch(setContacts([]));
-			  }
-			});
+			//   		if (permission === Contacts.PERMISSION_AUTHORIZED) {
+			//   			Contacts.getAll((err, contacts) => {
+			//   				console.log('Contacts.getAll');
+			//   				this.props.dispatch(setContacts(contacts));
+			//   			});
+			//   		} else {
+			//   			this.props.dispatch(setContacts([]));
+			//   		}
+			//   	});
+			//   }else {
+			//   	this.props.dispatch(setContacts([]));
+			//   }
+			// });
 
 		}
 
 		//console.log('firebaseMessagesRef',this.props.messenger.bot, nextProps.messenger.bot );
+		//
+		if(this.props.messenger.closed !== nextProps.messenger.closed ){
+
+			if(this.props.messenger.closed == true){
+				this.props.dispatch(loadSession('restart'));
+			}
+
+		}
+
+
 		if(this.props.messenger.bot !== nextProps.messenger.bot ){
 
 

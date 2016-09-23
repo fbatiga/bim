@@ -20,6 +20,8 @@ class CardView extends Component {
 			cards : [
 			{
 				src: asset.carte1,
+				numberColor : '#180E40',
+				textColor : '#42717D',
 				style : {
 					zIndex : 0,
 					position: 'absolute',
@@ -34,6 +36,8 @@ class CardView extends Component {
 			},
 			{
 				src: asset.carte2,
+				numberColor : '#120037',
+				textColor : '#82785B',
 				style : {
 					zIndex : 1,
 					position: 'absolute',
@@ -48,6 +52,8 @@ class CardView extends Component {
 			},
 			{
 				src: asset.carte3,
+				numberColor : '#FFFFFF',
+				textColor : '#1F5675',
 				style : {
 					zIndex : 2,
 					position: 'absolute',
@@ -62,6 +68,8 @@ class CardView extends Component {
 			},
 			{
 				src: asset.carte4,
+				numberColor : '#FF2D5D',
+				textColor : '#726E8D',
 				style : {
 					zIndex : 3,
 					position: 'absolute',
@@ -96,7 +104,7 @@ class CardView extends Component {
 
 		console.log('topTo',topTo, card.zIndex);
 
-		let leftTo = 0 + ( pos * 2);
+		let leftTo = ( pos * 2);
 
 		let  left = Animated.timing(
 			card.left,
@@ -126,7 +134,7 @@ class CardView extends Component {
 
 		let animation = [];
 
-		let left = 8 + this.state.cards.length * 2;
+		let left = this.state.cards.length * 2;
 
 		this.state.cards.reverse().map((card, index)=>{
 
@@ -206,7 +214,7 @@ class CardView extends Component {
 
 
 		let topTo = 90 - pos * 30;
-		let leftTo = 0 + ( pos * 2);
+		let leftTo =  pos * 2 ;
 		let scaleTo = 1 - ( pos * 0.1 );
 
 
@@ -296,7 +304,7 @@ class CardView extends Component {
 			<Title>Cartes</Title>
 			<View style={CardStyle.top}>
 			<View style={{top : 120 , alignItems: 'flex-start'}} >
-			<View style={{ width: width, height: 300 }}>
+			<View style={{ width: 339, height: 300, alignSelf: 'center' }}>
 			{this.state.cards.reverse().map((card, index)=>{
 				return (<TouchableWithoutFeedback key={index}  onPress={Actions.cardDetails}>
 					<Animated.View style={[card.style, {
@@ -305,10 +313,70 @@ class CardView extends Component {
 						{ rotate : card.style.transform[1].rotate.interpolate({
 							inputRange: [0, 360],
 							outputRange: ['0deg', '360deg'],
-						})}]
-					}]} >
+						})
+					}
+					],
+					shadowColor :  '#000000',
+					shadowOpacity: 0.8,
+					shadowRadius: 3,
+					shadowOffset: {
+						height: 2,
+						width: 0
+					}
 
-					<Image source={card.src} style= {CardStyle.cardImage} />
+				}]} >
+
+				<Image source={card.src} style= {CardStyle.cardImage} >
+				<View style={{top : 125, left: 30, backgroundColor: 'transparent'}}>
+				<Text style={{
+					letterSpacing : 4,
+					fontFamily : 'Netto OT',
+					fontSize : 21,
+					textShadowColor : '#7B8186',
+					textShadowRadius: 1,
+					textShadowOffset: {
+						height: 2,
+						width: 0
+					},
+					fontWeight : 'bold',
+					color : card.numberColor
+				}}>
+				4971  2348  1357  3334
+				</Text>
+				</View>
+				<View style={{ top : 147, left: 30, backgroundColor: 'transparent'}}>
+				<Text style={{
+					letterSpacing : 2,
+					fontFamily : 'Netto OT',
+					fontSize : 12,
+					fontWeight : 'bold',
+					color : card.textColor,
+					textShadowColor : '#7B8186',
+					textShadowRadius: 1,
+					textShadowOffset: {
+						height: 1,
+						width: 0
+					} }}>
+					{this.props.messenger.profile.prenom} {this.props.messenger.profile.nom}
+					</Text>
+					</View>
+<View style={{ top : 152, left: 30, backgroundColor: 'transparent'}}>
+				<Text style={{
+					letterSpacing : 2,
+					fontFamily : 'Netto OT',
+					fontSize : 12,
+					fontWeight : 'bold',
+					color : card.textColor,
+					textShadowColor : '#7B8186',
+					textShadowRadius: 1,
+					textShadowOffset: {
+						height: 1,
+						width: 0
+					} }}>
+					EXPIRE FIN 01/19
+					</Text>
+					</View>
+					</Image>
 					</Animated.View>
 					</TouchableWithoutFeedback>);
 			})
@@ -347,10 +415,8 @@ const CardStyle = StyleSheet.create({
 	cardImage: {
 		width: 339,
 		height: 211,
-		//shadowColor : '#120037',
-		backgroundColor: "#ffffff",
-   		borderRadius: 10,
-		shadowColor: "#000000",
+		shadowColor : '#120037',
+		borderRadius: 10,
 		shadowOpacity: 0.8,
 		shadowRadius: 2,
 		shadowOffset: {
@@ -370,7 +436,8 @@ const asset = {
 
 function mapStateToProps(state) {
 	return {
-		card: state.card
+		card: state.card,
+		messenger: state.messenger
 	};
 }
 

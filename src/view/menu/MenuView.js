@@ -54,7 +54,6 @@ class MenuView extends Component {
 
 	componentWillReceiveProps(nextProps) {
 
-		console.log('componentWillReceiveProps',nextProps.menu);
 		if(	this.props.menu.goTo ==  'main'  && nextProps.menu.goTo == 'menu'){
 
 			let animation = [];

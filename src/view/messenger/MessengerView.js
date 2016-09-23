@@ -3,8 +3,10 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import { Text, View, ListView,  StyleSheet , Image, ScrollView, TextInput, TouchableOpacity, AsyncStorage, Animated } from 'react-native';
-import { register, getReply, updateProfile, loadSession, addMessage, addSlackMessage,loadButtons,restartBot , notify, setVisibility} from './MessengerAction';
+import { register, getReply, updateProfile, loadSession, addMessage, addSlackMessage,loadButtons,restartBot , notify, setVisibility, close} from './MessengerAction';
 import MessengerMain from './layout/MessengerMain';
+import {swipeTo} from '../menu/MenuAction';
+
 import MessengerBottom from './layout/MessengerBottom';
 import {firebaseDb} from  '../../app/AppFirebase';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
@@ -35,6 +37,7 @@ class MessengerView extends Component {
 
 	componentDidMount(){
 
+		this.props.dispatch(swipeTo('menu'));
 
 		if(this.props.messenger.messages.length > 0 ){
 
@@ -62,16 +65,14 @@ class MessengerView extends Component {
 		}
 	}
 
-	componentDidUpdate(){
-		if(this.props.messenger.bot == true  && this.props.messenger.messages.length == 0){
-
-		}
-	}
-
-
 	onSend(text) {
 
-		if (this.state.input == false  && text == '...') {
+
+		if(text == 'A plus tard !'){
+
+			this.props.dispatch(close());
+
+		}else if (this.state.input == false  && text == '...') {
 			this.setState({
 				input: true
 			});
@@ -82,7 +83,6 @@ class MessengerView extends Component {
 			if(this.state.input == true){
 
 				if(this.inputToSave !== null){
-
 
 					let form = [];
 
@@ -151,15 +151,11 @@ class MessengerView extends Component {
 	}
 
 
-	onLayout(){
-
-	}
-
 	render(){
 
 		return (
 
-			<View style={[style.container, this.props.style]} onLayout={this.onLayout.bind(this)}>
+			<View style={[style.container, this.props.style]} >
 			<MessengerMain
 			style={style.main}
 			setButtons={this.setButtons.bind(this)}
