@@ -4,9 +4,11 @@ import { View, Image, TouchableOpacity, TouchableWithoutFeedback , Dimensions, T
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import Title from '../common/title/Title';
+import CardItem from '../common/item/CardItem';
 import { moveStarted, moveEnded  } from './CardAction'
 import AppGuideline from '../../app/AppGuideline';
 import {swipeTo, configureSwipe} from '../menu/MenuAction';
+import {firebaseDb} from  '../../app/AppFirebase';
 
 const width = Dimensions.get('window').width;
 
@@ -15,79 +17,51 @@ class CardView extends Component {
 	constructor(props){
 		super(props);
 		this.isMoving=false;
+
+		let items = this.loadCards(this.props.card.list);
+
+
 		this.state = {
-			count :  4,
-			cards : [
-			{
-				src: asset.carte1,
-				numberColor : '#180E40',
-				textColor : '#42717D',
-				style : {
-					zIndex : 0,
-					position: 'absolute',
-					top: new Animated.Value(0),
-					left: new Animated.Value(300),
-					transform : [{
-						scale : new Animated.Value(0.7)
-					},{
-						rotate : new Animated.Value(0)
-					}]
-				}
-			},
-			{
-				src: asset.carte2,
-				numberColor : '#120037',
-				textColor : '#82785B',
-				style : {
-					zIndex : 1,
-					position: 'absolute',
-					top: new Animated.Value(30),
-					left: new Animated.Value(300),
-					transform : [{
-						scale : new Animated.Value(0.8)
-					},{
-						rotate : new Animated.Value(0)
-					}]
-				}
-			},
-			{
-				src: asset.carte3,
-				numberColor : '#FFFFFF',
-				textColor : '#1F5675',
-				style : {
-					zIndex : 2,
-					position: 'absolute',
-					top: new Animated.Value(60),
-					left: new Animated.Value(300),
-					transform : [{
-						scale : new Animated.Value(0.9)
-					},{
-						rotate : new Animated.Value(0)
-					}]
-				}
-			},
-			{
-				src: asset.carte4,
-				numberColor : '#FF2D5D',
-				textColor : '#726E8D',
-				style : {
-					zIndex : 3,
-					position: 'absolute',
-					top: new Animated.Value(90),
-					left: new Animated.Value(300),
-					transform : [{
-						scale : new Animated.Value(1)
-					},{
-						rotate : new Animated.Value(0)
-					}]
-				}
-			}]
+			count : this.props.card.list.length,
+			cards : items
 		};
 
 		this.newCards = [];
-
 	}
 
+
+
+	loadCards(cards){
+
+		let pos = cards.length;
+
+		let items =[];
+
+		cards.map((card, index)=>{
+
+			let scaleTo = 1 - ( (pos - index - 1) * 0.1 );
+			let topTo =  90 - (pos - index - 1)  * 30;
+
+			items.push({
+				design : card.design,
+				name : card.recipient,
+				style : {
+					zIndex : index,
+					top: new Animated.Value(topTo),
+					left: new Animated.Value(300),
+					transform : [{
+						scale : new Animated.Value(scaleTo)
+					},{
+						rotate : new Animated.Value(0)
+					}]
+				}
+			})
+
+		});
+
+		return  items;
+
+	}
 
 	moveCardTo(card, index){
 
@@ -101,8 +75,6 @@ class CardView extends Component {
 			toValue: topTo,
 			duration,
 		});
-
-		console.log('topTo',topTo, card.zIndex);
 
 		let leftTo = ( pos * 2);
 
@@ -130,8 +102,7 @@ class CardView extends Component {
 	}
 
 
-	componentDidMount(){
-
+	showCards(){
 		let animation = [];
 
 		let left = this.state.cards.length * 2;
@@ -155,16 +126,18 @@ class CardView extends Component {
 		Animated.parallel(animation).start();
 	}
 
+	componentDidMount(){
+		this.showCards();
+	}
+
 
 	componentWillUnmount(){
 
 		let animation = [];
 
-		let left = 8 + this.state.cards.length * 2;
+		let left = this.state.cards.length * 2;
 
 		this.state.cards.map((card, index)=>{
-
-
 			animation.push(
 				Animated.timing(
 					card.style.left,
@@ -185,7 +158,6 @@ class CardView extends Component {
 	removeCard(card){
 
 		let duration = 300;
-
 
 		let left = Animated.timing(
 			card.left,
@@ -241,23 +213,21 @@ class CardView extends Component {
 
 	move(){
 
-		if(this.state.count  = this.state.cards.length){
-			let cardToMove = this.state.cards.pop();
+		let cardToMove = this.state.cards.pop();
 
-			let parallels = [];
+		let parallels = [];
 
-			let newCards = this.state.cards.slice(0);
+		let newCards = this.state.cards.slice(0);
 
-			newCards.map((card, index)=>{
-				let animation = this.moveCardTo(card.style, index);
+		newCards.map((card, index)=>{
+			let animation = this.moveCardTo(card.style, index);
 
-				parallels = parallels.concat(animation);
-			});
+			parallels = parallels.concat(animation);
+		});
 
-			parallels = parallels.concat(this.removeCard(cardToMove.style));
+		parallels = parallels.concat(this.removeCard(cardToMove.style));
 
-			Animated.parallel(parallels).start(()=>{ this.onCardRemoved(newCards,cardToMove); });
-		}
+		Animated.parallel(parallels).start(()=>{ this.onCardRemoved(newCards,cardToMove); });
 	}
 
 
@@ -275,11 +245,9 @@ class CardView extends Component {
 
 	onCardRemoved(newCards, cardToMove){
 
-
 		let sequence = this.addCard(cardToMove.style);
 
 		this.state.cards = [cardToMove].concat(newCards);
-
 
 		Animated.sequence(sequence).start(()=>{
 			this.isMoving = false;
@@ -293,102 +261,54 @@ class CardView extends Component {
 			configureSwipe({
 				onVerticalSwipe : this.onSwipe.bind(this),
 				onVerticalLargeSwipe : this.onSwipe.bind(this),
-				onHorizontalSwipe : this.onSwipe.bind(this)
+				onHorizontalSwipe : this.onSwipe.bind(this),
+				onHorizontalLargeSwipe : this.onSwipe.bind(this),
 			})
 			);
 	}
 
+	componentWillReceiveProps(nextProps){
+
+
+		if(this.props.card.list != nextProps.card.list){
+
+			let items = this.loadCards(nextProps.card.list);
+			this.setState({
+				count : nextProps.card.list.length,
+				cards : items
+			});
+		}
+
+	}
+
+
+	componentDidUpdate( prevProps,  prevState){
+		if(this.state.cards.length !== prevState.cards.length){
+			this.showCards();
+		}
+	}
+
 	render() {
+
+
 		return (
-			<View style={CardStyle.container} onLayout={this.configureScroll.bind(this)}>
+			<View style={style.container} onLayout={this.configureScroll.bind(this)}>
 			<Title>Cartes</Title>
-			<View style={CardStyle.top}>
+			<View style={style.top}>
 			<View style={{top : 120 , alignItems: 'flex-start'}} >
-			<View style={{ width: 339, height: 300, alignSelf: 'center' }}>
+			<View style={style.cardContainer}>
+			{this.state.cards.length == 0 && <Text style={style.text}>Ajouter une carte</Text>}
 			{this.state.cards.reverse().map((card, index)=>{
-				return (<TouchableWithoutFeedback key={index}  onPress={Actions.cardDetails}>
-					<Animated.View style={[card.style, {
-						zIndex : card.style.top,
-						transform : [{ scale : card.style.transform[0].scale},
-						{ rotate : card.style.transform[1].rotate.interpolate({
-							inputRange: [0, 360],
-							outputRange: ['0deg', '360deg'],
-						})
-					}
-					],
-					shadowColor :  '#000000',
-					shadowOpacity: 0.8,
-					shadowRadius: 3,
-					shadowOffset: {
-						height: 2,
-						width: 0
-					}
-
-				}]} >
-
-				<Image source={card.src} style= {CardStyle.cardImage} >
-				<View style={{top : 125, left: 30, backgroundColor: 'transparent'}}>
-				<Text style={{
-					letterSpacing : 4,
-					fontFamily : 'Netto OT',
-					fontSize : 21,
-					textShadowColor : '#7B8186',
-					textShadowRadius: 1,
-					textShadowOffset: {
-						height: 2,
-						width: 0
-					},
-					fontWeight : 'bold',
-					color : card.numberColor
-				}}>
-				4971  2348  1357  3334
-				</Text>
-				</View>
-				<View style={{ top : 147, left: 30, backgroundColor: 'transparent'}}>
-				<Text style={{
-					letterSpacing : 2,
-					fontFamily : 'Netto OT',
-					fontSize : 12,
-					fontWeight : 'bold',
-					color : card.textColor,
-					textShadowColor : '#7B8186',
-					textShadowRadius: 1,
-					textShadowOffset: {
-						height: 1,
-						width: 0
-					} }}>
-					{this.props.messenger.profile.prenom} {this.props.messenger.profile.nom}
-					</Text>
-					</View>
-<View style={{ top : 152, left: 30, backgroundColor: 'transparent'}}>
-				<Text style={{
-					letterSpacing : 2,
-					fontFamily : 'Netto OT',
-					fontSize : 12,
-					fontWeight : 'bold',
-					color : card.textColor,
-					textShadowColor : '#7B8186',
-					textShadowRadius: 1,
-					textShadowOffset: {
-						height: 1,
-						width: 0
-					} }}>
-					EXPIRE FIN 01/19
-					</Text>
-					</View>
-					</Image>
-					</Animated.View>
+				return (<TouchableWithoutFeedback key={index} onPress={Actions.cardDetails}>
+					<CardItem style={card.style} design={card.design} name={card.name} />
 					</TouchableWithoutFeedback>);
 			})
 		}
 		</View>
 		</View>
 		</View>
-		<TouchableOpacity style={CardStyle.bottomRighticon} onPress={() => { Actions.addCard(); }}>
-		<Image source={asset.add}  style={{
-			width: 70,
-			height: 70
-		}} />
+		<TouchableOpacity style={style.bottomIcon} onPress={() => { Actions.addCard(); }}>
+		<Image source={asset.add}  style={style.add} />
 		</TouchableOpacity>
 		</View>
 		);
@@ -396,42 +316,38 @@ class CardView extends Component {
 }
 
 
-const CardStyle = StyleSheet.create({
+const style = StyleSheet.create({
 	container: {
 		flex: 1,
 		flexDirection : 'column',
 		alignItems: 'stretch',
 		backgroundColor: AppGuideline.colors.deepBlue
 	},
-	bottomRighticon: {
-		position: 'absolute',
-		bottom: 20,
-		right: 0,
-		marginRight: -10
+	bottomIcon: {
+		top : -50
 	},
 	top: {
 		flex: 1
 	},
-	cardImage: {
+	add : {
+		alignSelf : 'center'
+	},
+	text :{
+		color: '#fff',
+		backgroundColor : 'transparent',
+		fontSize: 20,
+		marginTop: 150,
+		textAlign: 'center'
+	},
+	cardContainer: {
 		width: 339,
-		height: 211,
-		shadowColor : '#120037',
-		borderRadius: 10,
-		shadowOpacity: 0.8,
-		shadowRadius: 2,
-		shadowOffset: {
-			height: 2,
-			width: 0
-		}
+		height: 300,
+		alignSelf: 'center'
 	}
 });
 
 const asset = {
 	add: require('./asset/add.png'),
-	carte1: require('./asset/carte1.png'),
-	carte2 : require('./asset/carte2.png'),
-	carte3 : require('./asset/carte3.png'),
-	carte4 : require('./asset/carte4.png'),
 };
 
 function mapStateToProps(state) {

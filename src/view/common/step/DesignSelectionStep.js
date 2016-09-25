@@ -71,30 +71,30 @@ export default class JackpotSelectDesign extends Component {
 			snapToAlignment='start'>
 			<View style={styles.tab}>
 			<TouchableOpacity onPress={()=> {
-				this.props.confirm('gris');
-			}}>
-			<Image source={asset.pasteque} style={styles.image} />
-			</TouchableOpacity>
-			</View>
-			<View style={styles.tab}>
-			<TouchableOpacity onPress={()=> {
-				this.props.confirm('vert');
-			}}>
-			<Image source={asset.bim} style={styles.image} />
-			</TouchableOpacity>
-			</View>
-			<View style={styles.tab}>
-			<TouchableOpacity onPress={()=> {
-				this.props.confirm('jaune');
+				this.props.confirm(2);
 			}}>
 			<Image source={asset.burger} style={styles.image} />
 			</TouchableOpacity>
 			</View>
 			<View style={styles.tab}>
 			<TouchableOpacity onPress={()=> {
-				this.props.confirm('bleu');
+				this.props.confirm(1);
+			}}>
+			<Image source={asset.bim} style={styles.image} />
+			</TouchableOpacity>
+			</View>
+			<View style={styles.tab}>
+			<TouchableOpacity onPress={()=> {
+				this.props.confirm(3);
 			}}>
 			<Image source={asset.batiment} style={styles.image} />
+			</TouchableOpacity>
+			</View>
+			<View style={styles.tab}>
+			<TouchableOpacity onPress={()=> {
+				this.props.confirm(4);
+			}}>
+			<Image source={asset.pasteque} style={styles.image} />
 			</TouchableOpacity>
 			</View>
 			</ScrollView>

@@ -38,7 +38,7 @@ class AmountSelectionView extends React.Component {
 
 	constructor(props) {
 		super(props);
-		this.state = {code: this.props.code};
+		this.state = {amount: this.props.amount};
 	}
 
 	render() {
@@ -58,7 +58,7 @@ class AmountSelectionView extends React.Component {
 			<View style={{ flexDirection: 'row' }}>
 			<View style={{ borderBottomColor: AppGuideline.colors.lightviolet, borderBottomWidth: 1, marginRight: 15 }}>
 			<Text
-			ref="codeInput"
+			ref="amountInput"
 			style={{
 				color: 'white',
 				textAlign: 'center',
@@ -67,13 +67,13 @@ class AmountSelectionView extends React.Component {
 			}}
 			>
 			{
-				this.state.code[0] || ' '
+				this.state.amount[0] || ' '
 			}
 			</Text>
 			</View>
 			<View style={{ borderBottomColor: AppGuideline.colors.lightviolet, borderBottomWidth: 1, marginRight: 15 }}>
 			<Text
-			ref="codeInput"
+			ref="amountInput"
 			style={{
 				color: 'white',
 				textAlign: 'center',
@@ -82,13 +82,13 @@ class AmountSelectionView extends React.Component {
 			}}
 			>
 			{
-				this.state.code[1] || ' '
+				this.state.amount[1] || ' '
 			}
 			</Text>
 			</View>
 			<View style={{ borderBottomColor: AppGuideline.colors.lightviolet, borderBottomWidth: 1, marginRight: 15 }}>
 			<Text
-			ref="codeInput"
+			ref="amountInput"
 			style={{
 				color: 'white',
 				textAlign: 'center',
@@ -97,13 +97,13 @@ class AmountSelectionView extends React.Component {
 			}}
 			>
 			{
-				this.state.code[2] || ' '
+				this.state.amount[2] || ' '
 			}
 			</Text>
 			</View>
 			<View style={{ borderBottomColor: AppGuideline.colors.lightviolet, borderBottomWidth: 1 }}>
 			<Text
-			ref="codeInput"
+			ref="amountInput"
 			style={{
 				color: 'white',
 				textAlign: 'center',
@@ -112,7 +112,7 @@ class AmountSelectionView extends React.Component {
 			}}
 			>
 			{
-				this.state.code[3] || ' '
+				this.state.amount[3] || ' '
 			}
 			</Text>
 			</View>
@@ -125,9 +125,9 @@ class AmountSelectionView extends React.Component {
                     height: 70
                 }}
                 onPress={()=> {
-                	console.log(this.state.code.length);
-                	if (this.state.code.length === 4) {
-                		this.props.confirm(this.state.code)
+                	console.log(this.state.amount.length);
+                	if (this.state.amount.length === 4) {
+                		this.props.confirm(this.state.amount)
                 	}
                 }}
                 >
@@ -168,14 +168,14 @@ class AmountSelectionView extends React.Component {
 
 	parseInput(input) {
 
-		var ln = this.state.code.length;
+		var ln = this.state.amount.length;
 		var append = '';
 		switch (input) {
 			case '<':
-			console.log(this.code, this.state.code.substr(0, this.state.code.length - 2));
+			console.log(this.amount, this.state.amount.substr(0, this.state.amount.length - 2));
 			if (ln > 0) {
-				append = this.state.code.substr(0, this.state.code.length - 1);
-				this.setState({code: append});
+				append = this.state.amount.substr(0, this.state.amount.length - 1);
+				this.setState({amount: append});
 				append = undefined;
 			}
 			break;
@@ -186,7 +186,7 @@ class AmountSelectionView extends React.Component {
 		}
 
 		if (append) {
-			this.setState({code: this.state.code + append});
+			this.setState({amount: this.state.amount + append});
 		}
 
 	}

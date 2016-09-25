@@ -5,11 +5,7 @@ import AppGuideline from '../../../app/AppGuideline';
 import asset from '../../../app/AppAsset';
 import BackButton from '../../common/button/BackButton';
 
-
 const { width, height } = Dimensions.get('window');
-const boxMargin = 10;
-const boxPreview = 25;
-const boxSize = width - (boxMargin + boxPreview ) * 2;
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
@@ -35,28 +31,22 @@ const styles = StyleSheet.create({
 	lines: {
 		borderBottomWidth: 1,
 		borderBottomColor: AppGuideline.colors.lightGrey,
-		flexDirection: 'row',
-		height: height / 4,
+		height: height / 6,
 		paddingHorizontal: 25,
-		alignItems: 'center'
+		justifyContent: 'center'
 	},
 	linkText: {
-		color: AppGuideline.colors.deepBlue,
-		flex: 1
-	},
-	amount: {
 		color: AppGuideline.colors.deepBlue
 	}
 });
 
-export default class CardSelectAccount extends Component {
+export default class CardSelectDuration extends Component {
 	render() {
 		return (
 			<View style={styles.container}>
 			<View style={styles.top}>
 			<BackButton image={asset.back_green} back={this.props.back} />
 			<Title>{this.props.title}</Title>
-
 			<View style={styles.topContent}>
 			<Text style={styles.text}>
 			{this.props.subtitle || 'Compte à débiter' }
@@ -65,19 +55,24 @@ export default class CardSelectAccount extends Component {
 			</View>
 			<View style={styles.bottom}>
 			<TouchableOpacity onPress={()=> {
-				this.props.confirm('Bim');
+				this.props.confirm('Un versement unique');
 			}}>
 			<View style={styles.lines}>
-			<Text style={styles.linkText}>BiM</Text>
-			<Text style={styles.amount}>2500 €</Text>
+			<Text style={styles.linkText}>Un versement unique</Text>
 			</View>
 			</TouchableOpacity>
 			<TouchableOpacity onPress={()=> {
-				this.props.confirm('Société générale');
+				this.props.confirm('Tous les mois');
 			}}>
 			<View style={styles.lines}>
-			<Text style={styles.linkText}>Société générale</Text>
-			<Text style={styles.amount}>1800 €</Text>
+			<Text style={styles.linkText}>Tous les mois</Text>
+			</View>
+			</TouchableOpacity>
+			<TouchableOpacity onPress={()=> {
+				this.props.confirm('Tous les trimestres');
+			}}>
+			<View style={styles.lines}>
+			<Text style={styles.linkText}>Tous les trimestres</Text>
 			</View>
 			</TouchableOpacity>
 			</View>
@@ -86,6 +81,6 @@ export default class CardSelectAccount extends Component {
 	}
 }
 
-CardSelectAccount.propTypes = {
+CardSelectDuration.propTypes = {
 	title: React.PropTypes.string
 };

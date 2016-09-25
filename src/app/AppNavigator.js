@@ -28,6 +28,7 @@ import {UserSlack} from '../view/messenger/MessengerReducer';
 import OneSignal from 'react-native-onesignal'; // Import package from node modules
 import Contacts from 'react-native-contacts';
 import {loadContacts, setContacts} from '../view/contact/ContactAction';
+import { setCards } from '../view/card/CardAction';
 import {notify, updateProfile, loadSession, setVisibility, addSlackMessage, restartBot} from '../view/messenger/MessengerAction';
 import {login, device} from '../view/login/LoginAction';
 
@@ -158,10 +159,9 @@ class AppNavigator extends Component {
 		this.firebaseNotificationRef = rootRef.child(username+'/notification');
 
 		this.firebaseProfileRef = rootRef.child(username+'/profile');
+		this.firebaseCardRef = rootRef.child(username+'/card');
 
 		if(this.props.login.device !== null && this.props.login.device.userId !== null){
-
-			console.log('this.props.login.device', this.props.login.device);
 
 			let firebaseDeviceRef = rootRef.child(username+'/device/'+this.props.login.device.userId);
 
@@ -182,15 +182,29 @@ class AppNavigator extends Component {
 			}
 		}.bind(this));
 
+
 		this.firebaseNotificationRef.on('value', function(snapshot) {
 
 			let notification = snapshot.val();
 			//console.log('firebaseNotificationRef', notification , this.props.messenger.notification);
 			if(notification !== null){
-				this.props.dispatch(notify(notification));
+				this.props.dispatch(card(notification));
 			}
 
 			this.firebaseNotificationRef.set(null);
+
+		}.bind(this));
+
+		this.firebaseCardRef.on('value', function(snapshot) {
+
+			let cards = snapshot.val();
+			//console.log('firebaseNotificationRef', notification , this.props.messenger.notification);
+			if(cards == null){
+				cards = {};
+			}
+
+			this.props.dispatch(setCards(cards));
+
 
 		}.bind(this));
 

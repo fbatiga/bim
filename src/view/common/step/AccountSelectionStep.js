@@ -65,7 +65,7 @@ export default class CardSelectAccount extends Component {
 			</View>
 			<View style={styles.bottom}>
 			<TouchableOpacity onPress={()=> {
-				this.props.confirm('Bim');
+				this.props.confirm();
 			}}>
 			<View style={styles.lines}>
 			<Text style={styles.linkText}>BiM</Text>
@@ -73,7 +73,7 @@ export default class CardSelectAccount extends Component {
 			</View>
 			</TouchableOpacity>
 			<TouchableOpacity onPress={()=> {
-				this.props.confirm('Société générale');
+				this.props.confirm();
 			}}>
 			<View style={styles.lines}>
 			<Text style={styles.linkText}>Société générale</Text>
