@@ -1,7 +1,7 @@
 {
 	"prenom" : "Nathalie",
 	"nom" : "Collin",
-	"adress" : "2 rue Mercoeur, 75011 PARIS",
+	"adresse" : "2 rue Mercoeur, 75011 PARIS",
 	"image" : "/nathalie.png",
 	"imageUrl" : "http://test.png",
 	"username" : "nathalie",

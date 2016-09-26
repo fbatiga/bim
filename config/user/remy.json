@@ -1,7 +1,7 @@
 {
 	"prenom" : "Rémy",
 	"nom" : "Weber",
-	"adress" : "118 rue de Javel, 75015 PARIS",
+	"adresse" : "118 rue de Javel, 75015 PARIS",
 	"image" : "/remy.png",
 	"imageUrl" : "http://remy.png",
 	"username" : "remy",

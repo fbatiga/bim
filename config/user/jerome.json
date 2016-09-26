@@ -1,7 +1,7 @@
 {
 	"prenom" : "Jérôme",
 	"nom" : "Toucheboeuf",
-	"adress" : "3 avenue des Ternes, 75017 PARIS",
+	"adresse" : "3 avenue des Ternes, 75017 PARIS",
 	"image" : "/jerome.png",
 	"imageUrl" : "http://test.png",
 	"username" : "jerome",

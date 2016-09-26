@@ -1,7 +1,7 @@
 {
 	"prenom" : "Alice",
 	"nom" : "Holzman",
-	"adress" : "13 rue de Berne, 75008 PARIS",
+	"adresse" : "13 rue de Berne, 75008 PARIS",
 	"image" : "/alice.png",
 	"imageUrl" : "http://test.png",
 	"username" : "alice",
