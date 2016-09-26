@@ -183,6 +183,7 @@
 		52629B971D7EC8D300682014 /* Roboto-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Roboto-Regular.ttf"; path = "../src/asset/font/Roboto-Regular.ttf"; sourceTree = "<group>"; };
 		52629BAE1D7EC9A200682014 /* Roboto-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Roboto-Thin.ttf"; path = "../src/asset/font/Roboto-Thin.ttf"; sourceTree = "<group>"; };
 		52629BAF1D7EC9A800682014 /* Roboto-ThinItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Roboto-ThinItalic.ttf"; path = "../src/asset/font/Roboto-ThinItalic.ttf"; sourceTree = "<group>"; };
+		526ECBEE1D98F8810021DF9C /* bimbot.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = bimbot.entitlements; path = bimbot/bimbot.entitlements; sourceTree = "<group>"; };
 		5275D4FA1D7067DC00F3C516 /* Montserrat-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Montserrat-Bold.otf"; path = "../src/asset/font/Montserrat-Bold.otf"; sourceTree = "<group>"; };
 		5275D4FC1D7067DC00F3C516 /* Montserrat-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Montserrat-Light.otf"; path = "../src/asset/font/Montserrat-Light.otf"; sourceTree = "<group>"; };
 		5275D4FD1D7067DC00F3C516 /* Montserrat-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Montserrat-SemiBold.otf"; path = "../src/asset/font/Montserrat-SemiBold.otf"; sourceTree = "<group>"; };
@@ -306,6 +307,7 @@
 		13B07FAE1A68108700A75B9A /* bimbot */ = {
 			isa = PBXGroup;
 			children = (
+				526ECBEE1D98F8810021DF9C /* bimbot.entitlements */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -483,6 +485,11 @@
 					13B07F861A680F5B00A75B9A = {
 						DevelopmentTeam = 5MD873H7K8;
 						ProvisioningStyle = Manual;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -797,6 +804,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODEPUSH_KEY = aksUewAl_9lFLlReuQXXqj6JNGJkE1VdA43dZ;
+				CODE_SIGN_ENTITLEMENTS = bimbot/bimbot.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
@@ -840,6 +848,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = bimbot/bimbot.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Steed Monteiro (5MD873H7K8)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				COPY_PHASE_STRIP = YES;
@@ -932,6 +941,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = bimbot/bimbot.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Steed Monteiro (5MD873H7K8)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				COPY_PHASE_STRIP = YES;

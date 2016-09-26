@@ -32,7 +32,8 @@ const styles = StyleSheet.create({
     }
 });
 
-export default class RecipientSelectionStep extends React.Component {
+
+class RecipientSelectionStep extends React.Component {
 
 	componentDidMount(){
 		this.props.dispatch(loadContacts());
