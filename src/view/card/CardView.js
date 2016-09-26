@@ -299,9 +299,9 @@ class CardView extends Component {
 			<View style={style.cardContainer}>
 			{this.state.cards.length == 0 && <Text style={style.text}>Ajouter une carte</Text>}
 			{this.state.cards.reverse().map((card, index)=>{
-				return (<TouchableWithoutFeedback key={index} onPress={Actions.cardDetails}>
+				return (<TouchableOpacity key={index} onPress={Actions.cardDetails}>
 					<CardItem style={card.style} design={card.design} name={card.name} />
-					</TouchableWithoutFeedback>);
+					</TouchableOpacity>);
 			})
 		}
 		</View>

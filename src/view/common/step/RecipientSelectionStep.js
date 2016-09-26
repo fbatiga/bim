@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
 class RecipientSelectionStep extends React.Component {
 
 	componentDidMount(){
-		this.props.dispatch(loadContacts());
+		//this.props.dispatch(loadContacts([]));
 	}
 
 

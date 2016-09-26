@@ -47,7 +47,7 @@ class ContactView extends Component {
 		//this.headerScroll = this.refs.header.getScrollResponder();
 		this.listViewScroll = this.refs.listView.getScrollResponder();
 
-		this.props.dispatch(loadContacts());
+		//this.props.dispatch(loadContacts([]));
 
 		Animated.timing(
 			this.state.animButton,
