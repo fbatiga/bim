@@ -67,7 +67,6 @@ class UserRight extends Component {
 
 	let image = asset.user;
 
-	console.log('this.props.messenger',this.props.messenger);
 
 		if(this.props.messenger !== undefined  && this.props.messenger.profile.username !== undefined && images[this.props.messenger.profile.username] !== undefined){
 			image = images[this.props.messenger.profile.username];

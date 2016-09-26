@@ -7,7 +7,7 @@ import BackButton from '../common/button/BackButton';
 import AppAsset from '../../app/AppAsset';
 import {swipeTo, configureSwipe} from '../menu/MenuAction';
 import {login, logout, signup} from '../login/LoginAction';
-import {setVisibility, loadSession} from '../messenger/MessengerAction';
+import {setVisibility, loadSession, initMessenger} from '../messenger/MessengerAction';
 
 
 import {connect} from 'react-redux';
@@ -104,14 +104,18 @@ class ProfileView extends Component {
 				onVerticalSwipe : this.onVerticalSwipe.bind(this),
 				onVerticalLargeSwipe : this.onVerticalSwipe.bind(this)
 			})
-		);
+			);
 	}
 
 	logout(){
 		AsyncStorage.clear();
 		alert('Vous avez été déconnecté');
-		this.props.dispatch(logout());
-		this.props.dispatch(setVisibility(true));
+
+		this.props.dispatch(initMessenger());
+		setTimeout(()=>{
+			this.props.dispatch(logout());
+			this.props.dispatch(setVisibility(true));
+		}, 1000);
 	}
 
 	onVerticalSwipe(distance) {
@@ -167,12 +171,12 @@ class ProfileView extends Component {
 			</View>
 			</View>
 			<View style={style.row}>
-							<TouchableOpacity onPress={this.logout.bind(this)} >
-								<View style={style.action}>
-									<Text style={style.param}> DECONNEXION </Text>
-								</View>
-							</TouchableOpacity>
-						</View>
+			<TouchableOpacity onPress={this.logout.bind(this)} >
+			<View style={style.action}>
+			<Text style={style.param}> DECONNEXION </Text>
+			</View>
+			</TouchableOpacity>
+			</View>
 			</View>
 			<Image source={asset.point}/>
 			</Animated.View>

@@ -3,7 +3,7 @@
 import {AsyncStorage} from 'react-native';
 import { handleActions } from 'redux-actions';
 import {
-  LOGIN_CONNECT, LOGIN_SIGNUP, LOGIN_DEVICE
+  LOGIN_CONNECT, LOGIN_SIGNUP, LOGIN_DEVICE, LOGIN_LOGOUT
 } from './LoginAction';
 import {Actions} from 'react-native-router-flux';
 
@@ -22,6 +22,10 @@ const LoginReducer = handleActions({
 
     [LOGIN_DEVICE]: (state, action) => {
         return {...state, device : action.device};
+    },
+
+	[LOGIN_LOGOUT]: (state, action) => {
+        return {...state, username : null};
     },
 
     [LOGIN_SIGNUP]: (state, action) => {

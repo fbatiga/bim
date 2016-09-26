@@ -3,6 +3,7 @@
 export const LOGIN_CONNECT = 'login.connect';
 export const LOGIN_SIGNUP = 'login.sign_up';
 export const LOGIN_DEVICE = 'login.device';
+export const LOGIN_LOGOUT = 'login.logout';
 
 
 export function login(username) {
@@ -13,10 +14,9 @@ export function login(username) {
 }
 
 
-export function logout(device) {
+export function logout() {
   return {
-    type: LOGIN_DEVICE,
-    device
+    type: LOGIN_LOGOUT
   };
 }
 

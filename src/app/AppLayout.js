@@ -171,14 +171,8 @@ class AppLayout extends Component {
 	showMessenger(){
 
 		let animation = [];
+
 		animation.push(
-			Animated.timing(
-				this.state.menuValue,
-				{
-					duration: 300,
-					toValue: 1,
-					easing: Easing.ease
-				}),
 			Animated.timing(
 				this.state.scale,
 				{
@@ -186,11 +180,9 @@ class AppLayout extends Component {
 					toValue: 30,
 					easing: Easing.ease
 				})
-		);
+			);
 
 		Animated.parallel(animation).start(()=>{
-
-
 			this.setState({
 				showMessenger:true
 			});
@@ -208,20 +200,13 @@ class AppLayout extends Component {
 		let animation = [];
 		animation.push(
 			Animated.timing(
-				this.state.menuValue,
-				{
-					duration: 300,
-					toValue: 0,
-					easing: Easing.ease
-				}),
-			Animated.timing(
 				this.state.scale,
 				{
 					duration: 300,
 					toValue: 0,
 					easing: Easing.ease
 				})
-		);
+			);
 
 		Animated.parallel(animation).start();
 
@@ -229,46 +214,47 @@ class AppLayout extends Component {
 
 	componentWillReceiveProps(nextProps){
 
-		if( nextProps.menu.goTo != this.props.menu.goTo){
+		if( nextProps.menu.goTo != this.props.menu.goTo ){
 
 			this.swipeTo(nextProps.menu.goTo);
 
-			if(nextProps.menu.goTo == 'main' || nextProps.messenger.visibility == true){
+			if(this.state.showMessenger == false ){
 
-				Animated.timing( this.state.menuValue,{
-					toValue: 1,
-					duration: 300,
-					delay : 200,
-					easing: Easing.ease
-				}).start();
+				if(nextProps.menu.goTo == 'main' ){
 
-			}else {
+					Animated.timing(
+						this.state.menuValue,
+						{
+							toValue: 1,
+							duration: 300,
+							delay : 200,
+							easing: Easing.ease
+						}).start();
 
-				Animated.timing(
-					this.state.menuValue,
-					{
-						duration: 300,
-						delay : 200,
-						toValue: 0,
-						easing: Easing.ease
-					}).start();
+				}else {
+
+					Animated.timing(
+						this.state.menuValue,
+						{
+							duration: 300,
+							delay : 200,
+							toValue: 0,
+							easing: Easing.ease
+						}).start();
+				}
+
 			}
 
 
 		}
 
+
+
 		if(this.props.login.username != nextProps.login.username && nextProps.login.username !== false ){
-
 			this.props.dispatch(setVisibility(true));
-
-			Animated.timing( this.state.menuValue,{
-					toValue: 1,
-					duration: 300,
-					delay : 200,
-					easing: Easing.ease
-				}).start();
-
 		}
+
+
 
 
 	}
@@ -288,6 +274,7 @@ class AppLayout extends Component {
 	componentDidUpdate(prevProps, prevState) {
 
 		if( prevProps.messenger.visibility !== this.props.messenger.visibility ){
+
 			if( this.props.messenger.visibility == true ){
 
 				this.showMessenger();
@@ -298,6 +285,38 @@ class AppLayout extends Component {
 
 			}
 		}
+
+		if(this.state.showMessenger !== prevState.showMessenger || this.props.login.username != prevProps.login.username ){
+
+			if(this.state.showMessenger == false ){
+
+				Animated.timing(
+					this.state.menuValue,
+					{
+						duration: 300,
+						toValue: 0,
+						easing: Easing.ease
+					}).start();
+
+			}else{
+
+				if(this.props.login.username !== null && this.props.login.username !== false){
+
+					Animated.timing(
+						this.state.menuValue,
+						{
+							delay : 200,
+							duration: 300,
+							toValue: 1,
+							easing: Easing.ease
+						}).start();
+
+				}
+
+			}
+
+		}
+
 
 	}
 
@@ -349,12 +368,12 @@ class AppLayout extends Component {
 				</View>
 				)}
 			<TouchableOpacity style={[style.button]}   onPress={this.menu.bind(this)}>
-				<Animated.Image source={AppAsset.close}  style={[style.bot,  { transform: [ {scale: this.state.menuValue}] } ]} />
-				{this.props.messenger.notification && !this.props.messenger.visibility && (
-					<View style={style.notificationBubble}>
-					<Text style={style.notificationText}>{this.props.messenger.messages.length}</Text>
-					</View>
-					)}
+			<Animated.Image source={AppAsset.close}  style={[style.bot,  { transform: [ {scale: this.state.menuValue}] } ]} />
+			{this.props.messenger.notification && !this.props.messenger.visibility  && (
+				<View style={style.notificationBubble}>
+				<Text style={style.notificationText}>{this.props.messenger.messages.length}</Text>
+				</View>
+				)}
 			</TouchableOpacity>
 
 			</View>);

@@ -219,7 +219,7 @@ const MessengerReducer = handleActions({
 	},
 
 	[MESSENGER_INIT]: (state, action) => {
-		return { ...state, messages : [],  buttons:[]};
+		return initialState;
 	},
 
 	[MESSENGER_MESSAGE]: (state, action) => {
