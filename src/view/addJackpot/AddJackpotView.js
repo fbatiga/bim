@@ -68,7 +68,7 @@ class AddJackpot extends Component {
 			break;
 			case 7:
 			setTimeout(() => { this.setState({  step: this.state.step + 1 }) },1500);
-			return (<JackpotSuccessView title='Comptes' subTitle='Cagnotte crée !' />);
+			return (<JackpotSuccessView title='Comptes' subtitle='Cagnotte crée !' />);
 			break;
 			case 8:
 			setTimeout(() => { Actions.overview() },1500);
