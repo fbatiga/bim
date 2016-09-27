@@ -187,7 +187,8 @@ class CardView extends Component {
 		let zIndex = Animated.timing(
 			card.zIndex,
 			{
-				toValue: scaleTo*10
+				toValue: scaleTo*10,
+				duration: 0
 			});
 
 
