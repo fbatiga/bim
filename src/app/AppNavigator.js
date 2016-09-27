@@ -19,6 +19,7 @@ import CardView from '../view/card/CardView';
 import CardDetailsView from '../view/cardDetails/CardDetailsView';
 import ContactView from '../view/contact/ContactView';
 import ContactDetailsView from '../view/contactDetails/ContactDetailsView';
+import AddContactView from '../view/contact/AddContactView';
 import TransferView from '../view/transfer/TransferView';
 import ParametersView from '../view/parameters/ParametersView';
 import AddCardView from '../view/addCard/AddCardView';
@@ -65,6 +66,7 @@ const scenes = Actions.create(
 	<Scene key="addCard" component={AddCardView} title="Ajouter une carte" schema='modal' direction='vertical'/>
 	<Scene key="cardDetails" component={CardDetailsView} title="Mes cartes"/>
 	<Scene key="contact" component={ContactView} title="Contacts" type='replace'/>
+	<Scene key="addContact" component={AddContactView} title="Ajouter un contact"/>
 	<Scene key="journal" component={JournalView} title="Journal" type='replace'/>
 	<Scene key="contactDetails" component={ContactDetailsView} title="Contact detail"/>
 	<Scene key="transfer" component={TransferView} title="Virement" schema='modal' direction='vertical'/>
