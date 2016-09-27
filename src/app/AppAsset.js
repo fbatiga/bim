@@ -37,9 +37,6 @@ export default {
     burgerPicto: require('../asset/burger.png'),
     bimPicto: require('../asset/bim_logo.png'),
     batimentPicto: require('../asset/boutique.png'),
-    cagnotte1: require('../asset/cagnotte1.png'),
-    cagnotte2: require('../asset/cagnotte2.png'),
-    cagnotte3: require('../asset/cagnotte3.png'),
     keyboard:{
         1:  require('../asset/keyboard/1.png'),
         2:  require('../asset/keyboard/2.png'),

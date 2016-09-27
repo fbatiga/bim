@@ -3,7 +3,6 @@ import { ScrollView, Text, View, StyleSheet, Dimensions, Image, TouchableOpacity
 import Title from '../../common/title/Title';
 import SubTitle from '../../common/title/SubTitle';
 import AppGuideline from '../../../app/AppGuideline';
-import asset from '../../../app/AppAsset';
 import BackButton from '../../common/button/BackButton';
 
 const { width, height } = Dimensions.get('window');
@@ -94,6 +93,13 @@ export default class JackpotSelectDesign extends Component {
 		);
 	}
 }
+
+const asset = {
+	back_green: require('../assets/back_green.png'),
+	cagnotte1: require('../assets/cagnotte1.png'),
+  cagnotte2: require('../assets/cagnotte2.png'),
+  cagnotte3: require('../assets/cagnotte3.png')
+};
 
 JackpotSelectDesign.propTypes = {
 	title: React.PropTypes.string
