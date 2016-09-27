@@ -41,7 +41,9 @@ class MessengerMain extends Component {
 
 	componentDidMount() {
 		this.scrollResponder = this.refs.listView.getScrollResponder();
+
 		this.setMessages(this.props.messages);
+
 	}
 
 	componentWillReceiveProps(nextProps) {
@@ -49,8 +51,10 @@ class MessengerMain extends Component {
 	}
 
 	scrollToBottom(contentWidth, contentHeight) {
+
+		console.log('scrollToBottom', contentHeight , this._listHeight)
 		if(contentHeight > this._listHeight){
-			scrollPosition = - (this._listHeight - contentHeight)+ 20;
+			scrollPosition = - (this._listHeight - contentHeight);
 			this.scrollResponder.scrollTo({
 				y: scrollPosition,
 				x: 0,
@@ -60,13 +64,7 @@ class MessengerMain extends Component {
 	}
 
 	saveListHeight(event) {
-
 		this._listHeight = event.nativeEvent.layout.height;
-
-		this.scrollResponder.scrollTo({
-				y:scrollPosition-10,
-		 		animated:  true,
-		});
 	}
 
 	render(){
@@ -78,6 +76,7 @@ class MessengerMain extends Component {
 			onContentSizeChange={this.scrollToBottom.bind(this)}
 			renderRow={this.renderRow.bind(this)}
 			enableEmptySections={true}
+			contentContainerStyle={{paddingBottom : 60, paddingTop : 20}}
 			viewSize={this.props.messages.length}
 			{...this.props}
 			/>
