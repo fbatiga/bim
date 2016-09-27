@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import { Text, View, StyleSheet, Dimensions, Image, TouchableOpacity } from 'react-native';
+import { ScrollView, Text, View, StyleSheet, Dimensions, Image, TouchableOpacity } from 'react-native';
 import Title from '../../common/title/Title';
 import SubTitle from '../../common/title/SubTitle';
 import AppGuideline from '../../../app/AppGuideline';
-import asset from '../../../app/AppAsset';
 import BackButton from '../../common/button/BackButton';
 
 const { width, height } = Dimensions.get('window');
@@ -26,32 +25,26 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		marginBottom: 25
 	},
-	redBox: {
-		backgroundColor: AppGuideline.colors.pink,
-		width: boxSize,
-		height: boxSize,
-		justifyContent: 'center',
-		alignItems: 'center',
-		borderRadius: 10,
-		marginHorizontal: 15
-	},
 	image: {
 		width: 127,
 		height: 130
 	},
-	greenBox: {
-		backgroundColor: '#B5EF00',
-		height: boxSize,
-		flex: 1,
-		borderRadius: 10,
-		marginLeft: -10
+	imageDesign: {
+		width: boxSize,
+		height: boxSize
 	},
-	blueBox: {
-		backgroundColor: AppGuideline.colors.blue,
-		height: boxSize,
+	tabsContainer: {
+		flex: 1
+	},
+	tabsContent: {
+		paddingHorizontal: boxPreview,
+	},
+	tab: {
 		flex: 1,
-		borderRadius: 10,
-		marginRight: -10
+		width: boxSize,
+		margin: boxMargin,
+		alignItems: 'center',
+		justifyContent: 'center',
 	}
 });
 
@@ -62,23 +55,51 @@ export default class JackpotSelectDesign extends Component {
 			<BackButton image={asset.back_green} back={this.props.back} />
 			<Title>{this.props.title}</Title>
 				<View style={styles.top}>
-				<SubTitle>{this.props.subtitle || 'Design de la cagnotte'}</SubTitle>
+				<SubTitle>{this.props.subtitle || 'Design de la cagnotte :'}</SubTitle>
 				</View>
 				<View style={styles.bottom}>
-					<View style={styles.greenBox} />
-					<TouchableOpacity onPress={()=> {
-							this.props.confirm();
-					}}>
-						<View style={styles.redBox}>
-							<Image source={asset.jackpot} style={styles.image} />
+					<ScrollView
+					style={styles.tabsContainer}
+					contentContainerStyle={styles.tabsContent}
+					horizontal={true}
+					automaticallyAdjustInsets={false}
+					decelerationRate={0}
+					snapToInterval={boxSize + boxMargin*2}
+					snapToAlignment='start'>
+						<View style={styles.tab}>
+							<TouchableOpacity onPress={()=> {
+								this.props.confirm();
+							}}>
+								<Image source={asset.cagnotte1} style={styles.imageDesign} />
+							</TouchableOpacity>
 						</View>
-					</TouchableOpacity>
-					<View style={styles.blueBox} />
+						<View style={styles.tab}>
+							<TouchableOpacity onPress={()=> {
+								this.props.confirm();
+							}}>
+								<Image source={asset.cagnotte2} style={styles.imageDesign} />
+							</TouchableOpacity>
+						</View>
+						<View style={styles.tab}>
+							<TouchableOpacity onPress={()=> {
+								this.props.confirm();
+							}}>
+								<Image source={asset.cagnotte3} style={styles.imageDesign} />
+							</TouchableOpacity>
+						</View>
+					</ScrollView>
 				</View>
 			</View>
 		);
 	}
 }
+
+const asset = {
+	back_green: require('../assets/back_green.png'),
+	cagnotte1: require('../assets/cagnotte1.png'),
+  cagnotte2: require('../assets/cagnotte2.png'),
+  cagnotte3: require('../assets/cagnotte3.png')
+};
 
 JackpotSelectDesign.propTypes = {
 	title: React.PropTypes.string
