@@ -1,7 +1,7 @@
 {
 	"prenom" : "Héloïse",
 	"nom" : "Beldico",
-	"adress" : "15 rue du Terrage, 75010 PARIS",
+	"adresse" : "15 rue du Terrage, 75010 PARIS",
 	"image" : "/heloise.png",
 	"imageUrl" : "http://test.png",
 	"username" : "heloise",

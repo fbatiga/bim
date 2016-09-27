@@ -51,15 +51,11 @@ class ProfileView extends Component {
 	}
 
 	onPointLayout(event){
-
-		console.log('asset.point',asset.point);
 		this.pointPosition = event.nativeEvent.layout.y + 300;
 
 		this.setState({
 			pointHeight: event.nativeEvent.layout.height
-		})
-
-		console.log('onPointLayout',this.pointPosition);
+		});
 	}
 
 	onTrophyLayout(event){

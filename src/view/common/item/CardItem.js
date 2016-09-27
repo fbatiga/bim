@@ -28,7 +28,6 @@ class CardItem extends React.Component {
 					height: 2,
 					width: 0
 				},
-				zIndex : card.style.top,
 				transform : [
 						{ scale : card.style.transform[0].scale},
 						{ rotate : card.style.transform[1].rotate.interpolate({
@@ -120,7 +119,8 @@ CardItem.propTypes = {
 CardItem.defaultProps = {
 	design : 'vert',
 	style : {
-		top: new Animated.Value(0),
+		zIndex : 0,
+		bottom: new Animated.Value(0),
 		left: new Animated.Value(0),
 		transform : [{
 			scale : new Animated.Value(1)

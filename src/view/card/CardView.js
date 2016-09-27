@@ -39,15 +39,15 @@ class CardView extends Component {
 
 		cards.map((card, index)=>{
 
-			let scaleTo = 1 - ( (pos - index - 1) * 0.1 );
-			let topTo =  90 - (pos - index - 1)  * 30;
+			let scaleTo = 1 - ( index * 0.1 );
+			let bottomTo =  index * 30 * scaleTo;
 
 			items.push({
 				design : card.design,
 				name : card.recipient,
 				style : {
-					zIndex : index,
-					top: new Animated.Value(topTo),
+					zIndex: new Animated.Value(scaleTo*10),
+					bottom: new Animated.Value(bottomTo),
 					left: new Animated.Value(300),
 					transform : [{
 						scale : new Animated.Value(scaleTo)
@@ -67,25 +67,16 @@ class CardView extends Component {
 
 
 		let duration = 300;
-		let pos = this.state.cards.length - index - 1;
 
-		let topTo =  90 - pos * 30;
 
-		let top = Animated.timing(card.top,{
-			toValue: topTo,
-			duration,
+		let scaleTo = 1 - ( index * 0.1 );
+		let bottomTo =  index * 30 * scaleTo;
+
+		let bottom = Animated.timing(card.bottom,{
+			toValue: bottomTo,
+			duration
 		});
 
-		let leftTo = ( pos * 2);
-
-		let  left = Animated.timing(
-			card.left,
-			{
-				toValue: leftTo,
-				duration,
-			});
-
-		let scaleTo = 1 - ( pos * 0.1 );
 
 
 		let scale = Animated.timing(
@@ -96,8 +87,13 @@ class CardView extends Component {
 			});
 
 
+		let zIndex = Animated.timing(
+			card.zIndex,
+			{
+				toValue: scaleTo*10
+			});
 
-		return [top,left,scale];
+		return [bottom,scale,zIndex];
 
 	}
 
@@ -105,17 +101,15 @@ class CardView extends Component {
 	showCards(){
 		let animation = [];
 
-		let left = this.state.cards.length * 2;
+		let left = this.state.count * 2;
 
-		this.state.cards.reverse().map((card, index)=>{
-
-			let leftTo = left - ( index * 2 );
+		this.state.cards.map((card, index)=>{
 
 			animation.push(
 				Animated.timing(
 					card.style.left,
 					{
-						toValue: leftTo,
+						toValue: 0,
 						duration : 200,
 						delay : index * 100
 					})
@@ -134,8 +128,6 @@ class CardView extends Component {
 	componentWillUnmount(){
 
 		let animation = [];
-
-		let left = this.state.cards.length * 2;
 
 		this.state.cards.map((card, index)=>{
 			animation.push(
@@ -182,21 +174,28 @@ class CardView extends Component {
 
 		let duration = 300;
 
-		let pos = this.state.cards.length ;
 
 
-		let topTo = 90 - pos * 30;
-		let leftTo =  pos * 2 ;
-		let scaleTo = 1 - ( pos * 0.1 );
+		let scaleTo = 1 - ( this.state.count * 0.1 );
+		let bottomTo = this.state.count * 30 * scaleTo;
 
 
 		let scale = Animated.timing(card.transform[0].scale,{ toValue: scaleTo, duration: 0 });
-		let top = Animated.timing(card.top,{ toValue: topTo , duration: 0 });
+		let bottom = Animated.timing(card.bottom,{ toValue: bottomTo , duration: 0 });
+
+
+		let zIndex = Animated.timing(
+			card.zIndex,
+			{
+				toValue: scaleTo*10,
+				duration: 0
+			});
+
 
 		let left = Animated.timing(
 			card.left,
 			{
-				toValue: leftTo,
+				toValue: 0,
 				duration,
 			});
 
@@ -208,26 +207,23 @@ class CardView extends Component {
 				duration,
 			});
 
-		return [Animated.parallel([scale,top]), Animated.parallel([left,rotation])  ];
+		return [Animated.parallel([zIndex,scale,bottom]), Animated.parallel([left,rotation])  ];
 	}
 
 	move(){
 
-		let cardToMove = this.state.cards.pop();
+		let cardToMove = this.state.cards.shift();
 
 		let parallels = [];
 
-		let newCards = this.state.cards.slice(0);
-
-		newCards.map((card, index)=>{
+		this.state.cards.map((card, index)=>{
 			let animation = this.moveCardTo(card.style, index);
-
 			parallels = parallels.concat(animation);
 		});
 
 		parallels = parallels.concat(this.removeCard(cardToMove.style));
 
-		Animated.parallel(parallels).start(()=>{ this.onCardRemoved(newCards,cardToMove); });
+		Animated.parallel(parallels).start(()=>{ this.onCardRemoved(cardToMove); });
 	}
 
 
@@ -243,11 +239,13 @@ class CardView extends Component {
 		}
 	}
 
-	onCardRemoved(newCards, cardToMove){
+	onCardRemoved(cardToMove){
+
+		cardToMove.zIndex = 0;
 
 		let sequence = this.addCard(cardToMove.style);
 
-		this.state.cards = [cardToMove].concat(newCards);
+		this.state.cards.push(cardToMove);
 
 		Animated.sequence(sequence).start(()=>{
 			this.isMoving = false;
@@ -295,13 +293,13 @@ class CardView extends Component {
 			<View style={style.container} onLayout={this.configureScroll.bind(this)}>
 			<Title>Cartes</Title>
 			<View style={style.top}>
-			<View style={{top : 120 , alignItems: 'flex-start'}} >
+			<View style={{top : 120 , alignItems: 'flex-end', justifyContent :'flex-end'}} >
 			<View style={style.cardContainer}>
 			{this.state.cards.length == 0 && <Text style={style.text}>Ajouter une carte</Text>}
-			{this.state.cards.reverse().map((card, index)=>{
-				return (<TouchableOpacity key={index} onPress={Actions.cardDetails}>
+			{this.state.cards.map((card, index)=>{
+				return (<TouchableOpacity key={index} style={{zIndex : card.style.zIndex }} onPress={Actions.cardDetails}>
 					<CardItem style={card.style} design={card.design} name={card.name} />
-					</TouchableOpacity>);
+				</TouchableOpacity>);
 			})
 		}
 		</View>
@@ -340,6 +338,7 @@ const style = StyleSheet.create({
 		textAlign: 'center'
 	},
 	cardContainer: {
+		justifyContent :'flex-end',
 		width: 339,
 		height: 300,
 		alignSelf: 'center'
