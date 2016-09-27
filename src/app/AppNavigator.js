@@ -11,6 +11,7 @@ import JournalView from '../view/journal/JournalView';
 import MessengerView from '../view/messenger/MessengerView';
 import AddAccountView from '../view/addAccount/AddAccountView';
 import AddJackpotView from '../view/addJackpot/AddJackpotView';
+import AddExistingAccountView from '../view/addExistingAccount/AddExistingAccountView';
 import OverviewView from '../view/overview/OverviewView';
 import AccountView from '../view/account/AccountView';
 import JackpotView from '../view/jackpot/JackpotView';
@@ -56,6 +57,7 @@ const scenes = Actions.create(
 	<Scene key="messenger" component={MessengerView} title="Messagerie"/>
 	<Scene key="overview" component={OverviewView} title="Consultation des comptes" type='replace'/>
 	<Scene key="addAccount" component={AddAccountView} title="addAccount" schema='modal' direction='vertical'/>
+	<Scene key="addExistingAccount" component={AddExistingAccountView} title="addExistingAccount"/>
 	<Scene key="addJackpot" component={AddJackpotView} title="addJackpot"/>
 	<Scene key="account" component={AccountView} title="account" type='replace'/>
 	<Scene key="jackpot" component={JackpotView} title="jackpot"/>

@@ -23,9 +23,13 @@ class addAccount extends Component {
 					</View>
 				</View>
 				<View style={style.bottom}>
-					<View style={style.lines}>
-						<Text style={style.text}>Ajouter un compte éxistant</Text>
-					</View>
+					<TouchableOpacity onPress={()=> {
+							Actions.addExistingAccount();
+					}}>
+						<View style={style.lines}>
+							<Text style={style.text}>Ajouter un compte existant</Text>
+						</View>
+					</TouchableOpacity>
 					<TouchableOpacity onPress={()=> {
 							Actions.addJackpot();
 					}}>

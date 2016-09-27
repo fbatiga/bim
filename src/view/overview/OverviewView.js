@@ -65,8 +65,8 @@ class OverviewView extends Component {
 			<View style={style.addIcon}>
 			<TouchableOpacity style={style.graph} onPress={Actions.addAccount}>
 			<Animated.Image source={asset.add} style={{
-				width: 70,
-				height: 70,
+				width: 40,
+				height: 40,
 				opacity: this.state.fadeAnim
 			}} />
 			</TouchableOpacity>
@@ -178,9 +178,9 @@ const style = StyleSheet.create({
 		fontWeight: 'bold'
 	},
 	addIcon: {
-		alignItems: 'flex-end',
+		alignItems: 'center',
 		marginRight: -15,
-		marginBottom: 15
+		marginBottom: 50
 	}
 
 });
