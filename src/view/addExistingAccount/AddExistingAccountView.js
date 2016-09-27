@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import { Actions } from 'react-native-router-flux';
 import AccountSelectBank from './step/AccountSelectBank';
 import AccountLoginInfos from './step/AccountLoginInfos';
-import AccountPointsView from './step/AccountPointsView';
+import AccountPointsView from '../common/step/PointsStep';
 
 class AddExistingAccount extends Component {
 	constructor(props) {
