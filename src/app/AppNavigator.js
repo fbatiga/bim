@@ -190,7 +190,7 @@ class AppNavigator extends Component {
 			let notification = snapshot.val();
 			//console.log('firebaseNotificationRef', notification , this.props.messenger.notification);
 			if(notification !== null){
-				this.props.dispatch(card(notification));
+				this.props.dispatch(notify(notification));
 			}
 
 			this.firebaseNotificationRef.set(null);
@@ -206,7 +206,6 @@ class AppNavigator extends Component {
 			}
 
 			this.props.dispatch(setCards(cards));
-
 
 		}.bind(this));
 

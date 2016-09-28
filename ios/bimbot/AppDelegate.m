@@ -25,16 +25,16 @@
   NSLog(@" DEBUG MODE");
   jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index.ios" fallbackResource:nil];
 #else
-#ifdef TEST
-  NSLog(@" STAGING MODE");
-#else
-  NSLog(@"PRODUCTION MODE");
-#endif
+  NSString *CodePushDeploymentKey = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CodePushDeploymentKey"];
+  NSLog(@"CodePushDeploymentKey : %@", CodePushDeploymentKey);
+  #ifdef TEST
+    NSLog(@" STAGING MODE");
+  #else
+    NSLog(@"PRODUCTION MODE");
+  #endif
   jsCodeLocation = [CodePush bundleURL];
 #endif
   
-  NSString *CodePushDeploymentKey = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CodePushDeploymentKey"];
-  NSLog(@"CodePushDeploymentKey : %@", CodePushDeploymentKey);
 
   
 

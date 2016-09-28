@@ -21,31 +21,7 @@ class MenuView extends Component {
 			{text : 'JOURNAL', action : Actions.journal }
 		];
 
-		this.state = {
-			items :[{
-			component : (<TouchableOpacity onPress={this.messenger.bind(this)}>
-							<View style={style.button}  >
-								<Image source={AppAsset.bot} style={[style.bot]} />
-								{this.props.messenger.notification && (
-								<View style={style.notificationBubble}>
-								<Text style={style.notificationText}>{this.props.messenger.messages.length}</Text>
-								</View>
-								)}
-							</View>
-						</TouchableOpacity>),
-			left: new Animated.Value(-width)
-		}]
-	};
 
-
-		this.menu.map((item)=>{
-			this.state.items.push({
-				component : (<TouchableOpacity  onPress={()=>{ this.props.gotTo(item)}}>
-								<Text style={style.title} >{item.text}</Text>
-							</TouchableOpacity>),
-				left: new Animated.Value(-width)
-			});
-		});
 	}
 
 	messenger(){
@@ -103,9 +79,32 @@ class MenuView extends Component {
 
 	render(){
 
+		let items = [{
+			component : (<TouchableOpacity onPress={this.messenger.bind(this)}>
+							<View style={style.button}  >
+								<Image source={AppAsset.bot} style={[style.bot]} />
+								{this.props.messenger.notification && (
+								<View style={style.notificationBubble}>
+								<Text style={style.notificationText}>{this.props.messenger.messages.length}</Text>
+								</View>
+								)}
+							</View>
+						</TouchableOpacity>),
+			left: new Animated.Value(-width)
+		}];
+
+		this.menu.map((item)=>{
+			items.push({
+				component : (<TouchableOpacity  onPress={()=>{ this.props.gotTo(item)}}>
+								<Text style={style.title} >{item.text}</Text>
+							</TouchableOpacity>),
+				left: new Animated.Value(-width)
+			});
+		});
+
 		return (
 			<View style={[style.container, this.props.style]} >
-			{this.state.items.map((item,index)=>{
+			{items.map((item,index)=>{
 				return (
 					<Animated.View  key={index}  style={{left: item.left}}>
 					{item.component}
