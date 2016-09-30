@@ -39,7 +39,7 @@ class MenuView extends Component {
 
 	componentWillReceiveProps(nextProps) {
 
-		if(	this.props.menu.goTo ==  'main'  && nextProps.menu.goTo == 'menu'){
+		if(	this.props.menu.goTo ==  'main'  && nextProps.menu.goTo == 'menu' || nextProps.messenger.visibility == false && this.props.messenger.visibility ==true){
 
 			let animation = [];
 
@@ -63,7 +63,7 @@ class MenuView extends Component {
 
 
 
-		if(	this.props.menu.goTo ==  'menu'  && nextProps.menu.goTo == 'main'){
+		if(	this.props.menu.goTo ==  'menu'  && nextProps.menu.goTo == 'main' || nextProps.messenger.visibility == true && this.props.messenger.visibility ==false ){
 
 			let animation = [];
 
