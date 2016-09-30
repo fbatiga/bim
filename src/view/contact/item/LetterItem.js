@@ -4,7 +4,6 @@ import AppGuideline from '../../../app/AppGuideline';
 import asset from '../../../app/AppAsset';
 
 const styles = StyleSheet.create({
-
 	button: {
 		paddingTop: 10,
 		width:35,
@@ -14,7 +13,6 @@ const styles = StyleSheet.create({
 });
 
 export default class LetterItem extends React.Component {
-
 	constructor(props){
 		super(props)
 		this.state = {
@@ -30,13 +28,13 @@ export default class LetterItem extends React.Component {
 	render() {
 		return (
 			<TouchableOpacity
-			onLayout={this.save.bind(this)}
-			style={styles.button}
-			onPress={() => {
-				this.props.onPress(this.props.children)
-			}} >
-				<Text style={{textAlign: 'center', color: this.state.color,
-		fontSize: 18 }}>{this.props.children}</Text>
+				onLayout={this.save.bind(this)}
+				style={styles.button}
+				onPress={() => {
+					this.props.onPress(this.props.children)
+				}}
+			>
+				<Text style={{textAlign: 'center', color: this.state.color, fontSize: 18 }}>{this.props.children}</Text>
 			</TouchableOpacity>
 		);
 	}

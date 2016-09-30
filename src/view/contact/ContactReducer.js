@@ -83,6 +83,7 @@ const initialState = {
 		dataSource: dsBim.cloneWithRows(actions.concat(defaultContacts)),
 		list : actions.concat(defaultContacts)
 	},
+	users: defaultContacts,
 	loading : false
 };
 
