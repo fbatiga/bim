@@ -4,7 +4,6 @@ import React, { Component } from 'react';
 import { View, Text,ListView, Image, ScrollView, StyleSheet, TouchableOpacity, Animated } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import  ScrollableTabView, { ScrollableTabBar }  from 'react-native-scrollable-tab-view';
-import asset from '../../app/AppAsset';
 import AppGuideline from '../../app/AppGuideline';
 import Title from '../common/title/Title';
 
@@ -185,6 +184,9 @@ const style = StyleSheet.create({
 
 });
 
+const asset = {
+	add: require('./assets/add.png'),
+};
 
 function mapStateToProps(state) {
 	return {

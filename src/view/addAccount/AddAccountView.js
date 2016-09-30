@@ -2,7 +2,6 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity , Dimensions, StyleSheet} from 'react-native';
 import { Actions } from 'react-native-router-flux';
-import { connect } from 'react-redux';
 import { init } from './AddAccountAction';
 import AppAsset from '../../app/AppAsset';
 import AppGuideline from '../../app/AppGuideline';
@@ -10,7 +9,6 @@ import BackButton from '../common/button/BackButton';
 import Title from '../common/title/Title';
 
 class addAccount extends Component {
-
 	render() {
 		return (
 			<View style={style.container}>
@@ -46,7 +44,6 @@ class addAccount extends Component {
 		);
 	}
 }
-
 
 const { width, height } = Dimensions.get('window');
 
@@ -91,5 +88,4 @@ const style = StyleSheet.create({
 	}
 });
 
-
-export default connect()(addAccount);
+export default addAccount;
