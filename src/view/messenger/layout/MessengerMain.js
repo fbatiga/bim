@@ -63,13 +63,6 @@ class MessengerMain extends Component {
 
 	saveListHeight(event) {
 		this._listHeight = event.nativeEvent.layout.height;
-
-		this.scrollResponder.scrollTo({
-				y: this._listHeight,
-				x: 0,
-				animated:  true,
-			});
-
 	}
 
 	render(){
