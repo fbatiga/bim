@@ -22,30 +22,15 @@ class MenuView extends Component {
 		];
 
 		this.state = {
-			items :[{
-			component : (<TouchableOpacity onPress={this.messenger.bind(this)}>
-							<View style={style.button}  >
-								<Image source={AppAsset.bot} style={[style.bot]} />
-								{this.props.messenger.notification && (
-								<View style={style.notificationBubble}>
-								<Text style={style.notificationText}>{this.props.messenger.messages.length}</Text>
-								</View>
-								)}
-							</View>
-						</TouchableOpacity>),
-			left: new Animated.Value(-width)
-		}]
-	};
+			animation : []
+		};
 
+		this.state.animation.push({left: new Animated.Value(-width)});
 
-		this.menu.map((item)=>{
-			this.state.items.push({
-				component : (<TouchableOpacity  onPress={()=>{ this.props.gotTo(item)}}>
-								<Text style={style.title} >{item.text}</Text>
-							</TouchableOpacity>),
-				left: new Animated.Value(-width)
-			});
+		this.menu.map(()=>{
+			this.state.animation.push({left: new Animated.Value(-width)});
 		});
+
 	}
 
 	messenger(){
@@ -58,7 +43,7 @@ class MenuView extends Component {
 
 			let animation = [];
 
-			this.state.items.map((link, index)=>{
+			this.state.animation.map((link, index)=>{
 
 				animation.push(
 					Animated.timing(
@@ -82,7 +67,7 @@ class MenuView extends Component {
 
 			let animation = [];
 
-			this.state.items.map((link, index)=>{
+			this.state.animation.map((link, index)=>{
 
 				animation.push(
 					Animated.timing(
@@ -103,12 +88,32 @@ class MenuView extends Component {
 
 	render(){
 
+		let items = [<TouchableOpacity onPress={this.messenger.bind(this)}>
+							<View style={style.button}  >
+								<Image source={AppAsset.bot} style={[style.bot]} />
+								{(this.props.messenger.toSee > 0) && (
+								<View style={style.notificationBubble}>
+								<Text style={style.notificationText}>{this.props.messenger.toSee}</Text>
+								</View>
+								)}
+							</View>
+					</TouchableOpacity>
+		];
+
+		this.menu.map((item)=>{
+			items.push(<TouchableOpacity  onPress={()=>{ this.props.gotTo(item)}}>
+								<Text style={style.title} >{item.text}</Text>
+							</TouchableOpacity>);
+		});
+
+
+
 		return (
 			<View style={[style.container, this.props.style]} >
-			{this.state.items.map((item,index)=>{
+			{this.state.animation.map((item,index)=>{
 				return (
 					<Animated.View  key={index}  style={{left: item.left}}>
-					{item.component}
+					{items[index]}
 					</Animated.View>
 				);
 			})}

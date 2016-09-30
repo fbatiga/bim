@@ -31,7 +31,7 @@ import OneSignal from 'react-native-onesignal'; // Import package from node modu
 import Contacts from 'react-native-contacts';
 import {loadContacts, setContacts} from '../view/contact/ContactAction';
 import { setCards } from '../view/card/CardAction';
-import {notify, updateProfile, loadSession, setVisibility, addSlackMessage, restartBot} from '../view/messenger/MessengerAction';
+import {notify, updateProfile, loadSession, setVisibility, addSlackMessage, restartBot, stopBot} from '../view/messenger/MessengerAction';
 import {login, device} from '../view/login/LoginAction';
 
 import {firebaseDb} from  './AppFirebase';
@@ -91,16 +91,18 @@ class AppNavigator extends Component {
 
 
 	componentDidMount() {
-		Contacts.checkPermission( (err, permission) => {
-			console.log('Contacts.checkPermission',permission);
 
-			//preloading  contact list
-			if(permission === Contacts.PERMISSION_AUTHORIZED){
-				Contacts.getAll((err, contacts) => {
-					this.props.dispatch(setContacts(contacts));
-				});
-			}
-		});
+		this.props.dispatch(setContacts([]));
+		// Contacts.checkPermission( (err, permission) => {
+		// 	console.log('Contacts.checkPermission',permission);
+
+		// 	//preloading  contact list
+		// 	if(permission === Contacts.PERMISSION_AUTHORIZED){
+		// 		Contacts.getAll((err, contacts) => {
+		// 			this.props.dispatch(setContacts(contacts));
+		// 		});
+		// 	}
+		// });
 
 		OneSignal.configure({
 			onIdsAvailable:this.registerDevice.bind(this),
@@ -113,11 +115,12 @@ class AppNavigator extends Component {
 
 
 	handleNotification(message, data, isActive){
-		console.log('handleNotification',message, data, isActive);
+		console.log('handleNotification',message, data, isActive, this.props.login.username);
 		if(!isActive){
 
 			if(this.props.login.username == false){
-				this.props.dispatch(login(message.user));
+				this.props.dispatch(login(data.username));
+				this.props.dispatch(notify(data.notificationId));
 			}
 
 
@@ -159,7 +162,6 @@ class AppNavigator extends Component {
 
 
 	loadProfile(username){
-		this.firebaseMessagesRef = rootRef.child(username+'/slack');
 		this.firebaseNotificationRef = rootRef.child(username+'/notification');
 
 		this.firebaseProfileRef = rootRef.child(username+'/profile');
@@ -179,9 +181,7 @@ class AppNavigator extends Component {
 
 		this.firebaseProfileRef.on('value', function(snapshot) {
 			let profile = snapshot.val();
-			console.log('profile',profile);
 			if(profile !== null){
-
 				this.props.dispatch(updateProfile(profile));
 			}
 		}.bind(this));
@@ -189,13 +189,10 @@ class AppNavigator extends Component {
 
 		this.firebaseNotificationRef.on('value', function(snapshot) {
 
-			let notification = snapshot.val();
-			//console.log('firebaseNotificationRef', notification , this.props.messenger.notification);
-			if(notification !== null){
-				this.props.dispatch(card(notification));
+			let value = snapshot.val();
+			if(value != null){
+				this.props.dispatch(notify(value));
 			}
-
-			this.firebaseNotificationRef.set(null);
 
 		}.bind(this));
 
@@ -208,7 +205,6 @@ class AppNavigator extends Component {
 			}
 
 			this.props.dispatch(setCards(cards));
-
 
 		}.bind(this));
 
@@ -270,21 +266,16 @@ class AppNavigator extends Component {
 
 		}
 
+		if(this.props.messenger.notificationId !== nextProps.messenger.notificationId && nextProps.messenger.notificationId !== null ){
+			if(this.firebaseMessagesRef !== null){
+			this.firebaseMessagesRef.off();
 
-		if(this.props.messenger.bot !== nextProps.messenger.bot ){
+			}
+			this.firebaseMessagesRef = rootRef.child(this.props.login.username+'/message/'+nextProps.messenger.notificationId);
 
-
-			if(nextProps.messenger.bot == true){
-
-				this.firebaseMessagesRef.off();
-
-				this.props.dispatch(loadSession('restart'));
-
-			}else{
-
-				this.firebaseMessagesRef.on("child_added", function(snapshot) {
+			this.firebaseMessagesRef.on("child_added", function(snapshot) {
 					let message = snapshot.val();
-					//console.log('child_added ', message);
+					console.log('child_added ', message);
 
 					if(message.user !== undefined && message.user != 'slackbot' && message.text !== 'fin'){
 
@@ -297,6 +288,16 @@ class AppNavigator extends Component {
 					this.firebaseMessagesRef.child(snapshot.key).remove();
 
 				}.bind(this));
+
+		}
+
+		if(this.props.messenger.bot !== nextProps.messenger.bot ){
+			if(nextProps.messenger.bot == true){
+
+				this.firebaseMessagesRef.off();
+
+				this.props.dispatch(loadSession('restart'));
+
 			}
 		}
 

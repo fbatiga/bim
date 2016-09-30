@@ -369,11 +369,11 @@ class AppLayout extends Component {
 				)}
 			<TouchableOpacity style={[style.button]}   onPress={this.menu.bind(this)}>
 			<Animated.Image source={AppAsset.close}  style={[style.bot,  { transform: [ {scale: this.state.menuValue}] } ]} />
-			{this.props.messenger.notification && !this.props.messenger.visibility  && (
-				<View style={style.notificationBubble}>
-				<Text style={style.notificationText}>{this.props.messenger.messages.length}</Text>
-				</View>
-				)}
+			{(this.props.messenger.toSee > 0) && (
+				<Animated.View style={[style.notificationBubble,  { transform: [ {scale: this.state.menuValue}] } ]}>
+				<Text style={style.notificationText}>{this.props.messenger.toSee}</Text>
+				</Animated.View>
+			)}
 			</TouchableOpacity>
 
 			</View>);

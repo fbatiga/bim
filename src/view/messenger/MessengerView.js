@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import { Text, View, ListView,  StyleSheet , Image, ScrollView, TextInput, TouchableOpacity, AsyncStorage, Animated } from 'react-native';
-import { register, getReply, updateProfile, loadSession, addMessage, addSlackMessage,loadButtons,restartBot , notify, setVisibility, close} from './MessengerAction';
+import { messagesToSee, register, getReply, updateProfile, loadSession, addMessage, addSlackMessage,loadButtons,restartBot , notify, setVisibility, close} from './MessengerAction';
 import MessengerMain from './layout/MessengerMain';
 import {swipeTo} from '../menu/MenuAction';
 
@@ -41,9 +41,14 @@ class MessengerView extends Component {
 
 		if(this.props.messenger.messages.length > 0 ){
 
+			this.props.dispatch(messagesToSee(0));
+
 			this.props.messenger.messages.map((message)=>{
 				message.loaded = true;
 			})
+
+
+
 		}
 
 		Animated.timing(
