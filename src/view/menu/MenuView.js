@@ -91,9 +91,9 @@ class MenuView extends Component {
 		let items = [<TouchableOpacity onPress={this.messenger.bind(this)}>
 							<View style={style.button}  >
 								<Image source={AppAsset.bot} style={[style.bot]} />
-								{this.props.messenger.notification && (
+								{(this.props.messenger.toSee > 0) && (
 								<View style={style.notificationBubble}>
-								<Text style={style.notificationText}>{this.props.messenger.messages.length}</Text>
+								<Text style={style.notificationText}>{this.props.messenger.toSee}</Text>
 								</View>
 								)}
 							</View>

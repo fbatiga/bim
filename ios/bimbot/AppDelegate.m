@@ -28,16 +28,12 @@
   NSString *CodePushDeploymentKey = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CodePushDeploymentKey"];
   NSLog(@"CodePushDeploymentKey : %@", CodePushDeploymentKey);
   #ifdef TEST
-    NSLog(@" STAGING MODE");
+    NSLog(@"STAGING MODE");
   #else
     NSLog(@"PRODUCTION MODE");
   #endif
   jsCodeLocation = [CodePush bundleURL];
 #endif
-  
-
-  
-
   
   RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation
                                                       moduleName:@"bimbot"
