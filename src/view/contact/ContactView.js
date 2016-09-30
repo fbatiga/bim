@@ -169,8 +169,10 @@ class ContactView extends Component {
 			<TouchableOpacity style={style.transferButton} >
 			</TouchableOpacity>
 			<View style={style.addIcon}>
-			<TouchableOpacity >
-			<Animated.Image source={AppAsset.add} style={{ transform: [ {scale :this.state.animButton }] }} />
+			<TouchableOpacity onPress={() => {
+				Actions.addContact();
+			}}>
+				<Animated.Image source={AppAsset.add} style={{ transform: [ {scale :this.state.animButton }] }} />
 			</TouchableOpacity>
 			</View>
 
