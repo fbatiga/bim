@@ -2,6 +2,7 @@
 
 export const OVERVIEW_INIT = 'overview.init';
 export const OVERVIEW_OPEN = 'overview.open';
+export const OVERVIEW_SET_ACCOUNTS = 'overview.setAccounts';
 
 
 export function init(action) {
@@ -16,5 +17,11 @@ export function openAccount(action) {
     };
 }
 
+export function setAccounts(accounts) {
+  console.log('action accounts', accounts);
 
-
+  return {
+    type: OVERVIEW_SET_ACCOUNTS,
+    accounts
+  }
+};

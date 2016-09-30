@@ -24,6 +24,8 @@ class OverviewView extends Component {
 	}
 
 	render() {
+		console.log('firebaseAccounts', this.props.firebaseAccounts);
+
 		return (
 			<View
 			horizontal={false} style={[style.container, {flex: 1}]}>
@@ -41,7 +43,7 @@ class OverviewView extends Component {
 			tabBarInactiveTextColor={AppGuideline.colors.lightviolet}
 			renderTabBar={() => <ScrollableTabBar style={style.tabs} tabsContainerStyle={style.tabBar} />}
 			>
-			{this.props.overview.accounts.map((value, key) => {
+			{this.props.firebaseAccounts.map((value, key) => {
 				return (
 					<View tabLabel={value.label} key={key}>
 					<TouchableOpacity style={style.graph} onPress={()=> {
@@ -124,7 +126,6 @@ class OverviewView extends Component {
 	}
 }
 
-
 const style = StyleSheet.create({
 	circle: {
 		backgroundColor: 'transparent',
@@ -190,7 +191,8 @@ const asset = {
 
 function mapStateToProps(state) {
 	return {
-		overview: state.overview
+		overview: state.overview,
+		firebaseAccounts: state.overview.firebaseAccounts
 	};
 }
 
