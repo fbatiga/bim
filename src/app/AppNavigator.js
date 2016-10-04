@@ -226,7 +226,7 @@ class AppNavigator extends Component {
 				 const defaultAccounts = [
 					 {
  						id: 'TOUT',
- 						label: 'Mes comtpes',
+ 						label: 'Mes comptes',
  						balance: 0,
  						type: 'external'
  					},

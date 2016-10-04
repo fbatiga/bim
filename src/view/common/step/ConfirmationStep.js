@@ -44,23 +44,23 @@ class ConfirmationStep extends React.Component {
 		if (this.props.card) {
 			return (
 				<View style={{flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'center'}}>
-				<Text style={{color: '#fff', fontSize: 22, height: 35}}>Création d'une carte prépayée </Text>
-				<Text style={{color: '#fff', fontSize: 22, height: 35}}>avec un </Text>
+				<Text style={{color: '#fff', fontSize: 22, lineHeight: 40}}>Création d'une carte prépayée </Text>
+				<Text style={{color: '#fff', fontSize: 22, lineHeight: 40}}>avec un </Text>
 				<Text style={{
 					color: AppGuideline.colors.alternative,
 					fontSize: 22,
-					height: 35
+					lineHeight: 40
 				}}>{this.props.duration}</Text>
 				<Text style={{
 					color: AppGuideline.colors.alternative,
 					fontSize: 22,
-					height: 35
+					lineHeight: 40
 				}}> de {this.props.amount} €</Text>
-				<Text  style={{color: '#fff', fontSize: 22, height: 35}}> pour </Text>
+				<Text  style={{color: '#fff', fontSize: 22, lineHeight: 40}}> pour </Text>
 				<Text style={{
 					color: AppGuideline.colors.alternative,
 					fontSize: 22,
-					height: 35
+					lineHeight: 40
 				}}>{this.props.recipient}.</Text>
 				</View>
 				);
@@ -70,20 +70,20 @@ class ConfirmationStep extends React.Component {
 				<View style={{flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'center'}}>
 				<Text style={{color: AppGuideline.colors.alternative,
 				fontSize:24,
-				fontFamily : 'Montserrat-UltraLight',}}>{this.props.transferLabel}</Text>
+				fontFamily : 'Montserrat-UltraLight', lineHeight: 40}}>{this.props.transferLabel}</Text>
 				<Text style={{color: '#fff',
 				fontSize:24,
-				fontFamily : 'Montserrat-UltraLight',}}> de </Text>
+				fontFamily : 'Montserrat-UltraLight', lineHeight: 40}}> de </Text>
 				<Text style={{color: AppGuideline.colors.alternative,
 				fontSize:24,
-				fontFamily : 'Montserrat-UltraLight',}}>{this.props.amount} €</Text>
+				fontFamily : 'Montserrat-UltraLight', lineHeight: 40}}>{this.props.amount} €</Text>
 				<Text  style={{color: '#fff',
 				fontSize:24,
-				fontFamily : 'Montserrat-UltraLight',}}> pour </Text>
+				fontFamily : 'Montserrat-UltraLight', lineHeight: 40}}> pour </Text>
 				<Text style={{
 					color: AppGuideline.colors.alternative,
 				fontSize:24,
-				fontFamily : 'Montserrat-UltraLight',
+				fontFamily : 'Montserrat-UltraLight', lineHeight: 40
 				}}>{this.props.transferRecipient}.</Text>
 				</View>
 				);
@@ -100,7 +100,6 @@ class ConfirmationStep extends React.Component {
 			<Text style={{
 				color: AppGuideline.colors.white,
 				marginTop: 10,
-				marginBottom: 10,
 				fontSize:24,
 				fontFamily : 'Montserrat-UltraLight',
 			}}>

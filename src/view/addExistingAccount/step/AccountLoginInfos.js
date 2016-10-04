@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
   subtitle: {
     alignSelf: 'center',
     color: AppGuideline.colors.white,
-    maxWidth: width / 1.3
+		paddingHorizontal: 15
   },
   form: {
     flex: 1,

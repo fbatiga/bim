@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { firebaseDb } from  '../../app/AppFirebase';
 import AccountSelectBank from './step/AccountSelectBank';
 import AccountLoginInfos from './step/AccountLoginInfos';
+import AccountSuccessStep from '../common/step/SuccessStep';
 import AccountPointsView from '../common/step/PointsStep';
 
 const mapStateToProps = (state) => {
@@ -50,6 +51,10 @@ class AddExistingAccount extends Component {
 			return (<AccountLoginInfos title='Comptes' bank={this.state.bank} back={this.back.bind(this)} save={this.save.bind(this)} />);
 			break;
 			case 2:
+			setTimeout(() => { this.next(); },1500);
+			return (<AccountSuccessStep title='Comptes' subtitle='Votre compte a été ajouté avec succès' />);
+			break;
+			case 3:
 			setTimeout(() => { Actions.overview() },1500);
 			return (<AccountPointsView title='Comptes' value='+150 pts' />);
 			break;
@@ -60,6 +65,12 @@ class AddExistingAccount extends Component {
     this.setState({
       step: this.state.step + 1,
       [title]: value
+    });
+  }
+
+	next() {
+    this.setState({
+      step: this.state.step + 1
     });
   }
 
