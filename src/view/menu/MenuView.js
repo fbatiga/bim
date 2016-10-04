@@ -7,7 +7,7 @@ import { Actions } from 'react-native-router-flux';
 import {connect} from 'react-redux';
 import {setVisibility} from '../messenger/MessengerAction';
 
-const {width} = Dimensions.get('window');
+const {width, height} = Dimensions.get('window');
 
 class MenuView extends Component {
 
@@ -140,7 +140,7 @@ const style = StyleSheet.create({
 	title : {
 		fontFamily : 'Montserrat-Bold',
 		letterSpacing: 10,
-		lineHeight: 60,
+		lineHeight: height/12,
 		marginTop: 15,
 		color : '#B8A4E6',
 		fontSize: 25
