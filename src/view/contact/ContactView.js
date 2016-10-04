@@ -109,6 +109,10 @@ class ContactView extends Component {
 			return null;
 		}
 
+		if (this.props.username === contact.username) {
+			return null;
+		}
+
 		return (<ContactItem
 			onPress={this.openContact.bind(this)}
 			rowData={contact}
@@ -119,6 +123,8 @@ class ContactView extends Component {
 
 
 	render() {
+		console.log(this.props.username);
+
 		return (
 			<View style={style.container}>
 			<Title style={{color: AppGuideline.colors.deepblue, height: 80}} >CONTACTS</Title>
@@ -180,7 +186,8 @@ const style = StyleSheet.create({
 
 function mapStateToProps(state) {
 	return {
-		contact: state.contact
+		contact: state.contact,
+		username: state.login.username
 	};
 }
 
