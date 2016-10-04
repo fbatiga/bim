@@ -141,11 +141,13 @@ function addMessages(state, result, isBot){
 
 	});
 
-	if(isBot && state.visibility == false ){
-		state.toSee += slackMessage.length;
-	}
+
 
 	let newState = { ...state, messages };
+
+	if(isBot && state.visibility == false ){
+		newState.toSee += slackMessage.length;
+	}
 
 	if(UserSlack != null ){
 		if(isBot == true){
