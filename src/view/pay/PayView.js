@@ -34,7 +34,6 @@ class PayView extends Component {
 
 	}
 
-
 	back(){
 		if(this.state.step == 0){
 			Actions.pop();
@@ -62,6 +61,9 @@ class PayView extends Component {
 	}
 
 	render() {
+
+		console.log(this.props.recipient);
+		console.log(this.props.recipientId);
 
 		let Title = 'PAYER';
 
@@ -149,7 +151,16 @@ class PayView extends Component {
 	}
 
 	confirmTitle(title) {
-		this.setState({transferLabel: title, step: this.state.step + 1});
+		if (this.props.recipient !== undefined && this.props.recipientId !== undefined) {
+			this.setState({
+				transferLabel: title,
+				transferRecipient: this.props.recipient,
+				transferRecipientId: this.props.recipientId,
+				step: this.state.step + 2
+			});
+		} else {
+			this.setState({transferLabel: title, step: this.state.step + 1});
+		}
 	}
 
 	confirmPay() {

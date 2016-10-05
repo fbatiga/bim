@@ -1,9 +1,10 @@
 'use strict';
 
 import React, { Component } from 'react';
-import { View, Text, Image,  StyleSheet, ScrollView, PanResponder, Dimensions, Animated, Easing, TouchableOpacity,BackAndroid} from 'react-native';
+import { View, Text, Image,  StyleSheet, ScrollView, Dimensions, Animated, Easing, TouchableOpacity } from 'react-native';
 import BackButton from '../common/button/BackButton';
 import AppAsset from '../../app/AppAsset';
+import AppGuideline from '../../app/AppGuideline';
 import { Actions } from 'react-native-router-flux';
 import {swipeTo, configureSwipe} from '../menu/MenuAction';
 import {connect} from 'react-redux';
@@ -40,7 +41,7 @@ class ContactDetailsView extends Component {
 	}
 
 	onPointLayout(event){
-		this.pointPosition = event.nativeEvent.layout.y + 300;
+		this.pointPosition = event.nativeEvent.layout.y + 325;
 
 		this.setState({
 			pointHeight: event.nativeEvent.layout.height
@@ -124,41 +125,42 @@ class ContactDetailsView extends Component {
 
 		return (
 			<View style={style.container} onLayout={this.configureScroll.bind(this)}>
-			<ScrollView
-			ref='profileSwiper'
-			horizontal={false}
-			scrollEnabled={false}
-			>
-			<View style={{height: height - this.state.pointHeight}} >
+				<ScrollView
+					ref='profileSwiper'
+					horizontal={false}
+					scrollEnabled={false}
+				>
+					<View style={{height: height - this.state.pointHeight}} >
+						<View style={style.row}>
+							<BackButton image={AppAsset.back} back={Actions.pop} style={{ opacity : this.state.fadeAnim}} />
+							<Animated.Image source={image} style={{top : this.state.animPictureValue}}/>
+						</View>
+					</View>
+					<Animated.View style={{top : this.state.animContentValue}} onLayout={this.onPointLayout.bind(this)} >
+						<View style={style.content} >
+							<Text style={style.name}>{this.props.contact.givenName}</Text>
+							<Text style={style.name}>{this.props.contact.familyName}</Text>
+							<View style={style.line}>
+								<Text style={style.address}>{this.props.contact.adresse}</Text>
+							</View>
+							<View style={style.row}>
 
-			<View style={style.row}>
-			<BackButton image={AppAsset.back} back={Actions.pop} style={{ opacity : this.state.fadeAnim}} />
-			<Animated.Image source={image} style={{top : this.state.animPictureValue}}/>
+							</View>
+							<TouchableOpacity onPress={() => { Actions.pay({recipient: `${this.props.contact.givenName} ${this.props.contact.familyName}`, recipientId: this.props.contact.username }); }}>
+								<View style={style.button}>
+									<Text style={style.buttonTitle}>FAIRE UN B!M</Text>
+									<Text style={style.buttonSubtitle}>+ 100 pts</Text>
+								</View>
+							</TouchableOpacity>
+						</View>
+						<Image source={asset.point}/>
+					</Animated.View>
+					<Image onLayout={this.onTrophyLayout.bind(this)} source={asset.trophy}/>
+				</ScrollView>
 			</View>
-			</View>
-			<Animated.View style={{top : this.state.animContentValue}} onLayout={this.onPointLayout.bind(this)} >
-			<View style={style.content} >
-			<Text style={style.name}>{this.props.contact.givenName}</Text>
-			<Text style={style.name}>{this.props.contact.familyName}</Text>
-			<View style={style.line}>
-			<Text style={style.address}>{this.props.contact.adresse}</Text>
-			</View>
-			<View style={style.row}>
-			<View style={style.action}>
-			</View>
-			</View>
-			</View>
-			<Image source={asset.point}/>
-			</Animated.View>
-
-			<Image onLayout={this.onTrophyLayout.bind(this)} source={asset.trophy}/>
-
-			</ScrollView>
-			</View>)
+		);
 	}
-
 }
-
 
 const style = StyleSheet.create({
 	container: {
@@ -168,10 +170,9 @@ const style = StyleSheet.create({
 	},
 	content :{
 		padding:30,
-		height : 300,
+		height : 325,
 		justifyContent: 'flex-start',
 		flexDirection: 'column'
-
 	},
 	name : {
 		fontFamily : 'Montserrat-Bold',
@@ -211,6 +212,19 @@ const style = StyleSheet.create({
 		fontFamily : 'Montserrat-UltraLight',
 		fontSize: 10,
 		color : '#120037',
+	},
+	button: {
+		backgroundColor: AppGuideline.colors.lightviolet,
+		alignItems: 'center'
+	},
+	buttonTitle: {
+		color: '#fff',
+		paddingTop: 15,
+		fontWeight: 'bold'
+	},
+	buttonSubtitle: {
+		color: 'yellow',
+		paddingBottom: 15
 	}
 });
 
