@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import {firebaseDb} from  '../../app/AppFirebase';
 
-
 import CardSelectAccount from './step/CardSelectAccount';
 import CardSelectDuration from './step/CardSelectDuration';
 import CardSelectAmmount from '../common/step/AmountSelectionStep';
@@ -21,98 +20,106 @@ class AddCardView extends Component {
 
     this.state = {
       duration: '',
-      amount: 10,
-	  transferRecipient: '',
+      amount: 0,
+	    transferRecipient: '',
+      transferRecipientId: '',
       design: 'gris',
+      code: '',
       step: 0,
     };
   }
 
-
-  back(){
-  	if(this.state.step == 0){
+  back() {
+  	if (this.state.step == 0) {
   		Actions.pop();
-  	}else{
+  	} else {
   		this.setState({
   			step: this.state.step - 1
   		});
   	}
   }
 
-  	componentDidUpdate(){
-		if(this.state.step == this.steps.length-2){
-
+  componentDidUpdate() {
+		if (this.state.step == this.steps.length-2) {
 			setTimeout(function(){
-
 				this.setState({
 					step: this.state.step + 1
 				});
-
 			}.bind(this),2000);
 		}
-		if(this.state.step == this.steps.length-1){
+		if (this.state.step == this.steps.length-1) {
 			setTimeout(Actions.pop,1500);
 		}
 	}
 
   render() {
+    console.log(this.state);
+    console.log(this.props.login);
 
-  		let Title = 'Cartes';
-
-  		this.steps = [
+  	this.steps = [
   		<CardSelectAccount
-  		title='Cartes'
-  		subtitle='Compte à débiter'
-  		back={this.back.bind(this)}
-  		confirm={this.selectAccount.bind(this)}
+    		title='Cartes'
+    		subtitle='Compte à débiter'
+    		back={this.back.bind(this)}
+    		confirm={this.selectAccount.bind(this)}
   		/>,
   		<CardSelectDuration
-  		title='Cartes'
-  		subtitle='Fréquence des virements :'
-  		back={this.back.bind(this)}
-  		confirm={this.selectDuration.bind(this)} />,
+    		title='Cartes'
+    		subtitle='Fréquence des virements :'
+    		back={this.back.bind(this)}
+    		confirm={this.selectDuration.bind(this)}
+      />,
   		<CardSelectAmmount
-  		title='Cartes'
-  		subtitle={'Somme à verser :'}
-  		back={this.back.bind(this)}
-  		amount={this.state.amount}
-  		confirm={this.selectAmount.bind(this)}/>,
-       	<RecipientSelectionStep
+    		title='Cartes'
+    		subtitle={'Somme à verser :'}
+    		back={this.back.bind(this)}
+    		amount={this.state.amount}
+    		confirm={this.selectAmount.bind(this)}
+      />,
+      <RecipientSelectionStep
        	title='Cartes'
        	subtitle={'Porteur de la carte :'}
        	bimOnly={true}
        	back={this.back.bind(this)}
-       	confirm={this.selectRecipient.bind(this)}/>,
-        <CardSelectDesign
+       	confirm={this.selectRecipient.bind(this)}
+      />,
+      <CardSelectDesign
         title='Cartes'
         subtitle='Design de la carte :'
         back={this.back.bind(this)}
-        confirm={this.selectDesign.bind(this)} />,
-        <CardSelectCode
+        confirm={this.selectDesign.bind(this)}
+      />,
+      <CardSelectCode
         title='Cartes'
         subtitle='Code de la carte'
-        code=''
+        code={this.state.code}
         back={this.back.bind(this)}
-        confirm={this.selectCode.bind(this)} />,
-        <CardConfirmView
-          card={true}
-          title='Cartes'
-          duration={this.state.duration}
-          amount={this.state.amount}
-          recipient={this.state.transferRecipient}
-          confirm={this.confirmCard.bind(this)} />,
-        <CardSuccessView
+        confirm={this.selectCode.bind(this)}
+      />,
+      <CardConfirmView
+        card={true}
         title='Cartes'
-        subTitle='Carte crée !'
+        duration={this.state.duration}
+        amount={this.state.amount}
         recipient={this.state.transferRecipient}
-        design={this.state.design} />,
-        <CardPointsView
+        recipientId={this.state.transferRecipientId}
+        originator={this.props.login}
+        back={this.back.bind(this)}
+        confirm={this.confirmCard.bind(this)}
+      />,
+      <CardSuccessView
         title='Cartes'
-        value='+100 pts' />
-        ];
+        subTitle='Carte créée !'
+        recipient={this.state.transferRecipient}
+        design={this.state.design}
+      />,
+      <CardPointsView
+        title='Cartes'
+        value='+100 pts'
+      />
+    ];
 
     return this.steps[this.state.step];
-
   }
 
   selectAccount(account) {
@@ -139,15 +146,19 @@ class AddCardView extends Component {
   selectRecipient(recipient) {
     let name = [];
 
-		if(recipient.givenName != undefined){
+		if (recipient.givenName != undefined) {
 			name.push(recipient.givenName);
 		}
 
-		if(recipient.familyName != undefined){
+		if (recipient.familyName != undefined) {
 			name.push(recipient.familyName);
 		}
 
-	this.setState({transferRecipient: name.join(' '), step: this.state.step + 1});
+	  this.setState({
+      transferRecipient: name.join(' '),
+      transferRecipientId: recipient.username,
+      step: this.state.step + 1
+    });
   }
 
   selectDesign(design) {
@@ -165,28 +176,24 @@ class AddCardView extends Component {
   }
 
   confirmCard() {
+    const firebaseRootRef = firebaseDb.ref();
+  	const cardRef = firebaseRootRef.child(this.props.login.username+'/card');
+
     this.setState({
       step: this.state.step + 1
     })
 
-	let firebaseRootRef = firebaseDb.ref();
-	let cardRef = firebaseRootRef.child(this.props.login.username+'/card');
-
-	cardRef.push({
-		amount: parseFloat(this.state.amount),
-		design: this.state.design,
-		code:  this.state.code,
-		duration: this.state.duration,
-		duration: this.state.account,
-		timestamp: Date.now(),
-		recipient: this.state.transferRecipient
-	});
-
+  	cardRef.push({
+  		amount: parseFloat(this.state.amount),
+  		design: this.state.design,
+  		code:  this.state.code,
+  		duration: this.state.duration,
+  		duration: this.state.account,
+  		timestamp: Date.now(),
+  		recipient: this.state.transferRecipient
+  	});
   }
-
 }
-
-
 
 function mapStateToProps(state) {
 	return {
