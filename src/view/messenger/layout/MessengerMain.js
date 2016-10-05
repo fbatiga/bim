@@ -51,8 +51,6 @@ class MessengerMain extends Component {
 	}
 
 	scrollToBottom(contentWidth, contentHeight) {
-
-		console.log('scrollToBottom', contentHeight , this._listHeight)
 		if(contentHeight > this._listHeight){
 			scrollPosition = - (this._listHeight - contentHeight);
 			this.scrollResponder.scrollTo({

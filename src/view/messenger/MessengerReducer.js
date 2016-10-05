@@ -4,7 +4,7 @@ import { handleActions } from 'redux-actions';
 
 import { AsyncStorage } from 'react-native';
 import {
-	MESSENGER_CLOSE, MESSENGER_REGISTER, MESSENGER_INIT, MESSENGER_PROFILE, MESSENGER_NOTIFICATION, MESSENGER_VISIBILITY, MESSENGER_BOT_RESTART, MESSENGER_SLACK_MESSAGE, MESSENGER_HELLO, MESSENGER_REQUEST, MESSENGER_SUCCESS, MESSENGER_FAILURE, MESSENGER_BUTTONS, MESSENGER_MESSAGE, MESSENGER_BOT_MESSAGE, MESSENGER_SESSION
+	MESSENGER_MESSAGES_TO_SEE,  MESSENGER_BOT_STOP, MESSENGER_CLOSE, MESSENGER_REGISTER, MESSENGER_INIT, MESSENGER_PROFILE, MESSENGER_NOTIFICATION, MESSENGER_VISIBILITY, MESSENGER_BOT_RESTART, MESSENGER_SLACK_MESSAGE, MESSENGER_HELLO, MESSENGER_REQUEST, MESSENGER_SUCCESS, MESSENGER_FAILURE, MESSENGER_BUTTONS, MESSENGER_MESSAGE, MESSENGER_BOT_MESSAGE, MESSENGER_SESSION
 } from './MessengerAction';
 
 import SlackUser from '../../app/AppSlack';
@@ -22,9 +22,10 @@ const initialState = {
 	closed : false,
 	username : null,
 	loading : false,
-	notification : false,
 	visibility : null,
+	notificationId : null,
 	bot: true,
+	toSee: 0,
 	profile : {}
 };
 
@@ -141,7 +142,12 @@ function addMessages(state, result, isBot){
 	});
 
 
+
 	let newState = { ...state, messages };
+
+	if(isBot && state.visibility == false ){
+		newState.toSee += slackMessage.length;
+	}
 
 	if(UserSlack != null ){
 		if(isBot == true){
@@ -202,20 +208,29 @@ const MessengerReducer = handleActions({
 	},
 
 	[MESSENGER_CLOSE]: (state, action) => {
-		return { ...state, bot: true, closed: true, notification : false, visibility :false, messages : [],  buttons:[]};
+		return { ...state, bot: true, closed: true, visibility :false, messages : [],  buttons:[]};
 	},
 
 	[MESSENGER_BOT_RESTART]: (state, action) => {
 		return { ...state, bot: true, notification : false};
 	},
 
-	[MESSENGER_NOTIFICATION]: (state, action) => {
+
+	[MESSENGER_BOT_STOP]: (state, action) => {
 		return { ...state, bot: false, notification : state.visibility ? false : true, messages : [],  buttons:[]};
 	},
 
-	[MESSENGER_VISIBILITY]: (state, action) => {
+	[MESSENGER_MESSAGES_TO_SEE]: (state, action) => {
+		return { ...state, toSee : action.count};
+	},
 
-		return { ...state, visibility : action.params, closed: false, notification: action.params ? false : state.notification };
+	[MESSENGER_NOTIFICATION]: (state, action) => {
+
+		return { ...state, bot: false, notificationId:action.params, messages : [], buttons : []};
+	},
+
+	[MESSENGER_VISIBILITY]: (state, action) => {
+		return { ...state, visibility : action.params, closed: false};
 	},
 
 	[MESSENGER_INIT]: (state, action) => {

@@ -175,10 +175,16 @@ class PayView extends Component {
 	}
 
 	confirmTitle(title) {
-		this.setState({
-			transferLabel: title,
-			step: this.state.step + 1
-		});
+		if (this.props.recipient !== undefined && this.props.recipientId !== undefined) {
+			this.setState({
+				transferLabel: title,
+				transferRecipient: this.props.recipient,
+				transferRecipientId: this.props.recipientId,
+				step: this.state.step + 2
+			});
+		} else {
+			this.setState({transferLabel: title, step: this.state.step + 1});
+		}
 	}
 
 	confirmPay() {
