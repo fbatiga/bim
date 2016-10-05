@@ -328,7 +328,10 @@ const style = StyleSheet.create({
 		flex: 1
 	},
 	add : {
-		alignSelf : 'center'
+		alignSelf : 'flex-end',
+		marginRight: -15,
+		width: 65,
+		height: 65
 	},
 	text :{
 		color: '#fff',
@@ -357,4 +360,3 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps)(CardView);
-
