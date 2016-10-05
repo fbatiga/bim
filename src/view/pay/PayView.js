@@ -112,7 +112,9 @@ class PayView extends Component {
 					amount={this.state.amount}
 					back={this.back.bind(this)}
 					transferLabel={this.state.transferLabel}
-					transferRecipient={this.state.transferRecipient}
+					recipient={this.state.transferRecipient}
+					recipientId={this.state.transferRecipientId}
+					originator={this.props.login.username}
 					confirm={this.confirmPay.bind(this)} />
 			);
 		}
