@@ -22,7 +22,16 @@ const AppStore = configureStore();
 class App extends Component {
 
   componentDidMount() {
-    CodePush.sync({updateDialog: true, installMode: CodePush.InstallMode.IMMEDIATE})
+
+     var updateDialogOptions = {
+	    updateTitle: "Mise à Jour disponible",
+	    optionalUpdateMessage: "Souhaitez-vous mettre à jour votre application ?",
+	    optionalIgnoreButtonLabel: "Non",
+	    optionalInstallButtonLabel: "Oui",
+	};
+
+
+    CodePush.sync({updateDialog: updateDialogOptions, installMode: CodePush.InstallMode.IMMEDIATE})
       .then(update => console.log('update', update))
       .catch(err => console.log('update error', err));
   }
