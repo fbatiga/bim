@@ -8,16 +8,16 @@ import momentfr from 'moment/locale/fr';
 
 
 const initialState = {
-	categories: [
-	{label: 'TOUT', categoryId: "all", color: 'white'},
-	{label: 'BANQUE', categoryId: "banque", color: 'violet'},
-	{label: 'ABONNEMENTS', categoryId: "abonnements", color: 'orange'},
-	{label: 'BARS & RESTAURANT', categoryId: "bar-restaurants", color: 'cyan'},
-	{label: 'IMPOTS & TAXES', categoryId: "impots", color: 'blue'},
-	{label: 'LOGEMENT', categoryId: "logement", color: 'yellow'},
-	{label: 'SANTÉ', categoryId: "sante", color: 'green'},
-	{label: 'RETRAITS, CHÈQUES & TRANSFERT', categoryId: "retraits", color: 'lightviolet'},
-	{label: 'SORTIE & LOISIRS', categoryId: "sorties", color: 'red'}
+	categories :  [
+		{label: 'TOUT', categoryId: "all", color: 'white'},
+		{label: 'BANQUE', categoryId: "banque", color: 'violet'},
+		{label: 'ABONNEMENTS', categoryId: "abonnements", color: 'orange'},
+		{label: 'BARS & RESTAURANT', categoryId: "bar-restaurants", color: 'cyan'},
+		{label: 'IMPOTS & TAXES', categoryId: "impots", color: 'blue'},
+		{label: 'LOGEMENT', categoryId: "logement", color: 'yellow'},
+		{label: 'SANTÉ', categoryId: "sante", color: 'green'},
+		{label: 'RETRAITS, CHÈQUES & TRANSFERT', categoryId: "retraits", color: 'lightviolet'},
+		{label: 'SORTIE & LOISIRS', categoryId: "sorties", color: 'red'}
 	],
 	balance: 2300,
 	previousMonthBalance: 1000,

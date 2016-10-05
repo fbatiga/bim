@@ -1,7 +1,7 @@
 'use strict';
 
 import React, { Component } from 'react';
-import { View, Text, Modal, ListView, Image, ScrollView, SegmentedControlIOS, TouchableOpacity, TouchableHighlight,StyleSheet,  Dimensions, Animated } from 'react-native';
+import { View, Text, Modal, ListView, Image, ScrollView, SegmentedControlIOS, TouchableOpacity,StyleSheet,  Dimensions, Animated } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import moment from 'moment';
 import {firebaseDb} from  '../../app/AppFirebase';
@@ -14,6 +14,9 @@ import {swipeTo, configureSwipe} from '../menu/MenuAction';
 import {connect} from 'react-redux';
 import {addTransaction, setTransactions} from './AccountAction';
 import AccountTab from './item/AccountTab';
+import AccountTabTitle from './item/AccountTabTitle';
+
+
 import Title from '../common/title/Title';
 import BackButton from '../common/button/BackButton';
 
@@ -30,26 +33,40 @@ class AccountView extends Component {
 	constructor(props) {
 		super(props);
 
-		var categories = {};
-		this.props.account.categories.map((value, key) => {
-			categories[value.categoryId] = value;
-		});
-		this.categories = categories;
-		this.position = 0;
-		this.scrollTransactionPosition= 0;
-		this.scrollTransactionHeight = height;
-
 		this.state = {
 			currentTab: 'all',
 			previousMonth: 'Mai',
 			currentMonth: 'Juin',
-			balance: this.props.account.balance,
 			modalVisible: false,
 			fadeAnim: new Animated.Value(0),
-			bounceValue: new Animated.Value(0),
-			slideIn: new Animated.Value(100)
+			slideIn: new Animated.Value(100),
+			tabs: []
 		};
+
+		this.categories = {};
+
+		this.props.account.categories.map((value, key) => {
+			this.categories[value.categoryId] = value;
+
+			value.style = {
+					bounce: new Animated.Value(key == 0 ? 1 : 0.7),
+					opacity: new Animated.Value(key == 0 ? 1 : 0.2),
+					font: new Animated.Value(key == 0 ? 1 : 0.7),
+				};
+			this.state.tabs.push(value);
+		});
+
+		this.position = 0;
+		this.scrollTransactionPosition= 0;
+		this.scrollTransactionHeight = height;
+		this.selected= 0;
+		this.tabs=[];
+		this.TitleTabs=[];
+
+		this.state.tabs[this.selected].selected = true;
+
 	}
+
 
 	componentWillMount(){
 		const rootRef = firebaseDb.ref();
@@ -58,19 +75,12 @@ class AccountView extends Component {
 
 	componentDidMount() {
 
-
 		let animations = [];
 		animations.push(
 			Animated.timing(
 				this.state.fadeAnim,
 				{
 					duration: 50,
-					toValue: 1
-				}),
-			Animated.timing(
-				this.state.bounceValue,
-				{
-					duration: 200,
 					toValue: 1
 				}),
 			Animated.timing(
@@ -88,7 +98,6 @@ class AccountView extends Component {
 			let transactions = [];
 			snapshot.forEach((row) => {
 				row = row.val();
-				row.category = this.categories[row.category];
 				transactions.push(row);
 			});
 
@@ -100,13 +109,15 @@ class AccountView extends Component {
 		});
 
 		this.mainView = this.refs.mainView.getScrollResponder();
+		this.tabView = this.refs.tabView.getScrollResponder();
+		this.tabTitleView = this.refs.tabTitleView.getScrollResponder();
+
 	}
 
 	listenToTransactionChanges(source) {
 		source.orderByChild('timestamp').on('child_added', (snapshot)=> {
 			snapshot = snapshot.val();
             // console.log(snapshot);
-            snapshot.category = this.categories[snapshot.category];
             // inserting at the beginning of the array
 
             this.props.dispatch(addTransaction(snapshot));
@@ -122,7 +133,6 @@ class AccountView extends Component {
 		this.setState({modalVisible: false});
 	}
 
-
 	setCategory(category) {
 		this.setState({category: category});
 	}
@@ -131,14 +141,98 @@ class AccountView extends Component {
 		this.props.dispatch(
 			configureSwipe({
 				onVerticalSwipe : this.onVerticalSwipe.bind(this),
-				onVerticalLargeSwipe : this.onVerticalSwipe.bind(this)
+				onVerticalLargeSwipe : this.onVerticalSwipe.bind(this),
+				onHorizontalSwipe : this.onHorizontalSwipe.bind(this),
+				onHorizontalLargeSwipe : this.onHorizontalSwipe.bind(this)
 			})
-			);
+		);
 	}
 
 	registerScroll(scroll){
 
 		this.transferScroll = scroll;
+
+	}
+
+	select(index){
+
+		console.log('select', index);
+
+		let animations = [];
+
+
+		if(this.tabs[index] != undefined){
+
+			if(this.tabs[this.selected] != undefined){
+
+				animations.push(
+					Animated.timing(
+					this.tabs[this.selected].props.style.opacity,
+					{
+						duration: 200,
+						toValue: 0.2
+					}),
+					Animated.timing(
+						this.tabs[this.selected].props.style.font,
+						{
+							duration: 200,
+							toValue: 0.7
+					})
+				);
+
+
+
+
+			}
+
+
+
+
+
+
+			animations.push(
+				Animated.timing(
+					this.tabs[index].props.style.opacity,
+					{
+						duration: 200,
+						toValue: 1
+				}),
+				Animated.timing(
+					this.tabs[index].props.style.font,
+					{
+						duration: 200,
+						toValue: 1
+				})
+			);
+
+			this.tabView.scrollTo({
+				x : this.tabs[index].position - ((width - this.tabs[index].width)/2),
+				animated:true
+			});
+
+			this.tabTitleView.scrollTo({
+				x : this.TitleTabs[index].position - ((width - this.TitleTabs[index].width)/2),
+				animated:true
+			});
+
+			this.selected = index;
+
+		}
+
+		Animated.parallel(animations).start();
+
+	}
+
+	onHorizontalSwipe(distance, position) {
+
+		if(distance > 0){
+
+			this.select(this.selected + 1);
+
+		}else{
+
+			this.select(this.selected - 1);
+		}
 
 	}
 
@@ -192,6 +286,19 @@ class AccountView extends Component {
 		this.scrollTransactionHeight = nativeEvent.contentSize.height;
 	}
 
+
+	registerTabs(item){
+		this.tabs[item.props.index] = item;
+	}
+
+
+	registerTitleTabs(item){
+		this.TitleTabs[item.props.index] = item;
+	}
+
+
+
+
 	render() {
 		return (
 			<View style={{ flex: 1 }} onLayout={this.configureScroll.bind(this)} >
@@ -209,43 +316,47 @@ class AccountView extends Component {
 			<BackButton image={AppAsset.back_dark} back={Actions.overview} />
 			<Title style={{color :AppGuideline.colors.deepBlue, marginBottom: 20}} >B!M</Title>
 
-			<Animated.View style={[style.graph, { transform: [ {scale: this.state.bounceValue} ] }]}>
-			<Image source={AppAsset.graphCircled}  style={style.graphCircle}>
-			<Text style={style.graphLabel} >SOLDE ACTUEL</Text>
-			<Text style={style.graphBalance} >{this.state.balance} €</Text>
-			</Image>
-			</Animated.View>
-
 			<View style={style.tabs}>
-			<ScrollView
-			style={style.tabsContainer}
-			contentContainerStyle={style.tabsContent}
-			horizontal={true}
-			automaticallyAdjustInsets={false}
-			decelerationRate={0}
-			bounces ={false}
-			snapToInterval={themeWidth + themeMargin*2}
-			snapToAlignment="center">
-			{this.props.account.categories.map((value, key) => {
-				return (<AccountTab rowData={value} callback={this.setCategory.bind(this)} key={key} />);
-			})}
-			</ScrollView>
-			</View>
-			</View>
+				<ScrollView
+					style={style.tabsContainer}
+					contentContainerStyle={style.tabsContent}
+					horizontal={true}
+					ref='tabView'
+					bounces ={false}
+					scrollEnabled ={false}
+					snapToAlignment="center">
+					{this.state.tabs.map((value, key) => {
+						return (<AccountTab rowData={value} style={value.style} register={this.registerTabs.bind(this)} callback={this.setCategory.bind(this)} key={key} index={key} balance={this.props.account.balance} />);
+					})}
+					</ScrollView>
+					<ScrollView
+					style={style.titleTabsContainer}
+					contentContainerStyle={style.tabsContent}
+					horizontal={true}
+					ref='tabTitleView'
+					bounces ={false}
+					scrollEnabled ={false}
+					snapToAlignment="center">
+					{this.state.tabs.map((value, key) => {
+						return (<AccountTabTitle rowData={value} style={value.style} register={this.registerTitleTabs.bind(this)} callback={this.setCategory.bind(this)} key={key} index={key} balance={this.props.account.balance} />);
+					})}
+					</ScrollView>
+				</View>
+				</View>
 
-			<Animated.View style={[style.bottom, { marginTop: this.state.slideIn }]}>
-			<AccountTransfertList
-			registerScroll={this.registerScroll.bind(this)}
-			onScrollEnd={this.onScrollTransactionEnd.bind(this)}
-			previousMonth={this.state.previousMonth}
-			currentMonth={this.state.currentMonth}
-			category={this.state.category}
-			account={this.props.account}
-			/>
-			</Animated.View>
-			</ScrollView>
-			</View>
-			);
+				<Animated.View style={[style.bottom, { marginTop: this.state.slideIn }]}>
+				<AccountTransfertList
+				registerScroll={this.registerScroll.bind(this)}
+				onScrollEnd={this.onScrollTransactionEnd.bind(this)}
+				previousMonth={this.state.previousMonth}
+				currentMonth={this.state.currentMonth}
+				category={this.state.category}
+				account={this.props.account}
+				/>
+				</Animated.View>
+				</ScrollView>
+				</View>
+				);
 	}
 }
 
@@ -261,36 +372,6 @@ const style = StyleSheet.create({
 	},
 	tabs: {
 		flex: 1
-	},
-	graph: {
-		alignItems: 'center'
-	},
-	graphCircle: {
-		justifyContent: 'center',
-		alignItems: 'center',
-		width: null,
-		height: 220,
-		resizeMode: 'stretch',
-	},
-	graphLabel: {
-
-		fontSize: 10,
-		letterSpacing : 1.5,
-		fontFamily: 'Montserrat',
-		color: '#120037',
-		fontWeight: '300',
-		marginBottom: 5,
-		width: 180,
-		marginLeft: 20,
-		marginRight: 20,
-		overflow: 'hidden',
-		textAlign: "center"
-	},
-
-	graphBalance: {
-		fontSize: 36,
-		color: '#120037',
-		fontWeight: 'bold'
 	},
 	dotIcon: {
 		alignItems: 'center',
@@ -312,9 +393,13 @@ const style = StyleSheet.create({
 		flex: 1,
 		backgroundColor: '#fff'
 	},
+	titleTabsContainer :{
+		flex: 1,
 
+	},
 	tabsContainer: {
-		flex: 1
+		flex: 2,
+
 	},
 	tabsContent: {
 		paddingHorizontal: themePreview,
