@@ -84,7 +84,7 @@ class AddExistingAccount extends Component {
 		const accountRef = firebaseRootRef.child(this.props.username+'/accounts');
 
 		accountRef.push({
-			id: this.state.bank.trim(),
+			id: this.state.bank,
 			label: this.state.bank,
 			balance: 0,
 			type: 'external'

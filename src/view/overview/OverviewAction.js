@@ -18,8 +18,6 @@ export function openAccount(action) {
 }
 
 export function setAccounts(accounts) {
-  console.log('action accounts', accounts);
-
   return {
     type: OVERVIEW_SET_ACCOUNTS,
     accounts

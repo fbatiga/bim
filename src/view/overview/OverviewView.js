@@ -3,14 +3,12 @@
 import React, { Component } from 'react';
 import { View, Text,ListView, Image, ScrollView, StyleSheet, TouchableOpacity, Animated } from 'react-native';
 import { Actions } from 'react-native-router-flux';
+import {connect} from 'react-redux';
 import  ScrollableTabView, { ScrollableTabBar }  from 'react-native-scrollable-tab-view';
 import AppGuideline from '../../app/AppGuideline';
 import Title from '../common/title/Title';
 
-import {connect} from 'react-redux';
-
 class OverviewView extends Component {
-
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -24,57 +22,51 @@ class OverviewView extends Component {
 	}
 
 	render() {
-		console.log('firebaseAccounts', this.props.firebaseAccounts);
-
 		return (
-			<View
-			horizontal={false} style={[style.container, {flex: 1}]}>
-			<View style={[style.top, {flex: 1}]}>
-
-			<Title style={{opacity: this.state.fadeAnim, marginBottom: 70}}>COMPTES</Title>
-
-			<Animated.View style={[style.circle, {transform: [{scale: this.state.bounceValue}]}]}>
-			<ScrollableTabView
-			style={{marginTop: 20,  borderBottomWidth: 0}}
-			initialPage={0}
-			tabBarPosition={'bottom'}
-			tabBarUnderlineColor={'transparent'}
-			tabBarActiveTextColor={'white'}
-			tabBarInactiveTextColor={AppGuideline.colors.lightviolet}
-			renderTabBar={() => <ScrollableTabBar style={style.tabs} tabsContainerStyle={style.tabBar} />}
-			>
-			{this.props.firebaseAccounts.map((value, key) => {
-				return (
-					<View tabLabel={value.label} key={key}>
-					<TouchableOpacity style={style.graph} onPress={()=> {
-						if (value.type == 'internal') {
-							this.transition(value.type);
-						}
-					}}>
-					<View style={[style.graphCircle, {backgroundColor: this.selectColor(value.type, key)}]}>
-					<Animated.Text style={[style.graphLabel, {opacity: this.state.fadeAnim}]} >SOLDE ACTUEL</Animated.Text>
-					<Animated.Text style={[style.graphBalance, {opacity: this.state.fadeAnim}]} >{value.balance} €</Animated.Text>
-					</View>
+			<View horizontal={false} style={[style.container, {flex: 1}]}>
+				<View style={[style.top, {flex: 1}]}>
+					<Title style={{opacity: this.state.fadeAnim, marginBottom: 70}}>COMPTES</Title>
+					<Animated.View style={[style.circle, {transform: [{scale: this.state.bounceValue}]}]}>
+						<ScrollableTabView
+							style={{marginTop: 20,  borderBottomWidth: 0}}
+							initialPage={0}
+							tabBarPosition={'bottom'}
+							tabBarUnderlineColor={'transparent'}
+							tabBarActiveTextColor={'white'}
+							tabBarInactiveTextColor={AppGuideline.colors.lightviolet}
+							renderTabBar={() => <ScrollableTabBar style={style.tabs} tabsContainerStyle={style.tabBar} />}
+						>
+							{
+								this.props.firebaseAccounts.map((value, key) => {
+									console.log('value', value);
+									return (
+										<View tabLabel={value.label} key={key}>
+											<TouchableOpacity activeOpacity={1} style={style.graph} onPress={()=> {
+												this.transition(value.type, value.label);
+											}}>
+												<View style={[style.graphCircle, {backgroundColor: this.selectColor(value.type, key), borderWidth: 2, borderColor: this.setBorder(value.type)}]}>
+													<Animated.Text style={[style.graphLabel, {opacity: this.state.fadeAnim, color: this.setTextColor(value.type)}]} >SOLDE ACTUEL</Animated.Text>
+													<Animated.Text style={[style.graphBalance, {opacity: this.state.fadeAnim, color: this.setTextColor(value.type)}]} >{value.balance} €</Animated.Text>
+												</View>
+											</TouchableOpacity>
+										</View>
+									);
+								})
+							}
+						</ScrollableTabView>
+					</Animated.View>
+				</View>
+				<View style={style.addIcon}>
+					<TouchableOpacity style={style.graph} onPress={Actions.addAccount}>
+						<Animated.Image source={asset.add} style={{
+							width: 65,
+							height: 65,
+							opacity: this.state.fadeAnim
+						}} />
 					</TouchableOpacity>
-					</View>
-					);
-			})}
-			</ScrollableTabView>
-			</Animated.View>
+				</View>
 			</View>
-
-			<View style={style.addIcon}>
-			<TouchableOpacity style={style.graph} onPress={Actions.addAccount}>
-			<Animated.Image source={asset.add} style={{
-				width: 40,
-				height: 40,
-				opacity: this.state.fadeAnim
-			}} />
-			</TouchableOpacity>
-			</View>
-
-			</View>
-			);
+		);
 	}
 
 	randomizeColor(index) {
@@ -90,15 +82,29 @@ class OverviewView extends Component {
 	selectColor(type, key) {
 		if (type === 'internal') {
 			return AppGuideline.colors.alternative;
+		} else if (type === 'total') {
+			return 'transparent';
 		} else {
 			return this.randomizeColor(key);
 		}
 	}
 
-	transition(type) {
+	setBorder(type) {
+		if (type === 'total') {
+			return '#fff'
+		}
+		return null;
+	}
 
+	setTextColor(type) {
+		if (type === 'total') {
+			return '#fff'
+		}
+		return AppGuideline.colors.deepBlue;
+	}
+
+	transition(type, label) {
 		let animations = [];
-
 
 		animations.push(
 			Animated.timing(
@@ -114,15 +120,15 @@ class OverviewView extends Component {
 			})
 		);
 
-
 		Animated.sequence(animations).start(()=>{
 			if (type === 'jackpot') {
 				Actions.jackpot();
 			} else {
-				Actions.account();
+				Actions.account({label});
+				// getAccountInfos
+				// getTransactionsByAccount
 			}
-		})
-
+		});
 	}
 }
 
@@ -159,15 +165,14 @@ const style = StyleSheet.create({
 		height: 200,
 		padding: 10,
 		marginBottom: 10,
-		// backgroundColor:  AppGuideline.colors.alternative,
-		borderRadius: 145
+		borderRadius: 100
 	},
 	graphLabel: {
 		fontSize: 10,
 		letterSpacing : 1.5,
 		fontFamily: 'Montserrat',
 		color: AppGuideline.colors.deepBlue,
-		fontWeight: '300',
+		fontWeight: '500',
 		marginBottom: 5,
 		overflow: 'hidden',
 		textAlign: "center"
@@ -178,7 +183,7 @@ const style = StyleSheet.create({
 		fontWeight: 'bold'
 	},
 	addIcon: {
-		alignItems: 'center',
+		alignItems: 'flex-end',
 		marginRight: -15,
 		marginBottom: 50
 	}
