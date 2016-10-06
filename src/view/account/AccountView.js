@@ -1,24 +1,34 @@
 'use strict';
-
 import React, { Component } from 'react';
-import { View, Text, Modal, ListView, Image, ScrollView, SegmentedControlIOS, TouchableOpacity, TouchableHighlight,StyleSheet,  Dimensions, Animated } from 'react-native';
+import {
+	View,
+	Text,
+	Modal,
+	ListView,
+	Image,
+	ScrollView,
+	SegmentedControlIOS,
+	TouchableOpacity,
+	TouchableHighlight,
+	StyleSheet,
+	Dimensions,
+	Animated } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import moment from 'moment';
-import {firebaseDb} from  '../../app/AppFirebase';
+import { firebaseDb } from  '../../app/AppFirebase';
+import { connect } from 'react-redux';
 
 import AppGuideline from '../../app/AppGuideline';
 import AppAsset from '../../app/AppAsset';
-import {swipeTo, configureSwipe} from '../menu/MenuAction';
+import { swipeTo, configureSwipe } from '../menu/MenuAction';
 
-
-import {connect} from 'react-redux';
-import {addTransaction, setTransactions} from './AccountAction';
 import AccountTab from './item/AccountTab';
 import Title from '../common/title/Title';
 import BackButton from '../common/button/BackButton';
-
 import AccountTransfertModal from './modal/AccountTransfertModal';
 import AccountTransfertList from './list/AccountTransfertList';
+
+import { addTransaction, setTransactions } from './AccountAction';
 
 const {width, height} = Dimensions.get('window');
 const themePreview = 50;
@@ -26,11 +36,11 @@ const themeMargin = 5;
 const themeWidth = width - (themePreview + themeMargin) * 2;
 
 class AccountView extends Component {
-
 	constructor(props) {
 		super(props);
 
-		var categories = {};
+		let categories = {};
+
 		this.props.account.categories.map((value, key) => {
 			categories[value.categoryId] = value;
 		});
@@ -41,8 +51,8 @@ class AccountView extends Component {
 
 		this.state = {
 			currentTab: 'all',
-			previousMonth: 'Mai',
-			currentMonth: 'Juin',
+			previousMonth: 'Aout',
+			currentMonth: 'Sept',
 			balance: this.props.account.balance,
 			modalVisible: false,
 			fadeAnim: new Animated.Value(0),
@@ -53,13 +63,13 @@ class AccountView extends Component {
 
 	componentWillMount(){
 		const rootRef = firebaseDb.ref();
-		this.transactionsRef = rootRef.child(this.props.login.username+'/transactions');
+
+		this.transactionsRef = rootRef.child(this.props.username+'/transactions');
 	}
 
 	componentDidMount() {
-
-
 		let animations = [];
+
 		animations.push(
 			Animated.timing(
 				this.state.fadeAnim,
@@ -78,14 +88,15 @@ class AccountView extends Component {
 				{
 					duration: 200,
 					toValue: 0
-				})
-			);
+				}
+			)
+		);
 
 		Animated.sequence(animations).start();
 
 		this.transactionsRef.once("value").then(function (snapshot) {
-
 			let transactions = [];
+
 			snapshot.forEach((row) => {
 				row = row.val();
 				row.category = this.categories[row.category];
@@ -105,13 +116,13 @@ class AccountView extends Component {
 	listenToTransactionChanges(source) {
 		source.orderByChild('timestamp').on('child_added', (snapshot)=> {
 			snapshot = snapshot.val();
-            // console.log(snapshot);
-            snapshot.category = this.categories[snapshot.category];
-            // inserting at the beginning of the array
 
-            this.props.dispatch(addTransaction(snapshot));
-           // this.setState({dataSource: this.state.dataSource.cloneWithRows(this.props.account.transactions)});
-       });
+      snapshot.category = this.categories[snapshot.category];
+      // inserting at the beginning of the array
+
+      this.props.dispatch(addTransaction(snapshot));
+	    // this.setState({dataSource: this.state.dataSource.cloneWithRows(this.props.account.transactions)});
+    });
 	}
 
 	showModal() {
@@ -121,7 +132,6 @@ class AccountView extends Component {
 	hideModal() {
 		this.setState({modalVisible: false});
 	}
-
 
 	setCategory(category) {
 		this.setState({category: category});
@@ -133,41 +143,29 @@ class AccountView extends Component {
 				onVerticalSwipe : this.onVerticalSwipe.bind(this),
 				onVerticalLargeSwipe : this.onVerticalSwipe.bind(this)
 			})
-			);
+		);
 	}
 
 	registerScroll(scroll){
-
 		this.transferScroll = scroll;
-
 	}
 
 	onVerticalSwipe(distance, position) {
-
-		if(this.position == 0 && position.y > 500){
-
+		if (this.position == 0 && position.y > 500) {
 			this.scrollTo(500);
-
-		}else if(position.y < 100 && distance < 0){
+		} else if (position.y < 100 && distance < 0) {
 			this.scrollTo(0);
-
-		}else{
-
-			if(distance< 100){
-				distance = distance *2;
-			}
-
+		} else {
 			let pos = this.scrollTransactionPosition + distance;
 
-
-			if(pos<0){
+			if (distance< 100) {
+				distance = distance *2;
+			}
+			if (pos < 0) {
 				pos = 0;
 			}
-
-			if( pos > this.scrollTransactionHeight - 500){
-
+			if (pos > this.scrollTransactionHeight - 500) {
 				pos = this.scrollTransactionHeight -  500;
-
 			}
 
 			this.transferScroll.scrollTo({
@@ -176,7 +174,6 @@ class AccountView extends Component {
 			});
 		}
 	}
-
 
 	scrollTo(y){
 		this.mainView.scrollTo({
@@ -193,59 +190,66 @@ class AccountView extends Component {
 	}
 
 	render() {
+		console.log('transactions', this.props.account.transactions);
+		console.log('label', this.props.label);
+
 		return (
 			<View style={{ flex: 1 }} onLayout={this.configureScroll.bind(this)} >
+				<ScrollView
+					bounces={false}
+					scrollEnabled={false}
+					ref='mainView'
+				>
+					{
+						this.state.modalVisible &&
+						<AccountTransfertModal close={this.hideModal.bind(this)}/>
+					}
+					<View style={style.top}>
+						<BackButton image={AppAsset.back_dark} back={Actions.overview} />
+						<Title style={{color :AppGuideline.colors.deepBlue, marginBottom: 20}} >B!M</Title>
 
-			<ScrollView
-			bounces={false}
-			scrollEnabled={false}
-			ref='mainView'
-			>
+						<Animated.View style={[style.graph, { transform: [ {scale: this.state.bounceValue} ] }]}>
+							<Image source={AppAsset.graphCircled}  style={style.graphCircle}>
+							<Text style={style.graphLabel} >SOLDE ACTUEL</Text>
+							<Text style={style.graphBalance} >{this.state.balance} €</Text>
+							</Image>
+						</Animated.View>
 
-			{this.state.modalVisible && <AccountTransfertModal close={this.hideModal.bind(this)}/>}
-
-			<View style={style.top}>
-
-			<BackButton image={AppAsset.back_dark} back={Actions.overview} />
-			<Title style={{color :AppGuideline.colors.deepBlue, marginBottom: 20}} >B!M</Title>
-
-			<Animated.View style={[style.graph, { transform: [ {scale: this.state.bounceValue} ] }]}>
-			<Image source={AppAsset.graphCircled}  style={style.graphCircle}>
-			<Text style={style.graphLabel} >SOLDE ACTUEL</Text>
-			<Text style={style.graphBalance} >{this.state.balance} €</Text>
-			</Image>
-			</Animated.View>
-
-			<View style={style.tabs}>
-			<ScrollView
-			style={style.tabsContainer}
-			contentContainerStyle={style.tabsContent}
-			horizontal={true}
-			automaticallyAdjustInsets={false}
-			decelerationRate={0}
-			bounces ={false}
-			snapToInterval={themeWidth + themeMargin*2}
-			snapToAlignment="center">
-			{this.props.account.categories.map((value, key) => {
-				return (<AccountTab rowData={value} callback={this.setCategory.bind(this)} key={key} />);
-			})}
-			</ScrollView>
+						<View style={style.tabs}>
+							<ScrollView
+								style={style.tabsContainer}
+								contentContainerStyle={style.tabsContent}
+								horizontal={true}
+								automaticallyAdjustInsets={false}
+								decelerationRate={0}
+								bounces ={false}
+								snapToInterval={themeWidth + themeMargin*2}
+								snapToAlignment="center"
+							>
+								{
+									this.props.account.categories.map((value, key) => {
+										return (
+											<AccountTab rowData={value} callback={this.setCategory.bind(this)} key={key} />
+										);
+									})
+								}
+							</ScrollView>
+						</View>
+					</View>
+					<Animated.View style={[style.bottom, { marginTop: this.state.slideIn }]}>
+						<AccountTransfertList
+							registerScroll={this.registerScroll.bind(this)}
+							onScrollEnd={this.onScrollTransactionEnd.bind(this)}
+							previousMonth={this.state.previousMonth}
+							currentMonth={this.state.currentMonth}
+							category={this.state.category}
+							account={this.props.account}
+							transactions={this.props.transactions}
+						/>
+					</Animated.View>
+				</ScrollView>
 			</View>
-			</View>
-
-			<Animated.View style={[style.bottom, { marginTop: this.state.slideIn }]}>
-			<AccountTransfertList
-			registerScroll={this.registerScroll.bind(this)}
-			onScrollEnd={this.onScrollTransactionEnd.bind(this)}
-			previousMonth={this.state.previousMonth}
-			currentMonth={this.state.currentMonth}
-			category={this.state.category}
-			account={this.props.account}
-			/>
-			</Animated.View>
-			</ScrollView>
-			</View>
-			);
+		);
 	}
 }
 
@@ -273,7 +277,6 @@ const style = StyleSheet.create({
 		resizeMode: 'stretch',
 	},
 	graphLabel: {
-
 		fontSize: 10,
 		letterSpacing : 1.5,
 		fontFamily: 'Montserrat',
@@ -286,7 +289,6 @@ const style = StyleSheet.create({
 		overflow: 'hidden',
 		textAlign: "center"
 	},
-
 	graphBalance: {
 		fontSize: 36,
 		color: '#120037',
@@ -296,7 +298,6 @@ const style = StyleSheet.create({
 		alignItems: 'center',
 		marginTop: 10
 	},
-
 	transferButton: {
 		position: 'absolute',
 		top: (height - 215),
@@ -305,14 +306,11 @@ const style = StyleSheet.create({
 		padding: 0,
 		zIndex: 100
 	},
-
 	transferButtonImage: {},
-
 	bottom: {
 		flex: 1,
 		backgroundColor: '#fff'
 	},
-
 	tabsContainer: {
 		flex: 1
 	},
@@ -326,7 +324,8 @@ const style = StyleSheet.create({
 function mapStateToProps(state) {
 	return {
 		account: state.account,
-		login: state.login
+		username: state.login.username,
+		transactions: state.account.transactions
 	};
 }
 

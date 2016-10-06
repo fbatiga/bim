@@ -1,11 +1,9 @@
 "use strict";
-
 import { handleActions } from 'redux-actions';
 import { OVERVIEW_OPEN, OVERVIEW_SET_ACCOUNTS } from './OverviewAction';
 import { Actions } from 'react-native-router-flux';
 import moment from 'moment';
 import momentfr from 'moment/locale/fr';
-
 
 const initialState = {
     categories: [
@@ -54,7 +52,6 @@ const initialState = {
     ], currentMonth: 6
 };
 
-
 moment.locale('fr');
 
 const OverviewReducer = handleActions({
@@ -65,11 +62,9 @@ const OverviewReducer = handleActions({
   [OVERVIEW_SET_ACCOUNTS]: (state, action) => {
   	let accounts = [];
 
-  	for(let i in action.accounts){
+  	for (let i in action.accounts) {
   		accounts.push(action.accounts[i])
   	}
-
-    console.log('reducer accounts', accounts);
 
     return { ...state, firebaseAccounts: accounts};
   },

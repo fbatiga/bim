@@ -38,12 +38,11 @@ class OverviewView extends Component {
 						>
 							{
 								this.props.firebaseAccounts.map((value, key) => {
+									console.log('value', value);
 									return (
 										<View tabLabel={value.label} key={key}>
 											<TouchableOpacity activeOpacity={1} style={style.graph} onPress={()=> {
-												if (value.type == 'internal') {
-													this.transition(value.type);
-												}
+												this.transition(value.type, value.label);
 											}}>
 												<View style={[style.graphCircle, {backgroundColor: this.selectColor(value.type, key), borderWidth: 2, borderColor: this.setBorder(value.type)}]}>
 													<Animated.Text style={[style.graphLabel, {opacity: this.state.fadeAnim, color: this.setTextColor(value.type)}]} >SOLDE ACTUEL</Animated.Text>
@@ -104,7 +103,7 @@ class OverviewView extends Component {
 		return AppGuideline.colors.deepBlue;
 	}
 
-	transition(type) {
+	transition(type, label) {
 		let animations = [];
 
 		animations.push(
@@ -125,7 +124,9 @@ class OverviewView extends Component {
 			if (type === 'jackpot') {
 				Actions.jackpot();
 			} else {
-				Actions.account();
+				Actions.account({label});
+				// getAccountInfos
+				// getTransactionsByAccount
 			}
 		});
 	}

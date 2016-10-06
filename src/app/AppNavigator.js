@@ -215,18 +215,13 @@ class AppNavigator extends Component {
 			let accounts = snapshot.val();
 
 			if (accounts === null) {
-				console.log('no accounts found');
-
-				/**
-				 * Create default accounts
-				 */
 
 				 const defaultAccounts = [
 					 {
  						id: 'TOUT',
  						label: 'Mes comptes',
  						balance: 0,
- 						type: 'external'
+ 						type: 'total'
  					},
  					{
  						id: 'Bim',
@@ -238,24 +233,12 @@ class AppNavigator extends Component {
 
 				this.firebaseAccountsRef.set(defaultAccounts);
 
-				/**
-				 * Load those accounts
-				 */
-
 				 this.props.dispatch(setAccounts(defaultAccounts));
 			} else {
-				/**
-				 * Load existing accounts
-				 */
-				 console.log('load existing accounts');
-				 console.log('loaded accounts :', accounts);
-
 				 this.props.dispatch(setAccounts(accounts));
 			}
 		})
-
 	}
-
 
 	componentWillReceiveProps(nextProps){
 		if(nextProps.login.username != this.props.login.username && nextProps.login.username !== false){
