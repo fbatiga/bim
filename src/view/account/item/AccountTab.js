@@ -10,8 +10,6 @@ const themeWidth = width - (themePreview + themeMargin) * 2;
 
 export default class AccountTab extends React.Component {
 
-
-
 	onLayout(event){
 		this.position = event.nativeEvent.layout.x;
 		this.width = event.nativeEvent.layout.width;

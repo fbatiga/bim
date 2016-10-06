@@ -61,7 +61,7 @@ class AccountView extends Component {
 					visibility: new Animated.Value(key == 0 ? 1 : 0),
 					opacity: new Animated.Value(key == 0 ? 1 : 0.2),
 					font: new Animated.Value(key == 0 ? 1 : 0.7),
-					textWidth: new Animated.Value(key == 0 ? width-100 : 100),
+					textWidth: new Animated.Value(0),
 				};
 			this.state.tabs.push(value);
 		});
@@ -109,8 +109,6 @@ class AccountView extends Component {
 			)
 		);
 
-		Animated.sequence(animations).start();
-
 		this.transactionsRef.once("value").then(function (snapshot) {
 			let transactions = [];
 
@@ -128,6 +126,10 @@ class AccountView extends Component {
 
 		this.mainView = this.refs.mainView.getScrollResponder();
 		this.tabView = this.refs.tabView.getScrollResponder();
+
+		Animated.sequence(animations).start(()=>{
+			this.select(0);
+		});
 
 	}
 
@@ -204,7 +206,7 @@ class AccountView extends Component {
 						this.tabs[this.selected].props.style.textWidth,
 						{
 							duration: 200,
-							toValue: 50
+							toValue: this.tabs[this.selected].state.width
 					})
 				);
 
@@ -238,8 +240,14 @@ class AccountView extends Component {
 			);
 
 
+			let position = 0;
+
+			if(this.tabs[index] != undefined){
+				position = this.tabs[index].position;
+			}
+
 			this.tabView.scrollTo({
-				x : index*50,
+				x : position,
 				animated:true
 			});
 
@@ -411,6 +419,7 @@ const style = StyleSheet.create({
 		backgroundColor: '#fff'
 	},
 	tabsContainer :{
+		paddingLeft:50,
 		flex: 1,
 	},
 	tabsContent: {

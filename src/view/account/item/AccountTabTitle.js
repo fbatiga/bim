@@ -10,24 +10,54 @@ const themeWidth = width - (themePreview + themeMargin) * 2;
 
 export default class AccountTabTitle extends React.Component {
 
-	onLayout(event){
-		this.position = event.nativeEvent.layout.x;
-		this.width = event.nativeEvent.layout.width;
+
+	constructor(props){
+		super(props);
+		this.state = {
+			width : null
+		};
+	}
+
+
+	componentDidUpdate(){
 		this.props.register(this);
+	}
+
+	onLayout(event){
+
+		if(this.position == undefined){
+			this.position = event.nativeEvent.layout.x;
+
+			Animated.timing(
+				this.props.rowData.style.textWidth,
+				{
+				duration: 0,
+				toValue: event.nativeEvent.layout.width
+			}).start();
+
+			this.setState({
+				width : event.nativeEvent.layout.width
+			});
+
+		}
 	}
 
 	render() {
 
+		let textStyle = { opacity: this.props.rowData.style.opacity }
+		if(this.state.width !== null){
+			textStyle = { opacity: this.props.rowData.style.opacity , width: this.props.rowData.style.textWidth}
+		}
+
 		return (
-				<Animated.View style={[style.tab, { opacity: this.props.rowData.style.opacity , width : this.props.rowData.style.textWidth }]} onLayout={this.onLayout.bind(this)}>
+				<Animated.View style={[style.tab,textStyle]} onLayout={this.onLayout.bind(this)}>
 				<TouchableWithoutFeedback onPress={()=>{this.props.callback(this.props.rowData.categoryId)}} >
 					<Animated.View style={{	flexDirection:'column',
 											marginTop : 40,
-											marginBottom : 92,
-											transform : [{ scale : this.props.rowData.style.font }]}}>
-						<Animated.Text style={style.text}>
+											marginBottom : 92}}>
+						<Text style={style.text}>
 							{this.props.rowData.label}
-						</Animated.Text>
+						</Text>
 						{this.props.index!=0  && <Animated.Text style={[style.subtitle, { opacity : this.props.rowData.style.visibility } ]}>
 							{this.props.balance}  €
 						</Animated.Text> }
@@ -54,9 +84,9 @@ const asset = {
 
 const style = StyleSheet.create({
 	tab: {
-		flex: 1,
       	alignItems: 'center',
-      	justifyContent: 'center',
+      	overflow : 'visible',
+      	justifyContent: 'flex-start',
   	},
 	text: {
 		textAlign : 'center',
