@@ -144,10 +144,7 @@ class ContactDetailsView extends Component {
 								<Text style={style.address}>{this.props.contact.adresse}</Text>
 							</View>
 							<View style={style.row}>
-								<View style={style.action}>
-									<Image source={asset.modify} />
-									<Text style={style.param}>MODIFIER</Text>
-								</View>
+
 							</View>
 							<TouchableOpacity onPress={() => { Actions.pay({recipient: `${this.props.contact.givenName} ${this.props.contact.familyName}`, recipientId: this.props.contact.username }); }}>
 								<View style={style.button}>
