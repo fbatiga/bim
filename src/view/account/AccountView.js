@@ -1,6 +1,6 @@
 'use strict';
 import React, { Component } from 'react';
-import { View, Text, Modal, Image, ScrollView, SegmentedControlIOS, StyleSheet, Dimensions, Animated } from 'react-native';
+import { View, Text, Modal, Image, ScrollView, TouchableWithoutFeedback, SegmentedControlIOS, StyleSheet, Dimensions, Animated } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import moment from 'moment';
 import { firebaseDb } from  '../../app/AppFirebase';
@@ -44,10 +44,11 @@ class AccountView extends Component {
 			currentTab: 'all',
 			previousMonth: 'Sept',
 			currentMonth: 'Oct',
-			balance: this.props.account.balance,
 			modalVisible: false,
 			fadeAnim: new Animated.Value(0),
 			slideIn: new Animated.Value(100),
+			bounce: new Animated.Value(1),
+			selected : 0,
 			tabs: []
 		};
 
@@ -57,10 +58,10 @@ class AccountView extends Component {
 			this.categories[value.categoryId] = value;
 
 			value.style = {
-					bounce: new Animated.Value(key == 0 ? 1 : 0.7),
+					visibility: new Animated.Value(key == 0 ? 1 : 0),
 					opacity: new Animated.Value(key == 0 ? 1 : 0.2),
 					font: new Animated.Value(key == 0 ? 1 : 0.7),
-					textWidth: new Animated.Value(key == 0 ? width : 50),
+					textWidth: new Animated.Value(key == 0 ? width-100 : 100),
 				};
 			this.state.tabs.push(value);
 		});
@@ -70,7 +71,6 @@ class AccountView extends Component {
 		this.scrollTransactionHeight = height;
 		this.selected= 0;
 		this.tabs=[];
-		this.TitleTabs=[];
 
 		this.state.tabs[this.selected].selected = true;
 
@@ -99,7 +99,13 @@ class AccountView extends Component {
 				{
 					duration: 200,
 					toValue: 0
-				}
+				},
+			Animated.timing(
+				this.state.bounce,
+				{
+					duration: 200,
+					toValue: 1
+				})
 			)
 		);
 
@@ -122,7 +128,6 @@ class AccountView extends Component {
 
 		this.mainView = this.refs.mainView.getScrollResponder();
 		this.tabView = this.refs.tabView.getScrollResponder();
-		this.tabTitleView = this.refs.tabTitleView.getScrollResponder();
 
 	}
 
@@ -188,18 +193,22 @@ class AccountView extends Component {
 						{
 							duration: 200,
 							toValue: 0.7
+					}),
+					Animated.timing(
+						this.tabs[this.selected].props.style.visibility,
+						{
+							duration: 200,
+							toValue: 0
+					}),
+					Animated.timing(
+						this.tabs[this.selected].props.style.textWidth,
+						{
+							duration: 200,
+							toValue: 50
 					})
 				);
 
-
-
-
 			}
-
-
-
-
-
 
 			animations.push(
 				Animated.timing(
@@ -213,24 +222,41 @@ class AccountView extends Component {
 					{
 						duration: 200,
 						toValue: 1
-				})
+				}),
+				Animated.timing(
+					this.tabs[index].props.style.textWidth,
+					{
+						duration: 200,
+						toValue: width-100
+				}),
+					Animated.timing(
+						this.tabs[index].props.style.visibility,
+						{
+							duration: 200,
+							toValue: 1
+					})
 			);
 
+
 			this.tabView.scrollTo({
-				x : this.tabs[index].position - ((width - this.tabs[index].width)/2),
+				x : index*50,
 				animated:true
 			});
 
-			this.tabTitleView.scrollTo({
-				x : this.TitleTabs[index].position - ((width - this.TitleTabs[index].width)/2),
-				animated:true
-			});
 
 			this.selected = index;
 
+			Animated.parallel(animations).start(()=>{
+				this.setState({
+					selected : index
+				});
+			});
+
+			this.setCategory(this.state.tabs[this.selected].categoryId);
+
 		}
 
-		Animated.parallel(animations).start();
+
 
 	}
 
@@ -287,16 +313,9 @@ class AccountView extends Component {
 	}
 
 
-	registerTabs(item){
+	register(item){
 		this.tabs[item.props.index] = item;
 	}
-
-
-	registerTitleTabs(item){
-		this.TitleTabs[item.props.index] = item;
-	}
-
-
 
 
 	render() {
@@ -317,7 +336,19 @@ class AccountView extends Component {
 			<Title style={{color :AppGuideline.colors.deepBlue, marginBottom: 20}} >B!M</Title>
 
 			<View style={style.tabs}>
-				<ScrollView
+					<Animated.View style={[style.graph, { transform: [ {scale: this.state.bounce} ] }]}>
+						<View style={style.tab}>
+							{this.state.selected == 0  && (
+								<Image source={asset.circle[this.state.selected]}  style={style.graphCircle}>
+								<Text style={style.graphLabel} >SOLDE ACTUEL</Text>
+								<Text style={style.graphBalance} >{this.props.account.balance} €</Text>
+								</Image>
+							)}
+
+							{this.state.selected !=0 && <Image source={asset.circle[this.state.selected]}  style={style.graphCircle} /> }
+							</View>
+					</Animated.View>
+					<ScrollView
 					style={style.tabsContainer}
 					contentContainerStyle={style.tabsContent}
 					horizontal={true}
@@ -326,19 +357,7 @@ class AccountView extends Component {
 					scrollEnabled ={false}
 					snapToAlignment="center">
 					{this.state.tabs.map((value, key) => {
-						return (<AccountTab rowData={value} style={value.style} register={this.registerTabs.bind(this)} callback={this.setCategory.bind(this)} key={key} index={key} balance={this.props.account.balance} />);
-					})}
-					</ScrollView>
-					<ScrollView
-					style={style.titleTabsContainer}
-					contentContainerStyle={style.tabsContent}
-					horizontal={true}
-					ref='tabTitleView'
-					bounces ={false}
-					scrollEnabled ={false}
-					snapToAlignment="center">
-					{this.state.tabs.map((value, key) => {
-						return (<AccountTabTitle rowData={value} style={value.style} register={this.registerTitleTabs.bind(this)} callback={this.setCategory.bind(this)} key={key} index={key} balance={this.props.account.balance} />);
+						return (<AccountTabTitle rowData={value} style={value.style} register={this.register.bind(this)} callback={()=>{this.select(key)}} key={key} index={key} balance={this.props.account.balance} />);
 					})}
 					</ScrollView>
 				</View>
@@ -372,9 +391,8 @@ const style = StyleSheet.create({
 		zIndex: 10
 	},
 	tabs: {
-		flex: 1
+		flex: 1,
 	},
-
 	dotIcon: {
 		alignItems: 'center',
 		marginTop: 10
@@ -392,20 +410,58 @@ const style = StyleSheet.create({
 		flex: 1,
 		backgroundColor: '#fff'
 	},
-	titleTabsContainer :{
+	tabsContainer :{
 		flex: 1,
-
-	},
-	tabsContainer: {
-		flex: 2,
-
 	},
 	tabsContent: {
-		paddingHorizontal: themePreview,
+		paddingLeft: 50,
 		alignItems: 'center',
 		flex: 1
-	}
+	},
+	graph: {
+		flexDirection : 'column',
+		alignItems: 'center',
+	},
+	graphCircle: {
+		flexDirection : 'column',
+		justifyContent: 'center',
+		padding : 25,
+	},
+	graphLabel: {
+		fontSize: 10,
+		letterSpacing : 1.5,
+		fontFamily: 'Montserrat',
+		color: '#120037',
+		fontWeight: '300',
+		textAlign: "center"
+	},
+	graphBalance: {
+		fontSize: 36,
+		color: '#120037',
+		textAlign: "center",
+		fontWeight: 'bold'
+	},
+	tab: {
+		flex: 1,
+		flexDirection : 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+  }
 });
+
+const asset = {
+	circle : [
+		require('./asset/circle_0.png'),
+		require('./asset/circle_1.png'),
+		require('./asset/circle_2.png'),
+		require('./asset/circle_3.png'),
+		require('./asset/circle_4.png'),
+		require('./asset/circle_5.png'),
+		require('./asset/circle_6.png'),
+		require('./asset/circle_7.png'),
+		require('./asset/circle_8.png')
+	]
+}
 
 function mapStateToProps(state) {
 	return {

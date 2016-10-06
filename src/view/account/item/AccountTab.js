@@ -11,20 +11,6 @@ const themeWidth = width - (themePreview + themeMargin) * 2;
 export default class AccountTab extends React.Component {
 
 
-	componentDidMount() {
-
-		let animations = [];
-		animations.push(
-			Animated.timing(
-				this.props.style.bounce,
-				{
-					duration: 200,
-					toValue: 1
-				})
-			);
-
-		Animated.sequence(animations).start();
-	}
 
 	onLayout(event){
 		this.position = event.nativeEvent.layout.x;
@@ -55,19 +41,7 @@ export default class AccountTab extends React.Component {
 	}
 }
 
-const asset = {
-	circle : [
-		require('../asset/circle_0.png'),
-		require('../asset/circle_1.png'),
-		require('../asset/circle_2.png'),
-		require('../asset/circle_3.png'),
-		require('../asset/circle_4.png'),
-		require('../asset/circle_5.png'),
-		require('../asset/circle_6.png'),
-		require('../asset/circle_7.png'),
-		require('../asset/circle_8.png')
-	]
-}
+
 
 const style = StyleSheet.create({
 	graph: {
@@ -95,7 +69,6 @@ const style = StyleSheet.create({
 	tab: {
 		flex: 1,
 		width: themeWidth,
-		margin: themeMargin,
       alignItems: 'center',
       justifyContent: 'center',
   }

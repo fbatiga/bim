@@ -10,22 +10,6 @@ const themeWidth = width - (themePreview + themeMargin) * 2;
 
 export default class AccountTabTitle extends React.Component {
 
-
-	componentDidMount() {
-
-		let animations = [];
-		animations.push(
-			Animated.timing(
-				this.props.style.bounce,
-				{
-					duration: 200,
-					toValue: 1
-				})
-			);
-
-		Animated.sequence(animations).start();
-	}
-
 	onLayout(event){
 		this.position = event.nativeEvent.layout.x;
 		this.width = event.nativeEvent.layout.width;
@@ -35,18 +19,18 @@ export default class AccountTabTitle extends React.Component {
 	render() {
 
 		return (
-				<Animated.View style={[style.tab, { opacity: this.props.rowData.style.opacity }]} onLayout={this.onLayout.bind(this)}>
+				<Animated.View style={[style.tab, { opacity: this.props.rowData.style.opacity , width : this.props.rowData.style.textWidth }]} onLayout={this.onLayout.bind(this)}>
 				<TouchableWithoutFeedback onPress={()=>{this.props.callback(this.props.rowData.categoryId)}} >
 					<Animated.View style={{	flexDirection:'column',
+											marginTop : 40,
 											marginBottom : 92,
 											transform : [{ scale : this.props.rowData.style.font }]}}>
 						<Animated.Text style={style.text}>
 							{this.props.rowData.label}
 						</Animated.Text>
-						{this.props.index!=0  && <Text style={style.subtitle}>
+						{this.props.index!=0  && <Animated.Text style={[style.subtitle, { opacity : this.props.rowData.style.visibility } ]}>
 							{this.props.balance}  €
-						</Text> }
-
+						</Animated.Text> }
 					</Animated.View>
 				</TouchableWithoutFeedback>
 			</Animated.View>
@@ -68,32 +52,27 @@ const asset = {
 	]
 }
 
-
-
 const style = StyleSheet.create({
-	tab :{
-		flex : 1
-	},
+	tab: {
+		flex: 1,
+      	alignItems: 'center',
+      	justifyContent: 'center',
+  	},
 	text: {
 		textAlign : 'center',
 		color: '#120037',
 		fontSize: 14,
+		lineHeight : 14,
+		height: 14,
+		flexWrap: 'nowrap',
 		fontFamily: 'Montserrat',
 	},
 	subtitle: {
-		width: themeWidth,
 		textAlign : 'center',
 		color: '#120037',
 		fontSize: 14,
 		fontFamily: 'Montserrat',
-	},
-	tab: {
-		flex: 1,
-		width: width - 300,
-		marginLeft: 50,
-      	alignItems: 'center',
-      	justifyContent: 'center',
-  }
+	}
 
 });
 
