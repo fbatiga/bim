@@ -37,6 +37,7 @@ class TitleSelectionStep extends React.Component {
 			autoCorrect={false}
 			autoFocus={true}
 			returnKeyType='next'
+			defaultValue={this.props.name}
 			ref="titleInput"
 			style={{
 				flex: 1,

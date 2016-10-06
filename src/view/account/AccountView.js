@@ -1,27 +1,25 @@
 'use strict';
-
 import React, { Component } from 'react';
-import { View, Text, Modal, ListView, Image, ScrollView, SegmentedControlIOS, TouchableOpacity,StyleSheet,  Dimensions, Animated } from 'react-native';
+import { View, Text, Modal, Image, ScrollView, SegmentedControlIOS, StyleSheet, Dimensions, Animated } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import moment from 'moment';
-import {firebaseDb} from  '../../app/AppFirebase';
+import { firebaseDb } from  '../../app/AppFirebase';
+import { connect } from 'react-redux';
 
 import AppGuideline from '../../app/AppGuideline';
 import AppAsset from '../../app/AppAsset';
-import {swipeTo, configureSwipe} from '../menu/MenuAction';
+import { swipeTo, configureSwipe } from '../menu/MenuAction';
 
-
-import {connect} from 'react-redux';
-import {addTransaction, setTransactions} from './AccountAction';
 import AccountTab from './item/AccountTab';
 import AccountTabTitle from './item/AccountTabTitle';
 
 
 import Title from '../common/title/Title';
 import BackButton from '../common/button/BackButton';
-
 import AccountTransfertModal from './modal/AccountTransfertModal';
 import AccountTransfertList from './list/AccountTransfertList';
+
+import { addTransaction, setTransactions } from './AccountAction';
 
 const {width, height} = Dimensions.get('window');
 const themePreview = 50;
@@ -29,14 +27,24 @@ const themeMargin = 5;
 const themeWidth = width - (themePreview + themeMargin) * 2;
 
 class AccountView extends Component {
-
 	constructor(props) {
 		super(props);
 
+		let categories = {};
+
+		this.props.account.categories.map((value, key) => {
+			categories[value.categoryId] = value;
+		});
+		this.categories = categories;
+		this.position = 0;
+		this.scrollTransactionPosition= 0;
+		this.scrollTransactionHeight = height;
+
 		this.state = {
 			currentTab: 'all',
-			previousMonth: 'Mai',
-			currentMonth: 'Juin',
+			previousMonth: 'Sept',
+			currentMonth: 'Oct',
+			balance: this.props.account.balance,
 			modalVisible: false,
 			fadeAnim: new Animated.Value(0),
 			slideIn: new Animated.Value(100),
@@ -52,6 +60,7 @@ class AccountView extends Component {
 					bounce: new Animated.Value(key == 0 ? 1 : 0.7),
 					opacity: new Animated.Value(key == 0 ? 1 : 0.2),
 					font: new Animated.Value(key == 0 ? 1 : 0.7),
+					textWidth: new Animated.Value(key == 0 ? width : 50),
 				};
 			this.state.tabs.push(value);
 		});
@@ -70,12 +79,14 @@ class AccountView extends Component {
 
 	componentWillMount(){
 		const rootRef = firebaseDb.ref();
-		this.transactionsRef = rootRef.child(this.props.login.username+'/transactions');
+
+		this.transactionsRef = rootRef.child(this.props.username+'/transactions');
 	}
 
 	componentDidMount() {
 
 		let animations = [];
+
 		animations.push(
 			Animated.timing(
 				this.state.fadeAnim,
@@ -88,14 +99,15 @@ class AccountView extends Component {
 				{
 					duration: 200,
 					toValue: 0
-				})
-			);
+				}
+			)
+		);
 
 		Animated.sequence(animations).start();
 
 		this.transactionsRef.once("value").then(function (snapshot) {
-
 			let transactions = [];
+
 			snapshot.forEach((row) => {
 				row = row.val();
 				transactions.push(row);
@@ -117,12 +129,13 @@ class AccountView extends Component {
 	listenToTransactionChanges(source) {
 		source.orderByChild('timestamp').on('child_added', (snapshot)=> {
 			snapshot = snapshot.val();
-            // console.log(snapshot);
-            // inserting at the beginning of the array
 
-            this.props.dispatch(addTransaction(snapshot));
-           // this.setState({dataSource: this.state.dataSource.cloneWithRows(this.props.account.transactions)});
-       });
+      snapshot.category = this.categories[snapshot.category];
+      // inserting at the beginning of the array
+
+      this.props.dispatch(addTransaction(snapshot));
+	    // this.setState({dataSource: this.state.dataSource.cloneWithRows(this.props.account.transactions)});
+    });
 	}
 
 	showModal() {
@@ -149,9 +162,7 @@ class AccountView extends Component {
 	}
 
 	registerScroll(scroll){
-
 		this.transferScroll = scroll;
-
 	}
 
 	select(index){
@@ -237,31 +248,21 @@ class AccountView extends Component {
 	}
 
 	onVerticalSwipe(distance, position) {
-
-		if(this.position == 0 && position.y > 500){
-
+		if (this.position == 0 && position.y > 500) {
 			this.scrollTo(500);
-
-		}else if(position.y < 100 && distance < 0){
+		} else if (position.y < 100 && distance < 0) {
 			this.scrollTo(0);
-
-		}else{
-
-			if(distance< 100){
-				distance = distance *2;
-			}
-
+		} else {
 			let pos = this.scrollTransactionPosition + distance;
 
-
-			if(pos<0){
+			if (distance< 100) {
+				distance = distance *2;
+			}
+			if (pos < 0) {
 				pos = 0;
 			}
-
-			if( pos > this.scrollTransactionHeight - 500){
-
+			if (pos > this.scrollTransactionHeight - 500) {
 				pos = this.scrollTransactionHeight -  500;
-
 			}
 
 			this.transferScroll.scrollTo({
@@ -270,7 +271,6 @@ class AccountView extends Component {
 			});
 		}
 	}
-
 
 	scrollTo(y){
 		this.mainView.scrollTo({
@@ -300,9 +300,9 @@ class AccountView extends Component {
 
 
 	render() {
+
 		return (
 			<View style={{ flex: 1 }} onLayout={this.configureScroll.bind(this)} >
-
 			<ScrollView
 			bounces={false}
 			scrollEnabled={false}
@@ -346,12 +346,13 @@ class AccountView extends Component {
 
 				<Animated.View style={[style.bottom, { marginTop: this.state.slideIn }]}>
 				<AccountTransfertList
-				registerScroll={this.registerScroll.bind(this)}
-				onScrollEnd={this.onScrollTransactionEnd.bind(this)}
-				previousMonth={this.state.previousMonth}
-				currentMonth={this.state.currentMonth}
-				category={this.state.category}
-				account={this.props.account}
+					registerScroll={this.registerScroll.bind(this)}
+					onScrollEnd={this.onScrollTransactionEnd.bind(this)}
+					previousMonth={this.state.previousMonth}
+					currentMonth={this.state.currentMonth}
+					category={this.state.category}
+					account={this.props.account}
+					transactions={this.props.transactions}
 				/>
 				</Animated.View>
 				</ScrollView>
@@ -373,11 +374,11 @@ const style = StyleSheet.create({
 	tabs: {
 		flex: 1
 	},
+
 	dotIcon: {
 		alignItems: 'center',
 		marginTop: 10
 	},
-
 	transferButton: {
 		position: 'absolute',
 		top: (height - 215),
@@ -386,9 +387,7 @@ const style = StyleSheet.create({
 		padding: 0,
 		zIndex: 100
 	},
-
 	transferButtonImage: {},
-
 	bottom: {
 		flex: 1,
 		backgroundColor: '#fff'
@@ -411,7 +410,8 @@ const style = StyleSheet.create({
 function mapStateToProps(state) {
 	return {
 		account: state.account,
-		login: state.login
+		username: state.login.username,
+		transactions: state.account.transactions
 	};
 }
 

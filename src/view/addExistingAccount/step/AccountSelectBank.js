@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { ScrollView, Text, View, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
 import Title from '../../common/title/Title';
 import SubTitle from '../../common/title/SubTitle';
@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
 	},
 });
 
-export default class AccountSelectBank extends Component {
+class AccountSelectBank extends Component {
 	render() {
 		return (
 			<ScrollView style={styles.container}>
@@ -101,5 +101,10 @@ export default class AccountSelectBank extends Component {
 }
 
 AccountSelectBank.propTypes = {
-	title: React.PropTypes.string
+	title: PropTypes.string,
+	subtitle: PropTypes.string,
+	back: PropTypes.func,
+	confirm: PropTypes.func
 };
+
+export default AccountSelectBank;

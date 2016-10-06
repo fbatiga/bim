@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { ScrollView, Text, View, StyleSheet, Dimensions, TouchableOpacity, TextInput, TouchableHighlight } from 'react-native';
 import Title from '../../common/title/Title';
 import SubTitle from '../../common/title/SubTitle';
@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
   subtitle: {
     alignSelf: 'center',
     color: AppGuideline.colors.white,
-    maxWidth: width / 1.3
+		paddingHorizontal: 15
   },
   form: {
     flex: 1,
@@ -76,8 +76,6 @@ export default class AccountSelectBank extends Component {
   }
 
   handleChange(name, value) {
-    console.log(name, value);
-
     this.setState({
       ...this.state,
       [name]: value
@@ -85,8 +83,6 @@ export default class AccountSelectBank extends Component {
   }
 
 	render() {
-    console.log(this.state);
-
 		return (
 			<View style={styles.container}>
 				<ScrollView scrollEnabled={false} style={{ backgroundColor: 'white' }}>
@@ -122,13 +118,13 @@ export default class AccountSelectBank extends Component {
                 secureTextEntry
                 returnKeyType='done'
                 onSubmitEditing={() => {
-                  this.props.confirm('user', this.state);
+                  this.props.save('user', this.state);
                 }}
                 />
             </View>
           </View>
         </ScrollView>
-        <TouchableHighlight onPress={() => { this.props.confirm('user', this.state); }}>
+        <TouchableHighlight onPress={() => { this.props.save('user', this.state); }}>
           <View style={styles.button}>
             <Text style={styles.buttonText}>LANCER LA SYNCHRONISATION</Text>
           </View>
@@ -139,6 +135,8 @@ export default class AccountSelectBank extends Component {
 }
 
 AccountSelectBank.propTypes = {
-  title: React.PropTypes.string,
-	bank: React.PropTypes.string
+  title: PropTypes.string,
+	bank: PropTypes.string,
+	back: PropTypes.func,
+	save: PropTypes.func
 };

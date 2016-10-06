@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { Text, View, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
+import React, { Component, PropTypes } from 'react';
+import { Text, View, ScrollView, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
 import Title from '../../common/title/Title';
 import AppGuideline from '../../../app/AppGuideline';
 import asset from '../../../app/AppAsset';
@@ -23,6 +23,7 @@ const styles = StyleSheet.create({
 		flex: 1
 	},
 	bottom: {
+    flex: 1,
 		backgroundColor: AppGuideline.colors.white
 	},
 	text: {
@@ -35,8 +36,8 @@ const styles = StyleSheet.create({
 		borderBottomWidth: 1,
 		borderBottomColor: AppGuideline.colors.lightGrey,
 		flexDirection: 'row',
-		height: height / 4,
 		paddingHorizontal: 25,
+    paddingVertical: 45,
 		alignItems: 'center'
 	},
 	linkText: {
@@ -48,7 +49,7 @@ const styles = StyleSheet.create({
 	}
 });
 
-class CardSelectAccount extends Component {
+class AccountsSelectionStep extends Component {
 	render() {
 		return (
 			<View style={styles.container}>
@@ -57,36 +58,38 @@ class CardSelectAccount extends Component {
 					<Title>{this.props.title}</Title>
 					<View style={styles.topContent}>
 						<Text style={styles.text}>
-							{this.props.subtitle || 'Compte à débiter' }
+							{this.props.subtitle || 'Compte à débiter :' }
 						</Text>
 					</View>
 				</View>
 
-				<View style={styles.bottom}>
-					<TouchableOpacity onPress={()=> {
-						this.props.confirm();
-					}}>
-						<View style={styles.lines}>
-							<Text style={styles.linkText}>BiM</Text>
-							<Text style={styles.amount}>2500 €</Text>
-						</View>
-					</TouchableOpacity>
-					<TouchableOpacity onPress={()=> {
-						this.props.confirm();
-					}}>
-						<View style={styles.lines}>
-							<Text style={styles.linkText}>Société générale</Text>
-							<Text style={styles.amount}>1800 €</Text>
-						</View>
-					</TouchableOpacity>
-				</View>
+				<ScrollView style={styles.bottom}>
+          {
+            this.props.accounts.map((account) => {
+              return (
+                <TouchableOpacity key={account.id} onPress={()=> {
+      						this.props.confirm(account.label);
+      					}}>
+      						<View style={styles.lines}>
+      							<Text style={styles.linkText}>{account.label}</Text>
+      							<Text style={styles.amount}>{`${account.balance} €`}</Text>
+      						</View>
+      					</TouchableOpacity>
+              );
+            })
+          }
+				</ScrollView>
 			</View>
 		);
 	}
 }
 
-CardSelectAccount.propTypes = {
-	title: React.PropTypes.string
+AccountsSelectionStep.propTypes = {
+	title: PropTypes.string,
+  subtitle: PropTypes.string,
+  back: PropTypes.func,
+  confirm: PropTypes.func,
+  accounts: PropTypes.array
 };
 
-export default CardSelectAccount;
+export default AccountsSelectionStep;

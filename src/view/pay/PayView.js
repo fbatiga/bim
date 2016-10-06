@@ -8,75 +8,76 @@ import {init} from './PayAction';
 import { Actions } from 'react-native-router-flux';
 
 import AmountSelectionStep from '../common/step/AmountSelectionStep';
-import ConfirmationStep from '../common/step/ConfirmationStep';
-import TitleSelectionStep from '../common/step/TitleSelectionStep';
-import QrCodeStep from '../common/step/QrCodeStep';
+import AccountsSelectionStep from '../common/step/AccountsSelectionStep';
 import RecipientSelectionStep from '../common/step/RecipientSelectionStep';
+import QrCodeStep from '../common/step/QrCodeStep';
+import TitleSelectionStep from '../common/step/TitleSelectionStep';
+import ConfirmationStep from '../common/step/ConfirmationStep';
 import SuccessStep from '../common/step/SuccessStep';
 import PointsStep from '../common/step/PointsStep';
 
-
 import AppGuideline from '../../app/AppGuideline';
 import AppAsset from '../../app/AppAsset';
+import { processTransfer } from './PayAction';
 
 class PayView extends Component {
-
 	constructor(props) {
 		super(props);
 
 		this.state = {
 			amount: null,
+			transferAccount: '',
+			transferRecipient: '',
+			transferRecipientId: '',
 			qrCode : false,
 			transferLabel : '',
-			transferRecipient: '',
 			step: 0
 		};
-
 	}
 
-
-	back(){
-		if(this.state.step == 0){
+	back() {
+		if (this.state.step == 0) {
 			Actions.pop();
-		}else{
+		} else {
 			this.setState({
 				step: this.state.step - 1
 			});
 		}
 	}
 
-	componentDidUpdate(){
-		if(this.state.step == this.steps.length-2){
-
-			setTimeout(function(){
-
+	componentDidUpdate() {
+		if (this.state.step == this.steps.length-2) {
+			setTimeout(function() {
 				this.setState({
 					step: this.state.step + 1
 				});
-
 			}.bind(this),2000);
 		}
-		if(this.state.step == this.steps.length-1){
+		if (this.state.step == this.steps.length-1) {
 			setTimeout(function(){Actions.account()},1500);
 		}
 	}
 
 	render() {
+		console.log('step', this.state.step);
+		console.log('state', this.state);
 
 		let Title = 'PAYER';
 
 		this.steps = [
 			<AmountSelectionStep
 				title={Title}
-				subtitle={'Somme à verser'}
+				subtitle={'Somme à verser :'}
 				amount={this.state.amount}
 				confirm={this.confirmAmount.bind(this)}
 			/>,
-			<TitleSelectionStep
-					title={Title}
-					back={this.back.bind(this)}
-					subtitle={'Nommer ce B!M'}
-					confirm={this.confirmTitle.bind(this)} />,
+			<AccountsSelectionStep
+				title={Title}
+				subtitle={'Compte à débiter :'}
+				accounts={this.props.firebaseAccounts}
+				back={this.back.bind(this)}
+				confirm={this.confirmAccount.bind(this)}
+			/>,
 			<RecipientSelectionStep
 				title={Title}
 				back={this.back.bind(this)}
@@ -84,11 +85,18 @@ class PayView extends Component {
 				bimOnly={true}
 				qrCode={this.qrCode.bind(this)}
 				contact={this.props.contact}
-				confirm={this.confirmRecipient.bind(this)} />
+				confirm={this.confirmRecipient.bind(this)}
+			/>,
+			<TitleSelectionStep
+				title={Title}
+				subtitle={'Nommer ce B!M'}
+				name={this.state.transferLabel}
+				back={this.back.bind(this)}
+				confirm={this.confirmTitle.bind(this)}
+			/>
 		];
 
-		if(this.state.qrCode == true){
-
+		if (this.state.qrCode == true) {
 			this.steps.push(
 				<QrCodeStep
 					title={Title}
@@ -96,9 +104,7 @@ class PayView extends Component {
 					back={this.back.bind(this)}
 					confirm={this.confirmPay.bind(this)} />
 			);
-
-		}else{
-
+		} else {
 			this.steps.push(
 				<ConfirmationStep
 					title={Title}
@@ -106,38 +112,47 @@ class PayView extends Component {
 					amount={this.state.amount}
 					back={this.back.bind(this)}
 					transferLabel={this.state.transferLabel}
-					transferRecipient={this.state.transferRecipient}
+					recipient={this.state.transferRecipient}
+					recipientId={this.state.transferRecipientId}
+					originator={this.props.login.username}
 					confirm={this.confirmPay.bind(this)} />
 			);
-
 		}
 
-		this.steps.push(<SuccessStep title={Title} subtitle='B!M envoyé !' />,
-						<PointsStep title={Title} />);
+		this.steps.push(
+			<SuccessStep title={Title} subtitle='B!M envoyé !' />,
+			<PointsStep title={Title} />
+		);
 
 		return this.steps[this.state.step];
 	}
 
-
-
-	qrCode(){
-		this.setState({ transferRecipient: 'QR Code',  qrCode: true,step: this.state.step + 1});
-	}
-
-
 	confirmAmount(amount) {
 		amount = parseFloat(amount);
+
 		if (!amount) {
 			alert('Merci de saisir un montant');
+		} else {
+			this.setState({
+				amount: amount,
+				step: this.state.step + 1
+			});
 		}
-		else {
-			this.setState({amount: amount, step: this.state.step + 1});
-		}
+	}
+
+	confirmAccount(account) {
+		this.setState({
+			transferAccount: account,
+			step: this.state.step + 1
+		});
 	}
 
 	confirmRecipient(recipient) {
 		let name = [];
-		if(recipient.familyName != undefined){
+
+		console.log(recipient);
+
+		if (recipient.familyName != undefined) {
 			name.push(recipient.familyName);
 		}
 
@@ -145,54 +160,69 @@ class PayView extends Component {
 			name.push(recipient.givenName);
 		}
 
-		this.setState({transferRecipient: name.join(' '), qrCode: false, step: this.state.step + 1});
+		this.setState({
+			transferRecipient: name.join(' '),
+			transferRecipientId: recipient.username,
+			qrCode: false,
+			step: this.state.step + 1
+		});
+	}
+
+	qrCode(){
+		this.setState({
+			transferRecipient: 'QR Code',
+			qrCode: true,
+			step: this.state.step + 1
+		});
 	}
 
 	confirmTitle(title) {
-		this.setState({transferLabel: title, step: this.state.step + 1});
+		if (this.props.recipient !== undefined && this.props.recipientId !== undefined) {
+			this.setState({
+				transferLabel: title,
+				transferRecipient: this.props.recipient,
+				transferRecipientId: this.props.recipientId,
+				step: this.state.step + 2
+			});
+		} else {
+			this.setState({transferLabel: title, step: this.state.step + 1});
+		}
 	}
 
 	confirmPay() {
-		this.setState({step: this.state.step + 1});
-		var key = this.state.transferRecipient.split(' ')[0].toLowerCase();
-
-		let firebaseRootRef = firebaseDb.ref();
-		let transactionsRef = firebaseRootRef.child(this.props.login.username+'/transactions');
-
-		transactionsRef.push({
-			label: this.state.transferLabel + ' (' + this.state.transferRecipient + ')',
-			amount: parseFloat(this.state.amount),
-			type: "debit",
-			category: 'retraits',
-			timestamp: Date.now(),
-			recipient: this.state.transferRecipient,
-			recipientId: key
-
+		this.setState({
+			step: this.state.step + 1
 		});
 
-		let recipentTransactionsRef = firebaseRootRef.child(key + '/transactions');
+		const transferInfos = {
+			recipient: this.state.transferRecipient,
+			recipientId: this.state.transferRecipientId,
+			originator: this.props.login.username,
+			amount: this.state.amount,
+			account: this.state.transferAccount,
+			name: this.state.transferLabel,
+			qr: this.state.qrCode
+		}
 
-		recipentTransactionsRef.push(
-			{
-				label: this.state.transferLabel,
-				amount: parseFloat(this.state.amount),
-				type: "credit",
-				category: 'retraits',
-				timestamp: Date.now(),
-				originator: 'alice'
-			}
-		);
+		this.props.processTransfer(transferInfos);
 	}
-
 }
-
 
 function mapStateToProps(state) {
 	return {
 		pay: state.pay,
 		contact: state.contact,
-		login: state.login
+		login: state.login,
+		firebaseAccounts: state.overview.firebaseAccounts
 	};
 }
 
-export default connect(mapStateToProps)(PayView);
+function mapDispatchToProps(dispatch) {
+	return {
+		processTransfer: (transferInfos) => {
+			dispatch(processTransfer(transferInfos));
+		}
+	};
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(PayView);
