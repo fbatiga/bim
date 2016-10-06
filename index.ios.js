@@ -24,7 +24,7 @@ class App extends Component {
   componentDidMount() {
 
      var updateDialogOptions = {
-	    updateTitle: "Mise à Jour disponible",
+	    optionalUpdateTitle: "Mise à Jour disponible",
 	    optionalUpdateMessage: "Souhaitez-vous mettre à jour votre application ?",
 	    optionalIgnoreButtonLabel: "Non",
 	    optionalInstallButtonLabel: "Oui",
