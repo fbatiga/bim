@@ -4,7 +4,6 @@ import React, { Component } from 'react';
 import { View, Text,ListView, Image, ScrollView, StyleSheet, TouchableOpacity, Animated } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import  ScrollableTabView, { ScrollableTabBar }  from 'react-native-scrollable-tab-view';
-import asset from '../../app/AppAsset';
 import AppGuideline from '../../app/AppGuideline';
 import Title from '../common/title/Title';
 
@@ -25,6 +24,8 @@ class OverviewView extends Component {
 	}
 
 	render() {
+		console.log('firebaseAccounts', this.props.firebaseAccounts);
+
 		return (
 			<View
 			horizontal={false} style={[style.container, {flex: 1}]}>
@@ -42,7 +43,7 @@ class OverviewView extends Component {
 			tabBarInactiveTextColor={AppGuideline.colors.lightviolet}
 			renderTabBar={() => <ScrollableTabBar style={style.tabs} tabsContainerStyle={style.tabBar} />}
 			>
-			{this.props.overview.accounts.map((value, key) => {
+			{this.props.firebaseAccounts.map((value, key) => {
 				return (
 					<View tabLabel={value.label} key={key}>
 					<TouchableOpacity style={style.graph} onPress={()=> {
@@ -125,7 +126,6 @@ class OverviewView extends Component {
 	}
 }
 
-
 const style = StyleSheet.create({
 	circle: {
 		backgroundColor: 'transparent',
@@ -185,10 +185,14 @@ const style = StyleSheet.create({
 
 });
 
+const asset = {
+	add: require('./assets/add.png'),
+};
 
 function mapStateToProps(state) {
 	return {
-		overview: state.overview
+		overview: state.overview,
+		firebaseAccounts: state.overview.firebaseAccounts
 	};
 }
 

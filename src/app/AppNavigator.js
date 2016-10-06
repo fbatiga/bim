@@ -31,6 +31,7 @@ import OneSignal from 'react-native-onesignal'; // Import package from node modu
 import Contacts from 'react-native-contacts';
 import {loadContacts, setContacts} from '../view/contact/ContactAction';
 import { setCards } from '../view/card/CardAction';
+import { setAccounts } from '../view/overview/OverviewAction';
 import {notify, updateProfile, loadSession, setVisibility, addSlackMessage, restartBot, stopBot} from '../view/messenger/MessengerAction';
 import {login, device} from '../view/login/LoginAction';
 
@@ -87,6 +88,8 @@ class AppNavigator extends Component {
 		this.firebaseMessagesRef = null;
 		this.firebaseNotificationRef = null;
 		this.appState = null;
+
+		// AsyncStorage.clear();
 	}
 
 
@@ -163,9 +166,9 @@ class AppNavigator extends Component {
 
 	loadProfile(username){
 		this.firebaseNotificationRef = rootRef.child(username+'/notification');
-
 		this.firebaseProfileRef = rootRef.child(username+'/profile');
 		this.firebaseCardRef = rootRef.child(username+'/card');
+		this.firebaseAccountsRef = rootRef.child(`${username}/accounts`);
 
 		if(this.props.login.device !== null && this.props.login.device.userId !== null){
 
@@ -208,6 +211,49 @@ class AppNavigator extends Component {
 
 		}.bind(this));
 
+		this.firebaseAccountsRef.on('value', (snapshot) => {
+			let accounts = snapshot.val();
+
+			if (accounts === null) {
+				console.log('no accounts found');
+
+				/**
+				 * Create default accounts
+				 */
+
+				 const defaultAccounts = [
+					 {
+ 						id: 'TOUT',
+ 						label: 'Mes comptes',
+ 						balance: 0,
+ 						type: 'external'
+ 					},
+ 					{
+ 						id: 'Bim',
+ 						label: 'BIM',
+ 						balance: 0,
+ 						type: 'internal'
+ 					}
+				 ]
+
+				this.firebaseAccountsRef.set(defaultAccounts);
+
+				/**
+				 * Load those accounts
+				 */
+
+				 this.props.dispatch(setAccounts(defaultAccounts));
+			} else {
+				/**
+				 * Load existing accounts
+				 */
+				 console.log('load existing accounts');
+				 console.log('loaded accounts :', accounts);
+
+				 this.props.dispatch(setAccounts(accounts));
+			}
+		})
+
 	}
 
 
@@ -226,6 +272,7 @@ class AppNavigator extends Component {
 				this.props.dispatch(loadSession('hello'));
 			}else{
 				this.props.dispatch(login(nextProps.messenger.profile.username));
+
 			}
 
 		}

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import {firebaseDb} from  '../../app/AppFirebase';
 
-import CardSelectAccount from './step/CardSelectAccount';
+import CardSelectAccount from '../common/step/AccountsSelectionStep';
 import CardSelectDuration from './step/CardSelectDuration';
 import CardSelectAmmount from '../common/step/AmountSelectionStep';
 import RecipientSelectionStep from '../common/step/RecipientSelectionStep';
@@ -13,6 +13,8 @@ import CardSelectCode from './step/CardSelectCode';
 import CardConfirmView from '../common/step/ConfirmationStep';
 import CardSuccessView from './step/CardSuccessView';
 import CardPointsView from '../addJackpot/step/JackpotPointsView';
+
+import { processCard } from './AddCardAction';
 
 class AddCardView extends Component {
   constructor(props) {
@@ -60,6 +62,7 @@ class AddCardView extends Component {
   		<CardSelectAccount
     		title='Cartes'
     		subtitle='Compte à débiter'
+        accounts={this.props.accounts}
     		back={this.back.bind(this)}
     		confirm={this.selectAccount.bind(this)}
   		/>,
@@ -176,22 +179,21 @@ class AddCardView extends Component {
   }
 
   confirmCard() {
-    const firebaseRootRef = firebaseDb.ref();
-  	const cardRef = firebaseRootRef.child(this.props.login.username+'/card');
-
     this.setState({
       step: this.state.step + 1
-    })
+    });
 
-  	cardRef.push({
-  		amount: parseFloat(this.state.amount),
+    const cardInfos = {
+      amount: parseFloat(this.state.amount),
   		design: this.state.design,
   		code:  this.state.code,
   		duration: this.state.duration,
-  		duration: this.state.account,
+  		account: this.state.account,
   		timestamp: Date.now(),
   		recipient: this.state.transferRecipient
-  	});
+    }
+
+    this.props.processCard(cardInfos, this.props.login.username);
   }
 }
 
@@ -199,8 +201,17 @@ function mapStateToProps(state) {
 	return {
 		pay: state.pay,
 		contact: state.contact,
-		login: state.login
+		login: state.login,
+    accounts: state.overview.firebaseAccounts
 	};
 }
 
-export default connect(mapStateToProps)(AddCardView);
+function mapDispatchToProps(dispatch) {
+  return {
+    processCard: (cardInfos, username) => {
+      dispatch(processCard(cardInfos, username));
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddCardView);
