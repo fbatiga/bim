@@ -1,18 +1,6 @@
 'use strict';
 import React, { Component } from 'react';
-import {
-	View,
-	Text,
-	Modal,
-	ListView,
-	Image,
-	ScrollView,
-	SegmentedControlIOS,
-	TouchableOpacity,
-	TouchableHighlight,
-	StyleSheet,
-	Dimensions,
-	Animated } from 'react-native';
+import { View, Text, Modal, Image, ScrollView, TouchableWithoutFeedback, SegmentedControlIOS, StyleSheet, Dimensions, Animated } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import moment from 'moment';
 import { firebaseDb } from  '../../app/AppFirebase';
@@ -23,6 +11,9 @@ import AppAsset from '../../app/AppAsset';
 import { swipeTo, configureSwipe } from '../menu/MenuAction';
 
 import AccountTab from './item/AccountTab';
+import AccountTabTitle from './item/AccountTabTitle';
+
+
 import Title from '../common/title/Title';
 import BackButton from '../common/button/BackButton';
 import AccountTransfertModal from './modal/AccountTransfertModal';
@@ -51,15 +42,40 @@ class AccountView extends Component {
 
 		this.state = {
 			currentTab: 'all',
-			previousMonth: 'Aout',
-			currentMonth: 'Sept',
-			balance: this.props.account.balance,
+			previousMonth: 'Sept',
+			currentMonth: 'Oct',
 			modalVisible: false,
 			fadeAnim: new Animated.Value(0),
-			bounceValue: new Animated.Value(0),
-			slideIn: new Animated.Value(100)
+			slideIn: new Animated.Value(100),
+			bounce: new Animated.Value(1),
+			selected : 0,
+			tabs: []
 		};
+
+		this.categories = {};
+
+		this.props.account.categories.map((value, key) => {
+			this.categories[value.categoryId] = value;
+
+			value.style = {
+					visibility: new Animated.Value(key == 0 ? 1 : 0),
+					opacity: new Animated.Value(key == 0 ? 1 : 0.2),
+					font: new Animated.Value(key == 0 ? 1 : 0.7),
+					textWidth: new Animated.Value(0),
+				};
+			this.state.tabs.push(value);
+		});
+
+		this.position = 0;
+		this.scrollTransactionPosition= 0;
+		this.scrollTransactionHeight = height;
+		this.selected= 0;
+		this.tabs=[];
+
+		this.state.tabs[this.selected].selected = true;
+
 	}
+
 
 	componentWillMount(){
 		const rootRef = firebaseDb.ref();
@@ -68,6 +84,7 @@ class AccountView extends Component {
 	}
 
 	componentDidMount() {
+
 		let animations = [];
 
 		animations.push(
@@ -78,28 +95,25 @@ class AccountView extends Component {
 					toValue: 1
 				}),
 			Animated.timing(
-				this.state.bounceValue,
-				{
-					duration: 200,
-					toValue: 1
-				}),
-			Animated.timing(
 				this.state.slideIn,
 				{
 					duration: 200,
 					toValue: 0
-				}
+				},
+			Animated.timing(
+				this.state.bounce,
+				{
+					duration: 200,
+					toValue: 1
+				})
 			)
 		);
-
-		Animated.sequence(animations).start();
 
 		this.transactionsRef.once("value").then(function (snapshot) {
 			let transactions = [];
 
 			snapshot.forEach((row) => {
 				row = row.val();
-				row.category = this.categories[row.category];
 				transactions.push(row);
 			});
 
@@ -111,6 +125,12 @@ class AccountView extends Component {
 		});
 
 		this.mainView = this.refs.mainView.getScrollResponder();
+		this.tabView = this.refs.tabView.getScrollResponder();
+
+		Animated.sequence(animations).start(()=>{
+			this.select(0);
+		});
+
 	}
 
 	listenToTransactionChanges(source) {
@@ -141,13 +161,124 @@ class AccountView extends Component {
 		this.props.dispatch(
 			configureSwipe({
 				onVerticalSwipe : this.onVerticalSwipe.bind(this),
-				onVerticalLargeSwipe : this.onVerticalSwipe.bind(this)
+				onVerticalLargeSwipe : this.onVerticalSwipe.bind(this),
+				onHorizontalSwipe : this.onHorizontalSwipe.bind(this),
+				onHorizontalLargeSwipe : this.onHorizontalSwipe.bind(this)
 			})
 		);
 	}
 
 	registerScroll(scroll){
 		this.transferScroll = scroll;
+	}
+
+	select(index){
+
+		console.log('select', index);
+
+		let animations = [];
+
+
+		if(this.tabs[index] != undefined){
+
+			if(this.tabs[this.selected] != undefined){
+
+				animations.push(
+					Animated.timing(
+					this.tabs[this.selected].props.style.opacity,
+					{
+						duration: 200,
+						toValue: 0.2
+					}),
+					Animated.timing(
+						this.tabs[this.selected].props.style.font,
+						{
+							duration: 200,
+							toValue: 0.7
+					}),
+					Animated.timing(
+						this.tabs[this.selected].props.style.visibility,
+						{
+							duration: 200,
+							toValue: 0
+					}),
+					Animated.timing(
+						this.tabs[this.selected].props.style.textWidth,
+						{
+							duration: 200,
+							toValue: this.tabs[this.selected].state.width
+					})
+				);
+
+			}
+
+			animations.push(
+				Animated.timing(
+					this.tabs[index].props.style.opacity,
+					{
+						duration: 200,
+						toValue: 1
+				}),
+				Animated.timing(
+					this.tabs[index].props.style.font,
+					{
+						duration: 200,
+						toValue: 1
+				}),
+				Animated.timing(
+					this.tabs[index].props.style.textWidth,
+					{
+						duration: 200,
+						toValue: width-100
+				}),
+					Animated.timing(
+						this.tabs[index].props.style.visibility,
+						{
+							duration: 200,
+							toValue: 1
+					})
+			);
+
+
+			let position = 0;
+
+			if(this.tabs[index] != undefined){
+				position = this.tabs[index].position;
+			}
+
+			this.tabView.scrollTo({
+				x : position,
+				animated:true
+			});
+
+
+			this.selected = index;
+
+			Animated.parallel(animations).start(()=>{
+				this.setState({
+					selected : index
+				});
+			});
+
+			this.setCategory(this.state.tabs[this.selected].categoryId);
+
+		}
+
+
+
+	}
+
+	onHorizontalSwipe(distance, position) {
+
+		if(distance > 0){
+
+			this.select(this.selected + 1);
+
+		}else{
+
+			this.select(this.selected - 1);
+		}
+
 	}
 
 	onVerticalSwipe(distance, position) {
@@ -189,67 +320,71 @@ class AccountView extends Component {
 		this.scrollTransactionHeight = nativeEvent.contentSize.height;
 	}
 
+
+	register(item){
+		this.tabs[item.props.index] = item;
+	}
+
+
 	render() {
-		console.log('transactions', this.props.account.transactions);
-		console.log('label', this.props.label);
 
 		return (
 			<View style={{ flex: 1 }} onLayout={this.configureScroll.bind(this)} >
-				<ScrollView
-					bounces={false}
-					scrollEnabled={false}
-					ref='mainView'
-				>
-					{
-						this.state.modalVisible &&
-						<AccountTransfertModal close={this.hideModal.bind(this)}/>
-					}
-					<View style={style.top}>
-						<BackButton image={AppAsset.back_dark} back={Actions.overview} />
-						<Title style={{color :AppGuideline.colors.deepBlue, marginBottom: 20}} >B!M</Title>
+			<ScrollView
+			bounces={false}
+			scrollEnabled={false}
+			ref='mainView'
+			>
 
-						<Animated.View style={[style.graph, { transform: [ {scale: this.state.bounceValue} ] }]}>
-							<Image source={AppAsset.graphCircled}  style={style.graphCircle}>
-							<Text style={style.graphLabel} >SOLDE ACTUEL</Text>
-							<Text style={style.graphBalance} >{this.state.balance} €</Text>
-							</Image>
-						</Animated.View>
+			{this.state.modalVisible && <AccountTransfertModal close={this.hideModal.bind(this)}/>}
 
-						<View style={style.tabs}>
-							<ScrollView
-								style={style.tabsContainer}
-								contentContainerStyle={style.tabsContent}
-								horizontal={true}
-								automaticallyAdjustInsets={false}
-								decelerationRate={0}
-								bounces ={false}
-								snapToInterval={themeWidth + themeMargin*2}
-								snapToAlignment="center"
-							>
-								{
-									this.props.account.categories.map((value, key) => {
-										return (
-											<AccountTab rowData={value} callback={this.setCategory.bind(this)} key={key} />
-										);
-									})
-								}
-							</ScrollView>
-						</View>
-					</View>
-					<Animated.View style={[style.bottom, { marginTop: this.state.slideIn }]}>
-						<AccountTransfertList
-							registerScroll={this.registerScroll.bind(this)}
-							onScrollEnd={this.onScrollTransactionEnd.bind(this)}
-							previousMonth={this.state.previousMonth}
-							currentMonth={this.state.currentMonth}
-							category={this.state.category}
-							account={this.props.account}
-							transactions={this.props.transactions}
-						/>
+			<View style={style.top}>
+
+			<BackButton image={AppAsset.back_dark} back={Actions.overview} />
+			<Title style={{color :AppGuideline.colors.deepBlue, marginBottom: 20}} >B!M</Title>
+
+			<View style={style.tabs}>
+					<Animated.View style={[style.graph, { transform: [ {scale: this.state.bounce} ] }]}>
+						<View style={style.tab}>
+							{this.state.selected == 0  && (
+								<Image source={asset.circle[this.state.selected]}  style={style.graphCircle}>
+								<Text style={style.graphLabel} >SOLDE ACTUEL</Text>
+								<Text style={style.graphBalance} >{this.props.account.balance} €</Text>
+								</Image>
+							)}
+
+							{this.state.selected !=0 && <Image source={asset.circle[this.state.selected]}  style={style.graphCircle} /> }
+							</View>
 					</Animated.View>
+					<ScrollView
+					style={style.tabsContainer}
+					contentContainerStyle={style.tabsContent}
+					horizontal={true}
+					ref='tabView'
+					bounces ={false}
+					scrollEnabled ={false}
+					snapToAlignment="center">
+					{this.state.tabs.map((value, key) => {
+						return (<AccountTabTitle rowData={value} style={value.style} register={this.register.bind(this)} callback={()=>{this.select(key)}} key={key} index={key} balance={this.props.account.balance} />);
+					})}
+					</ScrollView>
+				</View>
+				</View>
+
+				<Animated.View style={[style.bottom, { marginTop: this.state.slideIn }]}>
+				<AccountTransfertList
+					registerScroll={this.registerScroll.bind(this)}
+					onScrollEnd={this.onScrollTransactionEnd.bind(this)}
+					previousMonth={this.state.previousMonth}
+					currentMonth={this.state.currentMonth}
+					category={this.state.category}
+					account={this.props.account}
+					transactions={this.props.transactions}
+				/>
+				</Animated.View>
 				</ScrollView>
-			</View>
-		);
+				</View>
+				);
 	}
 }
 
@@ -264,35 +399,7 @@ const style = StyleSheet.create({
 		zIndex: 10
 	},
 	tabs: {
-		flex: 1
-	},
-	graph: {
-		alignItems: 'center'
-	},
-	graphCircle: {
-		justifyContent: 'center',
-		alignItems: 'center',
-		width: null,
-		height: 220,
-		resizeMode: 'stretch',
-	},
-	graphLabel: {
-		fontSize: 10,
-		letterSpacing : 1.5,
-		fontFamily: 'Montserrat',
-		color: '#120037',
-		fontWeight: '300',
-		marginBottom: 5,
-		width: 180,
-		marginLeft: 20,
-		marginRight: 20,
-		overflow: 'hidden',
-		textAlign: "center"
-	},
-	graphBalance: {
-		fontSize: 36,
-		color: '#120037',
-		fontWeight: 'bold'
+		flex: 1,
 	},
 	dotIcon: {
 		alignItems: 'center',
@@ -311,15 +418,59 @@ const style = StyleSheet.create({
 		flex: 1,
 		backgroundColor: '#fff'
 	},
-	tabsContainer: {
-		flex: 1
+	tabsContainer :{
+		paddingLeft:50,
+		flex: 1,
 	},
 	tabsContent: {
-		paddingHorizontal: themePreview,
+		paddingLeft: 50,
 		alignItems: 'center',
 		flex: 1
-	}
+	},
+	graph: {
+		flexDirection : 'column',
+		alignItems: 'center',
+	},
+	graphCircle: {
+		flexDirection : 'column',
+		justifyContent: 'center',
+		padding : 25,
+	},
+	graphLabel: {
+		fontSize: 10,
+		letterSpacing : 1.5,
+		fontFamily: 'Montserrat',
+		color: '#120037',
+		fontWeight: '300',
+		textAlign: "center"
+	},
+	graphBalance: {
+		fontSize: 36,
+		color: '#120037',
+		textAlign: "center",
+		fontWeight: 'bold'
+	},
+	tab: {
+		flex: 1,
+		flexDirection : 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+  }
 });
+
+const asset = {
+	circle : [
+		require('./asset/circle_0.png'),
+		require('./asset/circle_1.png'),
+		require('./asset/circle_2.png'),
+		require('./asset/circle_3.png'),
+		require('./asset/circle_4.png'),
+		require('./asset/circle_5.png'),
+		require('./asset/circle_6.png'),
+		require('./asset/circle_7.png'),
+		require('./asset/circle_8.png')
+	]
+}
 
 function mapStateToProps(state) {
 	return {
